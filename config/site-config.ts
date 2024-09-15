@@ -6,7 +6,7 @@ const DESCRIPTION =
 
 const PREVIEW_IMAGE_URL = "https://sendit-web.vercel.app/opengraph-image.png";
 const ALT_TITLE = "hyper market";
-const BASE_URL = "";
+const BASE_URL = "https://sendit-web.vercel.app";
 
 export const siteConfig: Metadata = {
   title: TITLE,
