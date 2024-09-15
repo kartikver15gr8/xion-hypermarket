@@ -53,6 +53,9 @@ import designuxone from "@/public/designuxone.svg";
 import designuxtwo from "@/public/designuxtwo.svg";
 import designuxthree from "@/public/designuxthree.svg";
 import designuxfour from "@/public/designuxfour.svg";
+import apesbanner from "@/public/_static/background/apesbanner.png";
+import gamecard from "@/public/_static/illustrations/gamecard.png";
+import blinkscard from "@/public/_static/illustrations/Blinks.png";
 
 const reviews = [
   {
@@ -131,11 +134,11 @@ export default function ProductExhibition() {
         <HotDigitalProducts />
         {/* <TopRanking sectionTitle="Top Ranking" /> */}
         <Category />
-        <NewThisWeek />
+        {/* <NewThisWeek /> */}
         {/* <TopRanking sectionTitle="Top Deals" /> */}
         <DappCard />
         {/* <NewArrival /> */}
-        <DiscountTokens />
+        {/* <DiscountTokens /> */}
         <GamingCollectibles />
       </div>
       <LiquidationBanner />
@@ -292,31 +295,31 @@ const Category = () => {
           See all
         </Button>
       </div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-x-2 md:gap-x-4 gap-y-2 md:gap-y-4">
-        <CategoryCard
+      <div className="grid grid-cols-2 gap-x-2 md:gap-x-4 gap-y-2 md:gap-y-4">
+        {/* <CategoryCard
           bg={bitlock}
           categoryName="Discount Tokens"
           description="Get 30% OFF on your favorite assets"
           bgClass="opacity-[41%] bg-blend-luminosity absolute w-[190px] h-[170px] rotate-[-19deg] -bottom-[70px] -right-2 "
-        />
+        /> */}
         <CategoryCard
           bg={cube}
           categoryName="Profit Hunters"
           description="Exclusive trading and profit scalping groups"
-          bgClass="opacity-[21%] bg-blend-luminosity absolute w-[300px] h-[270px] -bottom-[135px] -right-[90px]"
+          bgClass="opacity-[21%] bg-blend-luminosity absolute w-[430px] h-[300px] -bottom-[135px] -right-[90px]"
         />
         <CategoryCard
           bg={perc}
           categoryName="Discount Bonds"
           description="Explore the Bond Market"
-          bgClass="opacity-[31%] bg-blend-luminosity absolute w-[210px] h-[240px] rotate-[-18deg] -bottom-[140px] -right-10"
+          bgClass="opacity-[31%] bg-blend-luminosity absolute w-[310px] h-[290px] rotate-[-18deg] -bottom-[140px] -right-10"
         />
-        <CategoryCard
+        {/* <CategoryCard
           bg={block}
           categoryName="Design"
           description="Branding, Fonts, Graphics, Icons, UI/UX Templates and more."
           bgClass="opacity-[34%] bg-blend-luminosity absolute w-[290px] h-[190px] -bottom-[90px] -right-20"
-        />
+        /> */}
       </div>
     </div>
   );
@@ -334,7 +337,7 @@ const CategoryCard = ({
   bgClass: string;
 }) => {
   return (
-    <div className="relative flex flex-col h-32 border border-[#E5E5E5] rounded-xl overflow-hidden shadow-[inset_-70px_-50px_60px_rgba(0,0,0,0.08)]  hover:bg-[#dbdbdb] transition-all duration-300">
+    <div className="relative flex flex-col h-32 xl:h-44 2xl:48 border border-[#E5E5E5] rounded-xl xl:rounded-2xl overflow-hidden shadow-[inset_-70px_-50px_60px_rgba(0,0,0,0.08)]  hover:bg-[#dbdbdb] transition-all duration-300">
       <Image src={bg} alt="Background" className={`${bgClass}`} />
       <div className="absolute bottom-5 left-4">
         <p className="text-lg font-medium">{categoryName}</p>
@@ -346,8 +349,8 @@ const CategoryCard = ({
 
 const DappCard = () => {
   return (
-    <div className="relative  rounded-xl mt-10 h-[200px] md:h-[300px] shadow-[inset_-90px_70px_90px_rgba(0,0,0,0.1)] overflow-hidden bg-[#D1D1D2]">
-      <Image
+    <div className="relative rounded-xl mt-10 h-[200px] md:h-[300px] shadow-[inset_-90px_70px_90px_rgba(0,0,0,0.1)] overflow-hidden bg-[#D1D1D2]">
+      {/* <Image
         src={allcoinsbg}
         alt="Background"
         className="opacity-[10%]  absolute bg-blend-luminosity -right-20 w-[600px] md:w-[1100px] h-full"
@@ -356,9 +359,17 @@ const DappCard = () => {
         src={bidtable}
         alt="Background"
         className="hidden lg:flex absolute -top-20 right-0 lg:w-[750px] fade-bottom"
+      /> */}
+
+      <Image
+        src={apesbanner}
+        alt="Background"
+        className=""
+        layout="fill"
+        objectFit="cover"
       />
-      <div className="relative px-4 lg:px-16 pt-4 lg:pt-10 h-full">
-        <div className="flex items-center gap-x-1 md:gap-x-2 w-fit">
+      <div className="relative px-4 lg:px-16 pt-4 lg:pt-10 h-full flex flex-col items-center">
+        {/* <div className="flex items-center gap-x-1 md:gap-x-2 w-fit">
           <svg
             width="20"
             height="20"
@@ -373,19 +384,19 @@ const DappCard = () => {
           </svg>
 
           <p className="font-medium">DAPP</p>
-        </div>
-        <div className="mt-4 lg:mt-8 w-fit">
-          <p className="font-medium text-[16px] md:text-[20px] xl:text-[27px]">
-            Instant Checkout
+        </div> */}
+        <div className="w-fit flex flex-col items-center text-white">
+          <p className="font-bold text-[16px] md:text-[20px] xl:text-[32px]">
+            INSTANT CHECKOUT
           </p>
-          <p className="font-medium text-[16px] md:text-[20px] xl:text-[27px]">
-            with Crypto
+          <p className="font-bold text-[16px] md:text-[20px] xl:text-[32px]">
+            WITH CRYPTO
           </p>
           <p className="text-xs md:text-sm mt-1 md:mt-2 lg:mt-3  lg:mb-4">
             Instant Checkout with Crypto
           </p>
         </div>
-        <Button className="px-2 mt-4 lg:mt-2 md:px-4 w-36 lg:w-44 rounded-lg  hover:bg-[#52525C] transition-all duration-300 ">
+        <Button className="px-2 mt-4 lg:mt-2 md:px-4 w-36 lg:w-52 rounded-lg text-md bg-white text-black  hover:bg-[#e1e4e7] transition-all duration-300 ">
           Connect Wallet
         </Button>
       </div>
@@ -844,7 +855,7 @@ const DontMissBanner = () => {
 
 const HotDigitalProducts = () => {
   return (
-    <div className="relative overflow-hidden flex flex-col mt-10 rounded-xl  border bg-[#F7F7F7] p-2 md:p-3 lg:p-4 xl:p-5">
+    <div className="relative overflow-hidden flex flex-col mt-10 rounded-xl  border bg-[#F7F7F7] p-2 md:p-3 lg:p-4 xl:px-5 xl:py-10">
       <Image
         src={invertcube}
         className="absolute top-0 w-[200px] right-[14%] opacity-10"
@@ -1063,7 +1074,7 @@ const GamingCollectibles = () => {
     <div className="mt-10">
       <div className="">
         <p className="font-medium text-lg md:text-xl xl:text-2xl">
-          Gaming Collectibles
+          Today&apos;s Top Digital Services
         </p>
         <p className="text-[12px] mt-1">
           Get the inspiration you need with our curated collections and boost
@@ -1073,7 +1084,7 @@ const GamingCollectibles = () => {
       <div className="grid grid-cols-12 gap-x-4 mt-6">
         <GamingCollectiblesCard
           className="col-span-12 sm:col-span-4 border rounded "
-          img={warrior}
+          img={gamecard}
           category="Digital Product"
           title="Data 2 Skin: Anti-Mage/Lore"
           description="Get Mage Skin"
@@ -1115,11 +1126,11 @@ const GamingCollectibles = () => {
           />
           <GamingCollectiblesCard
             className=""
-            img={gamecurrency}
-            category="Digital Product"
-            title="Data 2 Skin: Anti-Mage/Lore"
-            description="Get Mage Skin"
-            price="$150 one time payment"
+            img={blinkscard}
+            category="Digital Service"
+            title="Blinks for tokens on solana"
+            description="Upgrade your in-game style with this unusual Defiant Spartan skin"
+            price="$21 one time payment"
           />
 
           <div className="relative border rounded lg:rounded-xl flex px-1 md:px-2 xl:px-4 justify-center flex-col text-white shadow-[inset_-90px_70px_90px_rgba(0,0,0,0.8)] bg-[#666565]">
