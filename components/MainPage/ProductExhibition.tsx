@@ -56,6 +56,11 @@ import designuxfour from "@/public/designuxfour.svg";
 import apesbanner from "@/public/_static/background/apesbanner.png";
 import gamecard from "@/public/_static/illustrations/gamecard.png";
 import blinkscard from "@/public/_static/illustrations/Blinks.png";
+import gameski from "@/public/_static/illustrations/gameski.png";
+import locket from "@/public/_static/illustrations/locketr.png";
+import ecom from "@/public/_static/illustrations/ecom.png";
+import shopify from "@/public/_static/illustrations/shopifyprod.png";
+import ball from "@/public/ball.png";
 
 const reviews = [
   {
@@ -306,13 +311,13 @@ const Category = () => {
           bg={cube}
           categoryName="Profit Hunters"
           description="Exclusive trading and profit scalping groups"
-          bgClass="opacity-[21%] bg-blend-luminosity absolute w-[430px] h-[300px] -bottom-[135px] -right-[90px]"
+          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[430px] h-[300px] -bottom-[135px] -right-[90px]"
         />
         <CategoryCard
-          bg={perc}
+          bg={ball}
           categoryName="Discount Bonds"
           description="Explore the Bond Market"
-          bgClass="opacity-[31%] bg-blend-luminosity absolute w-[310px] h-[290px] rotate-[-18deg] -bottom-[140px] -right-10"
+          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[310px] h-[290px] rotate-[-18deg] -bottom-[140px] -right-10"
         />
         {/* <CategoryCard
           bg={block}
@@ -747,6 +752,7 @@ const NewThisWeek = () => {
         </div>
       </div>
       <HotProductCard
+        redirectHref="/product/uidesign"
         img={gaming}
         category="Digital Product"
         productName="Gamified Life OS"
@@ -754,6 +760,7 @@ const NewThisWeek = () => {
         price="$150 per month"
       />
       <HotProductCard
+        redirectHref="/product/uidesign"
         img={flstudio}
         category="Digital Product"
         productName="FL Studio Vocal Guide"
@@ -761,6 +768,7 @@ const NewThisWeek = () => {
         price="$49 one time payment"
       />
       <HotProductCard
+        redirectHref="/product/uidesign"
         img={creativestrategy}
         category="Digital Product"
         productName="Creative Strategy Course"
@@ -824,7 +832,7 @@ const DontMissBanner = () => {
         name="MEV BOT"
         productName="Trading Bot"
         imgUrl={bitcoin}
-        redirectHref=""
+        redirectHref ="/product/uidesign"
         className="absolute"
       /> */}
       <Image
@@ -889,6 +897,7 @@ const HotDigitalProducts = () => {
       </div>
       <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3 lg:gap-y-0 h-full mt-5">
         <HotProductCard
+          redirectHref="/product/uidesign"
           img={hotproductone}
           category="Digital Product"
           productName="TOP 100 VCs LIST"
@@ -896,6 +905,7 @@ const HotDigitalProducts = () => {
           price="$150 one time payment"
         />
         <HotProductCard
+          redirectHref="/product/uidesign"
           img={mevbot}
           category="Digital Product"
           productName="MEV Bots"
@@ -903,6 +913,7 @@ const HotDigitalProducts = () => {
           price="$150 per month"
         />
         <HotProductCard
+          redirectHref="/product/uidesign"
           img={telegraminsider}
           category="Digital Product"
           productName="Telegram Insiders Group"
@@ -910,6 +921,7 @@ const HotDigitalProducts = () => {
           price="$49 one time payment"
         />
         <HotProductCard
+          redirectHref="/product/uidesign"
           img={raindropape}
           category="Digital Product"
           productName="Rain Drops Simulator"
@@ -927,15 +939,20 @@ const HotProductCard = ({
   productName,
   description,
   price,
+  redirectHref,
 }: {
   img: StaticImageData | string;
   category: string;
   productName: string;
   description: string;
   price: string;
+  redirectHref: string;
 }) => {
   return (
-    <div className="p-1 border rounded-lg hover:bg-[#e7e7e9] hover:border-[#ababae]  hover:shadow-lg transition-all duration-300">
+    <Link
+      href={redirectHref}
+      className="p-1 border rounded-lg hover:bg-[#e7e7e9] hover:border-[#ababae]  hover:shadow-lg transition-all duration-300"
+    >
       <Image src={img} alt="" className="rounded w-full" />
       <div className="p-1">
         <p className="text-[8px] sm:text-[10px] bg-[#d0d0d3] w-fit mt-1 sm:mt-2 px-1 rounded-[2px]">
@@ -947,7 +964,7 @@ const HotProductCard = ({
         </p>
         <p className="mt-1 sm:mt-2 text-[12px] md:text-[14px]">{price}</p>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -1102,25 +1119,25 @@ const GamingCollectibles = () => {
           />
           <GamingCollectiblesCard
             className=""
-            img={legendary}
-            category="Digital Product"
-            title="Legendary Treat"
-            description="Navi: Easter Hunt Set Consumable"
+            img={shopify}
+            category="Digital Service"
+            title="Content Writing"
+            description="Get help with writing high-quality blog posts, articles or any other content."
             price="$150 one time payment"
           />
           <GamingCollectiblesCard
             className=""
-            img={reaper}
-            category="Digital Product"
-            title="Reaper's wrath"
+            img={ecom}
+            category="Digital Service"
+            title="Ecommerce Sales Boosting"
             description="This group is your go-to hub for the latest meme coin picks, trending coins."
             price="$150 one time payment"
           />
           <GamingCollectiblesCard
             className=""
-            img={sportgloves}
+            img={gameski}
             category="Digital Product"
-            title="Sport Gloves"
+            title="Legends of Mage Skin"
             description="Get Mage Skin"
             price="$150 one time payment"
           />
@@ -1228,6 +1245,7 @@ const DesignUIUX = () => {
 
       <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-x-2 gap-y-2 md:gap-y-0 xl:gap-x-3">
         <HotProductCard
+          redirectHref="/product/uidesign"
           img={designuxone}
           category="Digital Product"
           productName="Trending AI-UX Patterns"
@@ -1235,6 +1253,7 @@ const DesignUIUX = () => {
           price="$150 one time payment"
         />
         <HotProductCard
+          redirectHref="/product/uidesign"
           img={designuxtwo}
           category="Digital Product"
           productName="Design System UI Kit for Figma"
@@ -1242,6 +1261,7 @@ const DesignUIUX = () => {
           price="$150 per month"
         />
         <HotProductCard
+          redirectHref="/product/uidesign"
           img={designuxthree}
           category="Digital Product"
           productName="Warp Tools for Figma"
@@ -1249,6 +1269,7 @@ const DesignUIUX = () => {
           price="$49 one time payment"
         />
         <HotProductCard
+          redirectHref="/product/uidesign"
           img={designuxfour}
           category="Digital Product"
           productName="How to Design Better UI"

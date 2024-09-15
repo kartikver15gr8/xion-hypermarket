@@ -76,7 +76,7 @@ export default function Product({ params }: any) {
           <Image src={designfive} className="w-full h-full" alt="product" />
         </div>
         <div className="flex flex-col col-span-4  rounded-xl">
-          <BorrowUSDCBannerBtn />
+          {/* <BorrowUSDCBannerBtn /> */}
           <div className="flex items-center mt-4 justify-between">
             <p className="font-bold text-xl">How to Design Better UI</p>
             <div className="flex  items-center gap-x-2">
