@@ -72,7 +72,7 @@ export default function FullNav() {
             <div className="flex items-center">
               <Image className="w-10 " src={ape} alt="" />
               <p className="italic font-bold text-2xl md:text-3xl 2xl:text-4xl ">
-                HYPER MARKET
+                Hyper Market
               </p>
             </div>
           </Link>
@@ -136,12 +136,12 @@ export default function FullNav() {
               isOpen={isOpen}
               setIsOpen={setIsOpen}
             />
-            <NavLink
+            {/* <NavLink
               href="/borrow"
               text="Ape Bank"
               isOpen={isOpen}
               setIsOpen={setIsOpen}
-            />
+            /> */}
             {/* <NavLink
               href="/earnmore"
               text="Earn More"
@@ -309,23 +309,46 @@ const itemVariants = {
 
 const NavItems = () => {
   const [activeTooltip, setActiveTooltip] = useState<number | null>(null);
-  const menuItems: MenuItem[] = [
-    { text: "Shop now", tooltip: "Buy discounts!", href: "/liquidation" },
-    { text: "Ape Bank", tooltip: "Get cash now!", href: "/borrow" },
-    {
-      text: "Earn",
-      tooltip: "Earn rewards and incentives!",
-      href: "/earnmore",
-    },
+  // const menuItems: MenuItem[] = [
+  //   { text: "Shop now", tooltip: "Buy discounts!", href: "/liquidation" },
+  //   { text: "Ape Bank", tooltip: "Get cash now!", href: "/borrow" },
+  //   {
+  //     text: "Earn",
+  //     tooltip: "Earn rewards and incentives!",
+  //     href: "/earnmore",
+  //   },
 
-    { text: "Portfolio", tooltip: "Check your portfolio!", href: "/portfolio" },
+  //   { text: "Portfolio", tooltip: "Check your portfolio!", href: "/portfolio" },
+  //   {
+  //     text: "Achievements",
+  //     tooltip: "View your accomplishments",
+  //     href: "/achievements",
+  //   },
+  // ];
+  const menuItems: MenuItem[] = [
     {
-      text: "Achievements",
-      tooltip: "View your accomplishments",
-      href: "/achievements",
+      text: "Explore",
+      tooltip: "Explore wide range of digital products!",
+      href: "/",
+    },
+    { text: "Sell", tooltip: "Become a seller!", href: "/" },
+    // {
+    //   text: "Earn",
+    //   tooltip: "Earn rewards and incentives!",
+    //   href: "/",
+    // },
+
+    {
+      text: "Affiliate Program",
+      tooltip: "Become affiliate, get incentivized!",
+      href: "/",
+    },
+    {
+      text: "Coming Soon",
+      tooltip: "Dropping some cool features, stay tuned!",
+      href: "/",
     },
   ];
-
   const pathname = usePathname();
   // console.log(pathname);
   return (
@@ -368,7 +391,7 @@ const NavItems = () => {
             )}
           </li>
         </Link>
-        {/* <Link href={menuItems[2].href} key={2}>
+        <Link href={menuItems[2].href} key={2}>
           <li
             key={2}
             className={pathname == "/earnmore" ? isActive : isInactive}
@@ -383,7 +406,7 @@ const NavItems = () => {
               </div>
             )}
           </li>
-        </Link> */}
+        </Link>
         <Link href={menuItems[3].href} key={3}>
           <li
             key={3}
@@ -400,7 +423,7 @@ const NavItems = () => {
             )}
           </li>
         </Link>
-        <Link href={menuItems[4].href} key={4}>
+        {/* <Link href={menuItems[4].href} key={4}>
           <li
             key={4}
             className={pathname == "/achievements" ? isActive : isInactive}
@@ -415,7 +438,7 @@ const NavItems = () => {
               </div>
             )}
           </li>
-        </Link>
+        </Link> */}
       </ul>
     </div>
   );

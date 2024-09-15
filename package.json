@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "postinstall": "prisma generate",
     "start": "next start",
     "lint": "next lint"
   },
@@ -16,6 +17,7 @@
     "@cosmjs/stargate": "^0.32.4",
     "@cosmos-kit/keplr": "^2.12.2",
     "@keplr-wallet/types": "^0.12.127",
+    "@prisma/client": "5.19.1",
     "@radix-ui/react-slider": "^1.2.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@tippyjs/react": "^4.2.6",
@@ -49,6 +51,7 @@
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.4",
     "postcss": "^8.4.47",
+    "prisma": "^5.19.1",
     "tailwindcss": "^3.4.11",
     "typescript": "^5.6.2"
   }
