@@ -72,7 +72,7 @@ export default function FullNav() {
             <div className="flex items-center">
               <Image className="w-10 " src={ape} alt="" />
               <p className="italic font-bold text-2xl md:text-3xl 2xl:text-4xl ">
-                Hyper Market
+                SENDIT
               </p>
             </div>
           </Link>
@@ -357,12 +357,7 @@ const NavItems = () => {
         <Link href={menuItems[0].href} key={0}>
           <li
             key={0}
-            className={
-              pathname == "/liquidation" ||
-              pathname.includes("/liquidation/coinpage")
-                ? isActive
-                : isInactive
-            }
+            className={pathname == "/" ? isActive : isInactive}
             onMouseEnter={() => setActiveTooltip(0)}
             onMouseLeave={() => setActiveTooltip(null)}
           >
