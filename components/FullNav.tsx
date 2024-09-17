@@ -569,7 +569,7 @@ const ConnectWithWallet = () => {
 
 const BecomeSeller = () => {
   return (
-    <Link href="/product/add" className=" w-fit hidden sm:flex">
+    <Link href="/seller/dashboard" className=" w-fit hidden sm:flex">
       <Button className="rounded-lg bg-[#223d40] w-fit md:text-[12px] text-[11px] lg:text-[14px] xl:text-[16px]  hover:bg-[#626263] transition-all duration-300">
         Become a Seller
       </Button>
