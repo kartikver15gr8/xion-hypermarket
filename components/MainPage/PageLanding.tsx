@@ -5,11 +5,19 @@ import randomstatic from "@/public/randomstatic.png";
 import shinebg from "@/public/_static/background/shinegradient.png";
 import chattip from "@/public/_static/illustrations/chattip.svg";
 import senditcoin from "@/public/coins/senditcoin.png";
+import homebanner from "@/public/_static/background/homebanner.png";
 
 export default function PageLanding() {
   return (
-    <div className="pt-16 relative flex justify-center h-[500px] md:h-[570px] lg:h-[600px] xl:h-[620px] bg-slate-400 border-black overflow-hidden">
+    <div className="pt-16 relative flex justify-center h-[500px] md:h-[570px] lg:h-[600px] border-black overflow-hidden">
       <Image
+        src={homebanner}
+        alt="Background"
+        layout="fill"
+        objectFit="cover"
+        className=""
+      />
+      {/* <Image
         src={randomstatic}
         alt="Background"
         layout="fill"
@@ -42,7 +50,7 @@ export default function PageLanding() {
         src={senditcoin}
         alt="Background"
         className="hidden md:flex opacity-[20%] bg-blend-difference absolute w-[130px] rotate-[-56deg] top-[80px] right-[100px]"
-      />
+      /> */}
 
       <div className="w-full flex flex-col justify-center items-center z-10">
         <div className="flex flex-col items-center text-white ">

@@ -14,7 +14,7 @@ export default function Home() {
   return (
     <div className="">
       <PageLanding />
-      <FinalBidsLabel />
+      {/* <FinalBidsLabel /> */}
       <ProductExhibition />
     </div>
   );
