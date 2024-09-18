@@ -1,20 +1,47 @@
 "use client";
 import BorrowUSDCBannerBtn from "@/components/BorrowUSDCBannerBtn";
-import Image from "next/image";
-import React from "react";
+import Image, { StaticImageData } from "next/image";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import kody from "@/public/kody.svg";
 import noisebg from "@/public/_static/background/noisebg.png";
 import { Button } from "@/components/ui/button";
 import kind from "@/public/kind.svg";
-import designuxone from "@/public/designuxone.svg";
-import designuxtwo from "@/public/designuxtwo.svg";
-import designuxthree from "@/public/designuxthree.svg";
-import designuxfour from "@/public/designuxfour.svg";
+import Trending_AI_UX_Patterns from "@/public/designuxone.svg";
+import Design_System_UI_Kit_for_Figma from "@/public/designuxtwo.svg";
+import Warp_Tools_for_Figma from "@/public/designuxthree.svg";
+import How_to_Design_Better_UI from "@/public/designuxfour.svg";
 import designfive from "@/public/designproductfive.svg";
+import Telegram_Insiders_Group from "@/public/telegraminsider.svg";
+import MEV_Bots from "@/public/mevbots.svg";
+import Rain_Drops_Simulator from "@/public/raindropapeicon.svg";
+import TOP_100_VCs_LIST from "@/public/hotproductone.svg";
 
 export default function Product({ params }: any) {
   const [product, setProduct] = useState(params.product);
+  const [bannerImg, setBannerImg] = useState<StaticImageData | string>(
+    TOP_100_VCs_LIST
+  );
+
+  useEffect(() => {
+    if (product == "Telegram_Insiders_Group") {
+      setBannerImg(Telegram_Insiders_Group);
+    } else if (product == "MEV_Bots") {
+      setBannerImg(MEV_Bots);
+    } else if (product == "Rain_Drops_Simulator") {
+      setBannerImg(Rain_Drops_Simulator);
+    } else if (product == "TOP_100_VCs_LIST") {
+      setBannerImg(TOP_100_VCs_LIST);
+    } else if (product == "How_to_Design_Better_UI") {
+      setBannerImg(How_to_Design_Better_UI);
+    } else if (product == "Warp_Tools_for_Figma") {
+      setBannerImg(Warp_Tools_for_Figma);
+    } else if (product == "Design_System_UI_Kit_for_Figma") {
+      setBannerImg(Design_System_UI_Kit_for_Figma);
+    } else if (product == "Trending_AI-UX_Patterns") {
+      setBannerImg(Trending_AI_UX_Patterns);
+    }
+  }, [product]);
   console.log(product);
   return (
     <div className="border pt-16 w-full h-[100vh] overflow-y-auto hide-scrollbar px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[100px]">
@@ -73,12 +100,12 @@ export default function Product({ params }: any) {
       {/* Main Product */}
       <div className="grid grid-cols-10 h-[550px] mt-10  gap-x-4">
         <div className=" overflow-hidden col-span-6 border rounded-xl ">
-          <Image src={designfive} className="w-full h-full" alt="product" />
+          <Image src={bannerImg} className="w-full h-full" alt="product" />
         </div>
         <div className="flex flex-col col-span-4  rounded-xl">
           <BorrowUSDCBannerBtn />
           <div className="flex items-center mt-4 justify-between">
-            <p className="font-bold text-xl">How to Design Better UI</p>
+            <p className="font-bold text-xl">{product.split("_").join(" ")}</p>
             <div className="flex  items-center gap-x-2">
               <Image src={kody} className="w-5 h-5 rounded-full" alt="" />
               <p>Kody | LP Labs</p>

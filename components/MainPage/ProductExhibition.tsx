@@ -61,75 +61,161 @@ import locket from "@/public/_static/illustrations/locketr.png";
 import ecom from "@/public/_static/illustrations/ecom.png";
 import shopify from "@/public/_static/illustrations/shopifyprod.png";
 import ball from "@/public/ball.png";
+import shopifyicon from "@/public/icon/shopifyicon.png";
+
+import globe from "@/public/_static/background/globe.png";
+import puzzle from "@/public/_static/background/puzzle.png";
+import puzzletwo from "@/public/_static/background/puzzletwo.png";
+import fidget from "@/public/_static/background/fidget.png";
+import layers from "@/public/_static/background/layer.png";
+import speaker from "@/public/_static/background/speaker.png";
+import bannerbgtwo from "@/public/_static/background/bannerbgtwo.png";
+
+// marquee icons
+import ecommicon from "@/public/marqueeicons/ecomautomation.png";
+import aibook from "@/public/marqueeicons/aibook.png";
+import ecomseomastery from "@/public/marqueeicons/ecomseomastery.png";
+import finbook from "@/public/marqueeicons/finbook.png";
+import psone from "@/public/marqueeicons/psone.png";
+import tradinguide from "@/public/marqueeicons/tradingguide.png";
+import truclassic from "@/public/marqueeicons/truclassic.png";
+import socialmanager from "@/public/marqueeicons/socialmediamanager.png";
+import billingmanager from "@/public/marqueeicons/billingmanager.png";
+import lowpoly from "@/public/marqueeicons/lowpolygameassets.png";
+import logodesignicon from "@/public/marqueeicons/logodesign.png";
+import markettooling from "@/public/marqueeicons/markettool.png";
 
 const reviews = [
   {
-    coin: "NTRN",
-    name: "Neutron",
-    imgURL: neutron,
+    name: "Ecommerce Sales Boosting",
+    imgURL: ecommicon,
     redirectHref: "neutron",
   },
   {
-    coin: "ATOM",
-    name: "Atom",
-    imgURL: atom,
+    name: "AI Content Generator",
+    imgURL: aibook,
     redirectHref: "atom",
   },
   {
-    coin: "OSMO",
-    name: "Osmosis",
-    imgURL: osmosis,
-    redirectHref: "osmosis",
-  },
-  {
-    coin: "SOL",
-    name: "Solana",
-    imgURL: solana,
+    name: "UI Kits",
+    imgURL: finbook,
     redirectHref: "solana",
   },
   {
-    coin: "TIA",
-    name: "Celestia",
-    imgURL: celestia,
+    name: "Social Media Automation Tools",
+    imgURL: psone,
     redirectHref: "celestia",
   },
   {
-    coin: "BTC",
-    name: "Bitcoin",
-    imgURL: bitcoin,
+    name: "SEO Optimization",
+    imgURL: ecomseomastery,
     redirectHref: "bitcoin",
   },
   {
-    coin: "INJ",
-    name: "Injective",
-    imgURL: injective,
+    name: "Crypto Trading Bots",
+    imgURL: tradinguide,
     redirectHref: "injective",
   },
   {
-    coin: "ETH",
-    name: "Ethereum",
-    imgURL: ethereum,
+    name: "E-Commerce Store Templates",
+    imgURL: truclassic,
     redirectHref: "ethereum",
   },
   {
-    coin: "USDC",
-    name: "USDC",
-    imgURL: usdccoin,
-    redirectHref: "usdc",
+    name: "Social Media Manager",
+    imgURL: socialmanager,
+    redirectHref: "ethereum",
   },
   {
-    coin: "AKT",
-    name: "Akash",
-    imgURL: akash,
-    redirectHref: "akash",
+    name: "Billing Manager",
+    imgURL: billingmanager,
+    redirectHref: "ethereum",
   },
   {
-    coin: "DYDX",
-    name: "ETHDYDX",
-    imgURL: dydx,
-    redirectHref: "ethdydx",
+    name: "Market Analytics",
+    imgURL: markettooling,
+    redirectHref: "ethereum",
+  },
+  {
+    name: "Low Poly Game Assets",
+    imgURL: lowpoly,
+    redirectHref: "ethereum",
+  },
+  {
+    name: "Logo Design",
+    imgURL: logodesignicon,
+    redirectHref: "ethereum",
   },
 ];
+
+// const reviews = [
+//   {
+//     coin: "NTRN",
+//     name: "Neutron",
+//     imgURL: neutron,
+//     redirectHref: "neutron",
+//   },
+//   {
+//     coin: "ATOM",
+//     name: "Atom",
+//     imgURL: atom,
+//     redirectHref: "atom",
+//   },
+//   {
+//     coin: "OSMO",
+//     name: "Osmosis",
+//     imgURL: osmosis,
+//     redirectHref: "osmosis",
+//   },
+//   {
+//     coin: "SOL",
+//     name: "Solana",
+//     imgURL: solana,
+//     redirectHref: "solana",
+//   },
+//   {
+//     coin: "TIA",
+//     name: "Celestia",
+//     imgURL: celestia,
+//     redirectHref: "celestia",
+//   },
+//   {
+//     coin: "BTC",
+//     name: "Bitcoin",
+//     imgURL: bitcoin,
+//     redirectHref: "bitcoin",
+//   },
+//   {
+//     coin: "INJ",
+//     name: "Injective",
+//     imgURL: injective,
+//     redirectHref: "injective",
+//   },
+//   {
+//     coin: "ETH",
+//     name: "Ethereum",
+//     imgURL: ethereum,
+//     redirectHref: "ethereum",
+//   },
+//   {
+//     coin: "USDC",
+//     name: "USDC",
+//     imgURL: usdccoin,
+//     redirectHref: "usdc",
+//   },
+//   {
+//     coin: "AKT",
+//     name: "Akash",
+//     imgURL: akash,
+//     redirectHref: "akash",
+//   },
+//   {
+//     coin: "DYDX",
+//     name: "ETHDYDX",
+//     imgURL: dydx,
+//     redirectHref: "ethdydx",
+//   },
+// ];
 
 export default function ProductExhibition() {
   return (
@@ -300,7 +386,7 @@ const Category = () => {
           See all
         </Button>
       </div>
-      <div className="grid grid-cols-2 gap-x-2 md:gap-x-4 gap-y-2 md:gap-y-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-x-2 md:gap-x-4 gap-y-2 md:gap-y-4">
         {/* <CategoryCard
           bg={bitlock}
           categoryName="Discount Tokens"
@@ -308,16 +394,40 @@ const Category = () => {
           bgClass="opacity-[41%] bg-blend-luminosity absolute w-[190px] h-[170px] rotate-[-19deg] -bottom-[70px] -right-2 "
         /> */}
         <CategoryCard
-          bg={cube}
-          categoryName="Profit Hunters"
-          description="Exclusive trading and profit scalping groups"
-          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[430px] h-[300px] -bottom-[135px] -right-[90px]"
+          bg={globe}
+          categoryName="How To Guides"
+          description="Step-by-step guides for easy learning"
+          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[250px] -bottom-[85px] -right-[40px]  "
         />
         <CategoryCard
-          bg={ball}
-          categoryName="Discount Bonds"
-          description="Explore the Bond Market"
-          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[310px] h-[290px] rotate-[-18deg] -bottom-[140px] -right-10"
+          bg={layers}
+          categoryName="SaaS Apps"
+          description="Cloud solutions to power your business"
+          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[270px] -right-[40px] -bottom-[40px]"
+        />
+        <CategoryCard
+          bg={speaker}
+          categoryName="Marketing Tools"
+          description="Boost your reach with powerful tools"
+          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[300px] top-[10px] -right-[90px]"
+        />
+        <CategoryCard
+          bg={fidget}
+          categoryName="Bots"
+          description="Automated solutions for seamless workflows"
+          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[330px] top-[30px] -right-[60px]"
+        />
+        <CategoryCard
+          bg={puzzle}
+          categoryName="Game Assets"
+          description="Creative assets for immersive games"
+          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[310px] top-[10px] -right-[50px]"
+        />
+        <CategoryCard
+          bg={puzzletwo}
+          categoryName="Design Templates"
+          description="Customizable templates for any project"
+          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[290px] -right-[60px] top-[10px]"
         />
         {/* <CategoryCard
           bg={block}
@@ -342,11 +452,30 @@ const CategoryCard = ({
   bgClass: string;
 }) => {
   return (
-    <div className="relative flex flex-col h-32 xl:h-44 2xl:48 border border-[#E5E5E5] rounded-xl xl:rounded-2xl overflow-hidden shadow-[inset_-70px_-50px_60px_rgba(0,0,0,0.08)]  hover:bg-[#dbdbdb] transition-all duration-300">
+    <div className=" p-3 md:p-4 lg:p-5 relative flex justify-center flex-col h-32 xl:h-44 2xl:h-48 border border-[#E5E5E5] rounded-xl xl:rounded-2xl overflow-hidden shadow-[inset_-70px_-50px_60px_rgba(0,0,0,0.08)]  hover:bg-[#dbdbdb] transition-all duration-300">
       <Image src={bg} alt="Background" className={`${bgClass}`} />
-      <div className="absolute bottom-5 left-4">
-        <p className="text-lg font-medium">{categoryName}</p>
-        <p className="text-xs ">{description}</p>
+      <div className="">
+        <div className="">
+          <p className="text-[16px] md:text-lg lg:text-xl font-medium">
+            {categoryName}
+          </p>
+          <p className="text-[10px] text-[#7c7d7d] md:text-xs md:mt-2">
+            {description}
+          </p>
+        </div>
+        <div className="flex items-center gap-x-1 sm:gap-x-2 md:gap-x-3 mt-2 sm:mt-4 md:mt-8 lg:mt-10">
+          <p className="text-sm md:text-[15px]">Explore</p>
+          <svg
+            className="w-4"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 1024 1024"
+          >
+            <path
+              fill="black"
+              d="M754.752 480H160a32 32 0 1 0 0 64h594.752L521.344 777.344a32 32 0 0 0 45.312 45.312l288-288a32 32 0 0 0 0-45.312l-288-288a32 32 0 1 0-45.312 45.312z"
+            />
+          </svg>
+        </div>
       </div>
     </div>
   );
@@ -367,7 +496,7 @@ const DappCard = () => {
       /> */}
 
       <Image
-        src={apesbanner}
+        src={bannerbgtwo}
         alt="Background"
         className=""
         layout="fill"
@@ -593,13 +722,11 @@ const secondRow = reviews.slice(reviews.length / 2);
 const ReviewCard = ({
   imgUrl,
   name,
-  coin,
   redirectHref,
 }: // body,
 {
   imgUrl: string | StaticImageData;
   name: string;
-  coin: string;
   redirectHref: string;
   // body: string;
 }) => {
@@ -617,7 +744,7 @@ const ReviewCard = ({
         <div className=" flex items-center h-16 lg:h-20 justify-center gap-x-2">
           <div className="bg-white border border-[#c3c3c6] flex items-center justify-center rounded-lg w-16 h-16 lg:w-20  lg:h-20 ">
             <Image
-              className="w-[88%] z-10 "
+              className="w-[100%] rounded-md z-10 "
               width={500}
               height={500}
               alt=""
@@ -626,10 +753,10 @@ const ReviewCard = ({
           </div>
           <div className="flex flex-col  w-24">
             <div className="flex flex-col  w-full">
-              <figcaption className="text-lg font-medium dark:text-white">
+              {/* <figcaption className="text-lg font-medium dark:text-white">
                 {coin}
-              </figcaption>
-              <p className="text-xs text-[#999898] font-medium dark:text-white/40">
+              </figcaption> */}
+              <p className="text-xs text-black font-medium dark:text-white/40">
                 {name}
               </p>
             </div>
@@ -637,7 +764,7 @@ const ReviewCard = ({
               href={`/liquidation/coinpage/${redirectHref}`}
               className="mt-2 font-teachers flex items-center gap-x-1 text-[12px] sm:text-[14px] md:text-[14px] xl:text-[14px]"
             >
-              <button className="">Bid</button>
+              <button className="">Buy</button>
               <svg
                 width="10"
                 height="7"
@@ -850,7 +977,7 @@ const DontMissBanner = () => {
             width={200}
             height={200}
           />
-          <p className="">Digital market place</p>
+          <p className="">Digital Marketplace</p>
         </div>
         <p className="text-4xl font-medium mt-1">Don&apos;t miss out</p>
         <Button className="text-md mt-5 hover:bg-blue-500 transition-all duration-200">
@@ -897,7 +1024,7 @@ const HotDigitalProducts = () => {
       </div>
       <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3 lg:gap-y-0 h-full mt-5">
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/TOP_100_VCs_LIST"
           img={hotproductone}
           category="Digital Product"
           productName="TOP 100 VCs LIST"
@@ -905,7 +1032,7 @@ const HotDigitalProducts = () => {
           price="$150 one time payment"
         />
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/MEV_Bots"
           img={mevbot}
           category="Digital Product"
           productName="MEV Bots"
@@ -913,7 +1040,7 @@ const HotDigitalProducts = () => {
           price="$150 per month"
         />
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/Telegram_Insiders_Group"
           img={telegraminsider}
           category="Digital Product"
           productName="Telegram Insiders Group"
@@ -921,7 +1048,7 @@ const HotDigitalProducts = () => {
           price="$49 one time payment"
         />
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/Rain_Drops_Simulator"
           img={raindropape}
           category="Digital Product"
           productName="Rain Drops Simulator"
@@ -1245,7 +1372,7 @@ const DesignUIUX = () => {
 
       <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-x-2 gap-y-2 md:gap-y-0 xl:gap-x-3">
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/Trending_AI-UX_Patterns"
           img={designuxone}
           category="Digital Product"
           productName="Trending AI-UX Patterns"
@@ -1253,7 +1380,7 @@ const DesignUIUX = () => {
           price="$150 one time payment"
         />
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/Design_System_UI_Kit_for_Figma"
           img={designuxtwo}
           category="Digital Product"
           productName="Design System UI Kit for Figma"
@@ -1261,7 +1388,7 @@ const DesignUIUX = () => {
           price="$150 per month"
         />
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/Warp_Tools_for_Figma"
           img={designuxthree}
           category="Digital Product"
           productName="Warp Tools for Figma"
@@ -1269,7 +1396,7 @@ const DesignUIUX = () => {
           price="$49 one time payment"
         />
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/How_to_Design_Better_UI"
           img={designuxfour}
           category="Digital Product"
           productName="How to Design Better UI"

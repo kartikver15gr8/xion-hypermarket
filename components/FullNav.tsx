@@ -108,7 +108,10 @@ export default function FullNav() {
         {/* Will render PortfolioButton and Signin/Register button according to the userstate */}
 
         {/* <ConnectButton toggleWindow={toggleWalletConnect} /> */}
-        <ConnectWithWallet />
+        <div className="flex items-center gap-x-1">
+          <BecomeSeller />
+          <ConnectWithWallet />
+        </div>
 
         {/* Below is the Ape icon for phone screen UI */}
         <Image
@@ -131,8 +134,8 @@ export default function FullNav() {
         >
           <div className="text-black font-medium  flex flex-col shadow-[inset_5px_2px_30px_rgba(0,0,0,0.1)]">
             <NavLink
-              href="/liquidation"
-              text="Shop Now"
+              href="/"
+              text="Explore"
               isOpen={isOpen}
               setIsOpen={setIsOpen}
             />
@@ -149,14 +152,14 @@ export default function FullNav() {
               setIsOpen={setIsOpen}
             /> */}
             <NavLink
-              href="/lend"
-              text="Deposit/Lend"
+              href="/"
+              text="Affiliate Program"
               isOpen={isOpen}
               setIsOpen={setIsOpen}
             />
             <NavLink
-              href="/achievements"
-              text="Achievements"
+              href="/"
+              text="Coming Soon!"
               isOpen={isOpen}
               setIsOpen={setIsOpen}
             />
@@ -165,7 +168,7 @@ export default function FullNav() {
               variants={itemVariants}
             >
               <Link
-                href="/portfolio"
+                href="/"
                 className="flex px-[16px] w-5/6 items-center rounded-l-[4px] h-full "
                 onClick={() => {
                   setIsOpen(!isOpen);
@@ -179,17 +182,17 @@ export default function FullNav() {
                   alt="image"
                 />
                 <div className="flex flex-col mx-[8px]">
-                  <p className="text-[18px] font-medium">Portfolio</p>
-                  <p className="text-[12px] text-[#949493]">
+                  <p className="text-[18px] font-medium">Start Selling</p>
+                  {/* <p className="text-[12px] text-[#949493]">
                     {walletAddress
                       ? `${walletAddress.slice(0, 6)}...${walletAddress.slice(
                           -5
                         )}`
                       : "sendit...vucmr"}
-                  </p>
+                  </p> */}
                 </div>
               </Link>
-              <div
+              {/* <div
                 onClick={copyToClipboard}
                 className="w-1/6 flex justify-center items-center h-full  relative bg-no-repeat bg-center"
               >
@@ -233,7 +236,7 @@ export default function FullNav() {
                     d="m383.5 128l.5-24a56.16 56.16 0 0 0-56-56H112a64.19 64.19 0 0 0-64 64v216a56.16 56.16 0 0 0 56 56h24"
                   />
                 </svg>
-              </div>
+              </div> */}
             </motion.div>
           </div>
         </motion.div>
@@ -331,7 +334,7 @@ const NavItems = () => {
       tooltip: "Explore wide range of digital products!",
       href: "/",
     },
-    { text: "Sell", tooltip: "Become a seller!", href: "/" },
+    // { text: "Sell", tooltip: "Become a seller!", href: "/" },
     // {
     //   text: "Earn",
     //   tooltip: "Earn rewards and incentives!",
@@ -402,7 +405,7 @@ const NavItems = () => {
             )}
           </li>
         </Link>
-        <Link href={menuItems[3].href} key={3}>
+        {/* <Link href={menuItems[3].href} key={3}>
           <li
             key={3}
             className={pathname == "/portfolio" ? isActive : isInactive}
@@ -417,7 +420,7 @@ const NavItems = () => {
               </div>
             )}
           </li>
-        </Link>
+        </Link> */}
         {/* <Link href={menuItems[4].href} key={4}>
           <li
             key={4}
@@ -555,11 +558,21 @@ const ConnectWithWallet = () => {
       {keplrConnected && <PortfolioButton />}
       {!keplrConnected && (
         <div className=" w-fit hidden sm:flex" onClick={connectWallet}>
-          <Button className="rounded-full w-24 md:w-28 md:text-[12px] text-[11px] lg:w-32 lg:text-[14px] xl:text-[16px] 2xl:w-36 hover:bg-[#626263] transition-all duration-300">
+          <Button className="rounded-lg w-24 md:w-28 md:text-[12px] text-[11px] lg:w-24 lg:text-[14px] xl:text-[16px] 2xl:w-28 hover:bg-[#626263] transition-all duration-300">
             Sign In
           </Button>
         </div>
       )}
     </div>
+  );
+};
+
+const BecomeSeller = () => {
+  return (
+    <Link href="/seller/dashboard" className=" w-fit hidden sm:flex">
+      <Button className="rounded-lg bg-[#223d40] w-fit md:text-[12px] text-[11px] lg:text-[14px] xl:text-[16px]  hover:bg-[#626263] transition-all duration-300">
+        Become a Seller
+      </Button>
+    </Link>
   );
 };

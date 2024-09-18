@@ -1,6 +1,7 @@
 import Image, { StaticImageData } from "next/image";
 import ball from "@/public/ball.png";
 import matrixcube from "@/public/matrixcube.png";
+import Link from "next/link";
 
 export default function page() {
   return (
@@ -58,10 +59,13 @@ const ProductCard = ({
   examples: string;
 }) => {
   return (
-    <div className="border rounded-lg border-[#E5E5E5] bg-[#F5F5F5]  flex flex-col items-center justify-center h-[450px] hover:bg-[#e5e5e5] transition-all duration-300">
+    <Link
+      href={"/product/add/category"}
+      className="border rounded-lg border-[#E5E5E5] bg-[#F5F5F5]  flex flex-col items-center justify-center h-[450px] hover:bg-[#e5e5e5] transition-all duration-300"
+    >
       <Image className="w-24" src={img} alt="" />
       <p className="font-medium text-2xl mt-4">{title}</p>
       <p className="text-xs mt-3">{examples}</p>
-    </div>
+    </Link>
   );
 };
