@@ -1,9 +1,9 @@
-import Transactions from "@/components/Seller/Transactions";
+import Analytics from "@/components/Seller/Analytics";
 
 export default function page() {
   return (
     <div className="pt-16 w-full">
-      <Transactions />
+      <Analytics />
     </div>
   );
 }
