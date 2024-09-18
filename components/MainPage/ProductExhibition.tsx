@@ -1024,7 +1024,7 @@ const HotDigitalProducts = () => {
       </div>
       <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3 lg:gap-y-0 h-full mt-5">
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/TOP_100_VCs_LIST"
           img={hotproductone}
           category="Digital Product"
           productName="TOP 100 VCs LIST"
@@ -1032,7 +1032,7 @@ const HotDigitalProducts = () => {
           price="$150 one time payment"
         />
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/MEV_Bots"
           img={mevbot}
           category="Digital Product"
           productName="MEV Bots"
@@ -1040,7 +1040,7 @@ const HotDigitalProducts = () => {
           price="$150 per month"
         />
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/Telegram_Insiders_Group"
           img={telegraminsider}
           category="Digital Product"
           productName="Telegram Insiders Group"
@@ -1048,7 +1048,7 @@ const HotDigitalProducts = () => {
           price="$49 one time payment"
         />
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/Rain_Drops_Simulator"
           img={raindropape}
           category="Digital Product"
           productName="Rain Drops Simulator"
@@ -1372,7 +1372,7 @@ const DesignUIUX = () => {
 
       <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-x-2 gap-y-2 md:gap-y-0 xl:gap-x-3">
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/Trending_AI-UX_Patterns"
           img={designuxone}
           category="Digital Product"
           productName="Trending AI-UX Patterns"
@@ -1380,7 +1380,7 @@ const DesignUIUX = () => {
           price="$150 one time payment"
         />
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/Design_System_UI_Kit_for_Figma"
           img={designuxtwo}
           category="Digital Product"
           productName="Design System UI Kit for Figma"
@@ -1388,7 +1388,7 @@ const DesignUIUX = () => {
           price="$150 per month"
         />
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/Warp_Tools_for_Figma"
           img={designuxthree}
           category="Digital Product"
           productName="Warp Tools for Figma"
@@ -1396,7 +1396,7 @@ const DesignUIUX = () => {
           price="$49 one time payment"
         />
         <HotProductCard
-          redirectHref="/product/uidesign"
+          redirectHref="/product/How_to_Design_Better_UI"
           img={designuxfour}
           category="Digital Product"
           productName="How to Design Better UI"
