@@ -249,7 +249,7 @@ const CurrentRank = () => {
   );
 };
 
-const Sales = () => {
+export const Sales = () => {
   return (
     <div className="mt-6 border rounded-2xl p-5 h-80 bg-white">
       <div className=" flex items-center gap-x-1">
@@ -375,7 +375,7 @@ const Sales = () => {
   );
 };
 
-const SalesLabel = ({
+export const SalesLabel = ({
   date,
   productName,
   buyer,

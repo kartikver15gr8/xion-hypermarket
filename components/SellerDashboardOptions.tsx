@@ -100,9 +100,15 @@ export default function SellerDashboardOptions({
                 <p className=" ">Products</p>
               </li>
             </Link>
-            <Link href="/">
-              <li className={pathname == "/" ? isActiveTab : isInactiveTab}>
-                <p className=" ">Sales</p>
+            <Link href="/seller/transactions">
+              <li
+                className={
+                  pathname == "/seller/transactions"
+                    ? isActiveTab
+                    : isInactiveTab
+                }
+              >
+                <p className=" ">Transactions</p>
               </li>
             </Link>
             <Link href="/">
