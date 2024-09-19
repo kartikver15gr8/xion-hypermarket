@@ -11,6 +11,7 @@ import { SalesLabel } from "../SellerDashboard";
 import { toast } from "sonner";
 import cartIcon from "@/public/svgIcons/cart.svg";
 import eyeIcon from "@/public/svgIcons/eye.svg";
+import ResponsiveLinearChart from "../ResponsiveLinearChart";
 
 export default function Analytics() {
   return (
@@ -291,7 +292,7 @@ export const AffiliateLabel = ({
 export const GraphWindow = () => {
   return (
     <div className="border rounded-xl h-72 bg-white p-4 grid grid-cols-12">
-      <div className="col-span-5 flex flex-col justify-between">
+      <div className="col-span-4 flex flex-col justify-between">
         <div className="flex items-center gap-x-1">
           <p className="text-[13px]">TOTAL SALES</p>
           <svg
@@ -326,9 +327,29 @@ export const GraphWindow = () => {
         </div>
       </div>
 
-      <div className="col-span-7 flex items-center justify-center border h-full rounded-xl">
-        <p className="text-2xl">You&apos;ll see the Analytics Soon!</p>
-        {/* <ResponsiveLinearChart /> */}
+      <div className="col-span-8 flex items-center justify-center h-full flex-col">
+        <div className="mb-2 flex items-center gap-x-4 w-full justify-end ">
+          <p className="text-[#8B8B92] text-[13px]">View</p>
+          <div className="border h-8 w-16 rounded-md flex items-center justify-center gap-x-1 hover:bg-[#e2e2e4] transition-all duration-300">
+            <p>YTD</p>
+            <svg
+              width="12"
+              height="6"
+              viewBox="0 0 12 6"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.5 0.75L6 5.25L10.5 0.75"
+                stroke="#4B4B54"
+                strokeWidth="1.35"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+        <ResponsiveLinearChart />
       </div>
     </div>
   );
