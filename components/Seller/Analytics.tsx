@@ -1,5 +1,5 @@
 "use client";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import hex from "@/public/hex.svg";
 import randomstatic from "@/public/randomstatic.png";
 import circlemedal from "@/public/circlemedal.svg";
@@ -9,10 +9,12 @@ import { useState } from "react";
 import usdccoin from "@/public/_static/coinIcons/usdc.png";
 import { SalesLabel } from "../SellerDashboard";
 import { toast } from "sonner";
+import cartIcon from "@/public/svgIcons/cart.svg";
+import eyeIcon from "@/public/svgIcons/eye.svg";
 
 export default function Analytics() {
   return (
-    <div className="w-[100%] pb-20 relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth">
+    <div className="w-[100%] pb-10 relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth">
       <AnalyticsTopLabel />
       <div className="px-20 pt-8">
         <div className="">
@@ -21,10 +23,180 @@ export default function Analytics() {
         </div>
         <GraphWindow />
         <Affiliates />
+        <TopProductSold />
       </div>
     </div>
   );
 }
+
+export const TopProductSold = () => {
+  return (
+    <div className="rounded-xl border h-80 p-4 bg-white mt-6 grid grid-cols-2 gap-x-8">
+      <div className="">
+        <p className="text-[13px]">TOP PRODUCTS SOLD</p>
+        <div className="mt-4  h-64 relative overflow-y-auto hide-scrollbar scroll-smooth">
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            sold={true}
+            unitsSold="15 units"
+          />
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            sold={true}
+            unitsSold="15 units"
+          />
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            sold={true}
+            unitsSold="15 units"
+          />
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            sold={true}
+            unitsSold="15 units"
+          />
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            sold={true}
+            unitsSold="15 units"
+          />
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            sold={true}
+            unitsSold="15 units"
+          />
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            sold={true}
+            unitsSold="15 units"
+          />
+        </div>
+      </div>
+      <div className="">
+        <p className="text-[13px]">TOP PRODUCTS VIEWED</p>
+        <div className="mt-4 h-64 relative overflow-y-auto hide-scrollbar scroll-smooth">
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            view={true}
+            productViews="200"
+          />
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            view={true}
+            productViews="200"
+          />
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            view={true}
+            productViews="200"
+          />
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            view={true}
+            productViews="200"
+          />
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            view={true}
+            productViews="200"
+          />
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            view={true}
+            productViews="200"
+          />
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            view={true}
+            productViews="200"
+          />
+          <ProductViewCard
+            productImage={logodesign}
+            title="Professional Video Editing"
+            category="Digital Service"
+            view={true}
+            productViews="200"
+          />
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export const ProductViewCard = ({
+  productImage,
+  title,
+  category,
+  sold,
+  view,
+  unitsSold,
+  productViews,
+}: {
+  productImage: StaticImageData | string;
+  title: string;
+  category: string;
+  sold?: boolean;
+  view?: boolean;
+  unitsSold?: string;
+  productViews?: string;
+}) => {
+  return (
+    <div className="flex justify-between p-2 rounded-lg">
+      <div className="flex items-center gap-x-2">
+        <Image className="w-14 h-14 rounded" src={productImage} alt="" />
+        <div className="">
+          <p className="text-[15px] font-medium">{title}</p>
+          <p className="text-[12px]">{category}</p>
+        </div>
+      </div>
+      {sold ? (
+        <div className="">
+          <div className="flex items-center gap-x-1">
+            <Image className="w-3" src={cartIcon} alt="" />
+            <p className="text-[14px]">Sold</p>
+          </div>
+          <p className="text-[13px]">{unitsSold}</p>
+        </div>
+      ) : (
+        <div className="">
+          <div className="flex items-center gap-x-1">
+            <Image className="w-3" src={eyeIcon} alt="" />
+            <p className="text-[14px]">Views</p>
+          </div>
+          <p className="text-[13px]">{productViews}</p>
+        </div>
+      )}
+    </div>
+  );
+};
 
 export const Affiliates = () => {
   return (
