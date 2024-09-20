@@ -19,21 +19,21 @@ export default function Earnings() {
   return (
     <div className="w-[100%] pb-10 relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth">
       <EarningsTopLabel />
-      <div className="px-20 pt-8">
-        <div className="grid grid-cols-2 gap-x-8  h-96">
+      <div className="px-[20px] sm:px-[20px] md:px-[40px] lg:px-[60px] xl:px-20 pt-8">
+        <div className="grid grid-cols-2 gap-x-2 md:gap-x-4 lg:gap-x-8   h-96">
           <div className="border rounded-xl grid grid-cols-1">
             <TopCompLabel
-              className="p-4 border-b"
+              className="p-2 md:p-4 border-b"
               title="AVAILABLE BALANCE"
               amount="200"
             />
             <TopCompLabel
-              className="p-4 border-b"
+              className="p-2 md:p-4 border-b"
               title="PENDING EARNINGS"
               amount="0.00"
             />
             <TopCompLabel
-              className="p-4"
+              className="p-2 md:p-4"
               title="TOTAL EARNINGS"
               amount="25,100"
             />
@@ -161,11 +161,13 @@ const WithdrawComp = () => {
       </div>
       <div>
         <div className="px-2 mb-1 grid grid-cols-10 items-center mt-3 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
-          <p className="text-[13px] col-span-1">Date</p>
-          <p className="text-[13px] col-span-3">Amount</p>
-          <p className="text-[13px] col-span-2">Method</p>
-          <p className="text-[13px] col-span-1">Status</p>
-          <p className="text-[13px] col-span-3">Transaction ID</p>
+          <p className="text-[11px] md:text-[13px] col-span-1">Date</p>
+          <p className="text-[11px] md:text-[13px] col-span-3">Amount</p>
+          <p className="text-[11px] md:text-[13px] col-span-2">Method</p>
+          <p className="text-[11px] md:text-[13px] col-span-1">Status</p>
+          <p className="text-[11px] md:text-[13px] col-span-3">
+            Transaction ID
+          </p>
         </div>
         <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-40">
           <WithdrawlsLabel
@@ -245,20 +247,20 @@ export const WithdrawlsLabel = ({
 }) => {
   return (
     <div className="border-b px-2 grid grid-cols-10 items-center w-full h-10">
-      <p className="text-[13px] col-span-1">{date}</p>
-      <p className="text-[13px] col-span-3">{amount}</p>
-      <p className="text-[13px] col-span-2">{method}</p>
+      <p className="text-[11px] md:text-[13px] col-span-1">{date}</p>
+      <p className="text-[11px] md:text-[13px] col-span-3">{amount}</p>
+      <p className="text-[11px] md:text-[13px] col-span-2">{method}</p>
       {status == "Confirmed" ? (
-        <p className="text-[13px] col-span-1 border border-[#9DFDB0] text-[#007230] w-fit px-1 rounded-sm bg-[#DFFFE4]">
+        <p className="text-[11px] md:text-[13px] col-span-1 border border-[#9DFDB0] text-[#007230] w-fit px-1 rounded-sm bg-[#DFFFE4]">
           {status}
         </p>
       ) : (
-        <p className="text-[13px] col-span-1 border border-[#FFD3CF] text-[#9B0015] w-fit px-1 rounded-sm bg-[#FFF3F1]">
+        <p className="text-[11px] md:text-[13px] col-span-1 border border-[#FFD3CF] text-[#9B0015] w-fit px-1 rounded-sm bg-[#FFF3F1]">
           {status}
         </p>
       )}
 
-      <div className="text-[13px] col-span-3 flex items-center justify-between ">
+      <div className="text-[11px] md:text-[13px] col-span-3 flex items-center justify-between ">
         <p className="w-fit ">{tnxId}</p>
         <Image className="w-10 h-10" src={optionsSvg} alt="Options" />
       </div>
@@ -269,27 +271,27 @@ export const WithdrawlsLabel = ({
 const WithdrawCard = () => {
   return (
     <div className="border rounded-xl p-4">
-      <p className="text-[14px]">WITHDRAW</p>
+      <p className="text-xs md:text-[13px]">WITHDRAW</p>
       <div className="flex items-center justify-between border-b h-16 border-dashed border-[#c2c0c0]">
-        <p className="text-[13px]">
+        <p className="text-[11px] md:text-[13px]">
           Which crypto asset would you like to withdraw?
         </p>
         <div className="flex items-center gap-x-1 px-2 h-9 border rounded-md">
           <Image
-            className="w-5 h-5"
+            className="md:w-5 w-3 h-3 md:h-5"
             src={usdccoin}
             alt="USDC"
             width={100}
             height={100}
           />
-          <p>49 USDC</p>
+          <p className="text-[11px] md:text-[13px] lg:text-lg">49 USDC</p>
         </div>
       </div>
       <div className="mt-2">
-        <p className="text-[15px] mb-2">Select Your Wallet</p>
-        <div className="h-10 border rounded-lg flex items-center pl-3">
+        <p className="text-[11px] md:text-[13px] mb-2">Select Your Wallet</p>
+        <div className="h-8 md:h-10 border rounded-lg flex items-center pl-3">
           <input
-            className="h-full w-full outline-none rounded-r-lg"
+            className="h-full w-full outline-none rounded-r-lg text-[11px] md:text-[13px]"
             type="text"
             placeholder="senditvru...6nnp"
           />
@@ -310,33 +312,35 @@ const WithdrawCard = () => {
         </div>
       </div>
       <div className="mt-2">
-        <p className="font-medium text-[15px]">Enter Amount</p>
+        <p className="font-medium text-[11px] md:text-[13px]">Enter Amount</p>
         <div className="flex flex-col justify-between rounded-lg border bg-white h-20 p-2">
           <div className=" flex justify-between">
             <div className="flex items-center gap-x-1 w-fit">
               <input
                 type="text"
                 placeholder="20 USDC"
-                className="w-20 outline-none text-lg font-bold"
+                className="w-20 outline-none  font-bold text-[11px] md:text-[13px] lg:text-lg"
               />
               {/* <p className="font-bold text-lg">USDC</p> */}
             </div>
-            <Button className="h-8">Max</Button>
+            <Button className="h-6 md:h-8 text-[11px] md:text-[13px]">
+              Max
+            </Button>
           </div>
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-x-1">
-              <p className="text-lg">≃</p>
-              <p>$20</p>
+              <p className="text-[11px] md:text-lg">≃</p>
+              <p className="text-[12px] md:text-[14px]">$20</p>
             </div>
-            <div className="flex items-center gap-x-1">
+            <div className="flex items-center gap-x-1 text-[12px] md:text-[14px]">
               <p>Balance: </p>
               <p>20</p>
             </div>
           </div>
         </div>
       </div>
-      <div className="text-white h-14 mt-4 rounded-lg bg-[#4E6465] hover:bg-[#607779] transition-all duration-300 flex items-center justify-center gap-x-2">
-        <p>Withdraw</p>
+      <div className="text-white h-12 md:text-14 mt-4 rounded-lg bg-[#4E6465] hover:bg-[#607779] transition-all duration-300 flex items-center justify-center gap-x-2">
+        <p className="text-[12px] md:text-[14px] lg:text-lg">Withdraw</p>
         <svg
           width="12"
           height="12"
@@ -369,12 +373,12 @@ const TopCompLabel = ({
   return (
     <div className={`${className}`}>
       <div className="flex items-center gap-x-1">
-        <p className="text-[13px]">{title}</p>
+        <p className="text-xs md:text-[13px]">{title}</p>
         <Image className="" src={questionmark} alt="" />
       </div>
       <div className="flex items-center mt-2">
-        <p className="text-xl font-medium">$</p>
-        <p className="text-4xl font-medium">{amount}</p>
+        <p className="text-md sm:text-lg md:text-xl font-medium">$</p>
+        <p className="text-xl md:text-3xl lg:text-4xl font-medium">{amount}</p>
       </div>
     </div>
   );

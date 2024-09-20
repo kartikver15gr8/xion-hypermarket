@@ -17,9 +17,9 @@ export default function Analytics() {
   return (
     <div className="w-[100%] pb-10 relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth">
       <AnalyticsTopLabel />
-      <div className="px-20 pt-8">
+      <div className="px-[20px] sm:px-[20px] md:px-[40px] lg:px-[60px] xl:px-20 pt-8">
         <div className="">
-          <p>Accounts Statistics</p>
+          <p className="text-sm md:text-[15px]">Accounts Statistics</p>
           <MidSection />
         </div>
         <GraphWindow />
@@ -32,7 +32,7 @@ export default function Analytics() {
 
 export const TopProductSold = () => {
   return (
-    <div className="rounded-xl border h-80 p-4 bg-white mt-6 grid grid-cols-2 gap-x-8">
+    <div className="rounded-xl border h-80 p-2 md:p-4 bg-white mt-6 grid grid-cols-2 gap-x-8">
       <div className="">
         <p className="text-[13px]">TOP PRODUCTS SOLD</p>
         <div className="mt-4  h-64 relative overflow-y-auto hide-scrollbar scroll-smooth">
@@ -171,28 +171,34 @@ export const ProductViewCard = ({
 }) => {
   return (
     <div className="flex justify-between p-2 rounded-lg">
-      <div className="flex items-center gap-x-2">
-        <Image className="w-14 h-14 rounded" src={productImage} alt="" />
+      <div className="flex items-center gap-x-1 md:gap-x-2">
+        <Image
+          className="h-10 w-10 sm:h-12 sm:w-12 md:w-14 md:h-14 rounded"
+          src={productImage}
+          alt=""
+        />
         <div className="">
-          <p className="text-[15px] font-medium">{title}</p>
-          <p className="text-[12px]">{category}</p>
+          <p className="text-[11px] sm:text-[12px] md:text-[15px] font-medium">
+            {title}
+          </p>
+          <p className="text-[9px] md:text-[12px]">{category}</p>
         </div>
       </div>
       {sold ? (
         <div className="">
           <div className="flex items-center gap-x-1">
-            <Image className="w-3" src={cartIcon} alt="" />
-            <p className="text-[14px]">Sold</p>
+            <Image className="w-2 md:w-3" src={cartIcon} alt="" />
+            <p className="text-[11px] sm:text-[12px] md:text-[14px]">Sold</p>
           </div>
-          <p className="text-[13px]">{unitsSold}</p>
+          <p className="text-[10px] md:text-[13px]">{unitsSold}</p>
         </div>
       ) : (
         <div className="">
           <div className="flex items-center gap-x-1">
-            <Image className="w-3" src={eyeIcon} alt="" />
-            <p className="text-[14px]">Views</p>
+            <Image className="w-2 md:w-3" src={eyeIcon} alt="" />
+            <p className="text-[11px] sm:text-[12px] md:text-[14px]">Views</p>
           </div>
-          <p className="text-[13px]">{productViews}</p>
+          <p className="text-[10px] md:text-[13px]">{productViews}</p>
         </div>
       )}
     </div>
@@ -201,14 +207,14 @@ export const ProductViewCard = ({
 
 export const Affiliates = () => {
   return (
-    <div className="mt-4 p-4 border rounded-xl h-64 bg-white">
+    <div className="mt-4 p-2 md:p-4 border rounded-xl h-64 bg-white">
       <p className="text-[13px]">AFFILIATES</p>
       <div className="px-2 mb-1 grid grid-cols-5 items-center mt-3 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
-        <p className="text-[13px] col-span-1">Source</p>
-        <p className="text-[13px] col-span-1">Views</p>
-        <p className="text-[13px] col-span-1">Sales</p>
-        <p className="text-[13px] col-span-1">Conversion</p>
-        <p className="text-[13px] col-span-1">Total</p>
+        <p className="text-[11px] md:text-[13px] col-span-1">Source</p>
+        <p className="text-[11px] md:text-[13px] col-span-1">Views</p>
+        <p className="text-[11px] md:text-[13px] col-span-1">Sales</p>
+        <p className="text-[11px] md:text-[13px] col-span-1">Conversion</p>
+        <p className="text-[11px] md:text-[13px] col-span-1">Total</p>
       </div>
       <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-40">
         <AffiliateLabel
@@ -280,11 +286,11 @@ export const AffiliateLabel = ({
 }) => {
   return (
     <div className="border-b px-2 grid grid-cols-5 items-center w-full h-10">
-      <p className="text-[13px] col-span-1">{source}</p>
-      <p className="text-[13px] col-span-1">{views}</p>
-      <p className="text-[13px] col-span-1">{sales}</p>
-      <p className="text-[13px] col-span-1">{conversion}</p>
-      <p className="text-[13px] col-span-1">{total}</p>
+      <p className="text-[11px] md:text-[13px] col-span-1">{source}</p>
+      <p className="text-[11px] md:text-[13px] col-span-1">{views}</p>
+      <p className="text-[11px] md:text-[13px] col-span-1">{sales}</p>
+      <p className="text-[11px] md:text-[13px] col-span-1">{conversion}</p>
+      <p className="text-[11px] md:text-[13px] col-span-1">{total}</p>
     </div>
   );
 };
@@ -292,9 +298,9 @@ export const AffiliateLabel = ({
 export const GraphWindow = () => {
   return (
     <div className="border rounded-xl h-72 bg-white p-4 grid grid-cols-12">
-      <div className="col-span-4 flex flex-col justify-between">
+      <div className="col-span-3 sm:col-span-4 flex flex-col justify-between">
         <div className="flex items-center gap-x-1">
-          <p className="text-[13px]">TOTAL SALES</p>
+          <p className="text-xs md:text-[13px]">TOTAL SALES</p>
           <svg
             width="12"
             height="12"
@@ -314,24 +320,24 @@ export const GraphWindow = () => {
         <div className="flex flex-col gap-y-2">
           <div className="flex gap-x-1">
             <p className="font-medium flex justify-end flex-col text-2xl">$</p>
-            <p className="font-medium text-7xl">1240</p>
+            <p className="font-medium text-4xl sm:text-5xl md:text-7xl">1240</p>
           </div>
           <div className="flex items-center gap-x-2">
             <div className="relative">
               <Image className="w-8" src={circlemedal} alt="" />
             </div>
-            <p className="w-44 text-[12px] text-wrap">
+            <p className="w-44 text-[10px] sm:text-[12px] text-wrap">
               You&apos;ve reached $1500 in total sales!
             </p>
           </div>
         </div>
       </div>
 
-      <div className="col-span-8 flex items-center justify-center h-full flex-col">
+      <div className="col-span-9 sm:col-span-8 flex items-center justify-center h-full flex-col">
         <div className="mb-2 flex items-center gap-x-4 w-full justify-end ">
-          <p className="text-[#8B8B92] text-[13px]">View</p>
+          <p className="text-[#8B8B92] text-[11px] sm:text-[13px]">View</p>
           <div className="border h-8 w-16 rounded-md flex items-center justify-center gap-x-1 hover:bg-[#e2e2e4] transition-all duration-300">
-            <p>YTD</p>
+            <p className=" text-[11px] sm:text-[13px]">YTD</p>
             <svg
               width="12"
               height="6"
@@ -360,7 +366,7 @@ const MidSection = () => {
     <div className="grid grid-cols-3">
       <div className="p-4">
         <div className=" flex items-center gap-x-1">
-          <p className="text-[13px]">TOTAL UNITS SOLD</p>
+          <p className="text-xs md:text-[13px]">TOTAL UNITS SOLD</p>
           <svg
             width="12"
             height="12"
@@ -377,11 +383,11 @@ const MidSection = () => {
             />
           </svg>
         </div>
-        <p className="font-bold text-4xl my-3">50</p>
+        <p className="font-bold text-3xl md:text-4xl my-3">50</p>
       </div>
       <div className=" p-4">
         <div className=" flex items-center gap-x-1">
-          <p className="text-[13px]">AVERAGE RATINGS</p>
+          <p className="text-xs md:text-[13px]">AVERAGE RATINGS</p>
           <svg
             width="12"
             height="12"
@@ -399,7 +405,7 @@ const MidSection = () => {
           </svg>
         </div>
         <div className="flex my-3 items-center gap-x-2">
-          <p className="font-bold text-4xl">4.5</p>
+          <p className="font-bold text-3xl md:text-4xl">4.5</p>
           <div className="">
             <div className="flex">
               <svg
@@ -458,13 +464,13 @@ const MidSection = () => {
                 />
               </svg>
             </div>
-            <p className="text-[12px]">20 Reviews</p>
+            <p className="text-[10px] md:text-[12px]">20 Reviews</p>
           </div>
         </div>
       </div>
       <div className=" p-4">
         <div className=" flex items-center gap-x-1">
-          <p className="text-[13px]">TOTAL VIEWS</p>
+          <p className="text-xs md:text-[13px]">TOTAL VIEWS</p>
           <svg
             width="12"
             height="12"
@@ -481,7 +487,7 @@ const MidSection = () => {
             />
           </svg>
         </div>
-        <p className="font-bold text-4xl my-3">100</p>
+        <p className="font-bold text-3xl md:text-4xl my-3">100</p>
       </div>
     </div>
   );

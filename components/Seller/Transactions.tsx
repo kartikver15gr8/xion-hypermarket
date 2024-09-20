@@ -30,7 +30,7 @@ export default function Transactions() {
   return (
     <div className="w-[100%] pb-20 relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth">
       <TransactionTopLabel />
-      <div className="px-20 mt-8 ">
+      <div className="px-[20px] sm:px-[20px] md:px-[40px] lg:px-[60px] xl:px-20 mt-8 ">
         <div className="grid grid-cols-2 w-[250px]">
           <div
             className={tab == "sales" ? Active : InActive}
@@ -62,12 +62,11 @@ export const OrderOverview = () => {
   return (
     <div className="mt-8">
       <p className="font-medium text-xl">Orders Overview</p>
-      <div className="grid grid-cols-12 mt-4 gap-x-6 h-10">
+      <div className="grid grid-cols-12 mt-4 gap-x-2 md:gap-x-4 lg:gap-x-8  h-10">
         <div className="col-span-2 border rounded-lg flex items-center justify-center gap-x-2">
-          <p>Filter</p>
+          <p className="text-xs md:text-[13px] lg:text-sm">Filter</p>
           <svg
-            width="12"
-            height="8"
+            className="w-2 md:w-3"
             viewBox="0 0 12 8"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -126,20 +125,26 @@ export const OrderOveriewCard = () => {
           <div className="flex items-center gap-x-3 mt-1">
             <Image className="w-12 h-12 rounded" src={logodesign} alt="" />
             <div>
-              <p className="text-[11px] font-medium">Digital Product</p>
-              <p className="font-medium">How to Design better UI</p>
-              <p className="text-[11px]">Variation - Extended Version</p>
+              <p className="text-[10px] sm:text-[11px] font-medium">
+                Digital Product
+              </p>
+              <p className="font-medium text-[13px] md:text-[15px]">
+                How to Design better UI
+              </p>
+              <p className="text-[10px] sm:text-[11px]">
+                Variation - Extended Version
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-x-1 px-2 h-9 border rounded-md">
             <Image
-              className="w-5 h-5"
+              className="md:w-5 md:h-5 sm:w-4 sm:h-4 w-3 h-3"
               src={usdccoin}
               alt="USDC"
               width={100}
               height={100}
             />
-            <p>49 USDC</p>
+            <p className="text-[11px] md:text-[13px]">49 USDC</p>
           </div>
         </div>
       </div>
@@ -161,15 +166,17 @@ export const OrderOveriewCard = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <p className="text-[11px] text-[#8B8B92]">Order Placed</p>
+            <p className="text-[10px] sm:text-[11px] text-[#8B8B92]">
+              Order Placed
+            </p>
           </div>
-          <p className="text-xs">01 September 2024</p>
+          <p className="text-[10px] sm:text-[11px]">01 September 2024</p>
         </div>
-        <div className="flex gap-x-3 items-center">
-          <div className="w-24 h-10 border rounded-lg flex items-center justify-center gap-x-2">
-            <p>Details</p>
+        <div className="flex gap-x-1 sm:gap-x-2 md:gap-x-3 items-center">
+          <div className="w-20 md:w-24 md:h-10 h-8 border rounded-lg flex items-center justify-center gap-x-2">
+            <p className="text-[11px] md:text-[13px]">Details</p>
           </div>
-          <div className="w-fit h-10 px-2  rounded-lg flex items-center justify-center gap-x-2 bg-[#4E6465] text-white">
+          <div className="w-fit h-8 md:h-10 px-2  rounded-lg flex items-center justify-center gap-x-2 bg-[#4E6465] text-white">
             <svg
               width="14"
               height="15"
@@ -185,7 +192,7 @@ export const OrderOveriewCard = () => {
                 strokeLinejoin="round"
               />
             </svg>
-            <p className="text-sm">Download Product</p>
+            <p className="text-[11px] md:text-[13px]">Download Product</p>
           </div>
         </div>
       </div>
@@ -197,12 +204,11 @@ export const SalesOverview = () => {
   return (
     <div className="mt-8">
       <p className="font-medium text-xl">Sales Overview</p>
-      <div className="grid grid-cols-12 mt-4 gap-x-8 h-10">
-        <div className="col-span-2 border rounded-lg flex items-center justify-center gap-x-2">
-          <p>Filter</p>
+      <div className="grid grid-cols-12 mt-4 gap-x-2 md:gap-x-4 lg:gap-x-8 h-10">
+        <div className="col-span-2 border rounded-lg flex items-center justify-center gap-x-1 md:gap-x-2">
+          <p className="text-xs md:text-[13px] lg:text-sm">Filter</p>
           <svg
-            width="12"
-            height="8"
+            className="w-2 md:w-3"
             viewBox="0 0 12 8"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -241,8 +247,7 @@ export const SalesOverview = () => {
         </div>
         <div className="col-span-2 gap-x-2 text-white rounded-lg flex items-center justify-center bg-[#4E6465]">
           <svg
-            width="14"
-            height="15"
+            className="w-2 md:w-3"
             viewBox="0 0 14 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -256,17 +261,17 @@ export const SalesOverview = () => {
             />
           </svg>
 
-          <p>Export</p>
+          <p className="text-xs md:text-[13px] lg:text-sm">Export</p>
         </div>
       </div>
       <div className="px-2 mb-1 grid grid-cols-12 items-center mt-3 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
-        <p className="text-[13px] col-span-1">Date</p>
-        <p className="text-[13px] col-span-3">Product Name</p>
-        <p className="text-[13px] col-span-3">Buyer</p>
-        <p className="text-[13px] col-span-1">Quantity</p>
-        <p className="text-[13px] col-span-1">Price</p>
-        <p className="text-[13px] col-span-1">Status</p>
-        <p className="text-[13px] col-span-2">Hash</p>
+        <p className="text-[11px] md:text-[13px] col-span-1">Date</p>
+        <p className="text-[11px] md:text-[13px] col-span-3">Product Name</p>
+        <p className="text-[11px] md:text-[13px] col-span-3">Buyer</p>
+        <p className="text-[11px] md:text-[13px] col-span-1">Quantity</p>
+        <p className="text-[11px] md:text-[13px] col-span-1">Price</p>
+        <p className="text-[11px] md:text-[13px] col-span-1">Status</p>
+        <p className="text-[11px] md:text-[13px] col-span-2">Hash</p>
       </div>
       <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-96">
         <SalesLabel
