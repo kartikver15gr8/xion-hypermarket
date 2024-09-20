@@ -44,7 +44,7 @@ export default function Product({ params }: any) {
   }, [product]);
   console.log(product);
   return (
-    <div className="border pt-16 w-full h-[100vh] overflow-y-auto hide-scrollbar px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[100px]">
+    <div className="border pt-16 w-full h-[100vh] overflow-y-auto hide-scrollbar px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[100px] ">
       {/* Top section which will show the folder structure */}
       <div className="flex items-center gap-x-3 mt-5 border-b pb-1 border-[##E8E7E5]">
         <svg
@@ -98,20 +98,26 @@ export default function Product({ params }: any) {
       </div>
 
       {/* Main Product */}
-      <div className="grid grid-cols-10 h-[550px] mt-10  gap-x-4">
-        <div className=" overflow-hidden col-span-6 border rounded-xl ">
-          <Image src={bannerImg} className="w-full h-full" alt="product" />
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-5 mb-5 xl:gap-x-4 2xl:gap-x-8 px-2 pt-2 xl:justify-between 2xl:justify-evenly gap-y-4 sm:gap-y-4 md:gap-y-4 lg:gap-y-0 lg:gap-x-2">
+        <div className="col-span-5 sm:col-span-5 md:col-span-5 lg:col-span-3">
+          <Image
+            src={bannerImg}
+            className="w-full h-full"
+            alt="product"
+            height={300}
+            width={500}
+          />
         </div>
-        <div className="flex flex-col col-span-4  rounded-xl">
+        <div className="lg:col-span-2 col-span-1 sm:col-span-1 md:col-span-1">
           <BorrowUSDCBannerBtn />
           <div className="flex items-center mt-4 justify-between">
             <p className="font-bold text-xl">{product.split("_").join(" ")}</p>
             <div className="flex  items-center gap-x-2">
               <Image src={kody} className="w-5 h-5 rounded-full" alt="" />
-              <p>Kody | LP Labs</p>
+              <p className="text-xs md:text-sm">Kody | LP Labs</p>
             </div>
           </div>
-          <div className="mt-4 mb-1 flex items-center justify-between">
+          <div className="mt-4 mb-1 flex items-center justify-between text-xs md:text-sm">
             <div className="border flex items-center w-36 h-12 rounded bg-[#F7F7F5]">
               <div className="border-r w-[50%] flex justify-center h-full items-center line-through">
                 $14,99
@@ -189,7 +195,7 @@ export default function Product({ params }: any) {
             </div>
           </div>
 
-          <div className="flex flex-col my-4 gap-y-1">
+          <div className="flex flex-col my-4 gap-y-1 text-sm md:text-[15px]">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-x-1">
                 <svg
@@ -259,7 +265,7 @@ export default function Product({ params }: any) {
           </div>
 
           <div className="mt-1">
-            <p className="text-[12px] font-medium">Make a price:</p>
+            <p className="text-xs md:text-[12px] font-medium">Make a price:</p>
             <div className="relative border h-12 mt-1 flex justify-between px-4 items-center shadow-[inset_5px_2px_28px_rgba(0,0,0,0.07)]">
               <Image
                 src={noisebg}
@@ -277,7 +283,7 @@ export default function Product({ params }: any) {
                 />
               </div>
             </div>
-            <p className="text-[12px] font-medium">
+            <p className="text-xs md:text-[12px] font-medium">
               Available in Wallet: 2000 USDC
             </p>
           </div>
@@ -303,12 +309,12 @@ export default function Product({ params }: any) {
           </div>
         </div>
       </div>
-      <div className="grid grid-cols-10 mt-10 mb-20 border">
-        <div className=" col-span-6 border border-r p-4">
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-5 xl:gap-x-4 2xl:gap-x-8 px-2 pt-2 xl:justify-between 2xl:justify-evenly gap-y-4 sm:gap-y-4 md:gap-y-4 lg:gap-y-0 mb-10">
+        <div className=" col-span-5 sm:col-span-5 md:col-span-5 lg:col-span-3">
           <p className="font-bold text-lg">Description:</p>
           <p className="text-[#8B8B92] text-[13px]">Version 3.0 is out now!</p>
           <div className="mt-4">
-            <p>
+            <p className="text-sm md:text-[15px]">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Incidunt
               explicabo necessitatibus voluptatum ipsa, error nemo maiores quis
               iste cum, quisquam voluptate delectus consequuntur nulla omnis.
@@ -330,7 +336,7 @@ export default function Product({ params }: any) {
             </p>
           </div>
         </div>
-        <div className="col-span-4 border p-4">
+        <div className="lg:col-span-2 col-span-1 sm:col-span-1 md:col-span-1">
           <p className="font-bold text-lg">Ratings:</p>
           <div className="flex mt-4">
             <div className="flex">
