@@ -126,7 +126,7 @@ const ResponsiveLinearChart: React.FC = () => {
           type="monotone"
           dataKey="sales"
           stroke="#8884d8"
-          activeDot={{ r: 8 }}
+          activeDot={{ r: 4 }}
         />
       </LineChart>
     </ResponsiveContainer>

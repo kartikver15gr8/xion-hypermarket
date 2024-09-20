@@ -9,7 +9,7 @@ export default function SellerDashboard() {
   return (
     <div className="w-[100%] pb-20 relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth">
       <TopLabel />
-      <div className="px-20 mt-8 ">
+      <div className="px-[20px] sm:px-[20px] md:px-[40px] lg:px-[60px] xl:px-20 mt-8 ">
         <MidSection />
         <TotalEarningsSection />
         <CurrentRank />
@@ -55,9 +55,9 @@ const TopLabel = () => {
 const MidSection = () => {
   return (
     <div className="border rounded-2xl grid grid-cols-3 bg-white">
-      <div className="p-4">
+      <div className="p-2 sm:p-3 md:p-4">
         <div className=" flex items-center gap-x-1">
-          <p className="text-[13px]">AVAILABLE BALANCE</p>
+          <p className="text-xs md:text-[13px]">AVAILABLE BALANCE</p>
           <svg
             width="12"
             height="12"
@@ -74,12 +74,11 @@ const MidSection = () => {
             />
           </svg>
         </div>
-        <p className="font-bold text-4xl my-3">$20</p>
-        <div className="flex w-32 h-10 items-center gap-x-1 border rounded-2xl justify-center shadow-lg hover:bg-[#e9e9ec] transition-all duration-300">
+        <p className="font-bold text-3xl md:text-4xl my-3">$20</p>
+        <div className="flex text-[11px] sm:text-[12px] md:text-[14px] w-20 sm:w-24 md:w-32 h-8 md:h-10 items-center gap-x-1 border rounded-xl md:rounded-2xl justify-center shadow-lg hover:bg-[#e9e9ec] transition-all duration-300">
           <p>Withdraw</p>
           <svg
-            width="14"
-            height="15"
+            className="w-2 md:w-3"
             viewBox="0 0 14 15"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -94,9 +93,9 @@ const MidSection = () => {
           </svg>
         </div>
       </div>
-      <div className="border-r border-l p-4">
+      <div className="border-r border-l p-2 sm:p-3 md:p-4">
         <div className=" flex items-center gap-x-1">
-          <p className="text-[13px]">TODAY TOTAL SALES</p>
+          <p className="text-xs md:text-[13px]">TODAY TOTAL SALES</p>
           <svg
             width="12"
             height="12"
@@ -113,20 +112,22 @@ const MidSection = () => {
             />
           </svg>
         </div>
-        <p className="font-bold text-4xl my-3">$50</p>
+        <p className="font-bold text-3xl md:text-4xl my-3">$50</p>
         <div className="flex justify-between">
           <div className="w-fit ">
-            <p className="text-[12px] font-medium">Top Product</p>
-            <p className="text-[11px]">How to Design Better UI</p>
+            <p className="text-[10px] md:text-[12px] font-medium">
+              Top Product
+            </p>
+            <p className="text-[8px] md:text-[11px]">How to Design Better UI</p>
           </div>
-          <div className="border flex items-center w-20 justify-center rounded-lg bg-[#E8ECEC]">
+          <div className="border flex items-center text-[10px] sm:text-[12px] md:text-[14px] w-14 sm:w-16 md:w-20 h-8 md:h-10 justify-center rounded-lg bg-[#E8ECEC]">
             <p>5 Sales</p>
           </div>
         </div>
       </div>
-      <div className=" p-4">
+      <div className=" p-2 sm:p-3 md:p-4">
         <div className=" flex items-center gap-x-1">
-          <p className="text-[13px]">TOTAL SALES IN 7 DAYS</p>
+          <p className="text-xs md:text-[13px]">TOTAL SALES IN 7 DAYS</p>
           <svg
             width="12"
             height="12"
@@ -143,8 +144,8 @@ const MidSection = () => {
             />
           </svg>
         </div>
-        <p className="font-bold text-4xl my-3">$100</p>
-        <div className="mt-8 text-[12px] flex gap-x-1 ">
+        <p className="font-bold text-3xl md:text-4xl my-3">$100</p>
+        <div className="mt-8 text-[10px] md:text-[12px] flex gap-x-1 ">
           <p className="text-green-700">4%</p>
           <p> vs last month</p>
         </div>
@@ -157,7 +158,7 @@ const TotalEarningsSection = () => {
   return (
     <div className="bg-white flex flex-col justify-between border mt-6 rounded-2xl h-36 p-4">
       <div className=" flex items-center gap-x-1">
-        <p className="text-[13px]">TOTAL EARNINGS</p>
+        <p className="text-xs md:text-[13px]">TOTAL EARNINGS</p>
         <svg
           width="12"
           height="12"
@@ -177,19 +178,19 @@ const TotalEarningsSection = () => {
       <div className="grid grid-cols-3 ">
         <div className="flex items-center gap-x-1">
           <p className="font-medium text-2xl">$</p>
-          <p className="font-bold text-6xl">1240.00</p>
+          <p className="font-bold text-2xl sm:text-4xl lg:text-6xl">1240.00</p>
         </div>
         <div className="flex items-center gap-x-2">
           <div className="relative">
-            <Image className="w-10" src={circlemedal} alt="" />
+            <Image className="w-8 sm:w-10" src={circlemedal} alt="" />
           </div>
-          <p className="w-44 text-[14px] text-wrap">
+          <p className="w-44 text-[10px] md:text-[14px] text-wrap">
             You&apos;ve reached $1500 in total sales!
           </p>
         </div>
         <div className="flex justify-end items-center">
-          <div className="border shadow-lg h-10 rounded-xl w-40 flex items-center gap-x-1 justify-center hover:bg-[#E8ECEC] transition-all duration-300">
-            <p>Analytics</p>
+          <div className="border shadow-lg h-10 rounded-xl w-20 sm:w-32 md:w-40 flex items-center gap-x-1 justify-center hover:bg-[#E8ECEC] transition-all duration-300">
+            <p className="text-[11px] sm:text-sm">Analytics</p>
             <svg
               className="w-3 mt-1"
               viewBox="0 0 14 15"
@@ -214,34 +215,52 @@ const TotalEarningsSection = () => {
 const CurrentRank = () => {
   return (
     <div className="mt-6">
-      <p className="font-medium text-xl">Your Path to Level 3</p>
-      <div className="grid grid-cols-2  w-[70%]">
-        <div className=" p-2 gap-x-2 flex items-center ">
+      <p className="font-medium text-sm sm:text-lg md:text-xl">
+        Your Path to Level 3
+      </p>
+      <div className="grid grid-cols-2 w-[100%] lg:w-[70%]">
+        <div className=" p-2 gap-x-1 md:gap-x-2 flex items-center ">
           <input type="checkbox" />
           <div className="">
-            <p className="text-[13px]">Complete at least 10 sales</p>
-            <p className="text-[11px] text-[#8B8B93]">7/10 sales completed</p>
+            <p className="text-[11px] md:text-[13px]">
+              Complete at least 10 sales
+            </p>
+            <p className="text-[9px] md:text-[11px] text-[#8B8B93]">
+              7/10 sales completed
+            </p>
           </div>
         </div>
         <div className=" p-2 gap-x-2 flex items-center ">
           <input type="checkbox" />
           <div className="">
-            <p className="text-[13px]">Total sales of $1,750 USD equivalent</p>
-            <p className="text-[11px] text-[#8B8B93]">1500/1750</p>
+            <p className="text-[11px] md:text-[13px]">
+              Total sales of $1,750 USD equivalent
+            </p>
+            <p className="text-[9px] md:text-[11px] text-[#8B8B93]">
+              1500/1750
+            </p>
           </div>
         </div>
         <div className=" p-2 gap-x-2 flex items-center ">
           <input type="checkbox" />
           <div className="">
-            <p className="text-[13px]">Maintain a 4.2/5.0 average rating</p>
-            <p className="text-[11px] text-[#8B8B93]">Current 4.5</p>
+            <p className="text-[11px] md:text-[13px]">
+              Maintain a 4.2/5.0 average rating
+            </p>
+            <p className="text-[9px] md:text-[11px] text-[#8B8B93]">
+              Current 4.5
+            </p>
           </div>
         </div>
         <div className=" p-2 gap-x-2 flex items-center ">
           <input type="checkbox" />
           <div className="">
-            <p className="text-[13px]">Maintain a 4.2/5.0 average rating</p>
-            <p className="text-[11px] text-[#8B8B93]">Current 4.5</p>
+            <p className="text-[11px] md:text-[13px]">
+              Maintain a 4.2/5.0 average rating
+            </p>
+            <p className="text-[9px] md:text-[11px] text-[#8B8B93]">
+              Current 4.5
+            </p>
           </div>
         </div>
       </div>
@@ -253,7 +272,7 @@ export const Sales = () => {
   return (
     <div className="mt-6 border rounded-2xl p-5 h-80 bg-white">
       <div className=" flex items-center gap-x-1">
-        <p className="text-[15px]">SALES</p>
+        <p className="text-xs md:text-[13px]">SALES</p>
         <svg
           width="12"
           height="12"
@@ -271,13 +290,13 @@ export const Sales = () => {
         </svg>
       </div>
       <div className="px-2 mb-1 grid grid-cols-12 items-center mt-3 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
-        <p className="text-[13px] col-span-1">Date</p>
-        <p className="text-[13px] col-span-3">Product Name</p>
-        <p className="text-[13px] col-span-3">Buyer</p>
-        <p className="text-[13px] col-span-1">Quantity</p>
-        <p className="text-[13px] col-span-1">Price</p>
-        <p className="text-[13px] col-span-1">Status</p>
-        <p className="text-[13px] col-span-2">Hash</p>
+        <p className="text-[10px] md:text-[13px] col-span-1">Date</p>
+        <p className="text-[10px] md:text-[13px] col-span-3">Product Name</p>
+        <p className="text-[10px] md:text-[13px] col-span-3">Buyer</p>
+        <p className="text-[10px] md:text-[13px] col-span-1">Quantity</p>
+        <p className="text-[10px] md:text-[13px] col-span-1">Price</p>
+        <p className="text-[10px] md:text-[13px] col-span-1">Status</p>
+        <p className="text-[10px] md:text-[13px] col-span-2">Hash</p>
       </div>
       <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-52">
         <SalesLabel
@@ -394,23 +413,23 @@ export const SalesLabel = ({
 }) => {
   return (
     <div className="border-b px-2 grid grid-cols-12 items-center w-full h-10">
-      <p className="text-[13px] col-span-1">{date}</p>
-      <p className="text-[13px] col-span-3">{productName}</p>
-      <p className="text-[13px] col-span-3">{buyer}</p>
-      <p className="text-[13px] col-span-1">{quantity}</p>
-      <p className="text-[13px] col-span-1">{price}</p>
-      <div className="text-[13px] flex items-center col-span-1">
+      <p className="text-[9px] md:text-[13px] col-span-1">{date}</p>
+      <p className="text-[9px] md:text-[13px] col-span-3">{productName}</p>
+      <p className="text-[9px] md:text-[13px] col-span-3">{buyer}</p>
+      <p className="text-[9px] md:text-[13px] col-span-1">{quantity}</p>
+      <p className="text-[9px] md:text-[13px] col-span-1">{price}</p>
+      <div className="text-[9px] md:text-[13px] flex items-center col-span-1">
         {status == "confirmed" ? (
-          <div className="flex items-center bg-opacity-45 border border-green-600 rounded-md h-6 px-1 bg-green-400 ">
+          <div className="flex text-[9px] md:text-[13px] items-center bg-opacity-45 border border-green-600 rounded-md h-6 px-1 bg-green-400 ">
             <p>{status}</p>
           </div>
         ) : (
-          <div className="flex items-center bg-opacity-45 border border-red-600 rounded-md h-6 px-1 bg-red-400 ">
+          <div className="flex text-[9px] md:text-[13px] items-center bg-opacity-45 border border-red-600 rounded-md h-6 px-1 bg-red-400 ">
             <p>{status}</p>
           </div>
         )}
       </div>
-      <div className="text-[13px] col-span-2 flex items-center">
+      <div className="text-[9px] md:text-[13px] col-span-2 flex items-center">
         <p>{hash}</p>
         <svg
           className="w-3 ml-1"

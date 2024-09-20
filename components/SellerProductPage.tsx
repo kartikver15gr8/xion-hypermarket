@@ -11,13 +11,15 @@ export default function SellerProductPage() {
   return (
     <div className="w-[100%] pb-20 relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth">
       <ProductTopLabel />
-      <div className="px-20 mt-8 ">
+      <div className="px-[20px] sm:px-[20px] md:px-[40px] lg:px-[60px] xl:px-20 mt-8 ">
         <div className="">
           <div className="flex justify-between items-center">
-            <p className="text-lg font-medium">Listed Products</p>
+            <p className="text-[14px] lg:text-lg font-medium">
+              Listed Products
+            </p>
             <Link
               href={"/product/add"}
-              className="flex items-center justify-center gap-x-1 bg-[#4E6465] w-32 h-8 rounded-md hover:bg-[#bac3c4] transition-all duration-300"
+              className="flex items-center justify-center gap-x-1 bg-[#4E6465] text-[12px] md:text-[14px] w-24 md:w-32 h-8 rounded-md hover:bg-[#bac3c4] transition-all duration-300"
             >
               <svg
                 width="12"
@@ -37,8 +39,8 @@ export default function SellerProductPage() {
               <p className=" text-white">New Product</p>
             </Link>
           </div>
-          <div className="grid grid-cols-12 gap-x-4 mt-3">
-            <div className="h-10 border p-[2px] rounded-md col-span-5 grid grid-cols-5 items-center bg-[#EEEEEF] gap-x-1">
+          <div className="grid grid-cols-12 gap-x-4 mt-3 gap-y-2 md:gap-y-0">
+            <div className="h-10 border p-[2px] rounded-md col-span-12 md:col-span-5 grid grid-cols-5 items-center bg-[#EEEEEF] gap-x-1 text-xs md:text-[13px] lg:text-sm">
               <div className="h-8 border rounded-sm flex items-center justify-center bg-white ">
                 All
               </div>
@@ -55,7 +57,7 @@ export default function SellerProductPage() {
                 Draft
               </div>
             </div>
-            <div className="h-10 border rounded-md col-span-2 flex items-center justify-center gap-x-1">
+            <div className="h-10 border text-xs md:text-[13px] lg:text-sm rounded-md col-span-4 md:col-span-2 flex items-center justify-center gap-x-1">
               <p>Digital Product</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -72,7 +74,7 @@ export default function SellerProductPage() {
                 </g>
               </svg>
             </div>
-            <div className="h-10 border rounded-md col-span-5 flex items-center pl-2">
+            <div className="h-10 border rounded-md col-span-8 md:col-span-5 flex items-center pl-2">
               <svg
                 className="mr-2"
                 width="15"
@@ -90,7 +92,7 @@ export default function SellerProductPage() {
                 />
               </svg>
               <input
-                className="h-full w-full outline-none"
+                className="h-full w-full outline-none rounded-r-lg"
                 type="text"
                 placeholder="Search"
               />
@@ -101,7 +103,7 @@ export default function SellerProductPage() {
               <input type="checkbox" />
               <p>0 Selected</p>
             </div>
-            <div className="w-[50%] grid grid-cols-5 gap-x-3 text-[#A9BACA]">
+            <div className="w-[50%] grid grid-cols-5 gap-x-3 text-[#A9BACA] text-xs md:text-[13px] lg:text-sm">
               <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#d1d9e2] transition-all duration-300">
                 <svg
                   width="14"
@@ -119,7 +121,7 @@ export default function SellerProductPage() {
                   />
                 </svg>
 
-                <p>Edit</p>
+                <p className="hidden md:flex">Edit</p>
               </div>
               <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#d1d9e2] transition-all duration-300">
                 <svg
@@ -138,7 +140,7 @@ export default function SellerProductPage() {
                   />
                 </svg>
 
-                <p>Edit</p>
+                <p className="hidden md:flex">Edit</p>
               </div>
               <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#d1d9e2] transition-all duration-300">
                 <svg
@@ -157,7 +159,7 @@ export default function SellerProductPage() {
                   />
                 </svg>
 
-                <p>Edit</p>
+                <p className="hidden md:flex">Edit</p>
               </div>
               <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#d1d9e2] transition-all duration-300">
                 <svg
@@ -176,7 +178,7 @@ export default function SellerProductPage() {
                   />
                 </svg>
 
-                <p>Edit</p>
+                <p className="hidden md:flex">Edit</p>
               </div>
               <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#d1d9e2] transition-all duration-300">
                 <svg
@@ -195,7 +197,7 @@ export default function SellerProductPage() {
                   />
                 </svg>
 
-                <p>Edit</p>
+                <p className="hidden md:flex">Edit</p>
               </div>
             </div>
           </div>
@@ -256,8 +258,12 @@ const ProductSales = () => {
           <div className="flex items-center gap-x-3">
             <Image className="rounded-md w-10 h-10" src={logodesign} alt="" />
             <div>
-              <p className="font-medium">How to Design Better UI - $183</p>
-              <p>Digital Product</p>
+              <p className="font-medium text-xs md:text-[13px] lg:text-sm">
+                How to Design Better UI - $183
+              </p>
+              <p className="text-[11px] md:text-[12px] lg:text-sm">
+                Digital Product
+              </p>
             </div>
           </div>
           <div>
@@ -278,12 +284,14 @@ const ProductSales = () => {
                 />
               </svg>
 
-              <p>Listed on</p>
+              <p className="text-xs md:text-[13px] lg:text-sm">Listed on</p>
             </div>
-            <p>01 September 2024</p>
+            <p className="text-xs md:text-[13px] lg:text-sm">
+              01 September 2024
+            </p>
           </div>
         </div>
-        <div className="col-span-3 grid grid-cols-1">
+        <div className="col-span-3 grid grid-cols-1 text-xs md:text-[13px] lg:text-sm">
           <div className="flex flex-col justify-center px-3">
             <div className="flex gap-x-1 items-center">
               <svg

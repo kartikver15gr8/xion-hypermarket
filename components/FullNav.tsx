@@ -163,12 +163,42 @@ export default function FullNav() {
               isOpen={isOpen}
               setIsOpen={setIsOpen}
             />
+            <NavLink
+              href="/seller/dashboard"
+              text="Dashboard"
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            />
+            <NavLink
+              href="/seller/products"
+              text="Products"
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            />
+            <NavLink
+              href="/seller/transactions"
+              text="Transactions"
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            />
+            <NavLink
+              href="/seller/analytics"
+              text="Analytics"
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            />
+            <NavLink
+              href="/seller/earnings"
+              text="Earnings"
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            />
             <motion.div
               className="flex items-center h-[70px] shadow-[inset_5px_2px_28px_rgba(0,0,0,0.1)] bg-gray-100"
               variants={itemVariants}
             >
               <Link
-                href="/"
+                href="/seller"
                 className="flex px-[16px] w-5/6 items-center rounded-l-[4px] h-full "
                 onClick={() => {
                   setIsOpen(!isOpen);
@@ -182,7 +212,7 @@ export default function FullNav() {
                   alt="image"
                 />
                 <div className="flex flex-col mx-[8px]">
-                  <p className="text-[18px] font-medium">Start Selling</p>
+                  <p className="text-[18px] font-medium">Become a Seller</p>
                   {/* <p className="text-[12px] text-[#949493]">
                     {walletAddress
                       ? `${walletAddress.slice(0, 6)}...${walletAddress.slice(
