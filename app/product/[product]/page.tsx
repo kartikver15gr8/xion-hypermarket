@@ -44,7 +44,7 @@ export default function Product({ params }: any) {
   }, [product]);
   console.log(product);
   return (
-    <div className="border pt-16 w-full h-[100vh] overflow-y-auto hide-scrollbar px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[100px] ">
+    <div className="border pt-16 w-full h-[100vh] px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[100px] ">
       {/* Top section which will show the folder structure */}
       <div className="flex items-center gap-x-3 mt-5 border-b pb-1 border-[##E8E7E5]">
         <svg
