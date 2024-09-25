@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
@@ -7,9 +8,10 @@ export default function page() {
       <Topbar />
       <ProductDescription />
       <AddMedia />
+      <Tags />
       <Pricing />
       <Sales />
-      <Variants />
+      {/* <Variants /> */}
       <Content />
       <div className="w-full flex justify-end items-center mt-4">
         <Button className="mr-2 border rounded w-36 bg-white text-black hover:bg-slate-200 transition-all duration-200">
@@ -27,8 +29,30 @@ const Content = () => {
   return (
     <div className="mt-4 p-4 rounded-xl border bg-white">
       <p className="text-lg mb-4">Content</p>
-      <div className=" grid grid-cols-2 gap-x-5 rounded-md h-48">
+      <div className=" grid grid-cols-1 gap-x-5 rounded-md h-48">
         <div className="border rounded-md">
+          <div className="h-10 p-2 border-b bg-slate-200">
+            <p>How to Design Better UI</p>
+          </div>
+          <div className="flex flex-col items-center justify-center h-36">
+            {/* <svg
+              width="18"
+              height="21"
+              viewBox="0 0 18 21"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M6.50098 16.0003H11.501C12.1885 16.0003 12.751 15.4378 12.751 14.7503V8.50032H14.7385C15.851 8.50032 16.4135 7.15032 15.626 6.36282L9.88848 0.625321C9.77283 0.509441 9.63547 0.417507 9.48426 0.35478C9.33304 0.292053 9.17094 0.259766 9.00723 0.259766C8.84352 0.259766 8.68141 0.292053 8.5302 0.35478C8.37898 0.417507 8.24162 0.509441 8.12598 0.625321L2.38848 6.36282C1.60098 7.15032 2.15098 8.50032 3.26348 8.50032H5.25098V14.7503C5.25098 15.4378 5.81348 16.0003 6.50098 16.0003ZM1.50098 18.5003H16.501C17.1885 18.5003 17.751 19.0628 17.751 19.7503C17.751 20.4378 17.1885 21.0003 16.501 21.0003H1.50098C0.813477 21.0003 0.250977 20.4378 0.250977 19.7503C0.250977 19.0628 0.813477 18.5003 1.50098 18.5003Z"
+                fill="#4E6466"
+              />
+            </svg> */}
+            <input className="" type="file" />
+
+            {/* <p>Drag & Drop Your Files or Browse</p> */}
+          </div>
+        </div>
+        {/* <div className="border rounded-md">
           <div className="h-10 p-2 border-b bg-slate-200">
             <p>How to Design Better UI</p>
           </div>
@@ -48,28 +72,7 @@ const Content = () => {
 
             <p>Drag & Drop Your Files or Browse</p>
           </div>
-        </div>
-        <div className="border rounded-md">
-          <div className="h-10 p-2 border-b bg-slate-200">
-            <p>How to Design Better UI</p>
-          </div>
-          <div className="flex flex-col items-center justify-center h-36">
-            <svg
-              width="18"
-              height="21"
-              viewBox="0 0 18 21"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6.50098 16.0003H11.501C12.1885 16.0003 12.751 15.4378 12.751 14.7503V8.50032H14.7385C15.851 8.50032 16.4135 7.15032 15.626 6.36282L9.88848 0.625321C9.77283 0.509441 9.63547 0.417507 9.48426 0.35478C9.33304 0.292053 9.17094 0.259766 9.00723 0.259766C8.84352 0.259766 8.68141 0.292053 8.5302 0.35478C8.37898 0.417507 8.24162 0.509441 8.12598 0.625321L2.38848 6.36282C1.60098 7.15032 2.15098 8.50032 3.26348 8.50032H5.25098V14.7503C5.25098 15.4378 5.81348 16.0003 6.50098 16.0003ZM1.50098 18.5003H16.501C17.1885 18.5003 17.751 19.0628 17.751 19.7503C17.751 20.4378 17.1885 21.0003 16.501 21.0003H1.50098C0.813477 21.0003 0.250977 20.4378 0.250977 19.7503C0.250977 19.0628 0.813477 18.5003 1.50098 18.5003Z"
-                fill="#4E6466"
-              />
-            </svg>
-
-            <p>Drag & Drop Your Files or Browse</p>
-          </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -150,7 +153,7 @@ const Pricing = () => {
   return (
     <div className="mt-4 p-4 rounded-xl border bg-white">
       <p className="text-lg mb-4">Pricing</p>
-      <div className="grid grid-cols-3 gap-x-6">
+      <div className="grid grid-cols-2 gap-x-6">
         <div>
           <p className="text-xs mb-1">Buy Now Price</p>
           <div className="border rounded flex justify-between h-12">
@@ -191,7 +194,7 @@ const Pricing = () => {
             </div>
           </div>
         </div>
-        <div>
+        {/* <div>
           <p className="text-xs mb-1">Accept Offers</p>
           <div className="border rounded flex justify-between h-12">
             <input
@@ -200,7 +203,22 @@ const Pricing = () => {
               placeholder="Yes/ No"
             />
           </div>
-        </div>
+        </div> */}
+      </div>
+    </div>
+  );
+};
+
+const Tags = () => {
+  return (
+    <div className="mt-5 p-4 bg-white rounded-xl border">
+      <p className="">Tags:</p>
+      <div className=" mt-2">
+        <input
+          type="text"
+          className="border w-full h-12 p-2 flex items-center rounded outline-none"
+          placeholder="Enter title"
+        />
       </div>
     </div>
   );
@@ -362,7 +380,7 @@ const ProductDescription = () => {
   return (
     <div className="border mt-6 h-96 rounded-xl p-4 bg-white">
       <p className="font-medium text-lg">Describe your product</p>
-      <div className="grid grid-cols-2 gap-x-5 mt-4">
+      <div className="grid grid-cols-1 gap-x-5 mt-4">
         <div className="">
           <p className="text-xs mb-2">Title:</p>
           <input
@@ -371,14 +389,14 @@ const ProductDescription = () => {
             placeholder="Enter title"
           />
         </div>
-        <div className="">
+        {/* <div className="">
           <p className="text-xs mb-2">Tags:</p>
           <input
             type="text"
             className="border w-full h-12 p-2 flex items-center rounded outline-none"
             placeholder="Enter title"
           />
-        </div>
+        </div> */}
       </div>
       <p className="mt-4 text-xs">Description</p>
       <div className="mt-2 border rounded-sm h-48">
