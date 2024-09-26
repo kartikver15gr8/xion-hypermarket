@@ -1,3 +1,5 @@
+"use client";
+
 import Image, { StaticImageData } from "next/image";
 import { Button } from "../ui/button";
 import senditcoin from "@/public/coins/senditcoin.png";
@@ -84,6 +86,10 @@ import billingmanager from "@/public/marqueeicons/billingmanager.png";
 import lowpoly from "@/public/marqueeicons/lowpolygameassets.png";
 import logodesignicon from "@/public/marqueeicons/logodesign.png";
 import markettooling from "@/public/marqueeicons/markettool.png";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import spinnerthree from "@/public/loaders/spinnerthree.svg";
+import spinnerfour from "@/public/loaders/spinnerfour.svg";
 
 const reviews = [
   {
@@ -375,25 +381,74 @@ const CoinCard = ({
   );
 };
 
+import { CategoryInterface } from "@/lib/models";
+import { categoryImages } from "@/lib/categoryimg";
+
 const Category = () => {
+  // storing categories
+  const [categories, setCategories] = useState<CategoryInterface[]>([]);
+  const [showAll, setShowAll] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const CategoryImages = categoryImages;
+
+  const toggleShowAll = () => {
+    setShowAll(!showAll);
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/categories`
+      );
+      // console.log(response.data);
+      setCategories(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(`Error occured while fetching the categories: ${error}`);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   return (
     <div className="mt-10">
       <div className="flex mb-6 justify-between items-center">
         <p className="font-medium text-lg md:text-xl xl:text-2xl">
           Explore Category&apos;s
         </p>
-        <Button className="px-4 h-8  hover:bg-[#52525C] transition-all duration-300">
-          See all
+        <Button
+          onClick={toggleShowAll}
+          className="px-4 h-8  hover:bg-[#52525C] transition-all duration-300"
+        >
+          {showAll ? "Show Less" : "See All"}
         </Button>
       </div>
+      {loading && (
+        <div className="flex justify-center mt-2">
+          <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
+        </div>
+      )}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-x-2 md:gap-x-4 gap-y-2 md:gap-y-4">
+        {categories && (
+          <>
+            {categories
+              .slice(0, showAll ? categories.length : 6)
+              .map((elem, key) => (
+                <CategoryCard
+                  key={key}
+                  bg={globe}
+                  categoryName={elem.Name}
+                  description={elem.Description}
+                  bgClass="opacity-[13%] bg-blend-luminosity absolute w-[250px] -bottom-[85px] -right-[40px]"
+                />
+              ))}
+          </>
+        )}
+
         {/* <CategoryCard
-          bg={bitlock}
-          categoryName="Discount Tokens"
-          description="Get 30% OFF on your favorite assets"
-          bgClass="opacity-[41%] bg-blend-luminosity absolute w-[190px] h-[170px] rotate-[-19deg] -bottom-[70px] -right-2 "
-        /> */}
-        <CategoryCard
           bg={globe}
           categoryName="How To Guides"
           description="Step-by-step guides for easy learning"
@@ -428,7 +483,7 @@ const Category = () => {
           categoryName="Design Templates"
           description="Customizable templates for any project"
           bgClass="opacity-[13%] bg-blend-luminosity absolute w-[290px] -right-[60px] top-[10px]"
-        />
+        /> */}
         {/* <CategoryCard
           bg={block}
           categoryName="Design"
@@ -463,8 +518,8 @@ const CategoryCard = ({
             {description}
           </p>
         </div>
-        <div className="flex items-center gap-x-1 sm:gap-x-2 md:gap-x-3 mt-2 sm:mt-4 md:mt-8 lg:mt-10">
-          <p className="text-sm md:text-[15px]">Explore</p>
+        <div className="flex items-center gap-x-1 cursor-pointer sm:gap-x-2 md:gap-x-3 mt-2 sm:mt-4 md:mt-8 lg:mt-10">
+          <p className="text-sm md:text-[15px] ">Explore</p>
           <svg
             className="w-4"
             xmlns="http://www.w3.org/2000/svg"
@@ -988,7 +1043,32 @@ const DontMissBanner = () => {
   );
 };
 
+import { ProductInterface } from "@/lib/models";
+
 const HotDigitalProducts = () => {
+  const [products, setProducts] = useState<ProductInterface[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchProducts = async () => {
+    try {
+      // fetching by specific category
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?category_id=7`
+      );
+      // console.log(response.data);
+
+      setProducts(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(`Error while fetching products: ${error}`);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   return (
     <div className="relative overflow-hidden flex flex-col mt-10 rounded-xl  border bg-[#F7F7F7] p-2 md:p-3 lg:p-4 xl:px-5 xl:py-10">
       <Image
@@ -1022,39 +1102,26 @@ const HotDigitalProducts = () => {
           </svg>
         </div>
       </div>
+      {loading && (
+        <div className="flex justify-center mt-2">
+          <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
+        </div>
+      )}
       <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3 lg:gap-y-0 h-full mt-5">
-        <HotProductCard
-          redirectHref="/product/TOP_100_VCs_LIST"
-          img={hotproductone}
-          category="Digital Product"
-          productName="TOP 100 VCs LIST"
-          description="The ultimate resource for startups & entrepreneurs"
-          price="$150 one time payment"
-        />
-        <HotProductCard
-          redirectHref="/product/MEV_Bots"
-          img={mevbot}
-          category="Digital Product"
-          productName="MEV Bots"
-          description="Software tools that analyze arbitrage opportunities across DeFi"
-          price="$150 per month"
-        />
-        <HotProductCard
-          redirectHref="/product/Telegram_Insiders_Group"
-          img={telegraminsider}
-          category="Digital Product"
-          productName="Telegram Insiders Group"
-          description="This group is your go-to hub for the latest meme coin picks, trending coins."
-          price="$49 one time payment"
-        />
-        <HotProductCard
-          redirectHref="/product/Rain_Drops_Simulator"
-          img={raindropape}
-          category="Digital Product"
-          productName="Rain Drops Simulator"
-          description="Bring your 3D scenes to life with the Rain Drops Simulator for Geometry Nodes."
-          price="$150 one time payment"
-        />
+        {products &&
+          products.map((elem, key) => {
+            return (
+              <HotProductCard
+                key={key}
+                redirectHref={`/product/${elem.ID}`}
+                img={`https://devnet.sendit.zone/showcaseimages/${elem.thumbnail}`}
+                category="Digital Product"
+                productName={elem.Name}
+                description={elem.Description}
+                price={`$${elem.Price} one time payment`}
+              />
+            );
+          })}
       </div>
     </div>
   );
@@ -1068,7 +1135,7 @@ const HotProductCard = ({
   price,
   redirectHref,
 }: {
-  img: StaticImageData | string;
+  img: string | undefined;
   category: string;
   productName: string;
   description: string;
@@ -1080,7 +1147,15 @@ const HotProductCard = ({
       href={redirectHref}
       className="p-1 border rounded-lg hover:bg-[#e7e7e9] hover:border-[#ababae]  hover:shadow-lg transition-all duration-300"
     >
-      <Image src={img} alt="" className="rounded w-full" />
+      {/* <Image
+        src={img}
+        alt=""
+        className="rounded w-full"
+        width={400}
+        height={300}
+        layout="responsive"
+      /> */}
+      <img src={img} alt="" className="rounded w-full" />
       <div className="p-1">
         <p className="text-[8px] sm:text-[10px] bg-[#d0d0d3] w-fit mt-1 sm:mt-2 px-1 rounded-[2px]">
           {category}
@@ -1345,6 +1420,27 @@ const GamingCollectiblesCard = ({
 };
 
 const DesignUIUX = () => {
+  const [products, setProducts] = useState<ProductInterface[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  const fetchProducts = async () => {
+    try {
+      // fetching by specific category
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?category_id=11`
+      );
+      // console.log(response.data);
+      setProducts(response.data);
+      setLoading(false);
+    } catch (error) {
+      console.log(`Error while fetching products: ${error}`);
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
   return (
     <div className="mt-10 mb-20">
       <div className="flex items-center justify-between">
@@ -1369,40 +1465,26 @@ const DesignUIUX = () => {
           </svg>
         </div>
       </div>
-
+      {loading && (
+        <div className="flex justify-center mt-2">
+          <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
+        </div>
+      )}
       <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-x-2 gap-y-2 md:gap-y-0 xl:gap-x-3">
-        <HotProductCard
-          redirectHref="/product/Trending_AI-UX_Patterns"
-          img={designuxone}
-          category="Digital Product"
-          productName="Trending AI-UX Patterns"
-          description="The ultimate resource for startups & entrepreneurs"
-          price="$150 one time payment"
-        />
-        <HotProductCard
-          redirectHref="/product/Design_System_UI_Kit_for_Figma"
-          img={designuxtwo}
-          category="Digital Product"
-          productName="Design System UI Kit for Figma"
-          description="Software tools that analyze arbitrage opportunities across DeFi"
-          price="$150 per month"
-        />
-        <HotProductCard
-          redirectHref="/product/Warp_Tools_for_Figma"
-          img={designuxthree}
-          category="Digital Product"
-          productName="Warp Tools for Figma"
-          description="This group is your go-to hub for the latest meme coin picks, trending coins."
-          price="$49 one time payment"
-        />
-        <HotProductCard
-          redirectHref="/product/How_to_Design_Better_UI"
-          img={designuxfour}
-          category="Digital Product"
-          productName="How to Design Better UI"
-          description="Bring your 3D scenes to life with the Rain Drops Simulator for Geometry Nodes."
-          price="$150 one time payment"
-        />
+        {products &&
+          products.map((elem, key) => {
+            return (
+              <HotProductCard
+                key={key}
+                redirectHref={`/product/${elem.ID}`}
+                img={`https://devnet.sendit.zone/showcaseimages/${elem.thumbnail}`}
+                category="Digital Product"
+                productName={elem.Name}
+                description={elem.Description}
+                price={`$${elem.Price} one time payment`}
+              />
+            );
+          })}
       </div>
     </div>
   );

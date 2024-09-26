@@ -4,18 +4,26 @@ export interface AffiliateLink {
   user_id: number;
 }
 
-export interface Category {
-  description: string;
-  name: string;
+export interface CategoryInterface {
+  Description: string;
+  Name: string;
 }
 
-export interface Product {
-  category_id: number;
-  description: string;
-  filename: string;
-  name: string;
-  price: string;
-  user_id: number;
+export interface ProductInterface {
+  ID: number;
+  Name: string;
+  Description: string;
+  Filename: string;
+  Price: string;
+  UserID: number;
+  CategoryID: number;
+  Category: {
+    ID: number;
+    Name: string;
+    Description: string;
+    Thumbnail: string;
+  };
+  thumbnail: string;
 }
 
 export interface Purchase {

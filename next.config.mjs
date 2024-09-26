@@ -14,6 +14,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "hypermarket.vercel.app",
       },
+      {
+        protocol: "https",
+        hostname: "devnet.sendit.zone",
+      },
     ],
   },
 };
