@@ -1,17 +1,16 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 import Link from "next/link";
-
+import { useEffect, useState } from "react";
+import { CategoryInterface } from "@/lib/models";
 export default function page() {
   return (
     <div className="pt-16 pb-20 sm:px-[20px] md:px-[40px] lg:px-[60px] xl:px-[150px] 2xl:px-[200px] min-h-screen bg-[#FAF9F5]">
       <Topbar />
       <ProductDescription />
-      <AddMedia />
       <Tags />
       <Pricing />
-      <Sales />
-      {/* <Variants /> */}
       <Content />
       <div className="w-full flex justify-end items-center mt-4">
         <Button className="mr-2 border rounded w-36 bg-white text-black hover:bg-slate-200 transition-all duration-200">
@@ -21,11 +20,19 @@ export default function page() {
           <Button className="rounded w-36">List Products</Button>
         </Link>
       </div>
+      <AddMedia />
     </div>
   );
 }
 
 const Content = () => {
+  const [file, setFile] = useState(null);
+
+  const handleFileChange = (event: any) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+  };
+
   return (
     <div className="mt-4 p-4 rounded-xl border bg-white">
       <p className="text-lg mb-4">Content</p>
@@ -35,113 +42,7 @@ const Content = () => {
             <p>How to Design Better UI</p>
           </div>
           <div className="flex flex-col items-center justify-center h-36">
-            {/* <svg
-              width="18"
-              height="21"
-              viewBox="0 0 18 21"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6.50098 16.0003H11.501C12.1885 16.0003 12.751 15.4378 12.751 14.7503V8.50032H14.7385C15.851 8.50032 16.4135 7.15032 15.626 6.36282L9.88848 0.625321C9.77283 0.509441 9.63547 0.417507 9.48426 0.35478C9.33304 0.292053 9.17094 0.259766 9.00723 0.259766C8.84352 0.259766 8.68141 0.292053 8.5302 0.35478C8.37898 0.417507 8.24162 0.509441 8.12598 0.625321L2.38848 6.36282C1.60098 7.15032 2.15098 8.50032 3.26348 8.50032H5.25098V14.7503C5.25098 15.4378 5.81348 16.0003 6.50098 16.0003ZM1.50098 18.5003H16.501C17.1885 18.5003 17.751 19.0628 17.751 19.7503C17.751 20.4378 17.1885 21.0003 16.501 21.0003H1.50098C0.813477 21.0003 0.250977 20.4378 0.250977 19.7503C0.250977 19.0628 0.813477 18.5003 1.50098 18.5003Z"
-                fill="#4E6466"
-              />
-            </svg> */}
-            <input className="" type="file" />
-
-            {/* <p>Drag & Drop Your Files or Browse</p> */}
-          </div>
-        </div>
-        {/* <div className="border rounded-md">
-          <div className="h-10 p-2 border-b bg-slate-200">
-            <p>How to Design Better UI</p>
-          </div>
-          <div className="flex flex-col items-center justify-center h-36">
-            <svg
-              width="18"
-              height="21"
-              viewBox="0 0 18 21"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6.50098 16.0003H11.501C12.1885 16.0003 12.751 15.4378 12.751 14.7503V8.50032H14.7385C15.851 8.50032 16.4135 7.15032 15.626 6.36282L9.88848 0.625321C9.77283 0.509441 9.63547 0.417507 9.48426 0.35478C9.33304 0.292053 9.17094 0.259766 9.00723 0.259766C8.84352 0.259766 8.68141 0.292053 8.5302 0.35478C8.37898 0.417507 8.24162 0.509441 8.12598 0.625321L2.38848 6.36282C1.60098 7.15032 2.15098 8.50032 3.26348 8.50032H5.25098V14.7503C5.25098 15.4378 5.81348 16.0003 6.50098 16.0003ZM1.50098 18.5003H16.501C17.1885 18.5003 17.751 19.0628 17.751 19.7503C17.751 20.4378 17.1885 21.0003 16.501 21.0003H1.50098C0.813477 21.0003 0.250977 20.4378 0.250977 19.7503C0.250977 19.0628 0.813477 18.5003 1.50098 18.5003Z"
-                fill="#4E6466"
-              />
-            </svg>
-
-            <p>Drag & Drop Your Files or Browse</p>
-          </div>
-        </div> */}
-      </div>
-    </div>
-  );
-};
-const Variants = () => {
-  return (
-    <div className="mt-4 p-4 rounded-xl border bg-white">
-      <p className="text-lg mb-4">Variants</p>
-      <div className="border rounded-md h-32 flex items-center justify-center shadow-[inset_5px_2px_28px_rgba(0,0,0,0.1)]">
-        <button className="bg-black rounded-lg h-12 w-32 text-white hover:bg-gray-600 transition-all duration-300">
-          Add Variants
-        </button>
-      </div>
-    </div>
-  );
-};
-const Sales = () => {
-  return (
-    <div className="mt-4 p-4 rounded-xl border bg-white">
-      <p className="text-lg mb-4">Sales</p>
-      <div className="grid grid-cols-3 gap-x-6">
-        <div>
-          <p className="text-xs mb-1">Enable Unlimited Sales</p>
-          <div className="border rounded flex justify-between h-12">
-            <input
-              className="flex p-2 items-center rounded-l  outline-none"
-              type="text"
-              placeholder="Enter buy now price"
-            />
-            <div className="flex items-center justify-center bg-slate-300 rounded-r w-12 h-12">
-              <p>$</p>
-            </div>
-          </div>
-        </div>
-        <div>
-          <p className="text-xs mb-1">Set Sales Limit per User</p>
-          <div className="border rounded flex justify-between h-12">
-            <input
-              className="flex p-2 items-center rounded-l  outline-none"
-              type="text"
-              placeholder="Enter Limit"
-            />
-            <div className="flex items-center justify-center bg-slate-300 rounded-r w-12 h-12">
-              <svg
-                width="8"
-                height="12"
-                viewBox="0 0 8 12"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M0.667969 7.99984L4.0013 11.3332L7.33464 7.99984M0.667969 3.99984L4.0013 0.666504L7.33464 3.99984"
-                  stroke="black"
-                  strokeWidth="1.33333"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </div>
-          </div>
-        </div>
-        <div>
-          <p className="text-xs mb-1">End Sale On</p>
-          <div className="border rounded flex justify-between h-12">
-            <input
-              className="flex p-2 items-center rounded-l  outline-none"
-              type="text"
-              placeholder="Yes/ No"
-            />
+            <input type="file" onChange={handleFileChange} />
           </div>
         </div>
       </div>
@@ -150,6 +51,8 @@ const Sales = () => {
 };
 
 const Pricing = () => {
+  const [price, setPrice] = useState("");
+  const [comparePrice, setComparePrice] = useState("");
   return (
     <div className="mt-4 p-4 rounded-xl border bg-white">
       <p className="text-lg mb-4">Pricing</p>
@@ -161,6 +64,9 @@ const Pricing = () => {
               className="flex p-2 items-center rounded-l  outline-none"
               type="text"
               placeholder="Enter buy now price"
+              onChange={(e) => {
+                setPrice(e.target.value);
+              }}
             />
             <div className="flex items-center justify-center bg-slate-300 rounded-r w-12 h-12">
               <p>$</p>
@@ -174,6 +80,9 @@ const Pricing = () => {
               className="flex p-2 items-center rounded-l  outline-none"
               type="text"
               placeholder="Enter Limit"
+              onChange={(e) => {
+                setComparePrice(e.target.value);
+              }}
             />
             <div className="flex items-center justify-center bg-slate-300 rounded-r w-12 h-12">
               <svg
@@ -210,16 +119,63 @@ const Pricing = () => {
 };
 
 const Tags = () => {
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [categories, setCategories] = useState<CategoryInterface[]>([]);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/categories`
+      );
+      console.log(response.data);
+      setCategories(response.data);
+    } catch (error) {
+      console.log(`You got an error: ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  const handleChange = (event: any) => {
+    const selectedCategoryId = event.target.value;
+    if (categories) {
+      const selectedCategory = categories.find(
+        (category) => category.ID === parseInt(selectedCategoryId)
+      );
+      // @ts-ignore
+      setSelectedCategory(selectedCategory);
+      console.log(selectedCategory?.ID);
+      console.log(selectedCategory?.Name);
+    }
+  };
+
   return (
-    <div className="mt-5 p-4 bg-white rounded-xl border">
-      <p className="">Tags:</p>
-      <div className=" mt-2">
-        <input
-          type="text"
-          className="border w-full h-12 p-2 flex items-center rounded outline-none"
-          placeholder="Enter title"
-        />
-      </div>
+    <div className="mt-5 p-4 flex flex-col bg-white rounded-xl border">
+      {/* <label htmlFor="category-select">Select a Category:</label> */}
+      {categories && (
+        <select
+          className=" outline-none"
+          id="category-select"
+          //@ts-ignore
+          value={selectedCategory?.ID || ""}
+          onChange={handleChange}
+        >
+          <option value="">Select a category</option>
+          {categories.map((category) => (
+            <option key={category.ID} value={category.ID}>
+              {category.Name}
+            </option>
+          ))}
+        </select>
+      )}
+      {/* {selectedCategory && (
+        <div className="text-xs mt-2">
+          <p>Selected Category ID: {selectedCategory.ID}</p>
+          <p>Selected Category Name: {selectedCategory.Name}</p>
+        </div>
+      )} */}
     </div>
   );
 };
@@ -377,16 +333,22 @@ const Topbar = () => {
 };
 
 const ProductDescription = () => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+
   return (
     <div className="border mt-6 h-96 rounded-xl p-4 bg-white">
       <p className="font-medium text-lg">Describe your product</p>
       <div className="grid grid-cols-1 gap-x-5 mt-4">
         <div className="">
-          <p className="text-xs mb-2">Title:</p>
+          <p className="text-xs mb-2">Title</p>
           <input
             type="text"
             className="border w-full h-12 p-2 flex items-center rounded outline-none"
             placeholder="Enter title"
+            onChange={(e) => {
+              setTitle(e.target.value);
+            }}
           />
         </div>
         {/* <div className="">
@@ -623,7 +585,83 @@ const ProductDescription = () => {
           placeholder="Start writing…"
           name=""
           id=""
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
         ></textarea>
+      </div>
+    </div>
+  );
+};
+
+const Variants = () => {
+  return (
+    <div className="mt-4 p-4 rounded-xl border bg-white">
+      <p className="text-lg mb-4">Variants</p>
+      <div className="border rounded-md h-32 flex items-center justify-center shadow-[inset_5px_2px_28px_rgba(0,0,0,0.1)]">
+        <button className="bg-black rounded-lg h-12 w-32 text-white hover:bg-gray-600 transition-all duration-300">
+          Add Variants
+        </button>
+      </div>
+    </div>
+  );
+};
+
+const Sales = () => {
+  return (
+    <div className="mt-4 p-4 rounded-xl border bg-white">
+      <p className="text-lg mb-4">Sales</p>
+      <div className="grid grid-cols-3 gap-x-6">
+        <div>
+          <p className="text-xs mb-1">Enable Unlimited Sales</p>
+          <div className="border rounded flex justify-between h-12">
+            <input
+              className="flex p-2 items-center rounded-l  outline-none"
+              type="text"
+              placeholder="Enter buy now price"
+            />
+            <div className="flex items-center justify-center bg-slate-300 rounded-r w-12 h-12">
+              <p>$</p>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p className="text-xs mb-1">Set Sales Limit per User</p>
+          <div className="border rounded flex justify-between h-12">
+            <input
+              className="flex p-2 items-center rounded-l  outline-none"
+              type="text"
+              placeholder="Enter Limit"
+            />
+            <div className="flex items-center justify-center bg-slate-300 rounded-r w-12 h-12">
+              <svg
+                width="8"
+                height="12"
+                viewBox="0 0 8 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0.667969 7.99984L4.0013 11.3332L7.33464 7.99984M0.667969 3.99984L4.0013 0.666504L7.33464 3.99984"
+                  stroke="black"
+                  strokeWidth="1.33333"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div>
+          <p className="text-xs mb-1">End Sale On</p>
+          <div className="border rounded flex justify-between h-12">
+            <input
+              className="flex p-2 items-center rounded-l  outline-none"
+              type="text"
+              placeholder="Yes/ No"
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -5,8 +5,10 @@ export interface AffiliateLink {
 }
 
 export interface CategoryInterface {
-  Description: string;
+  ID: number;
   Name: string;
+  Description: string;
+  Thumbnail: string;
 }
 
 export interface ProductInterface {

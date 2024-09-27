@@ -51,7 +51,7 @@ export default function Product({ params }: any) {
       {productById && <FolderStructure product={productById.Name} />}
       {productById && (
         <ProductDetails
-          bannerImg={bannerImg}
+          bannerImg={`https://devnet.sendit.zone/showcaseimages/${productById.thumbnail}`}
           productName={productById.Name}
           price={`$${productById.Price}`}
         />
@@ -79,13 +79,14 @@ const ProductDetails = ({
       {/* Main Product */}
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-5 mb-5 xl:gap-x-8 2xl:gap-x-12 px-2 pt-2 xl:justify-between 2xl:justify-evenly gap-y-4 sm:gap-y-4 md:gap-y-4 lg:gap-y-0 lg:gap-x-2">
         <div className="col-span-5 sm:col-span-5 md:col-span-5 lg:col-span-3">
-          <Image
+          {/* <Image
             src={bannerImg}
             className="w-full h-full"
             alt="product"
             height={300}
             width={500}
-          />
+          /> */}
+          <img src={bannerImg} alt="" className="rounded w-full" />
         </div>
         <div className="lg:col-span-2 col-span-1 sm:col-span-1 md:col-span-1">
           <BorrowUSDCBannerBtn />
