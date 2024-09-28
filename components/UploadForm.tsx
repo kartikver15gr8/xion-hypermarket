@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import { Widget } from "@uploadcare/react-widget";
 
+const uploadcarekey = process.env.NEXT_PUBLIC_UPLOADCARE_KEY || "";
 const UploadForm: React.FC = () => {
   const [imageUrl, setImageUrl] = useState<string>("");
 
@@ -17,7 +18,7 @@ const UploadForm: React.FC = () => {
   return (
     <div>
       <h1>Upload an Image</h1>
-      <Widget publicKey="ab4119a1f2e826f10103" onChange={handleFileUpload} />
+      <Widget publicKey={uploadcarekey} onChange={handleFileUpload} />
       {imageUrl && (
         <div>
           <h2>Uploaded Image:</h2>

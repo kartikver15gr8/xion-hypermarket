@@ -9,6 +9,7 @@ import { Widget } from "@uploadcare/react-widget";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
+const uploadcarekey = process.env.NEXT_PUBLIC_UPLOADCARE_KEY || "";
 export default function ProductUpload() {
   const router = useRouter();
   // for Product Description
@@ -480,10 +481,7 @@ export default function ProductUpload() {
             <p>Add File</p>
           </div> */}
             {/* <h1>Upload an Image</h1> */}
-            <Widget
-              publicKey="ab4119a1f2e826f10103"
-              onChange={handleFileUpload}
-            />
+            <Widget publicKey={uploadcarekey} onChange={handleFileUpload} />
             {imageUrl && (
               <div className="w-fit">
                 {/* <h2>Uploaded Image:</h2> */}
