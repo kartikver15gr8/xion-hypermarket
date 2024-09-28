@@ -190,8 +190,8 @@ export default function TestSwagger() {
               <div key={key} className="border w-96 p-1 rounded">
                 <p className="w-fit text-wrap">{JSON.stringify(elem)}</p>
                 <p>{`${
-                  elem.thumbnail
-                } and type is: ${typeof elem.thumbnail}`}</p>
+                  elem.ThumbnailUrl
+                } and type is: ${typeof elem.ThumbnailUrl}`}</p>
               </div>
             );
           })}

@@ -17,15 +17,16 @@ export interface ProductInterface {
   Description: string;
   Filename: string;
   Price: string;
+  ComparePrice: string;
   UserID: number;
   CategoryID: number;
   Category: {
     ID: number;
     Name: string;
     Description: string;
-    Thumbnail: string;
+    ThumbnailUrl: string;
   };
-  thumbnail: string;
+  ThumbnailUrl: string;
 }
 
 export interface Purchase {

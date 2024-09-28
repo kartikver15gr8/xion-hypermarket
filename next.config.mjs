@@ -23,6 +23,11 @@ const nextConfig = {
         protocol: "https",
         hostname: "devnet.sendit.zone",
       },
+      {
+        protocol: "https",
+        hostname: "ucarecdn.com",
+        pathname: "/**",
+      },
     ],
   },
 };

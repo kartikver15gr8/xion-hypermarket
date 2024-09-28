@@ -1110,11 +1110,12 @@ const HotDigitalProducts = () => {
       <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3 lg:gap-y-0 h-full mt-5">
         {products &&
           products.map((elem, key) => {
+            //img={`https://devnet.sendit.zone/showcaseimages/${elem.thumbnail}`}
             return (
               <HotProductCard
                 key={key}
                 redirectHref={`/product/${elem.ID}`}
-                img={`https://devnet.sendit.zone/showcaseimages/${elem.thumbnail}`}
+                img={elem.ThumbnailUrl}
                 category="Digital Product"
                 productName={elem.Name}
                 description={elem.Description}
@@ -1477,7 +1478,7 @@ const DesignUIUX = () => {
               <HotProductCard
                 key={key}
                 redirectHref={`/product/${elem.ID}`}
-                img={`https://devnet.sendit.zone/showcaseimages/${elem.thumbnail}`}
+                img={elem.ThumbnailUrl}
                 category="Digital Product"
                 productName={elem.Name}
                 description={elem.Description}
