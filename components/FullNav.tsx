@@ -18,6 +18,7 @@ import { Button } from "./ui/button";
 import { usePathname } from "next/navigation";
 import { useKeplr } from "@/hooks/useKeplr";
 import WalletConnectWindow from "./WalletConnectWindow";
+import PhantomWalletButton from "./PhantomWalletButton";
 
 const isActive =
   "relative text-[14px] md:text-[16px] bg-[#dcdfe0] lg:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200";
@@ -110,7 +111,8 @@ export default function FullNav() {
         {/* <ConnectButton toggleWindow={toggleWalletConnect} /> */}
         <div className="flex items-center gap-x-1">
           <BecomeSeller />
-          <ConnectWithWallet />
+          {/* <ConnectWithWallet /> */}
+          <PhantomWalletButton />
         </div>
 
         {/* Below is the Ape icon for phone screen UI */}

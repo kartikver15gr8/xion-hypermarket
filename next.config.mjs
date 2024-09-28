@@ -1,5 +1,10 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  reactStrictMode: true,
+  webpack: (config) => {
+    config.resolve.fallback = { fs: false, net: false, tls: false };
+    return config;
+  },
   images: {
     remotePatterns: [
       {
@@ -13,6 +18,15 @@ const nextConfig = {
       {
         protocol: "https",
         hostname: "hypermarket.vercel.app",
+      },
+      {
+        protocol: "https",
+        hostname: "devnet.sendit.zone",
+      },
+      {
+        protocol: "https",
+        hostname: "ucarecdn.com",
+        pathname: "/**",
       },
     ],
   },
