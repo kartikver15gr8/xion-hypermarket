@@ -31,11 +31,11 @@ const agent = new https.Agent({
 export const GET = async (req: Request) => {
   const url = req.url;
   console.log(`this is the dynamic url: ${url}`);
-  let a = url.split("/buy/");
+  let a = url.split("/blinks/");
   let productId = a[1];
 
   console.log(`This is the productId: ${productId}`);
-  //   http://localhost:3000/api/actions/buy/9
+  //   http://localhost:3000/api/actions/blinks/9
 
   let dataTwo;
 
@@ -73,7 +73,7 @@ export const GET = async (req: Request) => {
     const { toPubkey } = validatedQueryParams(requestUrl);
 
     const baseHref = new URL(
-      `/api/actions/buy?to=${toPubkey.toBase58()}`,
+      `/api/actions/blinks?to=${toPubkey.toBase58()}`,
       requestUrl.origin
     ).toString();
 
@@ -86,7 +86,7 @@ export const GET = async (req: Request) => {
         actions: [
           {
             label: `${dataTwo[0].Price} SOL`,
-            href: `/api/actions/buy?amount=${data.amount}`,
+            href: `/api/actions/blinks?amount=${data.amount}`,
           },
           // {
           //   label: "0.5 SOL",
