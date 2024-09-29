@@ -9,11 +9,15 @@ export const GET = async () => {
       },
       {
         pathPattern: "/product/**",
-        apiPath: "https://hypermarket.vercel.app/blinks/product/**",
+        apiPath: "https://hypermarket.vercel.app/api/actions/buy/**",
       },
       {
         pathPattern: "/product/**",
-        apiPath: "https://sendit.markets/buy/**",
+        apiPath: "https://sendit.markets/api/actions/blinks/**",
+      },
+      {
+        pathPattern: "/product/**",
+        apiPath: "https://hypermarket.vercel.app/blinks/product/**",
       },
     ],
   };
