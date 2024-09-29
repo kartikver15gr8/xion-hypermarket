@@ -8,6 +8,7 @@ import { PhantomWalletName } from "@solana/wallet-adapter-phantom";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 import { toast } from "sonner";
+import axios from "axios";
 
 const PhantomWalletButton: React.FC = () => {
   const { select, wallet, connect, disconnect, connected, publicKey } =
@@ -16,6 +17,7 @@ const PhantomWalletButton: React.FC = () => {
   const [walletAddress, setWalletAddress] = useState("");
   const [phantomAddress, setPhantomAddress] = useRecoilState(phantomWallet);
   const walletAddr = useRecoilValue(phantomWallet);
+  const [userExist, setUserExist] = useState(true);
 
   useEffect(() => {
     if ("solana" in window) {
@@ -24,10 +26,53 @@ const PhantomWalletButton: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    const postUser = async () => {
+      try {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/signup`,
+          { wallet_address: walletAddress }
+        );
+        console.log(response.data);
+        return response.data;
+      } catch (error) {
+        console.log(`You got an error while creating a new user: ${error}`);
+      }
+    };
+    if (!userExist) {
+      postUser();
+    }
+  }, [userExist, walletAddress]);
+
+  useEffect(() => {
+    const checkUserExist = async () => {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${walletAddress}`
+        );
+        console.log("This is the user details");
+
+        console.log(response.data);
+        console.log(response.data.WalletAddress);
+        setUserExist(true);
+        return response.data;
+      } catch (error) {
+        setUserExist(false);
+        console.log(
+          `You got an error while checking the user existence: ${error}`
+        );
+      }
+    };
+    if (walletAddress !== "") {
+      checkUserExist();
+    }
+  }, [walletAddress]);
+
+  useEffect(() => {
     if (connected && publicKey) {
       setWalletAddress(publicKey.toBase58());
       setPhantomAddress(publicKey.toBase58());
       toast.info("Successfully connected to Phantom");
+      // console.log(`This is from recoil value${phantomAddress}`);
     } else {
       setWalletAddress("");
     }
