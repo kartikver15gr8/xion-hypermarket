@@ -40,7 +40,7 @@ export default function page() {
             <ProductCard
               img={ball}
               title="Digital Services"
-              examples="Things like: ebooks, skins, game skins"
+              examples="COMING SOON…!"
             />
           </div>
         </div>

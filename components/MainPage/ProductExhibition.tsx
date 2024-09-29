@@ -387,9 +387,9 @@ import { categoryImages } from "@/lib/categoryimg";
 const Category = () => {
   // storing categories
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
-  const [showAll, setShowAll] = useState(false);
   const [loading, setLoading] = useState(true);
   const CategoryImages = categoryImages;
+  const [showAll, setShowAll] = useState(false);
 
   const toggleShowAll = () => {
     setShowAll(!showAll);
@@ -760,9 +760,9 @@ const LiquidationBanner = () => {
               fill="#050505"
             />
           </svg>
-          <p>LIQUIDATIONS</p>
+          <p>LISTED PRODUCTS</p>
         </div>
-        <p className="text-2xl font-medium mt-4">OUR TOKENS</p>
+        <p className="text-2xl font-medium mt-4">GRAB BEST DEALS</p>
         <div className="w-full sm:px-[20px] md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[100px] mt-10">
           <LiquidationsTokenMarquee />
         </div>
@@ -1049,6 +1049,12 @@ const HotDigitalProducts = () => {
   const [products, setProducts] = useState<ProductInterface[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [showAll, setShowAll] = useState(false);
+
+  const toggleShowAll = () => {
+    setShowAll(!showAll);
+  };
+
   const fetchProducts = async () => {
     try {
       // fetching by specific category
@@ -1084,17 +1090,21 @@ const HotDigitalProducts = () => {
           </div>
           <p className="text-[12px] mt-1">Discover our digital products</p>
         </div>
-        <div className="flex gap-x-1 items-center ">
-          <p className="text-[11px] lg:text-sm">All Digital Products</p>
+
+        <div
+          onClick={toggleShowAll}
+          className="flex items-center gap-x-1 bg-black text-white rounded px-2 h-8 hover:bg-[#7e7d7d] transition-all duration-300 cursor-pointer"
+        >
+          <p>{showAll ? "Show Less" : "Show All"}</p>
           <svg
-            className="w-2 xl:w-3"
+            className="w-3"
             viewBox="0 0 12 12"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M1.33398 6.00016H10.6673M10.6673 6.00016L6.00065 1.3335M10.6673 6.00016L6.00065 10.6668"
-              stroke="#050505"
+              d="M1.33398 5.99967H10.6673M10.6673 5.99967L6.00065 1.33301M10.6673 5.99967L6.00065 10.6663"
+              stroke="#ffffff"
               strokeWidth="1.28"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -1107,22 +1117,24 @@ const HotDigitalProducts = () => {
           <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
         </div>
       )}
-      <div className="w-full grid grid-cols-2 lg:grid-cols-4 gap-x-3 gap-y-3 lg:gap-y-0 h-full mt-5">
-        {products &&
-          products.map((elem, key) => {
-            //img={`https://devnet.sendit.zone/showcaseimages/${elem.thumbnail}`}
-            return (
-              <HotProductCard
-                key={key}
-                redirectHref={`/product/${elem.ID}`}
-                img={elem.ThumbnailUrl}
-                category="Digital Product"
-                productName={elem.Name}
-                description={elem.Description}
-                price={`$${elem.Price} one time payment`}
-              />
-            );
-          })}
+      <div className="mt-5 w-full grid grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-2 xl:gap-y-3 xl:gap-x-3">
+        {products && (
+          <>
+            {products
+              .slice(0, showAll ? products.length : 4)
+              .map((elem, key) => (
+                <HotProductCard
+                  key={key}
+                  redirectHref={`/product/${elem.ID}`}
+                  img={elem.ThumbnailUrl}
+                  category="Digital Product"
+                  productName={elem.Name}
+                  description={elem.Description}
+                  price={`$${elem.Price} one time payment`}
+                />
+              ))}
+          </>
+        )}
       </div>
     </div>
   );
@@ -1146,22 +1158,20 @@ const HotProductCard = ({
   return (
     <Link
       href={redirectHref}
-      className="p-1 border rounded-lg hover:bg-[#e7e7e9] hover:border-[#ababae]  hover:shadow-lg transition-all duration-300"
+      className="p-1 border border-[#ccccce] rounded-lg hover:bg-[#e7e7e9] hover:border-[#ababae] hover:shadow-lg transition-all duration-300"
     >
-      {/* <Image
-        src={img}
-        alt=""
-        className="rounded w-full"
-        width={400}
-        height={300}
-        layout="responsive"
-      /> */}
-      <img src={img} alt="" className="rounded w-full" />
+      <div className="relative w-full h-0 pb-[60%] overflow-hidden rounded border border-[#ccccce]">
+        <img
+          src={img}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+      </div>
       <div className="p-1">
         <p className="text-[8px] sm:text-[10px] bg-[#d0d0d3] w-fit mt-1 sm:mt-2 px-1 rounded-[2px]">
           {category}
         </p>
-        <p className="font-bold text-lg  mt-1 md:mt-2">{productName}</p>
+        <p className="font-bold text-lg mt-1 md:mt-2">{productName}</p>
         <p className="text-[9px] sm:text-[10px] md:text-[12px] w-[80%] text-[#8B8B92]">
           {description}
         </p>
@@ -1424,6 +1434,12 @@ const DesignUIUX = () => {
   const [products, setProducts] = useState<ProductInterface[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [showAll, setShowAll] = useState(false);
+
+  const toggleShowAll = () => {
+    setShowAll(!showAll);
+  };
+
   const fetchProducts = async () => {
     try {
       // fetching by specific category
@@ -1448,8 +1464,11 @@ const DesignUIUX = () => {
         <p className="font-medium text-lg md:text-xl xl:text-2xl">
           Design UI/UX
         </p>
-        <div className="flex items-center gap-x-1">
-          <p>Explore All</p>
+        <div
+          onClick={toggleShowAll}
+          className="flex items-center gap-x-1 bg-black text-white rounded px-2 h-8 hover:bg-[#7e7d7d] transition-all duration-300 cursor-pointer"
+        >
+          <p>{showAll ? "Show Less" : "Show All"}</p>
           <svg
             className="w-3"
             viewBox="0 0 12 12"
@@ -1458,7 +1477,7 @@ const DesignUIUX = () => {
           >
             <path
               d="M1.33398 5.99967H10.6673M10.6673 5.99967L6.00065 1.33301M10.6673 5.99967L6.00065 10.6663"
-              stroke="#050505"
+              stroke="#ffffff"
               strokeWidth="1.28"
               strokeLinecap="round"
               strokeLinejoin="round"
@@ -1471,21 +1490,24 @@ const DesignUIUX = () => {
           <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
         </div>
       )}
-      <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-x-2 gap-y-2 md:gap-y-0 xl:gap-x-3">
-        {products &&
-          products.map((elem, key) => {
-            return (
-              <HotProductCard
-                key={key}
-                redirectHref={`/product/${elem.ID}`}
-                img={elem.ThumbnailUrl}
-                category="Digital Product"
-                productName={elem.Name}
-                description={elem.Description}
-                price={`$${elem.Price} one time payment`}
-              />
-            );
-          })}
+      <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-x-2 gap-y-2 xl:gap-y-3 xl:gap-x-3">
+        {products && (
+          <>
+            {products
+              .slice(0, showAll ? products.length : 4)
+              .map((elem, key) => (
+                <HotProductCard
+                  key={key}
+                  redirectHref={`/product/${elem.ID}`}
+                  img={elem.ThumbnailUrl}
+                  category="Digital Product"
+                  productName={elem.Name}
+                  description={elem.Description}
+                  price={`$${elem.Price} one time payment`}
+                />
+              ))}
+          </>
+        )}
       </div>
     </div>
   );

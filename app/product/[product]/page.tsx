@@ -78,15 +78,12 @@ const ProductDetails = ({
 
       {/* Main Product */}
       <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-5 mb-5 xl:gap-x-8 2xl:gap-x-12 px-2 pt-2 xl:justify-between 2xl:justify-evenly gap-y-4 sm:gap-y-4 md:gap-y-4 lg:gap-y-0 lg:gap-x-2">
-        <div className="col-span-5 sm:col-span-5 md:col-span-5 lg:col-span-3">
-          {/* <Image
+        <div className="col-span-5 sm:col-span-5 md:col-span-5 lg:col-span-3 relative w-full h-0 pb-[60%] overflow-hidden border border-[#717274] rounded-lg">
+          <img
             src={bannerImg}
-            className="w-full h-full"
             alt="product"
-            height={200}
-            width={300}
-          /> */}
-          <img src={bannerImg} alt="" className="rounded w-full" />
+            className="absolute inset-0 w-full h-full object-cover"
+          />
         </div>
         <div className="lg:col-span-2 col-span-1 sm:col-span-1 md:col-span-1">
           <BorrowUSDCBannerBtn />
@@ -112,6 +109,10 @@ const ProductDetails = ({
               <p>5 Ratings</p>
 
               <div className="flex">
+                <Image className="w-3" src={star} alt="" />
+                <Image className="w-3" src={star} alt="" />
+                <Image className="w-3" src={star} alt="" />
+                <Image className="w-3" src={star} alt="" />
                 <Image className="w-3" src={star} alt="" />
               </div>
             </div>
@@ -187,7 +188,7 @@ const ProductDetails = ({
           </div>
 
           <div className="mt-1">
-            <p className="text-xs md:text-[12px] font-medium">Make a price:</p>
+            {/* <p className="text-xs md:text-[12px] font-medium">Make a price:</p> */}
             <div className="relative border h-12 mt-1 flex justify-between px-4 items-center shadow-[inset_5px_2px_28px_rgba(0,0,0,0.07)]">
               <Image
                 src={noisebg}
@@ -196,18 +197,18 @@ const ProductDetails = ({
                 objectFit="cover"
                 className="opacity-[5%]"
               />
-              <p className="text-xl font-bold">Price</p>
+              <p className="text-xl font-medium">Price after discount</p>
               <div className="border bg-white z-10 flex items-center px-2 h-10 w-28">
-                <p>$</p>
-                <input
+                <p>{price}</p>
+                {/* <input
                   type="number"
                   className="flex items-center p-1 h-full w-full outline-none "
-                />
+                /> */}
               </div>
             </div>
-            <p className="text-xs md:text-[12px] font-medium mt-1">
+            {/* <p className="text-xs md:text-[12px] font-medium mt-1">
               Available in Wallet: 2000 USDC
-            </p>
+            </p> */}
           </div>
 
           <div className="grid grid-cols-2 gap-x-2 h-14 mt-4 w-full">
@@ -309,12 +310,9 @@ const ProductReviews = ({
         <div className="flex mt-4">
           <div className="flex">
             <Image className="w-3" src={star} alt="" />
-          </div>
-        </div>
-        <p>&quot;Absolutely amazing ebook, would highly recommend&quot;</p>
-        <p>Buyer&apos;s Name</p>
-        <div className="flex mt-4">
-          <div className="flex">
+            <Image className="w-3" src={star} alt="" />
+            <Image className="w-3" src={star} alt="" />
+            <Image className="w-3" src={star} alt="" />
             <Image className="w-3" src={star} alt="" />
           </div>
         </div>
@@ -322,6 +320,20 @@ const ProductReviews = ({
         <p>Buyer&apos;s Name</p>
         <div className="flex mt-4">
           <div className="flex">
+            <Image className="w-3" src={star} alt="" />
+            <Image className="w-3" src={star} alt="" />
+            <Image className="w-3" src={star} alt="" />
+            <Image className="w-3" src={star} alt="" />
+          </div>
+        </div>
+        <p>&quot;Absolutely amazing ebook, would highly recommend&quot;</p>
+        <p>Buyer&apos;s Name</p>
+        <div className="flex mt-4">
+          <div className="flex">
+            <Image className="w-3" src={star} alt="" />
+            <Image className="w-3" src={star} alt="" />
+            <Image className="w-3" src={star} alt="" />
+            <Image className="w-3" src={star} alt="" />
             <Image className="w-3" src={star} alt="" />
           </div>
         </div>
