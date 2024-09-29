@@ -4,9 +4,9 @@ const TITLE = "Hyper Market - Sell Everything, Buy Everything";
 const DESCRIPTION =
   "Hyper Market, best platform that lets you purchase any digital asset on unbelievable discounts. buy or sell anything with crypto!";
 
-const PREVIEW_IMAGE_URL = "https://sendit-web.vercel.app/opengraph-image.png";
+const PREVIEW_IMAGE_URL = "https://sendit.markets/opengraph-image.png";
 const ALT_TITLE = "hyper market";
-const BASE_URL = "https://sendit-web.vercel.app";
+const BASE_URL = "https://sendit.markets";
 
 export const siteConfig: Metadata = {
   title: TITLE,
