@@ -463,46 +463,21 @@ export default function ProductUpload() {
         <p className="text-xs mt-2 mb-1">
           Click to upload and slide to switch order:
         </p>
-        <div className="grid grid-cols-5 gap-x-2 h-44">
-          <div className="border flex flex-col items-center justify-center p-1 text-white  bg-[#4B6161] rounded">
-            {/* <div className="border border-dashed w-full h-full flex items-center justify-center flex-col gap-y-1">
-            <svg
-              width="15"
-              height="17"
-              viewBox="0 0 15 17"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M5.2002 12.9999H9.2002C9.7502 12.9999 10.2002 12.5499 10.2002 11.9999V6.99991H11.7902C12.6802 6.99991 13.1302 5.91991 12.5002 5.28991L7.9102 0.699915C7.81768 0.607211 7.70779 0.533664 7.58682 0.483482C7.46585 0.433301 7.33616 0.407471 7.2052 0.407471C7.07423 0.407471 6.94454 0.433301 6.82357 0.483482C6.7026 0.533664 6.59271 0.607211 6.5002 0.699915L1.9102 5.28991C1.2802 5.91991 1.7202 6.99991 2.6102 6.99991H4.2002V11.9999C4.2002 12.5499 4.6502 12.9999 5.2002 12.9999ZM1.2002 14.9999H13.2002C13.7502 14.9999 14.2002 15.4499 14.2002 15.9999C14.2002 16.5499 13.7502 16.9999 13.2002 16.9999H1.2002C0.650195 16.9999 0.200195 16.5499 0.200195 15.9999C0.200195 15.4499 0.650195 14.9999 1.2002 14.9999Z"
-                fill="white"
-              />
-            </svg>
-            <p>Add File</p>
-          </div> */}
-            {/* <h1>Upload an Image</h1> */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-2 gap-y-2">
+          <div className="border flex flex-col items-center justify-center p-1 text-white bg-[#4B6161] rounded h-44 relative">
             <Widget publicKey={uploadcarekey} onChange={handleFileUpload} />
             {imageUrl && (
-              <div className="w-fit">
-                {/* <h2>Uploaded Image:</h2> */}
-                <Image
-                  className="w-fit"
+              <div className="absolute inset-0 rounded border border-[#ccccce] overflow-hidden">
+                {/* Image container */}
+                <img
                   src={imageUrl}
                   alt=""
-                  width={300}
-                  height={200}
+                  className="w-full h-full object-cover"
                 />
-                {/* <img
-                  className="w-fit"
-                  src={imageUrl}
-                  alt="Uploaded"
-                  width="300"
-                /> */}
-                {/* <p>Image URL: {imageUrl}</p> */}
               </div>
             )}
           </div>
-          <div className="border hover:bg-[#F9F9FD] transition-all duration-200 flex items-center justify-center rounded">
+          <div className="border hover:bg-[#F9F9FD] transition-all duration-200 flex items-center justify-center rounded h-44">
             <svg
               width="15"
               height="14"
@@ -519,7 +494,7 @@ export default function ProductUpload() {
               />
             </svg>
           </div>
-          <div className="border hover:bg-[#F9F9FD] transition-all duration-200 flex items-center justify-center rounded">
+          <div className="border hover:bg-[#F9F9FD] transition-all duration-200 flex items-center justify-center rounded h-44">
             <svg
               width="15"
               height="14"
@@ -536,7 +511,7 @@ export default function ProductUpload() {
               />
             </svg>
           </div>
-          <div className="border hover:bg-[#F9F9FD] transition-all duration-200 flex items-center justify-center rounded">
+          <div className="border hover:bg-[#F9F9FD] transition-all duration-200 flex items-center justify-center rounded h-44">
             <svg
               width="15"
               height="14"
@@ -553,7 +528,7 @@ export default function ProductUpload() {
               />
             </svg>
           </div>
-          <div className="border hover:bg-[#F9F9FD] transition-all duration-200 flex items-center justify-center rounded">
+          <div className="border hover:bg-[#F9F9FD] transition-all duration-200 flex items-center justify-center rounded h-44">
             <svg
               width="15"
               height="14"
