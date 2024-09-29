@@ -41,7 +41,7 @@ export const GET = async (req: Request) => {
 
   try {
     const response = await axios.get(
-      `https://pgdb.sendit.zone/api/v1/fetch/products?product_id=${productId}`,
+      `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?product_id=${productId}`,
       {
         httpsAgent: agent,
       }
