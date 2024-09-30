@@ -962,6 +962,8 @@ const NewThisWeek = () => {
 };
 
 const DontMissBanner = () => {
+  const router = useRouter();
+
   return (
     <div className="relative overflow-hidden flex flex-col h-[200px] mt-10 rounded-xl">
       <Image src={circleshade} className="absolute h-full opacity-70" alt="" />
@@ -1035,7 +1037,12 @@ const DontMissBanner = () => {
           <p className="">Digital Marketplace</p>
         </div>
         <p className="text-4xl font-medium mt-1">Don&apos;t miss out</p>
-        <Button className="text-md mt-5 hover:bg-blue-500 transition-all duration-200">
+        <Button
+          onClick={() => {
+            router.push("/product");
+          }}
+          className="text-md mt-5 hover:bg-blue-500 transition-all duration-200"
+        >
           Buy now
         </Button>
       </div>
@@ -1044,6 +1051,7 @@ const DontMissBanner = () => {
 };
 
 import { ProductInterface } from "@/lib/models";
+import { useRouter } from "next/navigation";
 
 const HotDigitalProducts = () => {
   const [products, setProducts] = useState<ProductInterface[]>([]);
@@ -1140,7 +1148,7 @@ const HotDigitalProducts = () => {
   );
 };
 
-const HotProductCard = ({
+export const HotProductCard = ({
   img,
   category,
   productName,

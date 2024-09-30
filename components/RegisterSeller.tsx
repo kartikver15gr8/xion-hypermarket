@@ -24,11 +24,10 @@ export default function RegisterSeller() {
       return;
     }
 
-    setIsRegistering(true);
-
     try {
-      const publicKey = new PublicKey(walletAddress);
+      setIsRegistering(true);
 
+      const publicKey = new PublicKey(walletAddress);
       const tx = await solanaMarketplaceProgram.methods
         .registerSeller()
         .accounts({
@@ -79,20 +78,18 @@ export default function RegisterSeller() {
   };
 
   return (
-    <div className="pt-16 border p-4">
-      <h2 className="text-2xl font-bold mb-4">Register as a Seller</h2>
-      <p className="mb-4">
-        Click the button below to register as a seller on our marketplace.
-      </p>
+    <div className="pt-16">
       <button
         onClick={registerSellerTransaction}
-        className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+        className="px-4 py-2 bg-[#223D40] text-white rounded-lg hover:bg-[#426d72] transition-colors"
         disabled={isRegistering || !walletAddress}
       >
         {isRegistering ? "Registering..." : "Register as Seller"}
       </button>
       {!walletAddress && (
-        <p className="mt-2 text-red-500">Please connect your wallet first.</p>
+        <p className="mt-2 text-red-500 text-sm">
+          Please connect your wallet first.
+        </p>
       )}
     </div>
   );
