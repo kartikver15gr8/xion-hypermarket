@@ -8,7 +8,42 @@ export interface CategoryInterface {
   ID: number;
   Name: string;
   Description: string;
-  Thumbnail: string;
+  ThumbnailUrl: string;
+}
+
+export interface ReviewInterface {
+  Comment: string;
+  CreatedAt: string;
+  ID: number;
+  Product: {
+    Category: {
+      Description: string;
+      ID: number;
+      Name: string;
+      ThumbnailUrl: string;
+    };
+    CategoryID: number;
+    ComparePrice: string;
+    Description: string;
+    Filename: string;
+    id: number;
+    Name: string;
+    Price: string;
+    ThumbnailUrl: string;
+    UserID: number;
+  };
+  ProductID: number;
+  Rating: number;
+  TransactionHash: string;
+  UpdatedAt: string;
+  User: {
+    CreatedAt: string;
+    ID: number;
+    SellerRegTxHash: string;
+    UpdatedAt: string;
+    WalletAddress: string;
+  };
+  userID: number;
 }
 
 export interface ProductInterface {

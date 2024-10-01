@@ -20,6 +20,9 @@ import axios from "axios";
 import { ProductInterface } from "@/lib/models";
 import { useRouter } from "next/navigation";
 import star from "@/public/_static/illustrations/star.svg";
+import { ReviewInterface } from "@/lib/models";
+import { useRecoilValue } from "recoil";
+import { phantomWallet } from "@/store/atom/phantomWallet";
 
 export default function Product({ params }: any) {
   const router = useRouter();
@@ -30,7 +33,7 @@ export default function Product({ params }: any) {
   // Fetch product data based on productId
   const fetchProductData = async () => {
     try {
-      console.log(`Fetching product with ID: ${productId}`);
+      // console.log(`Fetching product with ID: ${productId}`);
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?product_id=${productId}`
       );
@@ -57,7 +60,10 @@ export default function Product({ params }: any) {
         />
       )}
       {productById && (
-        <ProductReviews productDescription={productById.Description} />
+        <ProductReviews
+          productId={productId}
+          productDescription={productById.Description}
+        />
       )}
     </div>
   );
@@ -293,9 +299,37 @@ const FolderStructure = ({ product }: { product: string }) => {
 
 const ProductReviews = ({
   productDescription,
+  productId,
 }: {
   productDescription: string;
+  productId: number;
 }) => {
+  const [productReviews, setProductReviews] = useState<ReviewInterface[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchReviews = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/reviews?product_id=${productId}`
+      );
+      console.log("the reviews");
+
+      console.log(response.data);
+      setProductReviews(response.data);
+    } catch (error) {
+      console.log(
+        `You got an error while fetching the product reviews: ${error}`
+      );
+      setIsLoading(false);
+    }
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    fetchReviews();
+  }, []);
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-5 xl:gap-x-4 2xl:gap-x-8 px-2 pt-2 xl:justify-between 2xl:justify-evenly gap-y-4 sm:gap-y-4 md:gap-y-4 lg:gap-y-0 mb-10">
       <div className=" col-span-5 sm:col-span-5 md:col-span-5 lg:col-span-3">
@@ -306,40 +340,190 @@ const ProductReviews = ({
         </div>
       </div>
       <div className="lg:col-span-2 col-span-1 sm:col-span-1 md:col-span-1">
-        <p className="font-bold text-lg">Ratings:</p>
-        <div className="flex mt-4">
-          <div className="flex">
-            <Image className="w-3" src={star} alt="" />
-            <Image className="w-3" src={star} alt="" />
-            <Image className="w-3" src={star} alt="" />
-            <Image className="w-3" src={star} alt="" />
-            <Image className="w-3" src={star} alt="" />
+        <PostReviewTab productId={productId} />
+        <p className="font-bold text-lg mt-2">Ratings:</p>
+        {productReviews.length > 0 && (
+          <div className="mt-2 relative overflow-y-auto hide-scrollbar scroll-smooth h-60 border rounded-lg w-[100%]">
+            {productReviews.map((elem, key) => {
+              return (
+                <RatingLabel
+                  key={key}
+                  starCount={elem.Rating}
+                  description={elem.Comment}
+                />
+              );
+            })}
           </div>
-        </div>
-        <p>&quot;Absolutely amazing ebook, would highly recommend&quot;</p>
-        <p>Buyer&apos;s Name</p>
-        <div className="flex mt-4">
-          <div className="flex">
-            <Image className="w-3" src={star} alt="" />
-            <Image className="w-3" src={star} alt="" />
-            <Image className="w-3" src={star} alt="" />
-            <Image className="w-3" src={star} alt="" />
-          </div>
-        </div>
-        <p>&quot;Absolutely amazing ebook, would highly recommend&quot;</p>
-        <p>Buyer&apos;s Name</p>
-        <div className="flex mt-4">
-          <div className="flex">
-            <Image className="w-3" src={star} alt="" />
-            <Image className="w-3" src={star} alt="" />
-            <Image className="w-3" src={star} alt="" />
-            <Image className="w-3" src={star} alt="" />
-            <Image className="w-3" src={star} alt="" />
-          </div>
-        </div>
-        <p>&quot;Absolutely amazing ebook, would highly recommend&quot;</p>
-        <p>Buyer&apos;s Name</p>
+        )}
       </div>
+    </div>
+  );
+};
+
+const RatingLabel = ({
+  starCount,
+  description,
+}: {
+  starCount: number;
+  description: string;
+}) => {
+  const [isFullDescriptionVisible, setIsFullDescriptionVisible] =
+    useState(false);
+
+  const toggleDescription = () => {
+    setIsFullDescriptionVisible(!isFullDescriptionVisible);
+  };
+
+  const displayedDescription = isFullDescriptionVisible
+    ? description
+    : description.length > 100
+    ? `${description.substring(0, 100)}...`
+    : description;
+
+  return (
+    <div className="border-b p-2  ">
+      <div className="flex">
+        {Array.from({ length: starCount }, (_, index) => (
+          <Image
+            key={index}
+            className="w-3"
+            src={star}
+            alt={`Star ${index + 1}`}
+          />
+        ))}
+      </div>
+      {/* <p>{description}</p> */}
+      <p>{displayedDescription}</p>
+      {/* {description.length > 100 && (
+        <button
+          onClick={toggleDescription}
+          className="text-blue-500 underline mt-2"
+        >
+          {isFullDescriptionVisible ? "Show Less" : "Show Full"}
+        </button>
+      )} */}
+    </div>
+  );
+};
+
+const PostReviewTab = ({ productId }: { productId: number }) => {
+  const [reviewWindowVisibility, setAddReviewWindowVisibility] =
+    useState(false);
+  const walletAddress = useRecoilValue(phantomWallet);
+  const [comment, setComment] = useState("");
+  const [rating, setRating] = useState(0);
+  const [userId, setUserId] = useState(null);
+  // console.log(rating);
+
+  const fetchUserId = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${walletAddress}`
+      );
+      // console.log("This is the user: ");
+      console.log(response.data);
+      console.log(response.data.ID);
+      setUserId(response.data.ID);
+    } catch (error) {
+      console.log(`Error while fetching UserId: ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    fetchUserId();
+  }, []);
+
+  const toggleReviewWindowVisibility = () => {
+    setAddReviewWindowVisibility(!reviewWindowVisibility);
+  };
+
+  const postReviewAction = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/reviews`,
+        {
+          comment: comment,
+          product_id: Number(productId),
+          rating: rating,
+          user_id: userId,
+        }
+      );
+
+      console.log(response.data);
+      setAddReviewWindowVisibility(false);
+      return response.data;
+    } catch (error) {
+      console.log(`You got an error while posting review: ${error}`);
+    }
+  };
+
+  // Review post body
+  // {
+  //   "comment": "Amazing product so far, very helpful bots",
+  //   "product_id": 21,
+  //   "rating": 4,
+  //   "user_id": 4
+  // }
+
+  return (
+    <div className="">
+      {!reviewWindowVisibility ? (
+        <button
+          onClick={toggleReviewWindowVisibility}
+          className="border h-12 rounded-lg w-full bg-[#223D40] text-white font-medium hover:bg-[#416c70] transition-all duration-300"
+        >
+          Add Review
+        </button>
+      ) : (
+        <div className="rounded-lg">
+          <div className="h-10 flex justify-between items-center rounded-xl w-full">
+            <div className="border px-2 rounded-xl h-10 items-center flex">
+              {[...Array(5)].map((_, index) => {
+                const starIndex = index + 1;
+                return (
+                  <button
+                    key={starIndex}
+                    type="button"
+                    className={`star ${starIndex <= rating ? "on" : "off"}`}
+                    onClick={() => setRating(starIndex)}
+                    style={{
+                      backgroundColor: "transparent",
+                      border: "none",
+                      cursor: "pointer",
+                      color: starIndex <= rating ? "#385570" : "#C5D1DB",
+                      fontSize: "20px",
+                    }}
+                  >
+                    ★
+                  </button>
+                );
+              })}
+            </div>
+            <button
+              onClick={toggleReviewWindowVisibility}
+              className="px-2 border rounded-xl h-10 font-medium text-white bg-black"
+            >
+              Close
+            </button>
+          </div>
+          <textarea
+            className="border w-full p-1 rounded-lg mt-1"
+            name="Review"
+            id=""
+            rows={5}
+            placeholder="Write your review"
+            onChange={(e) => {
+              setComment(e.target.value);
+            }}
+          ></textarea>
+          <button
+            onClick={postReviewAction}
+            className="border h-12 rounded-lg w-full bg-[#223D40] text-white font-medium hover:bg-[#416c70] transition-all duration-300"
+          >
+            Post Review
+          </button>
+        </div>
+      )}
     </div>
   );
 };

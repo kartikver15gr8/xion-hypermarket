@@ -71,6 +71,12 @@ import puzzletwo from "@/public/_static/background/puzzletwo.png";
 import fidget from "@/public/_static/background/fidget.png";
 import layers from "@/public/_static/background/layer.png";
 import speaker from "@/public/_static/background/speaker.png";
+import fidgetcat from "@/public/categoryPngs/fidget_cat.png";
+import globecat from "@/public/categoryPngs/globe_cat.png";
+import layercat from "@/public/categoryPngs/layers_cat.png";
+import miccam from "@/public/categoryPngs/mic_cam.png";
+import puzzlecat from "@/public/categoryPngs/puzzle_cat.png";
+import cubecat from "@/public/categoryPngs/cube_cat.png";
 import bannerbgtwo from "@/public/_static/background/bannerbgtwo.png";
 
 // marquee icons
@@ -439,10 +445,10 @@ const Category = () => {
               .map((elem, key) => (
                 <CategoryCard
                   key={key}
-                  bg={globe}
+                  bg={elem.ThumbnailUrl}
                   categoryName={elem.Name}
                   description={elem.Description}
-                  bgClass="opacity-[13%] bg-blend-luminosity absolute w-[250px] -bottom-[85px] -right-[40px]"
+                  bgClass="opacity-[13%] bg-blend-luminosity absolute w-[250px] -bottom-[40px] -right-[40px]"
                 />
               ))}
           </>
@@ -508,7 +514,13 @@ const CategoryCard = ({
 }) => {
   return (
     <div className=" p-3 md:p-4 lg:p-5 relative flex justify-center flex-col h-32 xl:h-44 2xl:h-48 border border-[#E5E5E5] rounded-xl xl:rounded-2xl overflow-hidden shadow-[inset_-70px_-50px_60px_rgba(0,0,0,0.08)]  hover:bg-[#dbdbdb] transition-all duration-300">
-      <Image src={bg} alt="Background" className={`${bgClass}`} />
+      <Image
+        src={bg}
+        alt="Background"
+        className={`${bgClass}`}
+        width={200}
+        height={200}
+      />
       <div className="">
         <div className="">
           <p className="text-[16px] md:text-lg lg:text-xl font-medium">
