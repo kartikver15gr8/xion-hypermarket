@@ -57,6 +57,18 @@ export type SolanaMarketplace = {
         {
           name: "escrow";
           writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [101, 115, 99, 114, 111, 119];
+              },
+              {
+                kind: "account";
+                path: "buyer";
+              }
+            ];
+          };
         },
         {
           name: "protocolFee";
@@ -86,7 +98,6 @@ export type SolanaMarketplace = {
         {
           name: "buyer";
           writable: true;
-          relations: ["escrow"];
         },
         {
           name: "systemProgram";
@@ -119,7 +130,6 @@ export type SolanaMarketplace = {
           name: "seller";
           writable: true;
           signer: true;
-          relations: ["escrow"];
         },
         {
           name: "buyer";
@@ -128,6 +138,18 @@ export type SolanaMarketplace = {
         {
           name: "escrow";
           writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [101, 115, 99, 114, 111, 119];
+              },
+              {
+                kind: "account";
+                path: "buyer";
+              }
+            ];
+          };
         },
         {
           name: "protocolFee";
@@ -169,11 +191,22 @@ export type SolanaMarketplace = {
           name: "buyer";
           writable: true;
           signer: true;
-          relations: ["escrow"];
         },
         {
           name: "escrow";
           writable: true;
+          pda: {
+            seeds: [
+              {
+                kind: "const";
+                value: [101, 115, 99, 114, 111, 119];
+              },
+              {
+                kind: "account";
+                path: "buyer";
+              }
+            ];
+          };
         },
         {
           name: "systemProgram";

@@ -50,7 +50,19 @@
         },
         {
           "name": "escrow",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [101, 115, 99, 114, 111, 119]
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              }
+            ]
+          }
         },
         {
           "name": "protocol_fee",
@@ -68,8 +80,7 @@
         },
         {
           "name": "buyer",
-          "writable": true,
-          "relations": ["escrow"]
+          "writable": true
         },
         {
           "name": "system_program",
@@ -101,8 +112,7 @@
         {
           "name": "seller",
           "writable": true,
-          "signer": true,
-          "relations": ["escrow"]
+          "signer": true
         },
         {
           "name": "buyer",
@@ -110,7 +120,19 @@
         },
         {
           "name": "escrow",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [101, 115, 99, 114, 111, 119]
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              }
+            ]
+          }
         },
         {
           "name": "protocol_fee",
@@ -140,12 +162,23 @@
         {
           "name": "buyer",
           "writable": true,
-          "signer": true,
-          "relations": ["escrow"]
+          "signer": true
         },
         {
           "name": "escrow",
-          "writable": true
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [101, 115, 99, 114, 111, 119]
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              }
+            ]
+          }
         },
         {
           "name": "system_program",
