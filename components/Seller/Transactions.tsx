@@ -461,7 +461,7 @@ export const SalesOverview = () => {
 
 const TransactionTopLabel = () => {
   return (
-    <div className="relative border-b w-[100%]">
+    <div className="relative border-b w-[100%] px-[20px] sm:px-[20px] md:px-[40px] lg:px-[60px] xl:px-20">
       <Image
         src={randomstatic}
         alt="Background"
@@ -471,15 +471,15 @@ const TransactionTopLabel = () => {
       />
       <div className="h-20 grid grid-cols-2">
         <div className=" h-full flex items-center">
-          <p className="text-lg font-medium ml-20">Transactions</p>
+          <p className="text-sm lg:text-lg font-medium">Transactions</p>
         </div>
         <div className=" h-full flex items-center gap-x-2">
           <div className="relative  flex items-center justify-center">
-            <Image className="w-12" src={hex} alt="" />
+            <Image className="w-8 md:w-10 xl:w-12" src={hex} alt="" />
             <p className="text-lg font-medium text-white absolute z-20">2</p>
           </div>
           <div>
-            <p className="font-medium text-lg">Emerging Seller</p>
+            <p className="text-sm lg:text-lg font-medium">Emerging Seller</p>
             <div className="flex gap-x-[1px] mt-[5px] mb-[1px]">
               <div className="w-28 h-[3px] bg-[#223D40]"></div>
               <div className="w-8 h-[3px] bg-[#E2E0D9]"></div>

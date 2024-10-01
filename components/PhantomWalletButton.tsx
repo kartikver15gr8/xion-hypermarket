@@ -49,10 +49,10 @@ const PhantomWalletButton: React.FC = () => {
         const response = await axios.get(
           `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${walletAddress}`
         );
-        console.log("This is the user details");
+        // console.log("This is the user details");
 
-        console.log(response.data);
-        console.log(response.data.WalletAddress);
+        // console.log(response.data);
+        // console.log(response.data.WalletAddress);
         setUserExist(true);
         return response.data;
       } catch (error) {

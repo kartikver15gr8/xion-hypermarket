@@ -1,0 +1,884 @@
+{
+  "address": "6Cz26VijJygwjoTs7sRxQCThDBFho8W1cCsEq33Ze6yj",
+  "metadata": {
+    "name": "solana_marketplace",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "Solana Marketplace"
+  },
+  "instructions": [
+    {
+      "name": "add_seller_level",
+      "discriminator": [32, 214, 37, 160, 234, 46, 56, 115],
+      "accounts": [
+        {
+          "name": "sellers_level_list",
+          "docs": ["Account storing the Seller's level list."],
+          "writable": true
+        },
+        {
+          "name": "manager",
+          "docs": ["Manager account."],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "docs": ["const accounts"],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "AddSellerLevelParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "claim_affiliate_payout",
+      "discriminator": [213, 61, 11, 217, 83, 124, 101, 27],
+      "accounts": [
+        {
+          "name": "affiliate",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "escrow",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [101, 115, 99, 114, 111, 119]
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "protocol_fee",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112, 114, 111, 116, 111, 99, 111, 108, 95, 102, 101, 101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "buyer",
+          "writable": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claim_payout",
+      "discriminator": [127, 240, 132, 62, 227, 198, 146, 133],
+      "accounts": [
+        {
+          "name": "seller_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [115, 101, 108, 108, 101, 114]
+              },
+              {
+                "kind": "account",
+                "path": "seller"
+              }
+            ]
+          }
+        },
+        {
+          "name": "seller",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "buyer",
+          "writable": true
+        },
+        {
+          "name": "escrow",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [101, 115, 99, 114, 111, 119]
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "protocol_fee",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112, 114, 111, 116, 111, 99, 111, 108, 95, 102, 101, 101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "claim_review_payout",
+      "discriminator": [157, 104, 192, 54, 197, 222, 140, 103],
+      "accounts": [
+        {
+          "name": "buyer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "escrow",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [101, 115, 99, 114, 111, 119]
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "deposit_stake",
+      "discriminator": [160, 167, 9, 220, 74, 243, 228, 43],
+      "accounts": [
+        {
+          "name": "seller_pda",
+          "docs": ["Seller PDA account"],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [115, 101, 108, 108, 101, 114]
+              },
+              {
+                "kind": "account",
+                "path": "seller"
+              }
+            ]
+          }
+        },
+        {
+          "name": "seller",
+          "docs": ["Seller"],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sellers_level_list",
+          "docs": ["Account storing the Seller's level list."]
+        },
+        {
+          "name": "system_program",
+          "docs": ["const accounts"],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "DepositStakeParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "initialize",
+      "discriminator": [175, 175, 109, 31, 13, 152, 155, 237],
+      "accounts": [
+        {
+          "name": "contract_state",
+          "docs": ["Account storing the state of this contract."],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  99, 111, 110, 116, 114, 97, 99, 116, 95, 115, 116, 97, 116,
+                  101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "sellers_level_list",
+          "docs": ["Account storing the Seller's level list."],
+          "writable": true
+        },
+        {
+          "name": "manager",
+          "docs": [
+            "Manager for the protocol. Only manager has the authority to initialize a new protocol.",
+            "Manager also pays for any costs incurred during initialize."
+          ],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "protocol_fee",
+          "docs": ["Account storing the protocol fee."],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112, 114, 111, 116, 111, 99, 111, 108, 95, 102, 101, 101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "system_program",
+          "docs": ["const accounts"],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "process_purchase",
+      "discriminator": [38, 233, 48, 62, 162, 120, 177, 244],
+      "accounts": [
+        {
+          "name": "buyer",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "seller",
+          "docs": ["Seller"],
+          "writable": true
+        },
+        {
+          "name": "seller_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [115, 101, 108, 108, 101, 114]
+              },
+              {
+                "kind": "account",
+                "path": "seller"
+              }
+            ]
+          }
+        },
+        {
+          "name": "escrow",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [101, 115, 99, 114, 111, 119]
+              },
+              {
+                "kind": "account",
+                "path": "buyer"
+              }
+            ]
+          }
+        },
+        {
+          "name": "protocol_fee",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112, 114, 111, 116, 111, 99, 111, 108, 95, 102, 101, 101
+                ]
+              }
+            ]
+          }
+        },
+        {
+          "name": "sellers_level_list",
+          "docs": ["Account storing the Seller's level list."]
+        },
+        {
+          "name": "token_program",
+          "address": "TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        },
+        {
+          "name": "rent",
+          "address": "SysvarRent111111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "ProcessPurchaseParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "register_seller",
+      "discriminator": [9, 50, 144, 162, 206, 176, 154, 111],
+      "accounts": [
+        {
+          "name": "seller_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [115, 101, 108, 108, 101, 114]
+              },
+              {
+                "kind": "account",
+                "path": "seller"
+              }
+            ]
+          }
+        },
+        {
+          "name": "seller",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": []
+    },
+    {
+      "name": "remove_seller_level",
+      "discriminator": [55, 30, 62, 137, 157, 220, 204, 115],
+      "accounts": [
+        {
+          "name": "sellers_level_list",
+          "docs": ["Account storing the Seller's score list."],
+          "writable": true
+        },
+        {
+          "name": "manager",
+          "docs": ["Manager account."],
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "docs": ["const accounts"],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "RemoveSellerLevelParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "review_purchase",
+      "discriminator": [146, 40, 51, 26, 53, 21, 59, 157],
+      "accounts": [
+        {
+          "name": "seller_pda",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [115, 101, 108, 108, 101, 114]
+              },
+              {
+                "kind": "account",
+                "path": "seller"
+              }
+            ]
+          }
+        },
+        {
+          "name": "seller",
+          "writable": true
+        },
+        {
+          "name": "sellers_level_list",
+          "docs": ["Account storing the Seller's level list."]
+        },
+        {
+          "name": "buyer",
+          "signer": true
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "ReviewPurchaseParams"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "withdraw_stake",
+      "discriminator": [153, 8, 22, 138, 105, 176, 87, 66],
+      "accounts": [
+        {
+          "name": "seller_pda",
+          "docs": ["Seller PDA account"],
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [115, 101, 108, 108, 101, 114]
+              },
+              {
+                "kind": "account",
+                "path": "seller"
+              }
+            ]
+          }
+        },
+        {
+          "name": "seller",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "sellers_level_list",
+          "docs": ["Account storing the Seller's level list."]
+        },
+        {
+          "name": "system_program",
+          "docs": ["const accounts"],
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "params",
+          "type": {
+            "defined": {
+              "name": "WithdrawStakeParams"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "accounts": [
+    {
+      "name": "ContractState",
+      "discriminator": [190, 138, 10, 223, 189, 116, 222, 115]
+    },
+    {
+      "name": "Escrow",
+      "discriminator": [31, 213, 123, 187, 186, 22, 218, 155]
+    },
+    {
+      "name": "ProtocolFee",
+      "discriminator": [121, 127, 98, 139, 72, 110, 44, 118]
+    },
+    {
+      "name": "Seller",
+      "discriminator": [76, 163, 162, 59, 115, 49, 116, 39]
+    },
+    {
+      "name": "SellersLevelList",
+      "discriminator": [190, 230, 106, 158, 62, 95, 121, 177]
+    }
+  ],
+  "types": [
+    {
+      "name": "AddSellerLevelParams",
+      "docs": ["Parameters passed to the RemoveSeller instruction."],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "step_score",
+            "type": "u64"
+          },
+          {
+            "name": "min_stake",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "max_product_count",
+            "type": "u64"
+          },
+          {
+            "name": "max_product_price_total",
+            "type": "u64"
+          },
+          {
+            "name": "protocol_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "affiliate_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "review_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "max_days_to_list",
+            "type": "u64"
+          },
+          {
+            "name": "max_days_to_appeal",
+            "type": "u64"
+          },
+          {
+            "name": "payout_hold_days",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "BumpSeeds",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "contract_state_bump",
+            "type": "u8"
+          },
+          {
+            "name": "protocol_fee_bump",
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ContractState",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "bump_seeds",
+            "docs": ["Common bump seeds required by instructions"],
+            "type": {
+              "defined": {
+                "name": "BumpSeeds"
+              }
+            }
+          },
+          {
+            "name": "manager",
+            "docs": ["Manager authority"],
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
+      "name": "DepositStakeParams",
+      "docs": ["Parameters passed to the deposit stake instruction."],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount_lamports",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Escrow",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "buyer",
+            "type": "pubkey"
+          },
+          {
+            "name": "seller",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          },
+          {
+            "name": "unlock_time",
+            "type": "i64"
+          },
+          {
+            "name": "affiliate",
+            "type": {
+              "option": "pubkey"
+            }
+          },
+          {
+            "name": "affiliate_fee",
+            "type": "u64"
+          },
+          {
+            "name": "review_fee",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProcessPurchaseParams",
+      "docs": ["Parameters passed to the ProcessPurchase instruction."],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "price_lamports",
+            "type": "u64"
+          },
+          {
+            "name": "affiliate",
+            "type": {
+              "option": "pubkey"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "ProtocolFee",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "total_fee",
+            "docs": ["Total fee in the reserve"],
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "RemoveSellerLevelParams",
+      "docs": ["Parameters passed to the RemoveSeller instruction."],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "level_index",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ReviewPurchaseParams",
+      "docs": ["Parameters passed to the RatePurchase instruction."],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "rating",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Seller",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "level",
+            "type": "u8"
+          },
+          {
+            "name": "total_stake",
+            "type": "u64"
+          },
+          {
+            "name": "sales_amount",
+            "type": "u64"
+          },
+          {
+            "name": "sales_volume",
+            "type": "u64"
+          },
+          {
+            "name": "rating",
+            "type": "u8"
+          },
+          {
+            "name": "total_reviews",
+            "type": "u64"
+          },
+          {
+            "name": "is_banned",
+            "type": "bool"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SellerLevelInfo",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "step_score",
+            "type": "u64"
+          },
+          {
+            "name": "min_stake",
+            "type": {
+              "option": "u64"
+            }
+          },
+          {
+            "name": "max_product_count",
+            "type": "u64"
+          },
+          {
+            "name": "max_product_price_total",
+            "type": "u64"
+          },
+          {
+            "name": "protocol_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "affiliate_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "review_fee_bps",
+            "type": "u16"
+          },
+          {
+            "name": "max_days_to_list",
+            "type": "u64"
+          },
+          {
+            "name": "max_days_to_appeal",
+            "type": "u64"
+          },
+          {
+            "name": "payout_hold_days",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SellersLevelList",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "total_levels",
+            "docs": ["Count of sellers levels"],
+            "type": "u64"
+          },
+          {
+            "name": "sellers_level_list",
+            "docs": ["List of sellers levels info"],
+            "type": {
+              "vec": {
+                "defined": {
+                  "name": "SellerLevelInfo"
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "name": "WithdrawStakeParams",
+      "docs": ["Parameters passed to the deposit stake instruction."],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "amount_lamports",
+            "type": "u64"
+          }
+        ]
+      }
+    }
+  ]
+}
