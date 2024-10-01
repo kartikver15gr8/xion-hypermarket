@@ -8,6 +8,8 @@ import UploadForm from "@/components/UploadForm";
 import { Widget } from "@uploadcare/react-widget";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useRecoilValue } from "recoil";
+import { phantomWallet } from "@/store/atom/phantomWallet";
 
 const uploadcarekey = process.env.NEXT_PUBLIC_UPLOADCARE_KEY || "";
 export default function ProductUpload() {
@@ -43,6 +45,21 @@ export default function ProductUpload() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
   const [categoryId, setCategoryId] = useState<number | undefined>();
+  const userWalletAddress = useRecoilValue(phantomWallet);
+  const [userId, setUserId] = useState(0);
+
+  const fetchUserId = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${userWalletAddress}`
+      );
+      console.log(response.data);
+      setUserId(response.data.ID);
+      console.log(response.data.ID);
+    } catch (error) {
+      console.log(`You got error while fetching UserId: ${error}`);
+    }
+  };
 
   const fetchCategories = async () => {
     try {
@@ -57,6 +74,7 @@ export default function ProductUpload() {
   };
 
   useEffect(() => {
+    fetchUserId();
     fetchCategories();
   }, []);
 
@@ -91,7 +109,7 @@ export default function ProductUpload() {
           price: price,
           compare_price: comparePrice,
           thumbnail_url: imageUrl,
-          user_id: 1,
+          user_id: userId,
           category_id: categoryId,
         },
         {
