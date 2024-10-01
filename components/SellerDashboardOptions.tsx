@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import portfolio_ape from "@/public/_static/illustrations/portfolio_ape.png";
 import randomstatic from "@/public/randomstatic.png";
 import RegisterSeller from "./RegisterSeller";
+import ShareRegisterSeller from "./ShareRegisterSeller";
 
 const isActiveTab =
   "flex  text-black hover:text-black transition-all duration-300 backdrop-blur-lg ";
@@ -133,7 +134,8 @@ export default function SellerDashboardOptions({
             </Link>
           </ul>
         </div>
-        <RegisterSeller />
+        {/* <RegisterSeller /> */}
+        <ShareRegisterSeller />
       </div>
     </div>
   );
