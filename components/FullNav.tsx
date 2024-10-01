@@ -67,7 +67,7 @@ export default function FullNav() {
 
   return (
     <div className="absolute w-full flex flex-col p-2 sm:p-0">
-      <div className="items-center flex justify-between border border-[#cbccce] sm:border-[#e1e2e4] z-40 h-16 w-full shadow-sm rounded sm:rounded-none sm:bg-white p-[10px] backdrop-blur-md bg-[rgba(0,0,0,0.06)] md:px-8 lg:px-14 xl:px-16 2xl:px-[85px]">
+      <div className="items-center flex justify-between border border-[#cbccce] sm:border-[#e1e2e4] z-40 h-16 w-full shadow-sm rounded sm:rounded-none sm:bg-white p-[10px] backdrop-blur-md bg-[rgba(142,137,137,0.2)] md:px-8 lg:px-14 xl:px-16 2xl:px-[85px]">
         <div className="flex gap-x-2 md:gap-x-3 lg:gap-x-5 xl:gap-x-10 items-center">
           <Link href="/" className="hidden sm:flex">
             <div className="flex items-center">
@@ -93,7 +93,7 @@ export default function FullNav() {
               >
                 <path
                   d="M1 7H19M1 1H19M1 13H19"
-                  stroke="#050505"
+                  stroke="#ffffff"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -109,7 +109,7 @@ export default function FullNav() {
         {/* Will render PortfolioButton and Signin/Register button according to the userstate */}
 
         {/* <ConnectButton toggleWindow={toggleWalletConnect} /> */}
-        <div className="flex items-center gap-x-1">
+        <div className="hidden sm:flex items-center gap-x-1">
           <BecomeSeller />
           {/* <ConnectWithWallet /> */}
           <PhantomWalletButton />

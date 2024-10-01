@@ -8,7 +8,7 @@ export interface CategoryInterface {
   ID: number;
   Name: string;
   Description: string;
-  Thumbnail: string;
+  ThumbnailUrl: string;
 }
 
 export interface ReviewInterface {
