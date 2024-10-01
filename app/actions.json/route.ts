@@ -19,12 +19,16 @@ export const GET = async () => {
     //     pathPattern: "/product/**",
     //     apiPath: "https://hypermarket.vercel.app/blinks/product/**",
     //   },
+    // {
+    //   pathPattern: "/product/**",
+    //   apiPath: "https://api.sendit.markets/api/v1/blinks/product/**",
+    // },
     // ],
 
     rules: [
       {
         pathPattern: "/product/**",
-        apiPath: "https://api.sendit.markets/api/v1/blinks/product/**",
+        apiPath: "https://blinks.sendit.markets/api/actions/product/**",
       },
     ],
   };
