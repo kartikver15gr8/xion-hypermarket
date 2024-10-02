@@ -444,6 +444,7 @@ const Category = () => {
               .slice(0, showAll ? categories.length : 6)
               .map((elem, key) => (
                 <CategoryCard
+                  id={elem.ID}
                   key={key}
                   bg={elem.ThumbnailUrl}
                   categoryName={elem.Name}
@@ -503,17 +504,22 @@ const Category = () => {
 
 const CategoryCard = ({
   bg,
+  id,
   categoryName,
   description,
   bgClass,
 }: {
   bg: StaticImageData | string;
+  id: number;
   categoryName: string;
   description: string;
   bgClass: string;
 }) => {
   return (
-    <div className=" p-3 md:p-4 lg:p-5 relative flex justify-center flex-col h-32 xl:h-44 2xl:h-48 border border-[#E5E5E5] rounded-xl xl:rounded-2xl overflow-hidden shadow-[inset_-70px_-50px_60px_rgba(0,0,0,0.08)]  hover:bg-[#dbdbdb] transition-all duration-300">
+    <Link
+      href={`/product/category/${id}`}
+      className=" p-3 md:p-4 lg:p-5 relative flex justify-center flex-col h-32 xl:h-44 2xl:h-48 border border-[#E5E5E5] rounded-xl xl:rounded-2xl overflow-hidden shadow-[inset_-70px_-50px_60px_rgba(0,0,0,0.08)]  hover:bg-[#dbdbdb] transition-all duration-300"
+    >
       <Image
         src={bg}
         alt="Background"
@@ -544,7 +550,7 @@ const CategoryCard = ({
           </svg>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
