@@ -5,7 +5,7 @@
  * IDL can be found at `target/idl/solana_marketplace.json`.
  */
 export type SolanaMarketplace = {
-  address: "";
+  address: "6Cz26VijJygwjoTs7sRxQCThDBFho8W1cCsEq33Ze6yj";
   metadata: {
     name: "solanaMarketplace";
     version: "0.1.0";
@@ -689,6 +689,22 @@ export type SolanaMarketplace = {
       };
     },
     {
+      name: "contractInitialized";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "manager";
+            type: "pubkey";
+          },
+          {
+            name: "protocolFee";
+            type: "pubkey";
+          }
+        ];
+      };
+    },
+    {
       name: "contractState";
       type: {
         kind: "struct";
@@ -762,6 +778,26 @@ export type SolanaMarketplace = {
       };
     },
     {
+      name: "payoutClaimed";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "payoutType";
+            type: "string";
+          },
+          {
+            name: "address";
+            type: "pubkey";
+          },
+          {
+            name: "amount";
+            type: "u64";
+          }
+        ];
+      };
+    },
+    {
       name: "processPurchaseParams";
       docs: ["Parameters passed to the ProcessPurchase instruction."];
       type: {
@@ -794,6 +830,42 @@ export type SolanaMarketplace = {
       };
     },
     {
+      name: "purchaseProcessed";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "buyer";
+            type: "pubkey";
+          },
+          {
+            name: "seller";
+            type: "pubkey";
+          },
+          {
+            name: "price";
+            type: "u64";
+          },
+          {
+            name: "protocolFee";
+            type: "u64";
+          },
+          {
+            name: "affiliateFee";
+            type: "u64";
+          },
+          {
+            name: "reviewFee";
+            type: "u64";
+          },
+          {
+            name: "sellerAmount";
+            type: "u64";
+          }
+        ];
+      };
+    },
+    {
       name: "removeSellerLevelParams";
       docs: ["Parameters passed to the RemoveSeller instruction."];
       type: {
@@ -801,6 +873,22 @@ export type SolanaMarketplace = {
         fields: [
           {
             name: "levelIndex";
+            type: "u64";
+          }
+        ];
+      };
+    },
+    {
+      name: "reviewProcessed";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "seller";
+            type: "pubkey";
+          },
+          {
+            name: "rating";
             type: "u64";
           }
         ];
@@ -856,6 +944,26 @@ export type SolanaMarketplace = {
       };
     },
     {
+      name: "sellerLevelAdded";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "sellerLevelList";
+            type: "pubkey";
+          },
+          {
+            name: "params";
+            type: {
+              defined: {
+                name: "addSellerLevelParams";
+              };
+            };
+          }
+        ];
+      };
+    },
+    {
       name: "sellerLevelInfo";
       type: {
         kind: "struct";
@@ -906,6 +1014,38 @@ export type SolanaMarketplace = {
       };
     },
     {
+      name: "sellerLevelRemoved";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "sellerLevelList";
+            type: "pubkey";
+          },
+          {
+            name: "levelIndex";
+            type: "u64";
+          }
+        ];
+      };
+    },
+    {
+      name: "sellerRegistered";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "seller";
+            type: "pubkey";
+          },
+          {
+            name: "level";
+            type: "u64";
+          }
+        ];
+      };
+    },
+    {
       name: "sellersLevelList";
       type: {
         kind: "struct";
@@ -925,6 +1065,38 @@ export type SolanaMarketplace = {
                 };
               };
             };
+          }
+        ];
+      };
+    },
+    {
+      name: "stakeDeposited";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "seller";
+            type: "pubkey";
+          },
+          {
+            name: "amount";
+            type: "u64";
+          }
+        ];
+      };
+    },
+    {
+      name: "stakeWithdrawn";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "seller";
+            type: "pubkey";
+          },
+          {
+            name: "amount";
+            type: "u64";
           }
         ];
       };
