@@ -23,6 +23,7 @@ import star from "@/public/_static/illustrations/star.svg";
 import { ReviewInterface } from "@/lib/models";
 import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
+import { ProductsMarquee } from "@/components/ProductsMarquee";
 
 export default function Product({ params }: any) {
   const router = useRouter();
@@ -50,7 +51,7 @@ export default function Product({ params }: any) {
   }, [productId]);
 
   return (
-    <div className="pt-16 w-full min-h-screen px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[200px] ">
+    <div className="pt-16 pb-20 w-full min-h-screen px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[200px] ">
       {productById && <FolderStructure product={productById.Name} />}
       {productById && (
         <ProductDetails
@@ -65,6 +66,8 @@ export default function Product({ params }: any) {
           productDescription={productById.Description}
         />
       )}
+
+      <ProductsMarquee />
     </div>
   );
 }
