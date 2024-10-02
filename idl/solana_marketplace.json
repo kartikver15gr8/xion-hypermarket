@@ -627,6 +627,22 @@
       }
     },
     {
+      "name": "ContractInitialized",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "manager",
+            "type": "pubkey"
+          },
+          {
+            "name": "protocol_fee",
+            "type": "pubkey"
+          }
+        ]
+      }
+    },
+    {
       "name": "ContractState",
       "type": {
         "kind": "struct",
@@ -700,6 +716,26 @@
       }
     },
     {
+      "name": "PayoutClaimed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "payout_type",
+            "type": "string"
+          },
+          {
+            "name": "address",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "ProcessPurchaseParams",
       "docs": ["Parameters passed to the ProcessPurchase instruction."],
       "type": {
@@ -732,6 +768,42 @@
       }
     },
     {
+      "name": "PurchaseProcessed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "buyer",
+            "type": "pubkey"
+          },
+          {
+            "name": "seller",
+            "type": "pubkey"
+          },
+          {
+            "name": "price",
+            "type": "u64"
+          },
+          {
+            "name": "protocol_fee",
+            "type": "u64"
+          },
+          {
+            "name": "affiliate_fee",
+            "type": "u64"
+          },
+          {
+            "name": "review_fee",
+            "type": "u64"
+          },
+          {
+            "name": "seller_amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "RemoveSellerLevelParams",
       "docs": ["Parameters passed to the RemoveSeller instruction."],
       "type": {
@@ -739,6 +811,22 @@
         "fields": [
           {
             "name": "level_index",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "ReviewProcessed",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "seller",
+            "type": "pubkey"
+          },
+          {
+            "name": "rating",
             "type": "u64"
           }
         ]
@@ -794,6 +882,26 @@
       }
     },
     {
+      "name": "SellerLevelAdded",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "seller_level_list",
+            "type": "pubkey"
+          },
+          {
+            "name": "params",
+            "type": {
+              "defined": {
+                "name": "AddSellerLevelParams"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
       "name": "SellerLevelInfo",
       "type": {
         "kind": "struct",
@@ -844,6 +952,38 @@
       }
     },
     {
+      "name": "SellerLevelRemoved",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "seller_level_list",
+            "type": "pubkey"
+          },
+          {
+            "name": "level_index",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SellerRegistered",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "seller",
+            "type": "pubkey"
+          },
+          {
+            "name": "level",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
       "name": "SellersLevelList",
       "type": {
         "kind": "struct",
@@ -863,6 +1003,38 @@
                 }
               }
             }
+          }
+        ]
+      }
+    },
+    {
+      "name": "StakeDeposited",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "seller",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "StakeWithdrawn",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "seller",
+            "type": "pubkey"
+          },
+          {
+            "name": "amount",
+            "type": "u64"
           }
         ]
       }
