@@ -292,11 +292,12 @@ export const Sales = () => {
       <div className="px-2 mb-1 grid grid-cols-12 items-center mt-3 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
         <p className="text-[10px] md:text-[13px] col-span-1">Date</p>
         <p className="text-[10px] md:text-[13px] col-span-3">Product Name</p>
-        <p className="text-[10px] md:text-[13px] col-span-3">Buyer</p>
+        <p className="text-[10px] md:text-[13px] col-span-2">Buyer</p>
         <p className="text-[10px] md:text-[13px] col-span-1">Quantity</p>
         <p className="text-[10px] md:text-[13px] col-span-1">Price</p>
         <p className="text-[10px] md:text-[13px] col-span-1">Status</p>
         <p className="text-[10px] md:text-[13px] col-span-2">Hash</p>
+        <p className="text-[10px] md:text-[13px] col-span-1">Claim</p>
       </div>
       <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-52">
         <SalesLabel
@@ -307,6 +308,7 @@ export const Sales = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -316,6 +318,7 @@ export const Sales = () => {
           price="$32"
           status="pending"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -325,6 +328,7 @@ export const Sales = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -334,6 +338,7 @@ export const Sales = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -343,6 +348,7 @@ export const Sales = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -352,6 +358,7 @@ export const Sales = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -361,6 +368,7 @@ export const Sales = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -370,6 +378,7 @@ export const Sales = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -379,6 +388,7 @@ export const Sales = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -388,6 +398,7 @@ export const Sales = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
       </div>
     </div>
@@ -402,6 +413,7 @@ export const SalesLabel = ({
   price,
   status,
   hash,
+  claim,
 }: {
   date: string;
   productName: string;
@@ -410,12 +422,13 @@ export const SalesLabel = ({
   price: string;
   status: string;
   hash: string;
+  claim: string;
 }) => {
   return (
     <div className="border-b px-2 grid grid-cols-12 items-center w-full h-10">
       <p className="text-[9px] md:text-[13px] col-span-1">{date}</p>
       <p className="text-[9px] md:text-[13px] col-span-3">{productName}</p>
-      <p className="text-[9px] md:text-[13px] col-span-3">{buyer}</p>
+      <p className="text-[9px] md:text-[13px] col-span-2">{buyer}</p>
       <p className="text-[9px] md:text-[13px] col-span-1">{quantity}</p>
       <p className="text-[9px] md:text-[13px] col-span-1">{price}</p>
       <div className="text-[9px] md:text-[13px] flex items-center col-span-1">
@@ -446,6 +459,9 @@ export const SalesLabel = ({
           />
         </svg>
       </div>
+      <button className="text-[9px] md:text-[13px] rounded-md h-6 bg-black text-white col-span-1 hover:bg-[#5a5c5d] transition-all duration-300">
+        {claim}
+      </button>
     </div>
   );
 };
