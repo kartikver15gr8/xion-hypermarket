@@ -141,6 +141,12 @@ export default function FullNav() {
               isOpen={isOpen}
               setIsOpen={setIsOpen}
             />
+            <NavLink
+              href="/library"
+              text="Library"
+              isOpen={isOpen}
+              setIsOpen={setIsOpen}
+            />
             {/* <NavLink
               href="/borrow"
               text="Ape Bank"
@@ -366,7 +372,7 @@ const NavItems = () => {
       tooltip: "Explore wide range of digital products!",
       href: "/",
     },
-    // { text: "Sell", tooltip: "Become a seller!", href: "/" },
+    { text: "Library", tooltip: "Check your purchases!", href: "/library" },
     // {
     //   text: "Earn",
     //   tooltip: "Earn rewards and incentives!",
@@ -408,7 +414,7 @@ const NavItems = () => {
         <Link href={menuItems[1].href} key={1}>
           <li
             key={1}
-            className={pathname == "/borrow" ? isActive : isInactive}
+            className={pathname == "/library" ? isActive : isInactive}
             onMouseEnter={() => setActiveTooltip(1)}
             onMouseLeave={() => setActiveTooltip(null)}
           >
@@ -432,6 +438,22 @@ const NavItems = () => {
             {activeTooltip === 2 && (
               <div className="absolute left-1/2 -translate-x-1/2  mt-3 px-2 py-1 bg-[#e9ecec] text-slate-700 text-sm rounded-md whitespace-nowrap border border-[#bac3c4]">
                 {menuItems[2].tooltip}
+                <div className="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#1d2c3a]"></div>
+              </div>
+            )}
+          </li>
+        </Link>
+        <Link href={menuItems[3].href} key={3}>
+          <li
+            key={3}
+            className={pathname == "/earnmore" ? isActive : isInactive}
+            onMouseEnter={() => setActiveTooltip(3)}
+            onMouseLeave={() => setActiveTooltip(null)}
+          >
+            {menuItems[3].text}
+            {activeTooltip === 3 && (
+              <div className="absolute left-1/2 -translate-x-1/2  mt-3 px-2 py-1 bg-[#e9ecec] text-slate-700 text-sm rounded-md whitespace-nowrap border border-[#bac3c4]">
+                {menuItems[3].tooltip}
                 <div className="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#1d2c3a]"></div>
               </div>
             )}
