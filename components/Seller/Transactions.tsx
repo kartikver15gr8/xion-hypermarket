@@ -267,11 +267,12 @@ export const SalesOverview = () => {
       <div className="px-2 mb-1 grid grid-cols-12 items-center mt-3 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
         <p className="text-[11px] md:text-[13px] col-span-1">Date</p>
         <p className="text-[11px] md:text-[13px] col-span-3">Product Name</p>
-        <p className="text-[11px] md:text-[13px] col-span-3">Buyer</p>
+        <p className="text-[11px] md:text-[13px] col-span-2">Buyer</p>
         <p className="text-[11px] md:text-[13px] col-span-1">Quantity</p>
         <p className="text-[11px] md:text-[13px] col-span-1">Price</p>
         <p className="text-[11px] md:text-[13px] col-span-1">Status</p>
         <p className="text-[11px] md:text-[13px] col-span-2">Hash</p>
+        <p className="text-[11px] md:text-[13px] col-span-1">Claim</p>
       </div>
       <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-96">
         <SalesLabel
@@ -282,6 +283,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -291,6 +293,7 @@ export const SalesOverview = () => {
           price="$32"
           status="pending"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -300,6 +303,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -309,6 +313,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -318,6 +323,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -327,6 +333,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -336,6 +343,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -345,6 +353,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -354,6 +363,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -363,6 +373,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -372,6 +383,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -381,6 +393,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -390,6 +403,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -399,6 +413,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -408,6 +423,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -417,6 +433,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -426,6 +443,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -435,6 +453,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -444,6 +463,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
         <SalesLabel
           date="10/10/24"
@@ -453,6 +473,7 @@ export const SalesOverview = () => {
           price="$32"
           status="confirmed"
           hash="0b3fe99b745ba2079"
+          claim="claim"
         />
       </div>
     </div>
