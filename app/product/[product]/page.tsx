@@ -67,7 +67,7 @@ export default function Product({ params }: any) {
         />
       )}
 
-      <ProductsMarquee />
+      {productById && <ProductsMarquee />}
     </div>
   );
 }
