@@ -64,6 +64,18 @@ export interface ProductInterface {
   ThumbnailUrl: string;
 }
 
+export interface PurchasesInterface {
+  ID: number;
+  ProductID: number;
+  UserID: number;
+  Amount: number;
+  Status: string;
+  AffiliateLinkID: number;
+  TransactionHash: string;
+  CreatedAt: string;
+  UpdatedAt: string;
+}
+
 export interface Purchase {
   affiliate_link_id: number;
   amount: number;
