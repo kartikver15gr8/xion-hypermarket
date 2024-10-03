@@ -5,8 +5,8 @@ import ShareProcessPurchase from "@/components/ShareProcessPurchase";
 
 export default function page() {
   return (
-    <div>
-      <ShareProcessPurchase />
+    <div className="pt-16 border">
+      <ShareProcessPurchase productId={20} />
     </div>
   );
 }

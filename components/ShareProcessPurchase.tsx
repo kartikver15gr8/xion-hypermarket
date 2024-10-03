@@ -5,8 +5,8 @@ const ProcessPurchaseClient = dynamic(() => import("./ProcessPurchaseClient"), {
   ssr: false,
 });
 
-const ShareProcessPurchase: React.FC = () => {
-  return <ProcessPurchaseClient productId={20} />;
+const ShareProcessPurchase = ({ productId }: { productId: number }) => {
+  return <ProcessPurchaseClient productId={productId} />;
 };
 
 export default ShareProcessPurchase;

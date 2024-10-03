@@ -37,6 +37,25 @@ export default function ProcessPurchaseClient({
   const [productById, setProductById] = useState<ProductInterface | null>(null);
   const [sellerWalletAddress, setSellerWalletAddress] = useState("");
   const [connection, setConnection] = useState<Connection | null>(null);
+  const [transactionHash, setTransactionHash] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  const [buyerId, setBuyerId] = useState(0);
+
+  const fetchBuyerId = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${walletAddress}`
+      );
+      console.log(`This is the user credentials ${response.data}`);
+      console.log(response.data.ID);
+
+      setBuyerId(response.data.ID);
+      return response.data.ID;
+    } catch (error) {
+      console.log(`You got an error while fetching the buyer id: ${error}`);
+    }
+  };
 
   useEffect(() => {
     const commitment: Commitment = "confirmed";
@@ -92,6 +111,32 @@ export default function ProcessPurchaseClient({
     }
   }, [productById]);
 
+  useEffect(() => {
+    if (walletAddress) {
+      fetchBuyerId();
+    }
+  }, []);
+
+  const buyProduct = async () => {
+    try {
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/purchases`,
+        {
+          affiliate_link_id: 0,
+          amount: Number(productById?.Price),
+          product_id: productId,
+          status: "",
+          transaction_hash: "",
+          user_id: buyerId,
+        }
+      );
+
+      console.log(response.data);
+    } catch (error) {
+      console.log("Error while making the buy product function call.");
+    }
+  };
+
   const makeProcessPurchase = async () => {
     if (!walletAddress) {
       toast.error("Please connect your wallet first");
@@ -146,6 +191,9 @@ export default function ProcessPurchaseClient({
           signedTransaction.serialize()
         );
 
+        if (signature) {
+          setTransactionHash(signature);
+        }
         toast.info("Transaction sent", { description: signature });
 
         const confirmation = await connection.confirmTransaction({
@@ -171,21 +219,50 @@ export default function ProcessPurchaseClient({
     }
   };
 
+  const handleOnClick = async () => {
+    try {
+      setLoading(true);
+      await makeProcessPurchase();
+      await buyProduct();
+      setLoading(false);
+    } catch (error) {
+      console.log("Error while triggering handle handleOnClick!");
+      setLoading(false);
+    }
+  };
+
   return (
-    <div className="pt-16 border">
-      <div>Hello</div>
+    <div className="w-full h-full border border-black rounded-md bg-black">
       {productById && (
         <div>
-          <h2>Product Name: {productById.Name}</h2>
+          {/* <h2>Product Name: {productById.Name}</h2>
           <p>Price: {productById.Price}</p>
+          <p>TransactionHash:{transactionHash}</p>
+          <p>BuyerID: {buyerId}</p>
           <p>SellerWalletAddress: {sellerWalletAddress} </p>
           <p>Buyer Address: {walletAddress}</p>
           <button
-            className="border p-2 rounded-lg m-1"
-            onClick={makeProcessPurchase}
+            className="border p-2 rounded-lg m-1 text-white bg-black font-medium  hover:bg-[#095492] transition-all duration-200"
+            onClick={handleOnClick}
           >
-            process purchase
-          </button>
+            Buy Now!
+          </button> */}
+          {buyerId && sellerWalletAddress && walletAddress ? (
+            <button
+              className="rounded-lg text-white bg-inherit font-medium h-14 w-full hover:bg-[#095492] transition-all duration-200"
+              onClick={handleOnClick}
+            >
+              {loading ? "Loading…" : "Buy Now!"}
+            </button>
+          ) : (
+            <button
+              className="rounded-lg text-white bg-black font-medium  hover:bg-[#095492] transition-all duration-200"
+              onClick={handleOnClick}
+              disabled={true}
+            >
+              Buy Now!
+            </button>
+          )}
         </div>
       )}
     </div>
