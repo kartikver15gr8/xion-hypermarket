@@ -16,6 +16,7 @@ import { useRecoilValue } from "recoil";
 import axios from "axios";
 import { ProductInterface } from "@/lib/models";
 import { getPdas } from "@/utils/helpers";
+import { useRouter } from "next/navigation";
 
 interface PhantomWindow extends Window {
   solana?: {
@@ -33,6 +34,8 @@ export default function ProcessPurchaseClient({
 }: {
   productId: number;
 }) {
+  const router = useRouter();
+
   const walletAddress = useRecoilValue(phantomWallet);
   const [productById, setProductById] = useState<ProductInterface | null>(null);
   const [sellerWalletAddress, setSellerWalletAddress] = useState("");
@@ -132,6 +135,7 @@ export default function ProcessPurchaseClient({
       );
 
       console.log(response.data);
+      router.push(`/library/${buyerId}`);
     } catch (error) {
       console.log("Error while making the buy product function call.");
     }
@@ -256,7 +260,7 @@ export default function ProcessPurchaseClient({
             </button>
           ) : (
             <button
-              className="rounded-lg text-white bg-black font-medium  hover:bg-[#095492] transition-all duration-200"
+              className="rounded-lg text-white bg-inherit font-medium h-14 w-full hover:bg-[#095492] transition-all duration-200"
               onClick={handleOnClick}
               disabled={true}
             >
