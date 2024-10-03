@@ -7,6 +7,7 @@ import {
   PublicKey,
   Transaction,
   clusterApiUrl,
+  Commitment,
 } from "@solana/web3.js";
 import { toast } from "sonner";
 import { solanaMarketplaceProgram } from "@/utils/constants";
@@ -16,12 +17,31 @@ import axios from "axios";
 import { ProductInterface } from "@/lib/models";
 import { getPdas } from "@/utils/helpers";
 
+interface PhantomWindow extends Window {
+  solana?: {
+    isPhantom?: boolean;
+    signTransaction(transaction: Transaction): Promise<Transaction>;
+  };
+}
+
+declare const window: PhantomWindow;
+
 const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
 
-export default function ProcessPurchase({ productId }: { productId: number }) {
+export default function ProcessPurchaseClient({
+  productId,
+}: {
+  productId: number;
+}) {
   const walletAddress = useRecoilValue(phantomWallet);
   const [productById, setProductById] = useState<ProductInterface | null>(null);
   const [sellerWalletAddress, setSellerWalletAddress] = useState("");
+  const [connection, setConnection] = useState<Connection | null>(null);
+
+  useEffect(() => {
+    const commitment: Commitment = "confirmed";
+    setConnection(new Connection(clusterApiUrl("devnet"), commitment));
+  }, []);
 
   const fetchProductData = async () => {
     try {
@@ -78,6 +98,11 @@ export default function ProcessPurchase({ productId }: { productId: number }) {
       return;
     }
 
+    if (!connection) {
+      toast.error("Connection not established");
+      return;
+    }
+
     try {
       if (productById) {
         const amount_lamports = parseInt(productById?.Price) * LAMPORTS_PER_SOL;
@@ -111,7 +136,7 @@ export default function ProcessPurchase({ productId }: { productId: number }) {
         transaction.feePayer = buyerPubKey;
         transaction.recentBlockhash = blockhash;
 
-        const { solana } = window as any;
+        const { solana } = window;
         if (!solana?.isPhantom) {
           throw new Error("Phantom wallet is not installed!");
         }
