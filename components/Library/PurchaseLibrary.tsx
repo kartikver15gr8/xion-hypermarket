@@ -2,7 +2,10 @@
 
 import Image, { StaticImageData } from "next/image";
 import Design_System_UI_Kit_for_Figma from "@/public/_static/illustrations/Blinks.png";
-export default function PurchaseLibrary() {
+import { useEffect, useState } from "react";
+import { ProductInterface, PurchasesInterface } from "@/lib/models";
+import axios from "axios";
+export default function PurchaseLibrary({ USER_ID }: { USER_ID: number }) {
   return (
     <div className="">
       <TopBar order="12355" />
@@ -18,7 +21,7 @@ export default function PurchaseLibrary() {
         paymentMethod="Wallet: Ox6b..3dsx"
         txId="0x...454jkx"
       />
-      <PurchasedProducts />
+      <PurchasedProducts userId={USER_ID} />
       <div className="mt-8 justify-end flex">
         <Summary />
       </div>
@@ -108,7 +111,27 @@ const TopBar = ({ order }: { order: string }) => {
   );
 };
 
-const PurchasedProducts = () => {
+const PurchasedProducts = ({ userId }: { userId: number }) => {
+  const [productPurchases, setProductPurchases] = useState<
+    PurchasesInterface[]
+  >([]);
+
+  const fetchPurchases = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/purchases?user_id=${userId}`
+      );
+      // console.log(response.data);
+      setProductPurchases(response.data);
+    } catch (error) {
+      console.log(`You got an error while fetching user purchases: ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    fetchPurchases();
+  }, []);
+
   return (
     <div className="border rounded-xl bg-white shadow-lg mt-14">
       <div className="grid grid-cols-10 h-14 items-center px-3 border-b text-[#8B8B93]">
@@ -118,72 +141,32 @@ const PurchasedProducts = () => {
         <p className="col-span-2">SELLER</p>
         <p className="col-span-2">ACTION</p>
       </div>
-      <div className="h-60 overflow-y-auto  hide-scrollbar scroll-smooth">
-        <ProductLabel
-          productImg="https://ucarecdn.com/deb46443-1cf0-4ec1-bb33-f86d93cfb949/e15545c9453e489ca7dbe8dd427b00e3.webp"
-          productName="Content Writing"
-          price="30"
-          fileDetails="a.zip"
-          sellerDetails="Basil Naser"
-        />
-
-        <ProductLabel
-          productImg="https://ucarecdn.com/19c16028-b2c1-49c3-aceb-f4d9978f1196/markettool.png"
-          productName="Content Writing"
-          price="30"
-          fileDetails="a.zip"
-          sellerDetails="Nabarun Sarkar"
-        />
-        <ProductLabel
-          productImg="https://ucarecdn.com/cc8477d7-3db2-4850-a74f-f70b496410eb/NikeInternTurningCEO.jpeg"
-          productName="Content Writing"
-          price="30"
-          fileDetails="a.zip"
-          sellerDetails="Kartik Verma"
-        />
-        <ProductLabel
-          productImg="https://ucarecdn.com/62a37432-0b0b-475f-a7e9-be5f92685e04/20240927233542.jpg"
-          productName="Content Writing"
-          price="30"
-          fileDetails="a.zip"
-          sellerDetails="Jovian D`souza"
-        />
-        <ProductLabel
-          productImg="https://ucarecdn.com/62a37432-0b0b-475f-a7e9-be5f92685e04/20240927233542.jpg"
-          productName="Content Writing"
-          price="30"
-          fileDetails="a.zip"
-          sellerDetails="Jovian D`souza"
-        />
-        <ProductLabel
-          productImg="https://ucarecdn.com/62a37432-0b0b-475f-a7e9-be5f92685e04/20240927233542.jpg"
-          productName="Content Writing"
-          price="30"
-          fileDetails="a.zip"
-          sellerDetails="Jovian D`souza"
-        />
-        <ProductLabel
-          productImg="https://ucarecdn.com/62a37432-0b0b-475f-a7e9-be5f92685e04/20240927233542.jpg"
-          productName="Content Writing"
-          price="30"
-          fileDetails="a.zip"
-          sellerDetails="Jovian D`souza"
-        />
-        <ProductLabel
-          productImg="https://ucarecdn.com/62a37432-0b0b-475f-a7e9-be5f92685e04/20240927233542.jpg"
-          productName="Content Writing"
-          price="30"
-          fileDetails="a.zip"
-          sellerDetails="Jovian D`souza"
-        />
-        <ProductLabel
-          productImg="https://ucarecdn.com/62a37432-0b0b-475f-a7e9-be5f92685e04/20240927233542.jpg"
-          productName="Content Writing"
-          price="30"
-          fileDetails="a.zip"
-          sellerDetails="Jovian D`souza"
-        />
-      </div>
+      {productPurchases.length > 1 ? (
+        <div className="h-60 overflow-y-auto  hide-scrollbar scroll-smooth">
+          {productPurchases.map((elem, key) => {
+            return (
+              <ProductLabel
+                key={key}
+                productImg="https://ucarecdn.com/deb46443-1cf0-4ec1-bb33-f86d93cfb949/e15545c9453e489ca7dbe8dd427b00e3.webp"
+                productName="Content Writing"
+                price={elem.Amount.toString()}
+                fileDetails="a.zip"
+                sellerDetails="Basil Naser"
+              />
+            );
+          })}
+        </div>
+      ) : (
+        <div className="h-20 overflow-y-auto  hide-scrollbar scroll-smooth">
+          <ProductLabel
+            productImg="https://ucarecdn.com/deb46443-1cf0-4ec1-bb33-f86d93cfb949/e15545c9453e489ca7dbe8dd427b00e3.webp"
+            productName="No Product"
+            price=""
+            fileDetails=""
+            sellerDetails="None"
+          />
+        </div>
+      )}
     </div>
   );
 };
