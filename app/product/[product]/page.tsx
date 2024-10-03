@@ -24,6 +24,7 @@ import { ReviewInterface } from "@/lib/models";
 import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 import { ProductsMarquee } from "@/components/ProductsMarquee";
+import ShareProcessPurchase from "@/components/ShareProcessPurchase";
 
 export default function Product({ params }: any) {
   const router = useRouter();
@@ -58,6 +59,7 @@ export default function Product({ params }: any) {
           bannerImg={productById.ThumbnailUrl}
           productName={productById.Name}
           price={`$${productById.Price}`}
+          productId={productById.ID}
         />
       )}
       {productById && (
@@ -76,11 +78,53 @@ const ProductDetails = ({
   bannerImg,
   productName,
   price,
+  productId,
 }: {
   bannerImg: string;
   productName: string;
   price: string;
+  productId: number;
 }) => {
+  // const [buyerId, setBuyerId] = useState(0);
+  // const buyerWalletAddress = useRecoilValue(phantomWallet);
+
+  // const fetchBuyerId = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${buyerWalletAddress}`
+  //     );
+  //     // console.log(`This is the user credentials ${response.data}`);
+  //     setBuyerId(response.data.ID);
+  //     return response.data.ID;
+  //   } catch (error) {
+  //     console.log(`You got an error while fetching the buyer id: ${error}`);
+  //   }
+  // };
+
+  // const buyProduct = async () => {
+  //   try {
+  //     const response = await axios.post(
+  //       `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/purchases`,
+  //       {
+  //         affiliate_link_id: 0,
+  //         amount: Number(price),
+  //         product_id: productId,
+  //         status: "",
+  //         transaction_hash: "",
+  //         user_id: buyerId,
+  //       }
+  //     );
+
+  //     console.log(response.data);
+  //   } catch (error) {
+  //     console.log("Error while making the buy product function call.");
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   fetchBuyerId();
+  // }, []);
+
   return (
     <div className="">
       {/* Top section which will show the folder structure */}
@@ -224,9 +268,17 @@ const ProductDetails = ({
             <Button className="text-black h-full bg-inherit border border-[#959592] hover:bg-[#dfdfdc] transition-all duration-200">
               Add to Basket!
             </Button>
-            <Button className="h-full hover:bg-[#095492] transition-all duration-200">
-              Buy Now!
-            </Button>
+            {/* {buyerId == 0 ? (
+              <Button
+                disabled={true}
+                className="h-full hover:bg-[#095492] transition-all duration-200"
+              >
+                Buy Now!
+              </Button>
+            ) : (
+              <ShareProcessPurchase productId={productId} />
+            )} */}
+            <ShareProcessPurchase productId={productId} />
           </div>
           <div className="flex p-2 mt-5 rounded border h-16 items-center relative overflow-hidden">
             <p className="text-[12px]">
