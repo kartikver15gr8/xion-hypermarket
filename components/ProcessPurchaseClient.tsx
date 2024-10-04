@@ -128,7 +128,7 @@ export default function ProcessPurchaseClient({
           affiliate_link_id: 0,
           amount: Number(productById?.Price),
           product_id: productId,
-          status: "",
+          status: 1,
           transaction_hash: "",
           user_id: buyerId,
         }
