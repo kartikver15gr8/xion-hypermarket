@@ -122,13 +122,13 @@ const BorrowUSDCBannerBtn = () => {
               <div className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="px-1 py-1">
                   <button
-                    className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm hover:bg-violet-500 hover:text-white"
+                    className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm hover:bg-[#33555b] hover:text-white"
                     onClick={() => copyUrlToClipboard(true)}
                   >
                     Copy Affiliate Link
                   </button>
                   <button
-                    className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm hover:bg-violet-500 hover:text-white"
+                    className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm hover:bg-[#33555b] hover:text-white"
                     onClick={() => copyUrlToClipboard(false)}
                   >
                     Copy Product Link
