@@ -40,19 +40,36 @@ const BorrowUSDCBannerBtn = () => {
     const splitURL: string[] = productURL.split("/");
     const productId: string = splitURL[splitURL.length - 1];
 
-    const urlToCopy: string =
-      isAffiliate && userWalletAddress.length >= 10
-        ? `https://dial.to/?action=solana-action:https://blinks.sendit.markets/api/actions/product/${productId}?a=${userWalletAddress}&cluster=devnet`
-        : `https://dial.to/?action=solana-action:https://blinks.sendit.markets/api/actions/product/${productId}&cluster=devnet`;
+    // Encoding the action URL
+    const actionUrl = encodeURIComponent(
+      `https://blinks.sendit.markets/api/actions/product/${productId}`
+    );
+
+    // Constructing the URL
+    let urlToCopy: string;
+    if (isAffiliate && userWalletAddress.length >= 10) {
+      const encodedWalletAddress = encodeURIComponent(userWalletAddress);
+      urlToCopy = `https://dial.to/?action=solana-action:${actionUrl}?a=${encodedWalletAddress}&cluster=devnet`;
+    } else {
+      urlToCopy = `https://dial.to/?action=solana-action:${actionUrl}&cluster=devnet`;
+    }
 
     navigator.clipboard
       .writeText(urlToCopy)
       .then(() => {
         setIsCopied(true);
         setTimeout(() => setIsCopied(false), 2000);
-        toast.info(
-          isAffiliate ? "Copied Affiliate Link!" : "Copied Product Link!"
-        );
+        if (userWalletAddress.length >= 10) {
+          toast.info(
+            isAffiliate ? "Copied Affiliate Link!" : "Copied Product Link!"
+          );
+        } else {
+          toast.info(
+            isAffiliate
+              ? "Please sign in to get an Affiliate Link!"
+              : "Copied Product Link!"
+          );
+        }
       })
       .catch((err: Error) => {
         console.error("Failed to copy URL: ", err);
@@ -122,13 +139,13 @@ const BorrowUSDCBannerBtn = () => {
               <div className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="px-1 py-1">
                   <button
-                    className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm hover:bg-violet-500 hover:text-white"
+                    className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm hover:bg-[#33555b] hover:text-white"
                     onClick={() => copyUrlToClipboard(true)}
                   >
                     Copy Affiliate Link
                   </button>
                   <button
-                    className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm hover:bg-violet-500 hover:text-white"
+                    className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm hover:bg-[#33555b] hover:text-white"
                     onClick={() => copyUrlToClipboard(false)}
                   >
                     Copy Product Link

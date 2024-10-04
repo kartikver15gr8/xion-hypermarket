@@ -804,6 +804,10 @@ export type SolanaMarketplace = {
         kind: "struct";
         fields: [
           {
+            name: "productId";
+            type: "u64";
+          },
+          {
             name: "priceLamports";
             type: "u64";
           },
@@ -841,6 +845,10 @@ export type SolanaMarketplace = {
           {
             name: "seller";
             type: "pubkey";
+          },
+          {
+            name: "productId";
+            type: "u64";
           },
           {
             name: "price";
@@ -1025,6 +1033,26 @@ export type SolanaMarketplace = {
           {
             name: "levelIndex";
             type: "u64";
+          }
+        ];
+      };
+    },
+    {
+      name: "sellerLevelUpdated";
+      type: {
+        kind: "struct";
+        fields: [
+          {
+            name: "level";
+            type: "u8";
+          },
+          {
+            name: "score";
+            type: "u64";
+          },
+          {
+            name: "baseLevel";
+            type: "u8";
           }
         ];
       };

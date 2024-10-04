@@ -168,6 +168,7 @@ export default function ProcessPurchaseClient({
 
         const tx = await solanaMarketplaceProgram.methods
           .processPurchase({
+            productId: new BN(productId),
             priceLamports: new BN(amount_lamports),
             affiliate: null,
           })
@@ -211,7 +212,7 @@ export default function ProcessPurchaseClient({
           );
         }
 
-        toast.success("Successfully registered as a seller!", {
+        toast.success("Transaction successful!", {
           description: signature,
         });
       } else {
