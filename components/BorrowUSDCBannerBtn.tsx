@@ -45,19 +45,21 @@ const BorrowUSDCBannerBtn = () => {
         ? `https://dial.to/?action=solana-action:https://blinks.sendit.markets/api/actions/product/${productId}?a=${userWalletAddress}&cluster=devnet`
         : `https://dial.to/?action=solana-action:https://blinks.sendit.markets/api/actions/product/${productId}&cluster=devnet`;
 
-    navigator.clipboard
-      .writeText(urlToCopy)
-      .then(() => {
-        setIsCopied(true);
-        setTimeout(() => setIsCopied(false), 2000);
+    navigator.clipboard.writeText(urlToCopy).then(() => {
+      setIsCopied(true);
+      setTimeout(() => setIsCopied(false), 2000);
+      if (userWalletAddress.length >= 10) {
         toast.info(
           isAffiliate ? "Copied Affiliate Link!" : "Copied Product Link!"
         );
-      })
-      .catch((err: Error) => {
-        console.error("Failed to copy URL: ", err);
-        toast.info("Error while copying the link!");
-      });
+      } else {
+        toast.info(
+          isAffiliate
+            ? "Please sign in to get an affiliate link!"
+            : "Copied Product Link!"
+        );
+      }
+    });
 
     setIsOpen(false);
   };
