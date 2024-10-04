@@ -742,6 +742,10 @@
         "kind": "struct",
         "fields": [
           {
+            "name": "product_id",
+            "type": "u64"
+          },
+          {
             "name": "price_lamports",
             "type": "u64"
           },
@@ -779,6 +783,10 @@
           {
             "name": "seller",
             "type": "pubkey"
+          },
+          {
+            "name": "product_id",
+            "type": "u64"
           },
           {
             "name": "price",
@@ -963,6 +971,26 @@
           {
             "name": "level_index",
             "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "SellerLevelUpdated",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "level",
+            "type": "u8"
+          },
+          {
+            "name": "score",
+            "type": "u64"
+          },
+          {
+            "name": "base_level",
+            "type": "u8"
           }
         ]
       }
