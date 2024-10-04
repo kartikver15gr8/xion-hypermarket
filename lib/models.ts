@@ -69,7 +69,7 @@ export interface PurchasesInterface {
   ProductID: number;
   UserID: number;
   Amount: number;
-  Status: string;
+  Status: number;
   AffiliateLinkID: number;
   TransactionHash: string;
   CreatedAt: string;
