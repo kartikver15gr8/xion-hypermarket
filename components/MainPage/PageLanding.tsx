@@ -186,7 +186,7 @@ export default function PageLanding() {
               )}
             </div>
           </div>
-          <div className="grid grid-cols-3 gap-x-4 mt-6 w-[300px] xl:w-[550px] text-white">
+          {/* <div className="grid grid-cols-3 gap-x-4 mt-6 w-[300px] xl:w-[550px] text-white">
             <div className="flex justify-center h-8 items-center bg-white bg-opacity-10 rounded-[2px] hover:bg-opacity-25 transition-all duration-200">
               Keyword
             </div>
@@ -196,7 +196,7 @@ export default function PageLanding() {
             <div className="flex justify-center h-8 items-center bg-white bg-opacity-10 rounded-[2px] hover:bg-opacity-25 transition-all duration-200">
               Keyword
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

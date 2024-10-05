@@ -25,6 +25,8 @@ import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 import { ProductsMarquee } from "@/components/ProductsMarquee";
 import ShareProcessPurchase from "@/components/ShareProcessPurchase";
+import homeIconSVG from "@/public/homeicon.svg";
+import Link from "next/link";
 
 export default function Product({ params }: any) {
   const router = useRouter();
@@ -53,13 +55,24 @@ export default function Product({ params }: any) {
 
   return (
     <div className="pt-16 pb-20 w-full min-h-screen px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[200px] ">
-      {productById && <FolderStructure product={productById.name} />}
+      {productById && (
+        <FolderStructure
+          product={productById.name}
+          productCategory={productById.category.name}
+        />
+      )}
       {productById && (
         <ProductDetails
+          comparePrice={
+            productById.compare_price ? productById.compare_price : "NA"
+          }
           bannerImg={productById.thumbnail_url}
           productName={productById.name}
           price={`$${productById.price}`}
           productId={productById.id}
+          fileName={productById.filename}
+          fileSize={productById.file_size}
+          sellerAddress={productById.seller_wallet_address}
         />
       )}
       {productById && (
@@ -79,52 +92,20 @@ const ProductDetails = ({
   productName,
   price,
   productId,
+  comparePrice,
+  fileSize,
+  fileName,
+  sellerAddress,
 }: {
   bannerImg: string;
   productName: string;
   price: string;
   productId: number;
+  comparePrice: string | number;
+  fileSize: string | number;
+  fileName: string;
+  sellerAddress: string;
 }) => {
-  // const [buyerId, setBuyerId] = useState(0);
-  // const buyerWalletAddress = useRecoilValue(phantomWallet);
-
-  // const fetchBuyerId = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${buyerWalletAddress}`
-  //     );
-  //     // console.log(`This is the user credentials ${response.data}`);
-  //     setBuyerId(response.data.ID);
-  //     return response.data.ID;
-  //   } catch (error) {
-  //     console.log(`You got an error while fetching the buyer id: ${error}`);
-  //   }
-  // };
-
-  // const buyProduct = async () => {
-  //   try {
-  //     const response = await axios.post(
-  //       `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/purchases`,
-  //       {
-  //         affiliate_link_id: 0,
-  //         amount: Number(price),
-  //         product_id: productId,
-  //         status: "",
-  //         transaction_hash: "",
-  //         user_id: buyerId,
-  //       }
-  //     );
-
-  //     console.log(response.data);
-  //   } catch (error) {
-  //     console.log("Error while making the buy product function call.");
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchBuyerId();
-  // }, []);
-
   return (
     <div className="">
       {/* Top section which will show the folder structure */}
@@ -143,15 +124,21 @@ const ProductDetails = ({
           <div className="flex items-center mt-4 justify-between">
             <p className="font-bold text-xl">{productName}</p>
 
-            <div className="flex  items-center gap-x-2">
+            <Link
+              href={`/product/seller/${sellerAddress}`}
+              className="flex  items-center gap-x-2"
+            >
               <Image src={kody} className="w-5 h-5 rounded-full" alt="" />
-              <p className="text-xs md:text-sm">Kody | LP Labs</p>
-            </div>
+              <p className="text-xs md:text-sm">
+                sold by:{" "}
+                {`${sellerAddress.slice(0, 2)}…${sellerAddress.slice(-2)}`}
+              </p>
+            </Link>
           </div>
           <div className="mt-4 mb-1 flex items-center justify-between text-xs md:text-sm">
             <div className="border flex items-center w-36 h-12 rounded bg-[#F7F7F5]">
               <div className="border-r w-[50%] flex justify-center h-full items-center line-through">
-                $14,99
+                ${comparePrice}
               </div>
               <div className=" w-[50%] flex justify-center h-full items-center">
                 {price}
@@ -175,6 +162,28 @@ const ProductDetails = ({
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-x-1">
                 <svg
+                  width="12"
+                  height="16"
+                  viewBox="0 0 12 16"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M7.33366 7.33337H3.33366M4.66699 10H3.33366M8.66699 4.66671H3.33366M11.3337 4.53337V11.4667C11.3337 12.5868 11.3337 13.1469 11.1157 13.5747C10.9239 13.951 10.618 14.257 10.2416 14.4487C9.81382 14.6667 9.25376 14.6667 8.13366 14.6667H3.86699C2.74689 14.6667 2.18683 14.6667 1.75901 14.4487C1.38269 14.257 1.07673 13.951 0.884979 13.5747C0.666992 13.1469 0.666992 12.5868 0.666992 11.4667V4.53337C0.666992 3.41327 0.666992 2.85322 0.884979 2.42539C1.07673 2.04907 1.38269 1.74311 1.75901 1.55136C2.18683 1.33337 2.74689 1.33337 3.86699 1.33337H8.13366C9.25376 1.33337 9.81382 1.33337 10.2416 1.55136C10.618 1.74311 10.9239 2.04907 11.1157 2.42539C11.3337 2.85322 11.3337 3.41327 11.3337 4.53337Z"
+                    stroke="#8B8B92"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+
+                <p>File Name</p>
+              </div>
+              <p>{fileName}</p>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-x-1">
+                <svg
                   width="14"
                   height="14"
                   viewBox="0 0 14 14"
@@ -192,29 +201,7 @@ const ProductDetails = ({
 
                 <p>File size</p>
               </div>
-              <p>7 MB</p>
-            </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-x-1">
-                <svg
-                  width="12"
-                  height="16"
-                  viewBox="0 0 12 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M7.33366 7.33337H3.33366M4.66699 10H3.33366M8.66699 4.66671H3.33366M11.3337 4.53337V11.4667C11.3337 12.5868 11.3337 13.1469 11.1157 13.5747C10.9239 13.951 10.618 14.257 10.2416 14.4487C9.81382 14.6667 9.25376 14.6667 8.13366 14.6667H3.86699C2.74689 14.6667 2.18683 14.6667 1.75901 14.4487C1.38269 14.257 1.07673 13.951 0.884979 13.5747C0.666992 13.1469 0.666992 12.5868 0.666992 11.4667V4.53337C0.666992 3.41327 0.666992 2.85322 0.884979 2.42539C1.07673 2.04907 1.38269 1.74311 1.75901 1.55136C2.18683 1.33337 2.74689 1.33337 3.86699 1.33337H8.13366C9.25376 1.33337 9.81382 1.33337 10.2416 1.55136C10.618 1.74311 10.9239 2.04907 11.1157 2.42539C11.3337 2.85322 11.3337 3.41327 11.3337 4.53337Z"
-                    stroke="#8B8B92"
-                    strokeWidth="1.2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-
-                <p>UI Lessons</p>
-              </div>
-              <p>56</p>
+              <p>{fileSize} MB</p>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-x-1">
@@ -297,23 +284,24 @@ const ProductDetails = ({
   );
 };
 
-const FolderStructure = ({ product }: { product: string }) => {
+const FolderStructure = ({
+  product,
+  productCategory,
+}: {
+  product: string;
+  productCategory: string;
+}) => {
   return (
     <div className="flex items-center gap-x-3 mt-5 border-b pb-1 border-[##E8E7E5]">
-      <svg
-        className="w-4"
-        viewBox="0 0 18 18"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M6.5 16.5V10.3333C6.5 9.86661 6.5 9.63326 6.59083 9.455C6.67072 9.29819 6.79821 9.17071 6.95501 9.09081C7.13327 8.99999 7.36662 8.99999 7.83333 8.99999H10.1667C10.6334 8.99999 10.8667 8.99999 11.045 9.09081C11.2018 9.17071 11.3293 9.29819 11.4092 9.455C11.5 9.63326 11.5 9.86661 11.5 10.3333V16.5M8.18141 1.30333L2.52949 5.69927C2.15168 5.99312 1.96278 6.14005 1.82669 6.32405C1.70614 6.48704 1.61633 6.67065 1.56169 6.86588C1.5 7.08627 1.5 7.32558 1.5 7.80421V13.8333C1.5 14.7667 1.5 15.2335 1.68166 15.59C1.84144 15.9036 2.09641 16.1585 2.41002 16.3183C2.76654 16.5 3.23325 16.5 4.16667 16.5H13.8333C14.7668 16.5 15.2335 16.5 15.59 16.3183C15.9036 16.1585 16.1586 15.9036 16.3183 15.59C16.5 15.2335 16.5 14.7667 16.5 13.8333V7.80421C16.5 7.32558 16.5 7.08627 16.4383 6.86588C16.3837 6.67065 16.2939 6.48704 16.1733 6.32405C16.0372 6.14005 15.8483 5.99312 15.4705 5.69927L9.81859 1.30333C9.52582 1.07562 9.37943 0.961766 9.21779 0.918001C9.07516 0.879384 8.92484 0.879384 8.78221 0.918001C8.62057 0.961766 8.47418 1.07562 8.18141 1.30333Z"
-          stroke="#050505"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+      <Link href={"/"} className="w-fit">
+        <Image
+          className="w-4"
+          src={homeIconSVG}
+          alt="home"
+          width={50}
+          height={50}
         />
-      </svg>
+      </Link>
 
       <svg
         width="6"
@@ -330,7 +318,7 @@ const FolderStructure = ({ product }: { product: string }) => {
         />
       </svg>
 
-      <p>Design</p>
+      <p className=" cursor-pointer">{productCategory}</p>
 
       <svg
         width="6"

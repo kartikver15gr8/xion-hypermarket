@@ -7,6 +7,8 @@ import { ProductInterface, PurchasesInterface } from "@/lib/models";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
+import homeIconSVG from "@/public/homeicon.svg";
+import Link from "next/link";
 export default function UserLibrary() {
   const [userId, setUserId] = useState(0);
   const userWalletAddress = useRecoilValue(phantomWallet);
@@ -31,23 +33,20 @@ export default function UserLibrary() {
 
   return (
     <div className="">
-      <TopBar order="12355" />
+      <TopBar />
       <div className="flex items-center gap-x-5 mt-10">
-        <p className="text-3xl font-bold italic">Order #12323</p>
-        <button className="border rounded-md bg-green-300 bg-opacity-40 border-green-600 h-7 px-1">
-          Completed
-        </button>
+        <p className="text-4xl font-bold">Your Recent Purchases</p>
       </div>
 
-      <PurchaseDetails
+      {/* <PurchaseDetails
         purchaseDate="September 16, 2024, 2:35 PM UTC"
         paymentMethod="Wallet: Ox6b..3dsx"
         txId="0x...454jkx"
-      />
+      /> */}
       <PurchasedProducts userId={userId} />
-      <div className="mt-8 justify-end flex">
+      {/* <div className="mt-8 justify-end flex">
         <Summary />
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -79,23 +78,18 @@ const PurchaseDetails = ({
   );
 };
 
-const TopBar = ({ order }: { order: string }) => {
+const TopBar = () => {
   return (
     <div className="flex items-center gap-x-3 mt-5 border-b pb-1 border-[##E8E7E5]">
-      <svg
-        className="w-4"
-        viewBox="0 0 18 18"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M6.5 16.5V10.3333C6.5 9.86661 6.5 9.63326 6.59083 9.455C6.67072 9.29819 6.79821 9.17071 6.95501 9.09081C7.13327 8.99999 7.36662 8.99999 7.83333 8.99999H10.1667C10.6334 8.99999 10.8667 8.99999 11.045 9.09081C11.2018 9.17071 11.3293 9.29819 11.4092 9.455C11.5 9.63326 11.5 9.86661 11.5 10.3333V16.5M8.18141 1.30333L2.52949 5.69927C2.15168 5.99312 1.96278 6.14005 1.82669 6.32405C1.70614 6.48704 1.61633 6.67065 1.56169 6.86588C1.5 7.08627 1.5 7.32558 1.5 7.80421V13.8333C1.5 14.7667 1.5 15.2335 1.68166 15.59C1.84144 15.9036 2.09641 16.1585 2.41002 16.3183C2.76654 16.5 3.23325 16.5 4.16667 16.5H13.8333C14.7668 16.5 15.2335 16.5 15.59 16.3183C15.9036 16.1585 16.1586 15.9036 16.3183 15.59C16.5 15.2335 16.5 14.7667 16.5 13.8333V7.80421C16.5 7.32558 16.5 7.08627 16.4383 6.86588C16.3837 6.67065 16.2939 6.48704 16.1733 6.32405C16.0372 6.14005 15.8483 5.99312 15.4705 5.69927L9.81859 1.30333C9.52582 1.07562 9.37943 0.961766 9.21779 0.918001C9.07516 0.879384 8.92484 0.879384 8.78221 0.918001C8.62057 0.961766 8.47418 1.07562 8.18141 1.30333Z"
-          stroke="#050505"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+      <Link href={"/"} className="w-fit">
+        <Image
+          className="w-4"
+          src={homeIconSVG}
+          alt="home"
+          width={50}
+          height={50}
         />
-      </svg>
+      </Link>
 
       <svg
         width="6"
@@ -113,23 +107,6 @@ const TopBar = ({ order }: { order: string }) => {
       </svg>
 
       <p>Orders</p>
-
-      <svg
-        width="6"
-        height="10"
-        viewBox="0 0 6 10"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M1 9L5 5L1 1"
-          stroke="#050505"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-
-      <p className="text-[#8B8B92] italic">#{order}</p>
     </div>
   );
 };
@@ -144,7 +121,7 @@ const PurchasedProducts = ({ userId }: { userId: number }) => {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/purchases?user_id=${userId}`
       );
-      // console.log(response.data);
+      console.log(response.data);
       setProductPurchases(response.data);
     } catch (error) {
       console.log(`You got an error while fetching user purchases: ${error}`);
@@ -157,27 +134,34 @@ const PurchasedProducts = ({ userId }: { userId: number }) => {
 
   return (
     <div className="border rounded-xl bg-white shadow-lg mt-14">
-      <div className="grid grid-cols-10 h-14 items-center px-3 border-b text-[#8B8B93]">
-        <p className="col-span-3">PRODUCT</p>
-        <p className="col-span-1">PRICE</p>
-        <p className="col-span-2">DETAILS</p>
-        <p className="col-span-2">SELLER</p>
-        <p className="col-span-2">ACTION</p>
+      <div className="px-2 mb-1 grid grid-cols-12 items-center w-full h-10 rounded-t-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
+        <p className="text-[10px] md:text-[13px] col-span-3">PRODUCT</p>
+        <p className="text-[10px] md:text-[13px] col-span-1">PRICE</p>
+        <p className="text-[10px] md:text-[13px] col-span-2">PURCHASE DATE</p>
+        <p className="text-[10px] md:text-[13px] col-span-1">FILE SIZE</p>
+        <p className="text-[10px] md:text-[13px] col-span-1">FILE TYPE</p>
+        <p className="text-[10px] md:text-[13px] col-span-1">CHECKSUM</p>
+        <p className="text-[10px] md:text-[13px] col-span-1">SELLER</p>
+        <p className="text-[10px] md:text-[13px] col-span-1">HASH</p>
+        <p className="text-[10px] md:text-[13px] col-span-1">ACTION</p>
       </div>
       {productPurchases.length > 1 ? (
-        <div className="h-60 overflow-y-auto  hide-scrollbar scroll-smooth">
+        <div className="h-[50vh] overflow-y-auto  hide-scrollbar scroll-smooth">
           {productPurchases.map((elem, key) => {
             return (
               <ProductLabel
                 key={key}
+                productId={elem.product_id}
                 productImg={elem.product_thumbnail_url}
                 productName={elem.product_title}
                 price={elem.amount.toFixed(2)}
-                fileDetails={elem.product_filename}
-                sellerDetails={`${elem.seller_wallet_address.slice(
-                  0,
-                  4
-                )}…${elem.seller_wallet_address.slice(-3)}`}
+                // fileDetails={elem.product_filename}
+                purchaseDate={elem.created_at}
+                fileSize={elem.product_file_size}
+                fileType={elem.product_file_type}
+                checkSum={elem.product_file_checksum}
+                transactionHash={elem.transaction_hash}
+                sellerDetails={elem.seller_wallet_address}
               />
             );
           })}
@@ -186,10 +170,15 @@ const PurchasedProducts = ({ userId }: { userId: number }) => {
         <div className="h-20 overflow-y-auto  hide-scrollbar scroll-smooth">
           <ProductLabel
             productImg="https://ucarecdn.com/deb46443-1cf0-4ec1-bb33-f86d93cfb949/e15545c9453e489ca7dbe8dd427b00e3.webp"
-            productName="No Product"
-            price=""
-            fileDetails=""
-            sellerDetails="None"
+            productId={0}
+            productName="string"
+            price="string"
+            purchaseDate="string"
+            sellerDetails="string"
+            fileSize="string"
+            fileType="string"
+            checkSum="string"
+            transactionHash="string"
           />
         </div>
       )}
@@ -198,64 +187,104 @@ const PurchasedProducts = ({ userId }: { userId: number }) => {
 };
 
 const ProductLabel = ({
+  productId,
   productImg,
   productName,
   price,
-  fileDetails,
+  purchaseDate,
   sellerDetails,
+  fileSize,
+  fileType,
+  checkSum,
+  transactionHash,
 }: {
+  productId?: number;
   productImg: string | StaticImageData;
   productName: string;
   price: string;
-  fileDetails: string;
+  purchaseDate: string;
   sellerDetails: string;
+  fileSize: string;
+  fileType: string;
+  checkSum: string;
+  transactionHash: string;
 }) => {
+  const dateStr = purchaseDate;
+  const date = new Date(dateStr);
+
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+
+  const formattedDate = date.toLocaleString("en-US", options);
+
   return (
-    <div className="grid grid-cols-10 border-b  h-20 px-3 items-center">
-      <div className="col-span-3 flex items-center gap-x-4">
+    <div className="border-b px-2 grid grid-cols-12 items-center w-full h-12">
+      <Link
+        href={`/product/${productId}`}
+        className="col-span-3 flex items-center gap-x-2"
+      >
         <Image
           src={productImg}
           alt="product"
-          className=" w-16 h-16 rounded-md"
-          width={100}
-          height={100}
+          className=" w-8 h-8 rounded-md"
+          width={20}
+          height={20}
         />
 
-        <p className="text-lg font-medium">{productName}</p>
-      </div>
-      <div className="col-span-1">
-        <p>${price}</p>
-      </div>
-      <div className="col-span-2 flex items-center gap-x-2">
+        {productName.length > 20 ? (
+          <p className="text-[9px] md:text-[13px]">
+            {productName.slice(0, 20)}...
+          </p>
+        ) : (
+          <p className="text-[9px] md:text-[13px]">{productName}</p>
+        )}
+      </Link>
+      <p className="text-[9px] md:text-[13px] col-span-1">{`${price} SOL`}</p>
+      <p className="text-[9px] md:text-[13px] col-span-2">{formattedDate}</p>
+      <p className="text-[9px] md:text-[13px] col-span-1">{fileSize}</p>
+      <p className="text-[9px] md:text-[13px] col-span-1">{fileType}</p>
+      {checkSum && checkSum.length > 10 ? (
+        <p className="text-[9px] md:text-[13px] col-span-1">
+          {checkSum.slice(0, 10)}...
+        </p>
+      ) : (
+        <p className="text-[9px] md:text-[13px] col-span-`">{checkSum}</p>
+      )}
+      {/* <p className="text-[9px] md:text-[13px] col-span-2">{sellerDetails}</p> */}
+      {sellerDetails && sellerDetails.length > 10 ? (
+        <p className="text-[9px] md:text-[13px] col-span-1">
+          {`${sellerDetails.slice(0, 4)}…${sellerDetails.slice(-3)}`}
+        </p>
+      ) : (
+        <p className="text-[9px] md:text-[13px] col-span-1">{sellerDetails}</p>
+      )}
+      <div className="text-[9px] md:text-[13px] col-span-1 flex items-center">
+        {transactionHash && transactionHash.length > 16 ? (
+          <p className="text-[9px] md:text-[13px]">
+            {transactionHash.slice(0, 16)}...
+          </p>
+        ) : (
+          <p className="text-[9px] md:text-[13px]">{transactionHash}</p>
+        )}
         <svg
-          className="w-3"
-          viewBox="0 0 12 13"
+          className="w-3 ml-1"
+          viewBox="0 0 14 14"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M7.16732 0.823933V3.23342C7.16732 3.56011 7.16732 3.72346 7.2309 3.84824C7.28682 3.958 7.37606 4.04724 7.48582 4.10317C7.6106 4.16675 7.77395 4.16675 8.10065 4.16675H10.5101M10.6673 5.32655V9.53341C10.6673 10.5135 10.6673 11.0036 10.4766 11.3779C10.3088 11.7072 10.0411 11.9749 9.7118 12.1427C9.33746 12.3334 8.84741 12.3334 7.86732 12.3334H4.13398C3.15389 12.3334 2.66385 12.3334 2.2895 12.1427C1.96022 11.9749 1.6925 11.7072 1.52472 11.3779C1.33398 11.0036 1.33398 10.5135 1.33398 9.53341V3.46675C1.33398 2.48666 1.33398 1.99661 1.52472 1.62226C1.6925 1.29298 1.96022 1.02527 2.2895 0.857487C2.66385 0.666748 3.15389 0.666748 4.13398 0.666748H6.00752C6.43555 0.666748 6.64957 0.666748 6.85097 0.715101C7.02954 0.75797 7.20024 0.828678 7.35682 0.924628C7.53342 1.03285 7.68475 1.18418 7.98742 1.48685L9.84722 3.34665C10.1499 3.64931 10.3012 3.80065 10.4094 3.97725C10.5054 4.13383 10.5761 4.30453 10.619 4.48309C10.6673 4.6845 10.6673 4.89851 10.6673 5.32655Z"
-            stroke="#52525C"
-            strokeWidth="1.2"
+            d="M4.66797 4.6665V3.03317C4.66797 2.37978 4.66797 2.05308 4.79513 1.80352C4.90698 1.58399 5.08546 1.40552 5.30498 1.29366C5.55454 1.1665 5.88124 1.1665 6.53464 1.1665H10.968C11.6214 1.1665 11.9481 1.1665 12.1976 1.29366C12.4171 1.40552 12.5956 1.58399 12.7075 1.80352C12.8346 2.05308 12.8346 2.37978 12.8346 3.03317V7.4665C12.8346 8.1199 12.8346 8.4466 12.7075 8.69616C12.5956 8.91568 12.4171 9.09416 12.1976 9.20601C11.9481 9.33317 11.6214 9.33317 10.968 9.33317H9.33464M3.03464 12.8332H7.46797C8.12136 12.8332 8.44806 12.8332 8.69762 12.706C8.91715 12.5942 9.09562 12.4157 9.20748 12.1962C9.33464 11.9466 9.33464 11.6199 9.33464 10.9665V6.53317C9.33464 5.87978 9.33464 5.55308 9.20748 5.30352C9.09562 5.08399 8.91715 4.90552 8.69762 4.79366C8.44806 4.6665 8.12136 4.6665 7.46797 4.6665H3.03464C2.38124 4.6665 2.05454 4.6665 1.80498 4.79366C1.58546 4.90552 1.40698 5.08399 1.29513 5.30352C1.16797 5.55308 1.16797 5.87978 1.16797 6.53317V10.9665C1.16797 11.6199 1.16797 11.9466 1.29513 12.1962C1.40698 12.4157 1.58546 12.5942 1.80498 12.706C2.05454 12.8332 2.38124 12.8332 3.03464 12.8332Z"
+            stroke="#8B8B92"
+            strokeWidth="1.1375"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
         </svg>
-
-        <p>{fileDetails}</p>
       </div>
-      <div className="col-span-2 flex items-center gap-x-2">
-        <Image
-          src={productImg}
-          alt="product"
-          className=" w-8 h-8 rounded-full"
-          width={100}
-          height={100}
-        />
-
-        <p className="">{sellerDetails}</p>
-      </div>
-      <div className="col-span-2 flex items-center bg-black text-white h-10 justify-center gap-x-2 rounded-lg">
+      <button className="col-span-1 flex items-center bg-black text-white h-8 justify-center gap-x-2 rounded-md hover:bg-[#5a5c5d] transition-all duration-300">
         <svg
           className="w-3"
           viewBox="0 0 12 13"
@@ -271,8 +300,8 @@ const ProductLabel = ({
           />
         </svg>
 
-        <p>Download</p>
-      </div>
+        <p className="text-[9px] md:text-[13px]">Download</p>
+      </button>
     </div>
   );
 };

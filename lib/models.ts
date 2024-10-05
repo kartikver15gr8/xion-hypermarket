@@ -50,24 +50,31 @@ export interface ReviewInterface {
 }
 
 export interface ProductInterface {
-  category: {
-    description: string;
-    id: number;
-    name: string;
-    thumbnail_url: string;
-  };
-  category_id: number;
-  compare_price: string;
-  description: string;
-  file_checksum: string;
-  file_size: number;
-  file_type: string;
-  filename: string;
   id: number;
   name: string;
+  description: string;
+  status: string;
+  filename: string;
+  file_type: string;
+  file_size: number;
+  file_checksum: string;
   price: string;
-  thumbnail_url: string;
+  compare_price: string;
   user_id: number;
+  category_id: number;
+  category: {
+    id: number;
+    name: string;
+    description: string;
+    thumbnail_url: string;
+    created_at: string;
+    updated_at: string;
+  };
+  thumbnail_url: string;
+  view_count: number;
+  created_at: string;
+  updated_at: string;
+  seller_wallet_address: string;
 }
 
 export interface PurchasesInterface {
@@ -83,7 +90,11 @@ export interface PurchasesInterface {
   product_title: string;
   product_description: string;
   product_filename: string;
+  product_file_size: string;
+  product_file_type: string;
+  product_file_checksum: string;
   product_thumbnail_url: string;
+  product_category_name: string;
   seller_wallet_address: string;
   affiliate_wallet_address: string;
   buyer_wallet_address: string;
