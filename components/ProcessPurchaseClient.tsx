@@ -27,8 +27,6 @@ interface PhantomWindow extends Window {
 
 declare const window: PhantomWindow;
 
-const connection = new Connection(clusterApiUrl("devnet"), "confirmed");
-
 export default function ProcessPurchaseClient({
   productId,
 }: {
@@ -120,7 +118,7 @@ export default function ProcessPurchaseClient({
     }
   }, []);
 
-  const buyProduct = async () => {
+  const buyProduct = async (transactionHash: string) => {
     try {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/purchases`,
@@ -129,7 +127,7 @@ export default function ProcessPurchaseClient({
           amount: Number(productById?.price),
           product_id: productId,
           status: 1,
-          transaction_hash: "",
+          transaction_hash: transactionHash,
           user_id: buyerId,
         }
       );
@@ -215,23 +213,28 @@ export default function ProcessPurchaseClient({
         toast.success("Transaction successful!", {
           description: signature,
         });
+
+        return signature;
       } else {
-        console.log("No productById");
+        return null;
       }
     } catch (error) {
-      console.log(`Error while processing purchase: ${error}`);
       toast.error(`Registration failed: ${error} `);
     }
   };
 
   const handleOnClick = async () => {
+    setLoading(true);
     try {
-      setLoading(true);
-      await makeProcessPurchase();
-      await buyProduct();
-      setLoading(false);
+      const signature = await makeProcessPurchase();
+      if (signature) {
+        await buyProduct(signature);
+      } else {
+        toast.error("Purchase process failed. Please try again.");
+      }
     } catch (error) {
-      console.log("Error while triggering handle handleOnClick!");
+      toast.error("An unexpected error occurred. Please try again.");
+    } finally {
       setLoading(false);
     }
   };

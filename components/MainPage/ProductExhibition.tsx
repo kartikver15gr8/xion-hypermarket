@@ -869,7 +869,7 @@ export function LiquidationsTokenMarquee() {
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?limit=20`
       );
       setMarqueeProducts(response.data);
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.log(`You got an error: ${error}`);
     }
