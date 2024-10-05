@@ -72,6 +72,7 @@ export default function Product({ params }: any) {
           productId={productById.id}
           fileName={productById.filename}
           fileSize={productById.file_size}
+          sellerAddress={productById.seller_wallet_address}
         />
       )}
       {productById && (
@@ -94,6 +95,7 @@ const ProductDetails = ({
   comparePrice,
   fileSize,
   fileName,
+  sellerAddress,
 }: {
   bannerImg: string;
   productName: string;
@@ -102,6 +104,7 @@ const ProductDetails = ({
   comparePrice: string | number;
   fileSize: string | number;
   fileName: string;
+  sellerAddress: string;
 }) => {
   return (
     <div className="">
@@ -121,10 +124,16 @@ const ProductDetails = ({
           <div className="flex items-center mt-4 justify-between">
             <p className="font-bold text-xl">{productName}</p>
 
-            <div className="flex  items-center gap-x-2">
+            <Link
+              href={`/product/seller/${sellerAddress}`}
+              className="flex  items-center gap-x-2"
+            >
               <Image src={kody} className="w-5 h-5 rounded-full" alt="" />
-              <p className="text-xs md:text-sm">Kody | LP Labs</p>
-            </div>
+              <p className="text-xs md:text-sm">
+                sold by:{" "}
+                {`${sellerAddress.slice(0, 2)}…${sellerAddress.slice(-2)}`}
+              </p>
+            </Link>
           </div>
           <div className="mt-4 mb-1 flex items-center justify-between text-xs md:text-sm">
             <div className="border flex items-center w-36 h-12 rounded bg-[#F7F7F5]">
