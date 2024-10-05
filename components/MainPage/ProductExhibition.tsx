@@ -804,7 +804,10 @@ const ReviewCard = ({
   // body: string;
 }) => {
   return (
-    <div className="p-[5px] border-[1px] border-[#7e7e7f] rounded-xl shadow-lg ">
+    <Link
+      href={redirectHref}
+      className="p-[5px] border-[1px] border-[#7e7e7f] rounded-xl shadow-lg "
+    >
       <figure
         className={cn(
           "relative w-40 md:w-48  cursor-pointer overflow-hidden rounded-md  justify-between flex ",
@@ -815,28 +818,21 @@ const ReviewCard = ({
         )}
       >
         <div className=" flex items-center h-16 lg:h-20 justify-center gap-x-2">
-          <div className="bg-white border border-[#c3c3c6] flex items-center justify-center rounded-lg w-16 h-16 lg:w-20  lg:h-20 ">
+          <div className="relative bg-white border border-[#c3c3c6] flex items-center justify-center rounded-lg w-16 h-16 lg:w-20  lg:h-20 ">
             <Image
               className="w-[100%] rounded-md z-10 "
-              width={500}
-              height={500}
               alt=""
               src={imgUrl}
+              layout="fill"
             />
           </div>
           <div className="flex flex-col  w-24">
             <div className="flex flex-col  w-full">
-              {/* <figcaption className="text-lg font-medium dark:text-white">
-                {coin}
-              </figcaption> */}
-              <p className="text-xs text-black font-medium dark:text-white/40">
-                {name}
+              <p className="text-[12px] sm:text-[14px] md:text-[14px] xl:text-[14px] text-black font-medium dark:text-white/40">
+                {`${name.slice(0, 20)}…`}
               </p>
             </div>
-            <Link
-              href={`/liquidation/coinpage/${redirectHref}`}
-              className="mt-2 font-teachers flex items-center gap-x-1 text-[12px] sm:text-[14px] md:text-[14px] xl:text-[14px]"
-            >
+            <div className="mt-2 font-teachers flex items-center gap-x-1 text-[12px]">
               <button className="">Buy</button>
               <svg
                 width="10"
@@ -853,45 +849,68 @@ const ReviewCard = ({
                   strokeLinejoin="round"
                 />
               </svg>
-            </Link>
+            </div>
           </div>
         </div>
         {/* <blockquote className="mt-2 text-sm">{body}</blockquote> */}
       </figure>
-    </div>
+    </Link>
   );
 };
 
 export function LiquidationsTokenMarquee() {
+  const [marqueeProducts, setMarqueeProducts] = useState<ProductInterface[]>(
+    []
+  );
+
+  const fetchMarqueeProducts = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?limit=20`
+      );
+      setMarqueeProducts(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(`You got an error: ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    fetchMarqueeProducts();
+  }, []);
+
+  const firstRow = marqueeProducts.slice(0, marqueeProducts.length / 2);
+  const secondRow = marqueeProducts.slice(marqueeProducts.length / 2);
+
   return (
     <div className="relative flex h-fit w-full flex-col items-center justify-center overflow-hidden rounded-lg  bg-none">
-      <Marquee pauseOnHover className="[--duration:20s]">
+      <Marquee pauseOnHover className="[--duration:30s]">
         {firstRow.map((review) => (
           <ReviewCard
             key={review.name}
             {...review}
-            imgUrl={review.imgURL}
-            redirectHref={review.redirectHref}
+            imgUrl={review.thumbnail_url}
+            redirectHref={`/product/${review.id}`}
           />
         ))}
       </Marquee>
-      <Marquee reverse pauseOnHover className="[--duration:20s]">
-        {firstRow.map((review) => (
+      <Marquee reverse pauseOnHover className="[--duration:30s]">
+        {secondRow.map((review) => (
           <ReviewCard
             key={review.name}
             {...review}
-            imgUrl={review.imgURL}
-            redirectHref={review.redirectHref}
+            imgUrl={review.thumbnail_url}
+            redirectHref={`/product/${review.id}`}
           />
         ))}
       </Marquee>
-      <Marquee pauseOnHover className="[--duration:10s]">
-        {firstRow.map((review) => (
+      <Marquee pauseOnHover className="[--duration:50s]">
+        {marqueeProducts.map((review) => (
           <ReviewCard
             key={review.name}
             {...review}
-            imgUrl={review.imgURL}
-            redirectHref={review.redirectHref}
+            imgUrl={review.thumbnail_url}
+            redirectHref={`/product/${review.id}`}
           />
         ))}
       </Marquee>
@@ -1153,7 +1172,7 @@ const HotDigitalProducts = () => {
                   key={key}
                   redirectHref={`/product/${elem.id}`}
                   img={elem.thumbnail_url}
-                  category="Digital Product"
+                  category={elem.category.name}
                   productName={elem.name}
                   description={elem.description}
                   price={`$${elem.price} one time payment`}
@@ -1526,7 +1545,7 @@ const DesignUIUX = () => {
                   key={key}
                   redirectHref={`/product/${elem.id}`}
                   img={elem.thumbnail_url}
-                  category="Digital Product"
+                  category={elem.category.name}
                   productName={elem.name}
                   description={elem.description}
                   price={`$${elem.price} one time payment`}

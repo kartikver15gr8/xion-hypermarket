@@ -7,6 +7,8 @@ import { ProductInterface, PurchasesInterface } from "@/lib/models";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
+import homeIconSVG from "@/public/homeicon.svg";
+import Link from "next/link";
 export default function UserLibrary() {
   const [userId, setUserId] = useState(0);
   const userWalletAddress = useRecoilValue(phantomWallet);
@@ -31,23 +33,20 @@ export default function UserLibrary() {
 
   return (
     <div className="">
-      <TopBar order="12355" />
+      <TopBar />
       <div className="flex items-center gap-x-5 mt-10">
-        <p className="text-3xl font-bold italic">Order #12323</p>
-        <button className="border rounded-md bg-green-300 bg-opacity-40 border-green-600 h-7 px-1">
-          Completed
-        </button>
+        <p className="text-4xl font-bold">Your Recent Purchases</p>
       </div>
 
-      <PurchaseDetails
+      {/* <PurchaseDetails
         purchaseDate="September 16, 2024, 2:35 PM UTC"
         paymentMethod="Wallet: Ox6b..3dsx"
         txId="0x...454jkx"
-      />
+      /> */}
       <PurchasedProducts userId={userId} />
-      <div className="mt-8 justify-end flex">
+      {/* <div className="mt-8 justify-end flex">
         <Summary />
-      </div>
+      </div> */}
     </div>
   );
 }
@@ -79,23 +78,18 @@ const PurchaseDetails = ({
   );
 };
 
-const TopBar = ({ order }: { order: string }) => {
+const TopBar = () => {
   return (
     <div className="flex items-center gap-x-3 mt-5 border-b pb-1 border-[##E8E7E5]">
-      <svg
-        className="w-4"
-        viewBox="0 0 18 18"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M6.5 16.5V10.3333C6.5 9.86661 6.5 9.63326 6.59083 9.455C6.67072 9.29819 6.79821 9.17071 6.95501 9.09081C7.13327 8.99999 7.36662 8.99999 7.83333 8.99999H10.1667C10.6334 8.99999 10.8667 8.99999 11.045 9.09081C11.2018 9.17071 11.3293 9.29819 11.4092 9.455C11.5 9.63326 11.5 9.86661 11.5 10.3333V16.5M8.18141 1.30333L2.52949 5.69927C2.15168 5.99312 1.96278 6.14005 1.82669 6.32405C1.70614 6.48704 1.61633 6.67065 1.56169 6.86588C1.5 7.08627 1.5 7.32558 1.5 7.80421V13.8333C1.5 14.7667 1.5 15.2335 1.68166 15.59C1.84144 15.9036 2.09641 16.1585 2.41002 16.3183C2.76654 16.5 3.23325 16.5 4.16667 16.5H13.8333C14.7668 16.5 15.2335 16.5 15.59 16.3183C15.9036 16.1585 16.1586 15.9036 16.3183 15.59C16.5 15.2335 16.5 14.7667 16.5 13.8333V7.80421C16.5 7.32558 16.5 7.08627 16.4383 6.86588C16.3837 6.67065 16.2939 6.48704 16.1733 6.32405C16.0372 6.14005 15.8483 5.99312 15.4705 5.69927L9.81859 1.30333C9.52582 1.07562 9.37943 0.961766 9.21779 0.918001C9.07516 0.879384 8.92484 0.879384 8.78221 0.918001C8.62057 0.961766 8.47418 1.07562 8.18141 1.30333Z"
-          stroke="#050505"
-          strokeWidth="1.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+      <Link href={"/"} className="w-fit">
+        <Image
+          className="w-4"
+          src={homeIconSVG}
+          alt="home"
+          width={50}
+          height={50}
         />
-      </svg>
+      </Link>
 
       <svg
         width="6"
@@ -113,23 +107,6 @@ const TopBar = ({ order }: { order: string }) => {
       </svg>
 
       <p>Orders</p>
-
-      <svg
-        width="6"
-        height="10"
-        viewBox="0 0 6 10"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M1 9L5 5L1 1"
-          stroke="#050505"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
-
-      <p className="text-[#8B8B92] italic">#{order}</p>
     </div>
   );
 };
@@ -165,11 +142,12 @@ const PurchasedProducts = ({ userId }: { userId: number }) => {
         <p className="col-span-2">ACTION</p>
       </div>
       {productPurchases.length > 1 ? (
-        <div className="h-60 overflow-y-auto  hide-scrollbar scroll-smooth">
+        <div className="h-[50vh] overflow-y-auto  hide-scrollbar scroll-smooth">
           {productPurchases.map((elem, key) => {
             return (
               <ProductLabel
                 key={key}
+                redirectURI={elem.product_id.toString()}
                 productImg={elem.product_thumbnail_url}
                 productName={elem.product_title}
                 price={elem.amount.toFixed(2)}
@@ -190,6 +168,7 @@ const PurchasedProducts = ({ userId }: { userId: number }) => {
             price=""
             fileDetails=""
             sellerDetails="None"
+            redirectURI={``}
           />
         </div>
       )}
@@ -203,16 +182,21 @@ const ProductLabel = ({
   price,
   fileDetails,
   sellerDetails,
+  redirectURI,
 }: {
   productImg: string | StaticImageData;
   productName: string;
   price: string;
   fileDetails: string;
   sellerDetails: string;
+  redirectURI: string;
 }) => {
   return (
     <div className="grid grid-cols-10 border-b  h-20 px-3 items-center">
-      <div className="col-span-3 flex items-center gap-x-4">
+      <Link
+        href={`/product/${redirectURI}`}
+        className="col-span-3 flex items-center gap-x-4 cursor-pointer"
+      >
         <Image
           src={productImg}
           alt="product"
@@ -222,7 +206,7 @@ const ProductLabel = ({
         />
 
         <p className="text-lg font-medium">{productName}</p>
-      </div>
+      </Link>
       <div className="col-span-1">
         <p>${price}</p>
       </div>

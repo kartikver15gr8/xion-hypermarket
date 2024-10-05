@@ -19,6 +19,7 @@ import { usePathname } from "next/navigation";
 import { useKeplr } from "@/hooks/useKeplr";
 import WalletConnectWindow from "./WalletConnectWindow";
 import PhantomWalletButton from "./PhantomWalletButton";
+import shopBag from "@/public/shopbag.svg";
 
 const isActive =
   "relative text-[14px] md:text-[16px] bg-[#dcdfe0] lg:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200";
@@ -143,7 +144,7 @@ export default function FullNav() {
             />
             <NavLink
               href="/library"
-              text="Library"
+              text="Orders"
               isOpen={isOpen}
               setIsOpen={setIsOpen}
             />
@@ -162,12 +163,6 @@ export default function FullNav() {
             <NavLink
               href="/"
               text="Affiliate Program"
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-            />
-            <NavLink
-              href="/"
-              text="Coming Soon!"
               isOpen={isOpen}
               setIsOpen={setIsOpen}
             />
@@ -230,6 +225,7 @@ export default function FullNav() {
                   </p> */}
                 </div>
               </Link>
+              {/*  Portfolio button */}
               {/* <div
                 onClick={copyToClipboard}
                 className="w-1/6 flex justify-center items-center h-full  relative bg-no-repeat bg-center"
@@ -372,26 +368,15 @@ const NavItems = () => {
       tooltip: "Explore wide range of digital products!",
       href: "/",
     },
-    { text: "Library", tooltip: "Check your purchases!", href: "/library" },
-    // {
-    //   text: "Earn",
-    //   tooltip: "Earn rewards and incentives!",
-    //   href: "/",
-    // },
-
+    { text: "Orders", tooltip: "Check your purchases!", href: "/library" },
     {
       text: "Affiliate Program",
       tooltip: "Become affiliate, get incentivized!",
       href: "/",
     },
-    {
-      text: "Coming Soon",
-      tooltip: "Dropping some cool features, stay tuned!",
-      href: "/",
-    },
   ];
   const pathname = usePathname();
-  // console.log(pathname);
+
   return (
     <div className="h-full items-center  px-4 hidden sm:flex">
       <ul className="flex gap-x-2 lg:gap-x-4 text-[18px] font-medium">
@@ -443,54 +428,6 @@ const NavItems = () => {
             )}
           </li>
         </Link>
-        <Link href={menuItems[3].href} key={3}>
-          <li
-            key={3}
-            className={pathname == "/earnmore" ? isActive : isInactive}
-            onMouseEnter={() => setActiveTooltip(3)}
-            onMouseLeave={() => setActiveTooltip(null)}
-          >
-            {menuItems[3].text}
-            {activeTooltip === 3 && (
-              <div className="absolute left-1/2 -translate-x-1/2  mt-3 px-2 py-1 bg-[#e9ecec] text-slate-700 text-sm rounded-md whitespace-nowrap border border-[#bac3c4]">
-                {menuItems[3].tooltip}
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#1d2c3a]"></div>
-              </div>
-            )}
-          </li>
-        </Link>
-        {/* <Link href={menuItems[3].href} key={3}>
-          <li
-            key={3}
-            className={pathname == "/portfolio" ? isActive : isInactive}
-            onMouseEnter={() => setActiveTooltip(3)}
-            onMouseLeave={() => setActiveTooltip(null)}
-          >
-            {menuItems[3].text}
-            {activeTooltip === 3 && (
-              <div className="absolute left-1/2 -translate-x-1/2  mt-3 px-2 py-1 bg-[#e9ecec] text-slate-700 text-sm rounded-md whitespace-nowrap border border-[#bac3c4]">
-                {menuItems[3].tooltip}
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#1d2c3a]"></div>
-              </div>
-            )}
-          </li>
-        </Link> */}
-        {/* <Link href={menuItems[4].href} key={4}>
-          <li
-            key={4}
-            className={pathname == "/achievements" ? isActive : isInactive}
-            onMouseEnter={() => setActiveTooltip(4)}
-            onMouseLeave={() => setActiveTooltip(null)}
-          >
-            {menuItems[4].text}
-            {activeTooltip === 4 && (
-              <div className="absolute left-1/2 -translate-x-1/2  mt-3 px-2 py-1 bg-[#e9ecec] text-slate-700 text-sm rounded-md whitespace-nowrap border border-[#bac3c4]">
-                {menuItems[4].tooltip}
-                <div className="absolute bottom-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-[#1d2c3a]"></div>
-              </div>
-            )}
-          </li>
-        </Link> */}
       </ul>
     </div>
   );
