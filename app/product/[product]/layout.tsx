@@ -20,17 +20,17 @@ export async function generateMetadata({
   const product = await getProduct(params.product);
 
   return {
-    title: product.Name,
-    description: product.Description,
+    title: product.name,
+    description: product.description,
     openGraph: {
-      title: product.Name,
-      description: product.Description,
+      title: product.name,
+      description: product.description,
       images: [`/product/${params.product}/opengraph-image`],
     },
     twitter: {
       card: "summary_large_image",
-      title: product.Name,
-      description: product.Description,
+      title: product.name,
+      description: product.description,
       images: [`/product/${params.product}/opengraph-image`],
     },
   };

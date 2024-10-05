@@ -444,11 +444,11 @@ const Category = () => {
               .slice(0, showAll ? categories.length : 6)
               .map((elem, key) => (
                 <CategoryCard
-                  id={elem.ID}
+                  id={elem.id}
                   key={key}
-                  bg={elem.ThumbnailUrl}
-                  categoryName={elem.Name}
-                  description={elem.Description}
+                  bg={elem.thumbnail_url}
+                  categoryName={elem.name}
+                  description={elem.description}
                   bgClass="opacity-[13%] bg-blend-luminosity absolute w-[250px] -bottom-[40px] -right-[40px]"
                 />
               ))}
@@ -1151,12 +1151,12 @@ const HotDigitalProducts = () => {
               .map((elem, key) => (
                 <HotProductCard
                   key={key}
-                  redirectHref={`/product/${elem.ID}`}
-                  img={elem.ThumbnailUrl}
+                  redirectHref={`/product/${elem.id}`}
+                  img={elem.thumbnail_url}
                   category="Digital Product"
-                  productName={elem.Name}
-                  description={elem.Description}
-                  price={`$${elem.Price} one time payment`}
+                  productName={elem.name}
+                  description={elem.description}
+                  price={`$${elem.price} one time payment`}
                 />
               ))}
           </>
@@ -1524,12 +1524,12 @@ const DesignUIUX = () => {
               .map((elem, key) => (
                 <HotProductCard
                   key={key}
-                  redirectHref={`/product/${elem.ID}`}
-                  img={elem.ThumbnailUrl}
+                  redirectHref={`/product/${elem.id}`}
+                  img={elem.thumbnail_url}
                   category="Digital Product"
-                  productName={elem.Name}
-                  description={elem.Description}
-                  price={`$${elem.Price} one time payment`}
+                  productName={elem.name}
+                  description={elem.description}
+                  price={`$${elem.price} one time payment`}
                 />
               ))}
           </>

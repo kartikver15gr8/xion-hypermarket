@@ -38,8 +38,8 @@ export default async function Image({
         }}
       >
         <img
-          src={product.ThumbnailUrl}
-          alt={product.Name}
+          src={product.thumbnail_url}
+          alt={product.name}
           style={{
             width: "100%",
             height: "100%",

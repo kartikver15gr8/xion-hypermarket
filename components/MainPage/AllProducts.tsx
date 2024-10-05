@@ -52,12 +52,12 @@ export default function AllProducts() {
               {allProducts.map((elem, key) => (
                 <HotProductCard
                   key={key}
-                  redirectHref={`/product/${elem.ID}`}
-                  img={elem.ThumbnailUrl}
+                  redirectHref={`/product/${elem.id}`}
+                  img={elem.thumbnail_url}
                   category="Digital Product"
-                  productName={elem.Name}
-                  description={elem.Description}
-                  price={`$${elem.Price} one time payment`}
+                  productName={elem.name}
+                  description={elem.description}
+                  price={`$${elem.price} one time payment`}
                 />
               ))}
             </>

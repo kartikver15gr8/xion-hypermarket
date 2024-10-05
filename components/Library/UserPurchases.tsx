@@ -5,7 +5,30 @@ import Design_System_UI_Kit_for_Figma from "@/public/_static/illustrations/Blink
 import { useEffect, useState } from "react";
 import { ProductInterface, PurchasesInterface } from "@/lib/models";
 import axios from "axios";
-export default function PurchaseLibrary({ USER_ID }: { USER_ID: number }) {
+import { useRecoilValue } from "recoil";
+import { phantomWallet } from "@/store/atom/phantomWallet";
+export default function UserLibrary() {
+  const [userId, setUserId] = useState(0);
+  const userWalletAddress = useRecoilValue(phantomWallet);
+
+  const fetchUserDetails = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${userWalletAddress}`
+      );
+      setUserId(response.data.ID);
+      return response.data;
+    } catch (error) {
+      return `Error: ${error}`;
+    }
+  };
+
+  useEffect(() => {
+    if (userWalletAddress) {
+      fetchUserDetails();
+    }
+  }, [userWalletAddress]);
+
   return (
     <div className="">
       <TopBar order="12355" />
@@ -21,7 +44,7 @@ export default function PurchaseLibrary({ USER_ID }: { USER_ID: number }) {
         paymentMethod="Wallet: Ox6b..3dsx"
         txId="0x...454jkx"
       />
-      <PurchasedProducts userId={USER_ID} />
+      <PurchasedProducts userId={userId} />
       <div className="mt-8 justify-end flex">
         <Summary />
       </div>
@@ -147,11 +170,14 @@ const PurchasedProducts = ({ userId }: { userId: number }) => {
             return (
               <ProductLabel
                 key={key}
-                productImg="https://ucarecdn.com/deb46443-1cf0-4ec1-bb33-f86d93cfb949/e15545c9453e489ca7dbe8dd427b00e3.webp"
-                productName="Content Writing"
-                price={elem.amount.toString()}
-                fileDetails="a.zip"
-                sellerDetails="Basil Naser"
+                productImg={elem.product_thumbnail_url}
+                productName={elem.product_title}
+                price={elem.amount.toFixed(2)}
+                fileDetails={elem.product_filename}
+                sellerDetails={`${elem.seller_wallet_address.slice(
+                  0,
+                  4
+                )}…${elem.seller_wallet_address.slice(-3)}`}
               />
             );
           })}
@@ -198,7 +224,7 @@ const ProductLabel = ({
         <p className="text-lg font-medium">{productName}</p>
       </div>
       <div className="col-span-1">
-        <p>${price}.00</p>
+        <p>${price}</p>
       </div>
       <div className="col-span-2 flex items-center gap-x-2">
         <svg

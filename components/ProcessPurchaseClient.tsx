@@ -51,10 +51,10 @@ export default function ProcessPurchaseClient({
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${walletAddress}`
       );
       console.log(`This is the user credentials ${response.data}`);
-      console.log(response.data.ID);
+      console.log(response.data.id);
 
-      setBuyerId(response.data.ID);
-      return response.data.ID;
+      setBuyerId(response.data.id);
+      return response.data.id;
     } catch (error) {
       console.log(`You got an error while fetching the buyer id: ${error}`);
     }
@@ -88,12 +88,12 @@ export default function ProcessPurchaseClient({
 
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/users?user_id=${productById.UserID}`
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/users?user_id=${productById.user_id}`
       );
 
       if (response.data && response.data.length > 0) {
         console.log("Seller Details:", response.data[0]);
-        setSellerWalletAddress(response.data[0].WalletAddress);
+        setSellerWalletAddress(response.data[0].wallet_address);
       } else {
         console.error("No seller found for the given UserID.");
       }
@@ -126,7 +126,7 @@ export default function ProcessPurchaseClient({
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/purchases`,
         {
           affiliate_link_id: 0,
-          amount: Number(productById?.Price),
+          amount: Number(productById?.price),
           product_id: productId,
           status: 1,
           transaction_hash: "",
@@ -135,7 +135,7 @@ export default function ProcessPurchaseClient({
       );
 
       console.log(response.data);
-      router.push(`/library/${buyerId}`);
+      router.push(`/library`);
     } catch (error) {
       console.log("Error while making the buy product function call.");
     }
@@ -154,7 +154,7 @@ export default function ProcessPurchaseClient({
 
     try {
       if (productById) {
-        const amount_lamports = parseInt(productById?.Price) * LAMPORTS_PER_SOL;
+        const amount_lamports = parseInt(productById?.price) * LAMPORTS_PER_SOL;
 
         const buyerPubKey = new PublicKey(walletAddress);
         const sellerPubKey = new PublicKey(sellerWalletAddress);
