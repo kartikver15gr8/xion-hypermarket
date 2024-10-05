@@ -1,94 +1,108 @@
 export interface AffiliateLink {
+  id: number;
   product_id: number;
-  url: string;
   user_id: number;
 }
 
 export interface CategoryInterface {
-  ID: number;
-  Name: string;
-  Description: string;
-  ThumbnailUrl: string;
+  id: number;
+  name: string;
+  description: string;
+  thumbnail_url: string;
 }
 
 export interface ReviewInterface {
-  Comment: string;
-  CreatedAt: string;
-  ID: number;
+  id: number;
+  rating: number;
+  comment: string;
+  created_at: string;
+  updated_at: string;
+  transaction_hash: string;
+  product_id: number;
   Product: {
-    Category: {
-      Description: string;
-      ID: number;
-      Name: string;
-      ThumbnailUrl: string;
-    };
-    CategoryID: number;
-    ComparePrice: string;
-    Description: string;
-    Filename: string;
     id: number;
-    Name: string;
-    Price: string;
-    ThumbnailUrl: string;
-    UserID: number;
+    name: string;
+    description: string;
+    filename: string;
+    file_type: string;
+    file_size: number;
+    file_checksum: string;
+    price: string;
+    compare_price: string;
+    user_id: number;
+    category_id: number;
+    category: {
+      id: number;
+      name: string;
+      description: string;
+      thumbnail_url: string;
+    };
+    thumbnail_url: string;
   };
-  ProductID: number;
-  Rating: number;
-  TransactionHash: string;
-  UpdatedAt: string;
-  User: {
-    CreatedAt: string;
-    ID: number;
-    SellerRegTxHash: string;
-    UpdatedAt: string;
-    WalletAddress: string;
+  user_id: number;
+  user: {
+    id: number;
+    wallet_address: null | string;
+    created_at: string;
+    updated_at: string;
+    seller_reg_tx_hash: null | string;
   };
-  userID: number;
 }
 
 export interface ProductInterface {
-  ID: number;
-  Name: string;
-  Description: string;
-  Filename: string;
-  Price: string;
-  ComparePrice: string;
-  UserID: number;
-  CategoryID: number;
-  Category: {
-    ID: number;
-    Name: string;
-    Description: string;
-    ThumbnailUrl: string;
+  category: {
+    description: string;
+    id: number;
+    name: string;
+    thumbnail_url: string;
   };
-  ThumbnailUrl: string;
+  category_id: number;
+  compare_price: string;
+  description: string;
+  file_checksum: string;
+  file_size: number;
+  file_type: string;
+  filename: string;
+  id: number;
+  name: string;
+  price: string;
+  thumbnail_url: string;
+  user_id: number;
 }
 
 export interface PurchasesInterface {
-  ID: number;
-  ProductID: number;
-  UserID: number;
-  Amount: number;
-  Status: number;
-  AffiliateLinkID: number;
-  TransactionHash: string;
-  CreatedAt: string;
-  UpdatedAt: string;
+  id: number;
+  product_id: number;
+  user_id: number;
+  amount: number;
+  status: string;
+  affiliate_id: number;
+  transaction_hash: string;
+  created_at: string;
+  updated_at: string;
+  product_title: string;
+  product_description: string;
+  product_filename: string;
+  product_thumbnail_url: string;
+  seller_wallet_address: string;
+  affiliate_wallet_address: string;
+  buyer_wallet_address: string;
 }
 
 export interface Purchase {
-  affiliate_link_id: number;
+  affiliate_id: number;
   amount: number;
   product_id: number;
-  status: string;
+  status: number;
   transaction_hash: string;
   user_id: number;
 }
 
 export interface Review {
   comment: string;
-  purchase_id: number;
+  product_id: number;
   rating: number;
+  user_id: number;
 }
 
 export interface ShowcaseImage {
@@ -97,11 +111,17 @@ export interface ShowcaseImage {
 }
 
 export interface User {
+  created_at: string;
   id: number;
+  seller_reg_tx_hash: string;
+  updated_at: string;
   wallet_address: string;
 }
 
 export interface UsersResponse {
+  created_at: string;
   id: number;
+  seller_reg_tx_hash: string;
+  updated_at: string;
   wallet_address: string;
 }

@@ -53,19 +53,19 @@ export default function Product({ params }: any) {
 
   return (
     <div className="pt-16 pb-20 w-full min-h-screen px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[200px] ">
-      {productById && <FolderStructure product={productById.Name} />}
+      {productById && <FolderStructure product={productById.name} />}
       {productById && (
         <ProductDetails
-          bannerImg={productById.ThumbnailUrl}
-          productName={productById.Name}
-          price={`$${productById.Price}`}
-          productId={productById.ID}
+          bannerImg={productById.thumbnail_url}
+          productName={productById.name}
+          price={`$${productById.price}`}
+          productId={productById.id}
         />
       )}
       {productById && (
         <ProductReviews
           productId={productId}
-          productDescription={productById.Description}
+          productDescription={productById.description}
         />
       )}
 
@@ -403,8 +403,8 @@ const ProductReviews = ({
               return (
                 <RatingLabel
                   key={key}
-                  starCount={elem.Rating}
-                  description={elem.Comment}
+                  starCount={elem.rating}
+                  description={elem.comment}
                 />
               );
             })}
@@ -477,8 +477,8 @@ const PostReviewTab = ({ productId }: { productId: number }) => {
       );
       // console.log("This is the user: ");
       console.log(response.data);
-      console.log(response.data.ID);
-      setUserId(response.data.ID);
+      console.log(response.data.id);
+      setUserId(response.data.id);
     } catch (error) {
       console.log(`Error while fetching UserId: ${error}`);
     }

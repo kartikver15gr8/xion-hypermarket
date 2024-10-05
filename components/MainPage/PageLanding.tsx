@@ -57,7 +57,7 @@ export default function PageLanding() {
 
     // Filter products based on search query
     const filtered = allProducts.filter((product) =>
-      product.Name.toLowerCase().includes(query)
+      product.name.toLowerCase().includes(query)
     );
     setFilteredProducts(filtered);
   };
@@ -173,10 +173,10 @@ export default function PageLanding() {
                   {filteredProducts.length > 0 ? (
                     filteredProducts.map((product) => (
                       <div
-                        key={product.ID}
+                        key={product.id}
                         className="p-2 backdrop-blur-md bg-[rgba(142,137,137,0.2)] border-b cursor-pointer"
                       >
-                        {product.Name}
+                        {product.name}
                       </div>
                     ))
                   ) : (

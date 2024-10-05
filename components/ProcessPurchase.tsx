@@ -46,7 +46,7 @@ export default function ProcessPurchase({ productId }: { productId: number }) {
 
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/users?user_id=${productById.UserID}`
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/users?user_id=${productById.user_id}`
       );
 
       if (response.data && response.data.length > 0) {
@@ -80,7 +80,7 @@ export default function ProcessPurchase({ productId }: { productId: number }) {
 
     try {
       if (productById) {
-        const amount_lamports = parseInt(productById?.Price) * LAMPORTS_PER_SOL;
+        const amount_lamports = parseInt(productById?.price) * LAMPORTS_PER_SOL;
 
         const buyerPubKey = new PublicKey(walletAddress);
         const sellerPubKey = new PublicKey(sellerWalletAddress);
@@ -151,8 +151,8 @@ export default function ProcessPurchase({ productId }: { productId: number }) {
       <div>Hello</div>
       {productById && (
         <div>
-          <h2>Product Name: {productById.Name}</h2>
-          <p>Price: {productById.Price}</p>
+          <h2>Product Name: {productById.name}</h2>
+          <p>Price: {productById.price}</p>
           <p>SellerWalletAddress: {sellerWalletAddress} </p>
           <p>Buyer Address: {walletAddress}</p>
           <button
