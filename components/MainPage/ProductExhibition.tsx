@@ -1216,9 +1216,15 @@ export const HotProductCard = ({
         <p className="text-[8px] sm:text-[10px] bg-[#d0d0d3] w-fit mt-1 sm:mt-2 px-1 rounded-[2px]">
           {category}
         </p>
-        <p className="font-bold text-lg mt-1 md:mt-2">{productName}</p>
+        <p className="font-bold text-lg mt-1 md:mt-2">
+          {productName.length > 50
+            ? `${productName.slice(0, 50)}…`
+            : `${productName}`}
+        </p>
         <p className="text-[9px] sm:text-[10px] md:text-[12px] w-[80%] text-[#8B8B92]">
-          {`${description.slice(0, 90)}…`}
+          {description.length > 90
+            ? `${description.slice(0, 90)}…`
+            : `${description}`}
         </p>
         <p className="mt-1 sm:mt-2 text-[12px] md:text-[14px]">{price}</p>
       </div>
