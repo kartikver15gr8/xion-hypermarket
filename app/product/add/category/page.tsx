@@ -567,11 +567,11 @@ export default function ProductUpload() {
       </div>
       {/* <Content /> */}
       <div className="mt-4 p-4 rounded-xl border bg-white">
-        <p className="text-lg mb-4">Content</p>
+        <p className="text-lg mb-4">Upload Content</p>
         <div className=" grid grid-cols-1 gap-x-5 rounded-md h-48">
           <div className="border rounded-md">
             <div className="h-10 p-2 border-b bg-slate-200">
-              <p>How to Design Better UI</p>
+              <p>Content Being Bought</p>
             </div>
             <div className="flex flex-col items-center justify-center h-36">
               <input type="file" onChange={handleFileChange} />
