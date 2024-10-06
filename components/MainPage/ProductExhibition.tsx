@@ -1218,7 +1218,7 @@ export const HotProductCard = ({
         </p>
         <p className="font-bold text-lg mt-1 md:mt-2">{productName}</p>
         <p className="text-[9px] sm:text-[10px] md:text-[12px] w-[80%] text-[#8B8B92]">
-          {description}
+          {`${description.slice(0, 90)}…`}
         </p>
         <p className="mt-1 sm:mt-2 text-[12px] md:text-[14px]">{price}</p>
       </div>
