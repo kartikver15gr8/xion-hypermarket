@@ -59,6 +59,7 @@ export default function Product({ params }: any) {
         <FolderStructure
           product={productById.name}
           productCategory={productById.category.name}
+          redirectUrl={`/product/category/${productById.category_id}`}
         />
       )}
       {productById && (
@@ -287,9 +288,11 @@ const ProductDetails = ({
 const FolderStructure = ({
   product,
   productCategory,
+  redirectUrl,
 }: {
   product: string;
   productCategory: string;
+  redirectUrl: string;
 }) => {
   return (
     <div className="flex items-center gap-x-3 mt-5 border-b pb-1 border-[##E8E7E5]">
@@ -318,7 +321,9 @@ const FolderStructure = ({
         />
       </svg>
 
-      <p className=" cursor-pointer">{productCategory}</p>
+      <Link href={redirectUrl}>
+        <p className=" cursor-pointer">{productCategory}</p>
+      </Link>
 
       <svg
         width="6"
