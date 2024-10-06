@@ -10,7 +10,7 @@ import { phantomWallet } from "@/store/atom/phantomWallet";
 import homeIconSVG from "@/public/homeicon.svg";
 import Link from "next/link";
 export default function UserLibrary() {
-  const [userId, setUserId] = useState(0);
+  const [userId, setUserId] = useState();
   const userWalletAddress = useRecoilValue(phantomWallet);
 
   const fetchUserDetails = async () => {
@@ -18,7 +18,9 @@ export default function UserLibrary() {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${userWalletAddress}`
       );
-      setUserId(response.data.ID);
+      setUserId(response.data.id);
+      // console.log(response.data.id);
+
       return response.data;
     } catch (error) {
       return `Error: ${error}`;
@@ -43,7 +45,7 @@ export default function UserLibrary() {
         paymentMethod="Wallet: Ox6b..3dsx"
         txId="0x...454jkx"
       /> */}
-      <PurchasedProducts userId={userId} />
+      {userId && <PurchasedProducts userId={userId} />}
       {/* <div className="mt-8 justify-end flex">
         <Summary />
       </div> */}
@@ -117,14 +119,16 @@ const PurchasedProducts = ({ userId }: { userId: number }) => {
   >([]);
 
   const fetchPurchases = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/purchases?user_id=${userId}`
-      );
-      console.log(response.data);
-      setProductPurchases(response.data);
-    } catch (error) {
-      console.log(`You got an error while fetching user purchases: ${error}`);
+    if (userId) {
+      try {
+        const response = await axios.get(
+          `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/purchases?buyer_id=${userId}`
+        );
+        // console.log(response.data);
+        setProductPurchases(response.data);
+      } catch (error) {
+        console.log(`You got an error while fetching user purchases: ${error}`);
+      }
     }
   };
 
@@ -145,7 +149,7 @@ const PurchasedProducts = ({ userId }: { userId: number }) => {
         <p className="text-[10px] md:text-[13px] col-span-1">HASH</p>
         <p className="text-[10px] md:text-[13px] col-span-1">ACTION</p>
       </div>
-      {productPurchases.length > 1 ? (
+      {productPurchases.length >= 1 ? (
         <div className="h-[50vh] overflow-y-auto  hide-scrollbar scroll-smooth">
           {productPurchases.map((elem, key) => {
             return (
