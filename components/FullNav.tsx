@@ -161,7 +161,7 @@ export default function FullNav() {
               setIsOpen={setIsOpen}
             /> */}
             <NavLink
-              href="/"
+              href="/affiliate"
               text="Affiliate Program"
               isOpen={isOpen}
               setIsOpen={setIsOpen}
@@ -372,7 +372,7 @@ const NavItems = () => {
     {
       text: "Affiliate Program",
       tooltip: "Become affiliate, get incentivized!",
-      href: "/",
+      href: "/affiliate",
     },
   ];
   const pathname = usePathname();
@@ -415,7 +415,7 @@ const NavItems = () => {
         <Link href={menuItems[2].href} key={2}>
           <li
             key={2}
-            className={pathname == "/earnmore" ? isActive : isInactive}
+            className={pathname == "/affiliate" ? isActive : isInactive}
             onMouseEnter={() => setActiveTooltip(2)}
             onMouseLeave={() => setActiveTooltip(null)}
           >
