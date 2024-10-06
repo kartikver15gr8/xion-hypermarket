@@ -127,12 +127,12 @@ const ProductDetails = ({
 
             <Link
               href={`/product/seller/${sellerAddress}`}
-              className="flex  items-center gap-x-2"
+              className="flex  items-center gap-x-2 z-50"
             >
               <Image src={kody} className="w-5 h-5 rounded-full" alt="" />
               <p className="text-xs md:text-sm">
-                sold by:{" "}
-                {`${sellerAddress.slice(0, 2)}…${sellerAddress.slice(-2)}`}
+                sold by:
+                {` ${sellerAddress.slice(0, 2)}…${sellerAddress.slice(-2)}`}
               </p>
             </Link>
           </div>
@@ -321,7 +321,7 @@ const FolderStructure = ({
         />
       </svg>
 
-      <Link href={redirectUrl}>
+      <Link href={redirectUrl} className=" z-50">
         <p className=" cursor-pointer">{productCategory}</p>
       </Link>
 
