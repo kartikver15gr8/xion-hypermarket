@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { toast } from "sonner";
+import herobg from "@/public/_static/background/Hero.jpeg";
 
 function SearchForm({
   onSearch,
@@ -100,12 +101,7 @@ function PageLandingContent() {
 
   return (
     <div className="pt-16 relative flex justify-center h-[500px] md:h-[570px] lg:h-[600px] border-black overflow-hidden">
-      <Image
-        src={homebannertwo}
-        alt="Background"
-        layout="fill"
-        objectFit="cover"
-      />
+      <Image src={herobg} alt="Background" layout="fill" objectFit="cover" />
 
       <Image
         src={shopifyHome}
