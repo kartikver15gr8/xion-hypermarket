@@ -69,7 +69,7 @@ export default function Product({ params }: any) {
           }
           bannerImg={productById.thumbnail_url}
           productName={productById.name}
-          price={`$${productById.price}`}
+          price={`${productById.price} SOL`}
           productId={productById.id}
           fileName={productById.filename}
           fileSize={productById.file_size}
@@ -139,7 +139,7 @@ const ProductDetails = ({
           <div className="mt-4 mb-1 flex items-center justify-between text-xs md:text-sm">
             <div className="border flex items-center w-36 h-12 rounded bg-[#F7F7F5]">
               <div className="border-r w-[50%] flex justify-center h-full items-center line-through">
-                ${comparePrice}
+                {comparePrice} SOL
               </div>
               <div className=" w-[50%] flex justify-center h-full items-center">
                 {price}

@@ -92,7 +92,7 @@ export function ProductsMarquee() {
               category="Digital Product"
               productName={elem.name}
               description={elem.description}
-              price={`$${elem.price} one time payment`}
+              price={`${elem.price} SOL one time payment`}
             />
           ))}
         </Marquee>
@@ -125,7 +125,7 @@ export const ProductCard = ({
       href={redirectHref}
       className="p-1 bg-white bg-opacity-80 border border-[#ccccce] rounded-lg hover:bg-[#e7e7e9] hover:border-[#ababae] hover:shadow-lg transition-all duration-300 w-72 h-80"
     >
-      <div className="relative w-full h-0 pb-[60%] overflow-hidden rounded border border-[#ccccce]">
+      <div className="relative w-full h-0 pb-[50%] overflow-hidden rounded border border-[#ccccce]">
         <img
           src={img}
           alt=""

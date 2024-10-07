@@ -81,7 +81,7 @@ export default function ProductBySeller({ params }: any) {
                 category="Digital Product"
                 productName={elem.name}
                 description={elem.description}
-                price={`$${elem.price} one time payment`}
+                price={`${elem.price} SOL one time payment`}
               />
             );
           })}

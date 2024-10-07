@@ -1175,7 +1175,7 @@ const HotDigitalProducts = () => {
                   category={elem.category.name}
                   productName={elem.name}
                   description={elem.description}
-                  price={`$${elem.price} one time payment`}
+                  price={`${elem.price} SOL one time payment`}
                 />
               ))}
           </>
@@ -1369,7 +1369,7 @@ const GamingCollectibles = () => {
           category="Digital Product"
           title="Data 2 Skin: Anti-Mage/Lore"
           description="Get Mage Skin"
-          price="$150 one time payment"
+          price="150 SOL one time payment"
         />
 
         <div className="col-span-12 sm:col-span-8  grid grid-cols-2 sm:grid-cols-3 gap-x-3">
@@ -1554,7 +1554,7 @@ const DesignUIUX = () => {
                   category={elem.category.name}
                   productName={elem.name}
                   description={elem.description}
-                  price={`$${elem.price} one time payment`}
+                  price={`${elem.price} SOL one time payment`}
                 />
               ))}
           </>
