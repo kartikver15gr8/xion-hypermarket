@@ -1,15 +1,17 @@
 "use client";
 
 import DepositStakeTnx from "@/components/DepositStakeTnx";
+import ShareDepositStakeTnx from "@/components/ShareDepositStakeTnx";
+import ShareWithdrawStakeTnx from "@/components/ShareWithdrawStakeTnx";
 import WithdrawStakeTnx from "@/components/WithdrawStakeTnx";
 import StakeWithSellerTnx from "@/components/WithdrawStakeTnx";
 
 export default function page() {
   return (
     <div className="pt-16">
-      <DepositStakeTnx />
+      <ShareDepositStakeTnx />
       <div className="border">
-        <WithdrawStakeTnx />
+        <ShareWithdrawStakeTnx />
       </div>
     </div>
   );
