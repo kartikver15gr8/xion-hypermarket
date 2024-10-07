@@ -4,6 +4,8 @@ import Image from "next/image";
 import hex from "@/public/hex.svg";
 import randomstatic from "@/public/randomstatic.png";
 import circlemedal from "@/public/circlemedal.svg";
+import ShareDepositStakeTnx from "./ShareDepositStakeTnx";
+import ShareWithdrawStakeTnx from "./ShareWithdrawStakeTnx";
 
 export default function SellerDashboard() {
   return (
@@ -218,7 +220,7 @@ const CurrentRank = () => {
       <p className="font-medium text-sm sm:text-lg md:text-xl">
         Your Path to Level 3
       </p>
-      <div className="grid grid-cols-2 w-[100%] lg:w-[70%]">
+      <div className="grid grid-cols-2 w-[100%] ">
         <div className=" p-2 gap-x-1 md:gap-x-2 flex items-center ">
           <input type="checkbox" />
           <div className="">
@@ -263,6 +265,8 @@ const CurrentRank = () => {
             </p>
           </div>
         </div>
+        <ShareDepositStakeTnx />
+        <ShareWithdrawStakeTnx />
       </div>
     </div>
   );

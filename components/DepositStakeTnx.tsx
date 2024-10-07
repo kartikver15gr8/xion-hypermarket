@@ -32,6 +32,7 @@ export default function DepositStakeTnx() {
   const [connection, setConnection] = useState<Connection | null>(null);
   const [transactionHash, setTransactionHash] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [amountToStake, setAmountToStake] = useState<number>(0);
 
   useEffect(() => {
     const commitment: Commitment = "confirmed";
@@ -48,7 +49,10 @@ export default function DepositStakeTnx() {
       toast.error("Connection not established");
       return;
     }
-
+    if (amountToStake <= 0 || !amountToStake) {
+      toast.error("Enter some amount to deposit");
+      return;
+    }
     try {
       // validating query params
       // const url = new URL(req.url);
@@ -56,7 +60,7 @@ export default function DepositStakeTnx() {
       setIsLoading(true);
 
       const amount = 100;
-      const amount_lamports = 0.02 * LAMPORTS_PER_SOL;
+      const amount_lamports = amountToStake * LAMPORTS_PER_SOL;
       console.log(amount_lamports);
 
       const sellerPubKey = new PublicKey(walletAddress);
@@ -121,12 +125,22 @@ export default function DepositStakeTnx() {
   };
 
   return (
-    <div>
+    <div className="h-10">
       {/* <p>Deposit Stake</p>
       <p>Seller Wallet Address: {walletAddress}</p> */}
+
+      <input
+        className="border h-full p-1 text-black text-xs sm:text-sm w-28 sm:w-32 outline-none rounded-l-md"
+        type="number"
+        placeholder="Amount in SOL"
+        // value={amountToStake}
+        onChange={(e) => {
+          setAmountToStake(parseFloat(e.target.value));
+        }}
+      />
       <button
         onClick={makeDepositState}
-        className="border p-1 px-2 bg-black text-white w-28 rounded-md"
+        className="p-1 h-full px-2 bg-black text-white text-xs sm:text-sm w-20 sm:w-28 rounded-r-md"
       >
         {isLoading ? "processing…" : "deposit"}
       </button>

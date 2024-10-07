@@ -33,13 +33,14 @@ export default function WithdrawStakeTnx() {
   const [connection, setConnection] = useState<Connection | null>(null);
   const [transactionHash, setTransactionHash] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [amountToWithdraw, setAmountToWithdraw] = useState<number>(0);
 
   useEffect(() => {
     const commitment: Commitment = "confirmed";
     setConnection(new Connection(clusterApiUrl("devnet"), commitment));
   }, []);
 
-  const makeDepositState = async () => {
+  const makeWithdrawState = async () => {
     if (!walletAddress) {
       toast.error("Please connect your wallet first");
       return;
@@ -49,6 +50,10 @@ export default function WithdrawStakeTnx() {
       toast.error("Connection not established");
       return;
     }
+    if (amountToWithdraw <= 0 || !amountToWithdraw) {
+      toast.error("Enter some amount to withdraw");
+      return;
+    }
 
     try {
       setIsLoading(true);
@@ -56,7 +61,7 @@ export default function WithdrawStakeTnx() {
       // const url = new URL(req.url);
       // const { amount } = validatedQueryParams(url);
       const amount = 100;
-      const amount_lamports = 0.02 * LAMPORTS_PER_SOL;
+      const amount_lamports = amountToWithdraw * LAMPORTS_PER_SOL;
       console.log(amount_lamports);
 
       const sellerPubKey = new PublicKey(walletAddress);
@@ -122,12 +127,21 @@ export default function WithdrawStakeTnx() {
   };
 
   return (
-    <div>
+    <div className="h-10">
       {/* <p>Withdraw Stake</p>
       <p>Seller Wallet Address: {walletAddress}</p> */}
+      <input
+        className="border h-full p-1 text-black text-xs sm:text-sm w-28 sm:w-32 outline-none rounded-l-md"
+        type="number"
+        placeholder="Amount in SOL"
+        // value={amountToWithdraw}
+        onChange={(e) => {
+          setAmountToWithdraw(parseFloat(e.target.value));
+        }}
+      />
       <button
-        onClick={makeDepositState}
-        className="border p-1 px-2 bg-black text-white w-28 rounded-md"
+        onClick={makeWithdrawState}
+        className="p-1 h-full px-2 bg-black text-white text-xs sm:text-sm w-20 sm:w-28 rounded-r-md"
       >
         {isLoading ? "processing…" : "withdraw"}
       </button>
