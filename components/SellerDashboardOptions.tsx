@@ -11,6 +11,8 @@ import portfolio_ape from "@/public/_static/illustrations/portfolio_ape.png";
 import randomstatic from "@/public/randomstatic.png";
 import RegisterSeller from "./RegisterSeller";
 import ShareRegisterSeller from "./ShareRegisterSeller";
+import { useRecoilValue } from "recoil";
+import { phantomWallet } from "@/store/atom/phantomWallet";
 
 const isActiveTab =
   "flex  text-black hover:text-black transition-all duration-300 backdrop-blur-lg ";
@@ -25,6 +27,7 @@ export default function SellerDashboardOptions({
   walletAddress: string;
 }) {
   const pathname = usePathname();
+  const sellerWalletAddress = useRecoilValue(phantomWallet);
   // console.log(pathname);
   const copyToClipboard = useCallback(() => {
     navigator.clipboard
@@ -60,7 +63,12 @@ export default function SellerDashboardOptions({
         </div>
         <div>
           <p className="font-medium text-[15px]">SELLER ID</p>
-          <p className="text-[11px]">random…id</p>
+          <p className="text-[11px]">
+            {`${sellerWalletAddress.slice(0, 3)}…${sellerWalletAddress.slice(
+              -3
+            )}
+            `}
+          </p>
         </div>
         <div className=" gap-y-2 ml-4">
           <svg
@@ -113,7 +121,7 @@ export default function SellerDashboardOptions({
                 <p className=" ">Transactions</p>
               </li>
             </Link>
-            <Link href="/seller/analytics">
+            <Link href="">
               <li
                 className={
                   pathname == "/seller/analytics" ? isActiveTab : isInactiveTab
@@ -123,7 +131,7 @@ export default function SellerDashboardOptions({
               </li>
             </Link>
 
-            <Link href="/seller/earnings">
+            <Link href="">
               <li
                 className={
                   pathname == "/seller/earnings" ? isActiveTab : isInactiveTab

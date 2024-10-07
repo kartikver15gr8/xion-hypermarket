@@ -136,3 +136,54 @@ export interface UsersResponse {
   updated_at: string;
   wallet_address: string;
 }
+
+export interface SellerAnalytics {
+  user_id: number;
+  user: {
+    id: number;
+    wallet_address: string;
+    created_at: string;
+    updated_at: string;
+    seller_reg_tx_hash: null | string;
+  };
+  view_count: number;
+  sale_count: number;
+  sale_amount: number;
+  average_rating: number;
+  review_count: number;
+}
+
+export interface ProductAnalytics {
+  product_id: number;
+  product: {
+    id: number;
+    name: string;
+    description: string;
+    status: string;
+    filename: string;
+    file_type: string;
+    file_size: number;
+    file_checksum: string;
+    price: string;
+    compare_price: string;
+    user_id: number;
+    category_id: number;
+    category: {
+      id: number;
+      name: string;
+      description: string;
+      thumbnail_url: string;
+      created_at: string;
+      updated_at: string;
+    };
+    thumbnail_url: string;
+    view_count: number;
+    created_at: string;
+    updated_at: string;
+  };
+  seller_wallet_address: string;
+  views: number;
+  sales: number;
+  average_rating: number;
+  review_count: number;
+}

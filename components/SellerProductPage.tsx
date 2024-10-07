@@ -6,8 +6,42 @@ import randomstatic from "@/public/randomstatic.png";
 import circlemedal from "@/public/circlemedal.svg";
 import logodesign from "@/public/marqueeicons/logodesign.png";
 import Link from "next/link";
+import { ProductAnalytics } from "@/lib/models";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { phantomWallet } from "@/store/atom/phantomWallet";
+import spinnerthree from "@/public/loaders/spinnerthree.svg";
+import { format } from "path";
 
 export default function SellerProductPage() {
+  const [productAnalytics, setProductsAnalytics] = useState<ProductAnalytics[]>(
+    []
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  const sellerWalletAddress = useRecoilValue(phantomWallet);
+
+  const fetchProductAnalytics = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/analytics/product?seller_wallet_address=${sellerWalletAddress}`
+      );
+      // console.log(response.data);
+      setProductsAnalytics(response.data);
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log(`You got error while fetching product analytics: ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    if (sellerWalletAddress) {
+      fetchProductAnalytics();
+    }
+  }, [sellerWalletAddress]);
+
   return (
     <div className="w-[100%] pb-20 relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth">
       <ProductTopLabel />
@@ -202,9 +236,32 @@ export default function SellerProductPage() {
             </div>
           </div>
 
+          {isLoading && (
+            <div className="flex justify-center mt-6">
+              <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
+            </div>
+          )}
+
+          {productAnalytics &&
+            productAnalytics.map((elem, key) => {
+              return (
+                <ProductSales
+                  key={key}
+                  productId={elem.product_id}
+                  productName={elem.product.name}
+                  productCategory={elem.product.category.name}
+                  productImage={elem.product.thumbnail_url}
+                  productSold={elem.sales}
+                  productViews={elem.views}
+                  status={elem.product.status}
+                  dateCreated={elem.product.created_at}
+                />
+              );
+            })}
+
+          {/* <ProductSales />
           <ProductSales />
-          <ProductSales />
-          <ProductSales />
+          <ProductSales /> */}
         </div>
       </div>
     </div>
@@ -244,28 +301,74 @@ const ProductTopLabel = () => {
   );
 };
 
-const ProductSales = () => {
+const ProductSales = ({
+  productId,
+  productName,
+  productCategory,
+  productViews,
+  productImage,
+  productSold,
+  dateCreated,
+  status,
+}: {
+  productId: number;
+  productName: string;
+  productCategory: string;
+  productViews: number;
+  productImage: string;
+  productSold: number;
+  dateCreated: string;
+  status: string;
+}) => {
+  const dateStr = dateCreated;
+  const date = new Date(dateStr);
+
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+
+  const formattedDate = date.toLocaleString("en-US", options);
   return (
     <div className="mt-3 border rounded-xl h-48">
       <div className="flex rounded-t-xl justify-between items-center p-3 h-12 border-b bg-[#F9F9FD]">
         <input type="checkbox" />
-        <div className="flex items-center bg-opacity-45 border border-green-600 rounded-md h-6 px-1 bg-green-400 ">
-          <p>Active</p>
+        <div className="flex gap-x-2">
+          <a
+            href={`https://dial.to/?action=solana-action%3Ahttps%3A%2F%2Fblinks.sendit.markets%2Fapi%2Factions%2Fmint-nft%2F${productId}&cluster=devnet`}
+            target="_blank"
+            className="flex items-center bg-opacity-65 border rounded-md h-6 px-1 bg-black text-white border-black "
+          >
+            <p>Mint as NFT</p>
+          </a>
+          <div className="flex items-center bg-opacity-45 border border-green-600 rounded-md h-6 px-1 bg-green-400 ">
+            <p>{status}</p>
+          </div>
         </div>
       </div>
       <div className="grid grid-cols-10 h-36 ">
         <div className="p-4 border-r  col-span-7  flex flex-col justify-between">
-          <div className="flex items-center gap-x-3">
-            <Image className="rounded-md w-10 h-10" src={logodesign} alt="" />
+          <Link
+            href={`/product/${productId}`}
+            className="flex items-center gap-x-3"
+          >
+            <Image
+              className="rounded-md w-10 h-10 border"
+              src={productImage}
+              alt=""
+              width={100}
+              height={100}
+            />
             <div>
               <p className="font-medium text-xs md:text-[13px] lg:text-sm">
-                How to Design Better UI - $183
+                {productName}
               </p>
               <p className="text-[11px] md:text-[12px] lg:text-sm">
-                Digital Product
+                {productCategory}
               </p>
             </div>
-          </div>
+          </Link>
           <div>
             <div className="flex gap-x-1 items-center">
               <svg
@@ -286,9 +389,7 @@ const ProductSales = () => {
 
               <p className="text-xs md:text-[13px] lg:text-sm">Listed on</p>
             </div>
-            <p className="text-xs md:text-[13px] lg:text-sm">
-              01 September 2024
-            </p>
+            <p className="text-xs md:text-[13px] lg:text-sm">{formattedDate}</p>
           </div>
         </div>
         <div className="col-span-3 grid grid-cols-1 text-xs md:text-[13px] lg:text-sm">
@@ -319,7 +420,7 @@ const ProductSales = () => {
 
               <p>View</p>
             </div>
-            <p>200</p>
+            <p>{productViews}</p>
           </div>
           <div className="flex flex-col justify-center px-3">
             <div className="flex gap-x-1 items-center">
@@ -340,7 +441,7 @@ const ProductSales = () => {
               </svg>
               <p>Sold</p>
             </div>
-            <p>19</p>
+            <p>{productSold}</p>
           </div>
         </div>
       </div>
