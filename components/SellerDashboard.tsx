@@ -15,6 +15,15 @@ export default function SellerDashboard() {
         <MidSection />
         <TotalEarningsSection />
         <CurrentRank />
+        <div className="mt-6">
+          <p className="font-medium mb-2 text-sm sm:text-lg md:text-xl">
+            Stake Your Trust
+          </p>
+          <div className="grid grid-cols-2">
+            <ShareDepositStakeTnx />
+            <ShareWithdrawStakeTnx />
+          </div>
+        </div>
         <Sales />
       </div>
     </div>
@@ -265,8 +274,6 @@ const CurrentRank = () => {
             </p>
           </div>
         </div>
-        <ShareDepositStakeTnx />
-        <ShareWithdrawStakeTnx />
       </div>
     </div>
   );
