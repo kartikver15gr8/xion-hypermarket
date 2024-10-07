@@ -11,6 +11,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
+import { toast } from "sonner";
 
 function SearchForm({
   onSearch,
@@ -62,9 +63,11 @@ function PageLandingContent() {
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const onSearch = (event: React.FormEvent) => {
-    event.preventDefault();
-    const encodedSearchQuery = encodeURI(searchQuery);
-    router.push(`/search?q=${encodedSearchQuery}`);
+    if (searchQuery.length >= 1) {
+      event.preventDefault();
+      const encodedSearchQuery = encodeURI(searchQuery);
+      router.push(`/search?q=${encodedSearchQuery}`);
+    }
   };
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
