@@ -67,6 +67,7 @@ export default function SellerDashboard() {
         <GraphWindow saleAmount={sellerAnalytics.sale_amount} />
         <CurrentRank />
         <Sales sellerWalletAddress={sellerWalletAddress} />
+        
       </div>
     </div>
   );

@@ -9,6 +9,7 @@ import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 import homeIconSVG from "@/public/homeicon.svg";
 import Link from "next/link";
+import { toast } from "sonner";
 export default function UserLibrary() {
   const [userId, setUserId] = useState();
   const userWalletAddress = useRecoilValue(phantomWallet);
@@ -166,6 +167,7 @@ const PurchasedProducts = ({ userId }: { userId: number }) => {
                 checkSum={elem.product_file_checksum}
                 transactionHash={elem.transaction_hash}
                 sellerDetails={elem.seller_wallet_address}
+                productFile={elem.product_filename}
               />
             );
           })}
@@ -183,6 +185,7 @@ const PurchasedProducts = ({ userId }: { userId: number }) => {
             fileType="string"
             checkSum="string"
             transactionHash="string"
+            productFile=""
           />
         </div>
       )}
@@ -201,6 +204,7 @@ const ProductLabel = ({
   fileType,
   checkSum,
   transactionHash,
+  productFile,
 }: {
   productId?: number;
   productImg: string | StaticImageData;
@@ -212,6 +216,7 @@ const ProductLabel = ({
   fileType: string;
   checkSum: string;
   transactionHash: string;
+  productFile: string;
 }) => {
   const dateStr = purchaseDate;
   const date = new Date(dateStr);
@@ -223,6 +228,48 @@ const ProductLabel = ({
   };
 
   const formattedDate = date.toLocaleString("en-US", options);
+
+  const handleCopy = () => {
+    if (transactionHash) {
+      navigator.clipboard
+        .writeText(transactionHash)
+        .then(() => {
+          toast.info("Copied Transaction Hash!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+          toast.info("Failed to copy Tnx Hash!");
+        });
+    }
+  };
+
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownload = async () => {
+    const url = `https://files.sendit.markets/products/${productFile}`;
+
+    try {
+      setIsDownloading(true);
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // Create a blob from the response
+      const blob = await response.blob();
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = productFile; // Set the file name for download
+      document.body.appendChild(link); // Append to body
+      link.click(); // Trigger the download
+      document.body.removeChild(link); // Clean up
+      setIsDownloading(false);
+    } catch (error) {
+      setIsDownloading(false);
+      console.error("Download failed:", error);
+    }
+  };
 
   return (
     <div className="border-b px-2 grid grid-cols-12 items-center w-full h-12">
@@ -265,10 +312,15 @@ const ProductLabel = ({
       ) : (
         <p className="text-[9px] md:text-[13px] col-span-1">{sellerDetails}</p>
       )}
-      <div className="text-[9px] md:text-[13px] col-span-1 flex items-center">
+      <div
+        onClick={handleCopy}
+        className="text-[9px] md:text-[13px] col-span-1 flex items-center cursor-pointer"
+      >
         {transactionHash && transactionHash.length > 16 ? (
           <p className="text-[9px] md:text-[13px]">
-            {transactionHash.slice(0, 16)}...
+            {`${transactionHash.slice(0, 2)}... ${transactionHash.slice(
+              -2
+            )}...`}
           </p>
         ) : (
           <p className="text-[9px] md:text-[13px]">{transactionHash}</p>
@@ -288,7 +340,10 @@ const ProductLabel = ({
           />
         </svg>
       </div>
-      <button className="col-span-1 flex items-center bg-black text-white h-8 justify-center gap-x-2 rounded-md hover:bg-[#5a5c5d] transition-all duration-300">
+      <button
+        onClick={handleDownload}
+        className="col-span-1 flex items-center bg-black text-white h-8 justify-center gap-x-2 rounded-md hover:bg-[#5a5c5d] transition-all duration-300"
+      >
         <svg
           className="w-3"
           viewBox="0 0 12 13"
@@ -304,7 +359,9 @@ const ProductLabel = ({
           />
         </svg>
 
-        <p className="text-[9px] md:text-[13px]">Download</p>
+        <p className="text-[9px] md:text-[13px]">
+          {isDownloading ? "Wait…" : "Download"}
+        </p>
       </button>
     </div>
   );
