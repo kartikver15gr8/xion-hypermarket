@@ -8,17 +8,21 @@ import { useRecoilValue } from "recoil";
 import { toast } from "sonner";
 import spinnerthree from "@/public/loaders/spinnerthree.svg";
 import { PurchasesInterface } from "@/lib/models";
+import ape from "@/public/ape.png";
 
 export default function AffiliateComponent() {
   return (
     <div>
       <TopBar />
       <div className="flex items-center gap-x-5 mt-10">
-        <p className="text-3xl font-bold italic">Affiliate Sales</p>
+        <p className="text-3xl font-bold italic">
+          Affiliate Sales & Commission
+        </p>
         {/* <button className="border rounded-md bg-green-300 bg-opacity-40 border-green-600 h-7 px-1">
           Completed
         </button> */}
       </div>
+      <MidSection />
       <SalesOverview />
     </div>
   );
@@ -271,6 +275,116 @@ const SalesLabel = ({
       <button className="text-[9px] md:text-[13px] rounded-md h-6 bg-black text-white col-span-1 hover:bg-[#5a5c5d] transition-all duration-300">
         {claim}
       </button>
+    </div>
+  );
+};
+
+const MidSection = () => {
+  return (
+    <div className="border rounded-2xl grid grid-cols-3 bg-white mt-4">
+      <div className="p-2 sm:p-3 md:p-4">
+        <div className=" flex items-center gap-x-1">
+          <p className="text-xs md:text-[13px]">TOTAL EARNED</p>
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.545 4.5C4.66255 4.16583 4.89458 3.88405 5.19998 3.70457C5.50538 3.52508 5.86445 3.45947 6.21359 3.51936C6.56273 3.57924 6.87941 3.76076 7.10754 4.03176C7.33567 4.30277 7.46053 4.64576 7.46 5C7.46 6 5.96 6.5 5.96 6.5M6 8.5H6.005M11 6C11 8.76142 8.76142 11 6 11C3.23858 11 1 8.76142 1 6C1 3.23858 3.23858 1 6 1C8.76142 1 11 3.23858 11 6Z"
+              stroke="#8B8B92"
+              strokeWidth="1.125"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+        <p className="font-bold text-3xl md:text-4xl my-3">$205</p>
+        <div className="flex gap-x-1 text-[11px] sm:text-[12px] md:text-[14px]">
+          <div className="flex items-center text-green-500">
+            <svg
+              className="w-3"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="none"
+                stroke="green"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2.5"
+                d="M12 20V4m0 0l6 6m-6-6l-6 6"
+              />
+            </svg>
+            <p>15%</p>
+          </div>
+          <p className="text-[#A6ACB7]">over past month</p>
+        </div>
+      </div>
+      <div className="border-r border-l p-2 sm:p-3 md:p-4">
+        <div className=" flex items-center gap-x-1">
+          <p className="text-xs md:text-[13px]">TODAY USERS REFERRED</p>
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.545 4.5C4.66255 4.16583 4.89458 3.88405 5.19998 3.70457C5.50538 3.52508 5.86445 3.45947 6.21359 3.51936C6.56273 3.57924 6.87941 3.76076 7.10754 4.03176C7.33567 4.30277 7.46053 4.64576 7.46 5C7.46 6 5.96 6.5 5.96 6.5M6 8.5H6.005M11 6C11 8.76142 8.76142 11 6 11C3.23858 11 1 8.76142 1 6C1 3.23858 3.23858 1 6 1C8.76142 1 11 3.23858 11 6Z"
+              stroke="#8B8B92"
+              strokeWidth="1.125"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+        <p className="font-bold text-3xl md:text-4xl my-3">40</p>
+
+        <div className="text-[11px] sm:text-[12px] md:text-[14px]">
+          <p className="text-[#A6ACB7]">Rank 1</p>
+          <div className="mt-1 flex items-center gap-x-1">
+            <Image
+              className="w-5 border rounded-full border-black"
+              src={ape}
+              alt=""
+              width={100}
+              height={100}
+            />
+            <p>Alex</p>
+          </div>
+        </div>
+      </div>
+      <div className=" p-2 sm:p-3 md:p-4">
+        <div className=" flex items-center gap-x-1">
+          <p className="text-xs md:text-[13px]">PRODUCTS SOLD</p>
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.545 4.5C4.66255 4.16583 4.89458 3.88405 5.19998 3.70457C5.50538 3.52508 5.86445 3.45947 6.21359 3.51936C6.56273 3.57924 6.87941 3.76076 7.10754 4.03176C7.33567 4.30277 7.46053 4.64576 7.46 5C7.46 6 5.96 6.5 5.96 6.5M6 8.5H6.005M11 6C11 8.76142 8.76142 11 6 11C3.23858 11 1 8.76142 1 6C1 3.23858 3.23858 1 6 1C8.76142 1 11 3.23858 11 6Z"
+              stroke="#8B8B92"
+              strokeWidth="1.125"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+        <p className="font-bold text-3xl md:text-4xl my-3">70</p>
+        <div className="mt-8 text-[10px] md:text-[12px]">
+          <p className="text-[#A6ACB7]">Top Product</p>
+          <p className="text-black font-medium text-[14px]">
+            How to Design Better UI
+          </p>
+        </div>
+      </div>
     </div>
   );
 };
