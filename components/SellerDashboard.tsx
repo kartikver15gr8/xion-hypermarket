@@ -6,16 +6,67 @@ import randomstatic from "@/public/randomstatic.png";
 import circlemedal from "@/public/circlemedal.svg";
 import ShareDepositStakeTnx from "./ShareDepositStakeTnx";
 import ShareWithdrawStakeTnx from "./ShareWithdrawStakeTnx";
+import ResponsiveLinearChart from "./ResponsiveLinearChart";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { phantomWallet } from "@/store/atom/phantomWallet";
+import { PurchasesInterface, SellerAnalytics } from "@/lib/models";
+import spinnerthree from "@/public/loaders/spinnerthree.svg";
 
 export default function SellerDashboard() {
+  const [sellerAnalytics, setSellerAnalytics] = useState<SellerAnalytics>({
+    user_id: 0,
+    user: {
+      id: 0,
+      wallet_address: "",
+      created_at: "2024-10-03T18:53:03.441Z",
+      updated_at: "2024-10-03T18:53:03.441Z",
+      seller_reg_tx_hash: null,
+    },
+    view_count: 0,
+    sale_count: 0,
+    sale_amount: 0,
+    average_rating: 0,
+    review_count: 0,
+  });
+  const sellerWalletAddress = useRecoilValue(phantomWallet);
+
+  const fetchSellerAnalytics = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/analytics/seller?seller_wallet_address=${sellerWalletAddress}`
+      );
+      setSellerAnalytics(response.data[0]);
+      // console.log(response.data[0]);
+    } catch (error) {
+      console.log(`You got error while fetching seller analytics`);
+    }
+  };
+
+  useEffect(() => {
+    if (sellerWalletAddress) {
+      fetchSellerAnalytics();
+    }
+  }, [sellerWalletAddress]);
+
   return (
     <div className="w-[100%] pb-20 relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth">
       <TopLabel />
       <div className="px-[20px] sm:px-[20px] md:px-[40px] lg:px-[60px] xl:px-20 mt-8 ">
-        <MidSection />
-        <TotalEarningsSection />
+        {/* <MidSection /> */}
+        {/* <TotalEarningsSection /> */}
+        <div className="">
+          <p className="text-sm md:text-[15px]">Accounts Statistics</p>
+          <MidSectionTwo
+            unitsSold={sellerAnalytics?.sale_count}
+            avgRating={sellerAnalytics?.average_rating}
+            totalViews={sellerAnalytics?.view_count}
+          />
+        </div>
+        <GraphWindow saleAmount={sellerAnalytics.sale_amount} />
         <CurrentRank />
-        <Sales />
+        <Sales sellerWalletAddress={sellerWalletAddress} />
       </div>
     </div>
   );
@@ -272,7 +323,38 @@ const CurrentRank = () => {
   );
 };
 
-export const Sales = () => {
+export const Sales = ({
+  sellerWalletAddress,
+}: {
+  sellerWalletAddress: string;
+}) => {
+  const [sellerPurchases, setSellerPurchases] = useState<PurchasesInterface[]>(
+    []
+  );
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchSellerPurchase = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/purchases?seller_wallet_address=${sellerWalletAddress}`
+      );
+      setSellerPurchases(response.data);
+      setIsLoading(false);
+      // console.log(response.data);
+    } catch (error) {
+      console.log(`Error while fetching seller sales:${error}`);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (sellerWalletAddress) {
+      fetchSellerPurchase();
+    }
+  }, [sellerWalletAddress]);
+
   return (
     <div className="mt-6 border rounded-2xl p-5 h-80 bg-white">
       <div className=" flex items-center gap-x-1">
@@ -304,106 +386,27 @@ export const Sales = () => {
         <p className="text-[10px] md:text-[13px] col-span-1">Claim</p>
       </div>
       <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-52">
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@xsy.com"
-          quantity={12}
-          price="$32"
-          status="pending"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
+        {isLoading && (
+          <div className="flex justify-center mt-2">
+            <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
+          </div>
+        )}
+        {sellerPurchases &&
+          sellerPurchases.map((elem, key) => {
+            return (
+              <SalesLabel
+                key={key}
+                date={elem.created_at}
+                productName={elem.product_title}
+                buyer={elem.buyer_wallet_address}
+                quantity={12}
+                price={elem.amount}
+                status={elem.status}
+                hash={elem.transaction_hash}
+                claim="claim"
+              />
+            );
+          })}
       </div>
     </div>
   );
@@ -423,16 +426,28 @@ export const SalesLabel = ({
   productName: string;
   buyer: string;
   quantity: number;
-  price: string;
+  price: string | number;
   status: string;
   hash: string;
   claim: string;
 }) => {
+  const dateStr = date;
+  const newDate = new Date(dateStr);
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  };
+  const formattedDate = newDate.toLocaleString("en-US", options);
+
   return (
     <div className="border-b px-2 grid grid-cols-12 items-center w-full h-10">
-      <p className="text-[9px] md:text-[13px] col-span-1">{date}</p>
+      <p className="text-[9px] md:text-[13px] col-span-1">{formattedDate}</p>
       <p className="text-[9px] md:text-[13px] col-span-3">{productName}</p>
-      <p className="text-[9px] md:text-[13px] col-span-2">{buyer}</p>
+      <p className="text-[9px] md:text-[13px] col-span-2">{`${buyer.slice(
+        0,
+        3
+      )}…${buyer.slice(-3)}`}</p>
       <p className="text-[9px] md:text-[13px] col-span-1">{quantity}</p>
       <p className="text-[9px] md:text-[13px] col-span-1">{price}</p>
       <div className="text-[9px] md:text-[13px] flex items-center col-span-1">
@@ -447,7 +462,7 @@ export const SalesLabel = ({
         )}
       </div>
       <div className="text-[9px] md:text-[13px] col-span-2 flex items-center">
-        <p>{hash}</p>
+        <p>{`${hash.slice(0, 3)}…${hash.slice(-3)}`}</p>
         <svg
           className="w-3 ml-1"
           viewBox="0 0 14 14"
@@ -466,6 +481,224 @@ export const SalesLabel = ({
       <button className="text-[9px] md:text-[13px] rounded-md h-6 bg-black text-white col-span-1 hover:bg-[#5a5c5d] transition-all duration-300">
         {claim}
       </button>
+    </div>
+  );
+};
+
+const MidSectionTwo = ({
+  unitsSold,
+  avgRating,
+  totalViews,
+}: {
+  unitsSold: string | number;
+  avgRating: string | number;
+  totalViews: string | number;
+}) => {
+  return (
+    <div className="grid grid-cols-3">
+      <div className="p-4">
+        <div className=" flex items-center gap-x-1">
+          <p className="text-xs md:text-[13px]">TOTAL UNITS SOLD</p>
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.545 4.5C4.66255 4.16583 4.89458 3.88405 5.19998 3.70457C5.50538 3.52508 5.86445 3.45947 6.21359 3.51936C6.56273 3.57924 6.87941 3.76076 7.10754 4.03176C7.33567 4.30277 7.46053 4.64576 7.46 5C7.46 6 5.96 6.5 5.96 6.5M6 8.5H6.005M11 6C11 8.76142 8.76142 11 6 11C3.23858 11 1 8.76142 1 6C1 3.23858 3.23858 1 6 1C8.76142 1 11 3.23858 11 6Z"
+              stroke="#8B8B92"
+              strokeWidth="1.125"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+        <p className="font-bold text-3xl md:text-4xl my-3">
+          {unitsSold ? unitsSold : 0}
+        </p>
+      </div>
+      <div className=" p-4">
+        <div className=" flex items-center gap-x-1">
+          <p className="text-xs md:text-[13px]">AVERAGE RATINGS</p>
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.545 4.5C4.66255 4.16583 4.89458 3.88405 5.19998 3.70457C5.50538 3.52508 5.86445 3.45947 6.21359 3.51936C6.56273 3.57924 6.87941 3.76076 7.10754 4.03176C7.33567 4.30277 7.46053 4.64576 7.46 5C7.46 6 5.96 6.5 5.96 6.5M6 8.5H6.005M11 6C11 8.76142 8.76142 11 6 11C3.23858 11 1 8.76142 1 6C1 3.23858 3.23858 1 6 1C8.76142 1 11 3.23858 11 6Z"
+              stroke="#8B8B92"
+              strokeWidth="1.125"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+        <div className="flex my-3 items-center gap-x-2">
+          <p className="font-bold text-3xl md:text-4xl">
+            {avgRating ? avgRating : 0}
+          </p>
+          <div className="">
+            <div className="flex">
+              <svg
+                className="w-[10px]"
+                viewBox="0 0 14 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.90919 0.196866C6.94494 0.119379 7.05506 0.119379 7.09081 0.196866L8.95151 4.23087C8.96608 4.26245 8.99601 4.2842 9.03055 4.28829L13.4421 4.81135C13.5268 4.8214 13.5609 4.92614 13.4982 4.98408L10.2366 8.00029C10.2111 8.0239 10.1997 8.05909 10.2065 8.0932L11.0722 12.4505C11.0889 12.5342 10.9998 12.5989 10.9253 12.5572L7.04884 10.3873C7.0185 10.3704 6.9815 10.3704 6.95116 10.3873L3.07468 12.5572C3.00022 12.5989 2.91112 12.5342 2.92776 12.4505L3.79354 8.0932C3.80032 8.05909 3.78889 8.0239 3.76335 8.00029L0.501775 4.98408C0.439125 4.92614 0.473156 4.8214 0.557896 4.81135L4.96946 4.28829C5.00399 4.2842 5.03392 4.26245 5.04849 4.23087L6.90919 0.196866Z"
+                  fill="#6B7D7F"
+                />
+              </svg>
+              <svg
+                className="w-[10px]"
+                viewBox="0 0 14 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.90919 0.196866C6.94494 0.119379 7.05506 0.119379 7.09081 0.196866L8.95151 4.23087C8.96608 4.26245 8.99601 4.2842 9.03055 4.28829L13.4421 4.81135C13.5268 4.8214 13.5609 4.92614 13.4982 4.98408L10.2366 8.00029C10.2111 8.0239 10.1997 8.05909 10.2065 8.0932L11.0722 12.4505C11.0889 12.5342 10.9998 12.5989 10.9253 12.5572L7.04884 10.3873C7.0185 10.3704 6.9815 10.3704 6.95116 10.3873L3.07468 12.5572C3.00022 12.5989 2.91112 12.5342 2.92776 12.4505L3.79354 8.0932C3.80032 8.05909 3.78889 8.0239 3.76335 8.00029L0.501775 4.98408C0.439125 4.92614 0.473156 4.8214 0.557896 4.81135L4.96946 4.28829C5.00399 4.2842 5.03392 4.26245 5.04849 4.23087L6.90919 0.196866Z"
+                  fill="#6B7D7F"
+                />
+              </svg>
+              <svg
+                className="w-[10px]"
+                viewBox="0 0 14 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.90919 0.196866C6.94494 0.119379 7.05506 0.119379 7.09081 0.196866L8.95151 4.23087C8.96608 4.26245 8.99601 4.2842 9.03055 4.28829L13.4421 4.81135C13.5268 4.8214 13.5609 4.92614 13.4982 4.98408L10.2366 8.00029C10.2111 8.0239 10.1997 8.05909 10.2065 8.0932L11.0722 12.4505C11.0889 12.5342 10.9998 12.5989 10.9253 12.5572L7.04884 10.3873C7.0185 10.3704 6.9815 10.3704 6.95116 10.3873L3.07468 12.5572C3.00022 12.5989 2.91112 12.5342 2.92776 12.4505L3.79354 8.0932C3.80032 8.05909 3.78889 8.0239 3.76335 8.00029L0.501775 4.98408C0.439125 4.92614 0.473156 4.8214 0.557896 4.81135L4.96946 4.28829C5.00399 4.2842 5.03392 4.26245 5.04849 4.23087L6.90919 0.196866Z"
+                  fill="#6B7D7F"
+                />
+              </svg>
+              <svg
+                className="w-[10px]"
+                viewBox="0 0 14 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.90919 0.196866C6.94494 0.119379 7.05506 0.119379 7.09081 0.196866L8.95151 4.23087C8.96608 4.26245 8.99601 4.2842 9.03055 4.28829L13.4421 4.81135C13.5268 4.8214 13.5609 4.92614 13.4982 4.98408L10.2366 8.00029C10.2111 8.0239 10.1997 8.05909 10.2065 8.0932L11.0722 12.4505C11.0889 12.5342 10.9998 12.5989 10.9253 12.5572L7.04884 10.3873C7.0185 10.3704 6.9815 10.3704 6.95116 10.3873L3.07468 12.5572C3.00022 12.5989 2.91112 12.5342 2.92776 12.4505L3.79354 8.0932C3.80032 8.05909 3.78889 8.0239 3.76335 8.00029L0.501775 4.98408C0.439125 4.92614 0.473156 4.8214 0.557896 4.81135L4.96946 4.28829C5.00399 4.2842 5.03392 4.26245 5.04849 4.23087L6.90919 0.196866Z"
+                  fill="#6B7D7F"
+                />
+              </svg>
+              <svg
+                className="w-[10px]"
+                viewBox="0 0 14 13"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.90919 0.196866C6.94494 0.119379 7.05506 0.119379 7.09081 0.196866L8.95151 4.23087C8.96608 4.26245 8.99601 4.2842 9.03055 4.28829L13.4421 4.81135C13.5268 4.8214 13.5609 4.92614 13.4982 4.98408L10.2366 8.00029C10.2111 8.0239 10.1997 8.05909 10.2065 8.0932L11.0722 12.4505C11.0889 12.5342 10.9998 12.5989 10.9253 12.5572L7.04884 10.3873C7.0185 10.3704 6.9815 10.3704 6.95116 10.3873L3.07468 12.5572C3.00022 12.5989 2.91112 12.5342 2.92776 12.4505L3.79354 8.0932C3.80032 8.05909 3.78889 8.0239 3.76335 8.00029L0.501775 4.98408C0.439125 4.92614 0.473156 4.8214 0.557896 4.81135L4.96946 4.28829C5.00399 4.2842 5.03392 4.26245 5.04849 4.23087L6.90919 0.196866Z"
+                  fill="#6B7D7F"
+                />
+              </svg>
+            </div>
+            <p className="text-[10px] md:text-[12px]">20 Reviews</p>
+          </div>
+        </div>
+      </div>
+      <div className=" p-4">
+        <div className=" flex items-center gap-x-1">
+          <p className="text-xs md:text-[13px]">TOTAL VIEWS</p>
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.545 4.5C4.66255 4.16583 4.89458 3.88405 5.19998 3.70457C5.50538 3.52508 5.86445 3.45947 6.21359 3.51936C6.56273 3.57924 6.87941 3.76076 7.10754 4.03176C7.33567 4.30277 7.46053 4.64576 7.46 5C7.46 6 5.96 6.5 5.96 6.5M6 8.5H6.005M11 6C11 8.76142 8.76142 11 6 11C3.23858 11 1 8.76142 1 6C1 3.23858 3.23858 1 6 1C8.76142 1 11 3.23858 11 6Z"
+              stroke="#8B8B92"
+              strokeWidth="1.125"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+        <p className="font-bold text-3xl md:text-4xl my-3">
+          {totalViews ? totalViews : 0}
+        </p>
+      </div>
+    </div>
+  );
+};
+
+export const GraphWindow = ({
+  saleAmount,
+}: {
+  saleAmount: string | number;
+}) => {
+  return (
+    <div className="border rounded-xl h-72 bg-white p-4 grid grid-cols-12">
+      <div className="col-span-3 sm:col-span-4 flex flex-col justify-between">
+        <div className="flex items-center gap-x-1">
+          <p className="text-xs md:text-[13px]">TOTAL SALES</p>
+          <svg
+            width="12"
+            height="12"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M4.545 4.5C4.66255 4.16583 4.89458 3.88405 5.19998 3.70457C5.50538 3.52508 5.86445 3.45947 6.21359 3.51936C6.56273 3.57924 6.87941 3.76076 7.10754 4.03176C7.33567 4.30277 7.46053 4.64576 7.46 5C7.46 6 5.96 6.5 5.96 6.5M6 8.5H6.005M11 6C11 8.76142 8.76142 11 6 11C3.23858 11 1 8.76142 1 6C1 3.23858 3.23858 1 6 1C8.76142 1 11 3.23858 11 6Z"
+              stroke="#8B8B92"
+              strokeWidth="1.125"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+        <div className="flex flex-col gap-y-2">
+          <div className="flex gap-x-1">
+            <p className="font-medium flex justify-end flex-col text-2xl">$</p>
+            <p className="font-medium text-4xl sm:text-5xl md:text-7xl">
+              {saleAmount ? saleAmount : 0}
+            </p>
+          </div>
+          <div className="flex items-center gap-x-2">
+            <div className="relative">
+              <Image className="w-8" src={circlemedal} alt="" />
+            </div>
+            <p className="w-44 text-[10px] sm:text-[12px] text-wrap">
+              You&apos;ve reached $1500 in total sales!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="col-span-9 sm:col-span-8 flex items-center justify-center h-full flex-col">
+        <div className="mb-2 flex items-center gap-x-4 w-full justify-end ">
+          <p className="text-[#8B8B92] text-[11px] sm:text-[13px]">View</p>
+          <div className="border h-8 w-16 rounded-md flex items-center justify-center gap-x-1 hover:bg-[#e2e2e4] transition-all duration-300">
+            <p className=" text-[11px] sm:text-[13px]">YTD</p>
+            <svg
+              width="12"
+              height="6"
+              viewBox="0 0 12 6"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.5 0.75L6 5.25L10.5 0.75"
+                stroke="#4B4B54"
+                strokeWidth="1.35"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+        <ResponsiveLinearChart />
+      </div>
     </div>
   );
 };
