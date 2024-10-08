@@ -60,6 +60,36 @@ const PhantomWalletButton: React.FC = () => {
   }, []);
 
   useEffect(() => {
+    const refreshProductAnalytics = async () => {
+      try {
+        const response = await axios.put(
+          `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/analytics/refresh/product`
+        );
+        console.log(response.data);
+        return response.data;
+      } catch (error) {
+        console.log(`You got an error while refreshing analytics: ${error}`);
+      }
+    };
+    refreshProductAnalytics();
+  }, []);
+
+  useEffect(() => {
+    const refreshAffiliateAnalytics = async () => {
+      try {
+        const response = await axios.put(
+          `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/analytics/refresh/affiliate`
+        );
+        console.log(response.data);
+        return response.data;
+      } catch (error) {
+        console.log(`You got an error while refreshing analytics: ${error}`);
+      }
+    };
+    refreshAffiliateAnalytics();
+  }, []);
+
+  useEffect(() => {
     const checkUserExist = async () => {
       try {
         const response = await axios.get(
