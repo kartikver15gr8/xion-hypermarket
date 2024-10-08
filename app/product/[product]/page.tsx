@@ -47,6 +47,24 @@ export default function Product({ params }: any) {
     }
   };
 
+  const updateViews = async () => {
+    try {
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/product/${productId}/view`
+      );
+      // console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(`You got an error while updating views: ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    if (productId) {
+      updateViews();
+    }
+  }, [productId]);
+
   useEffect(() => {
     if (productId) {
       fetchProductData();
