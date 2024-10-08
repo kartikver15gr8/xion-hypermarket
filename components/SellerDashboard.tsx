@@ -64,10 +64,9 @@ export default function SellerDashboard() {
             totalViews={sellerAnalytics?.view_count}
           />
         </div>
-        <GraphWindow saleAmount={sellerAnalytics.sale_amount} />
+        <GraphWindow saleAmount={sellerAnalytics?.sale_amount} />
         <CurrentRank />
         <Sales sellerWalletAddress={sellerWalletAddress} />
-        
       </div>
     </div>
   );
