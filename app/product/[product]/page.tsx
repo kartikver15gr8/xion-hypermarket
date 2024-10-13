@@ -145,7 +145,7 @@ const ProductDetails = ({
 
             <Link
               href={`/product/seller/${sellerAddress}`}
-              className="flex  items-center gap-x-2 z-50"
+              className="flex items-center gap-x-2 z-30"
             >
               <Image src={kody} className="w-5 h-5 rounded-full" alt="" />
               <p className="text-xs md:text-sm">
@@ -339,7 +339,7 @@ const FolderStructure = ({
         />
       </svg>
 
-      <Link href={redirectUrl} className=" z-50">
+      <Link href={redirectUrl} className=" z-40">
         <p className=" cursor-pointer">{productCategory}</p>
       </Link>
 

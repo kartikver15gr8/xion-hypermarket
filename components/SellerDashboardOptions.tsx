@@ -44,7 +44,10 @@ export default function SellerDashboardOptions({
 
   return (
     <div className="relative z-10 pt-16 border border-[#E5E5E5] min-h-screen">
-      <div className="relative flex items-center px-3 gap-x-2 border-b border-[#E5E5E5] h-20">
+      <Link
+        href={`/product/seller/${sellerWalletAddress}`}
+        className="relative flex items-center px-3 gap-x-2 border-b border-[#E5E5E5] h-20"
+      >
         <Image
           src={randomstatic}
           alt="Background"
@@ -52,7 +55,16 @@ export default function SellerDashboardOptions({
           objectFit="cover"
           className="opacity-[4%]"
         />
-        <div className="h-12 w-12 rounded-md">
+
+        <Image
+          className="w-12 h-12 border border-black rounded-full"
+          src={portfolio_ape}
+          alt="Seller"
+          width={200}
+          height={200}
+        />
+
+        {/* <div className="h-12 w-12 rounded-md">
           <Image
             className="w-full h-full rounded-md"
             src={portfolio_ape}
@@ -60,7 +72,7 @@ export default function SellerDashboardOptions({
             width={200}
             height={200}
           />
-        </div>
+        </div> */}
         <div>
           <p className="font-medium text-[15px]">SELLER ID</p>
           <p className="text-[11px]">
@@ -86,7 +98,7 @@ export default function SellerDashboardOptions({
             <path fill="black" d="M7.5 12L0 4h15z" />
           </svg>
         </div>
-      </div>
+      </Link>
       <div className="flex flex-col mt-10 ml-3 p-2 h-[400px]">
         <p className="text-[14px] text-[#C9C9CB] ">PORTAL</p>
         <div className="flex gap-x-3 w-[198px] mt-2">

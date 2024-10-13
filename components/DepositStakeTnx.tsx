@@ -130,7 +130,7 @@ export default function DepositStakeTnx() {
       <p>Seller Wallet Address: {walletAddress}</p> */}
 
       <input
-        className="border h-full p-1 text-black text-xs sm:text-sm w-28 sm:w-32 outline-none rounded-l-md"
+        className="border h-full p-1 text-black text-[12px] sm:text-sm outline-none rounded-l-md"
         type="number"
         placeholder="Amount in SOL"
         // value={amountToStake}
@@ -140,7 +140,7 @@ export default function DepositStakeTnx() {
       />
       <button
         onClick={makeDepositState}
-        className="p-1 h-full px-2 bg-black text-white text-xs sm:text-sm w-20 sm:w-28 rounded-r-md"
+        className="p-1 h-full bg-black text-white text-[12px] sm:text-sm rounded-r-md"
       >
         {isLoading ? "processing…" : "deposit"}
       </button>

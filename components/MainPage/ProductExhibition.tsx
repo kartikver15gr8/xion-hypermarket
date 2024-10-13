@@ -160,75 +160,6 @@ const reviews = [
   },
 ];
 
-// const reviews = [
-//   {
-//     coin: "NTRN",
-//     name: "Neutron",
-//     imgURL: neutron,
-//     redirectHref: "neutron",
-//   },
-//   {
-//     coin: "ATOM",
-//     name: "Atom",
-//     imgURL: atom,
-//     redirectHref: "atom",
-//   },
-//   {
-//     coin: "OSMO",
-//     name: "Osmosis",
-//     imgURL: osmosis,
-//     redirectHref: "osmosis",
-//   },
-//   {
-//     coin: "SOL",
-//     name: "Solana",
-//     imgURL: solana,
-//     redirectHref: "solana",
-//   },
-//   {
-//     coin: "TIA",
-//     name: "Celestia",
-//     imgURL: celestia,
-//     redirectHref: "celestia",
-//   },
-//   {
-//     coin: "BTC",
-//     name: "Bitcoin",
-//     imgURL: bitcoin,
-//     redirectHref: "bitcoin",
-//   },
-//   {
-//     coin: "INJ",
-//     name: "Injective",
-//     imgURL: injective,
-//     redirectHref: "injective",
-//   },
-//   {
-//     coin: "ETH",
-//     name: "Ethereum",
-//     imgURL: ethereum,
-//     redirectHref: "ethereum",
-//   },
-//   {
-//     coin: "USDC",
-//     name: "USDC",
-//     imgURL: usdccoin,
-//     redirectHref: "usdc",
-//   },
-//   {
-//     coin: "AKT",
-//     name: "Akash",
-//     imgURL: akash,
-//     redirectHref: "akash",
-//   },
-//   {
-//     coin: "DYDX",
-//     name: "ETHDYDX",
-//     imgURL: dydx,
-//     redirectHref: "ethdydx",
-//   },
-// ];
-
 export default function ProductExhibition() {
   return (
     <div className="mb-10">
@@ -1140,9 +1071,11 @@ const HotDigitalProducts = () => {
           onClick={toggleShowAll}
           className="flex items-center gap-x-1 bg-black text-white rounded px-2 h-8 hover:bg-[#7e7d7d] transition-all duration-300 cursor-pointer"
         >
-          <p>{showAll ? "Show Less" : "Show All"}</p>
+          <p className="text-[12px] sm:text-[14px]">
+            {showAll ? "Show Less" : "Show All"}
+          </p>
           <svg
-            className="w-3"
+            className="w-2 sm:w-3"
             viewBox="0 0 12 12"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
