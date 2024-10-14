@@ -5,10 +5,15 @@ import randomstatic from "@/public/randomstatic.png";
 import circlemedal from "@/public/circlemedal.svg";
 import logodesign from "@/public/marqueeicons/logodesign.png";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import usdccoin from "@/public/_static/coinIcons/usdc.png";
 import { SalesLabel } from "../SellerDashboard";
 import { toast } from "sonner";
+import { PurchasesInterface } from "@/lib/models";
+import axios from "axios";
+import { useRecoilValue } from "recoil";
+import { phantomWallet } from "@/store/atom/phantomWallet";
+import spinnerthree from "@/public/loaders/spinnerthree.svg";
 
 const Active =
   "h-10 text-[#4E6465] flex items-center justify-center gap-x-2 border-b-2 border-[#4E6465]";
@@ -201,6 +206,7 @@ export const OrderOveriewCard = () => {
 };
 
 export const SalesOverview = () => {
+  const walletAddress = useRecoilValue(phantomWallet);
   return (
     <div className="mt-8">
       <p className="font-medium text-xl">Sales Overview</p>
@@ -274,208 +280,7 @@ export const SalesOverview = () => {
         <p className="text-[11px] md:text-[13px] col-span-2">Hash</p>
         <p className="text-[11px] md:text-[13px] col-span-1">Claim</p>
       </div>
-      <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-96">
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@xsy.com"
-          quantity={12}
-          price="$32"
-          status="pending"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-        <SalesLabel
-          date="10/10/24"
-          productName="How to Design Better UI"
-          buyer="johndoe@sendit.zone"
-          quantity={12}
-          price="$32"
-          status="confirmed"
-          hash="0b3fe99b745ba2079"
-          claim="claim"
-        />
-      </div>
+      <SalesTab sellerWalletAddress={walletAddress} />
     </div>
   );
 };
@@ -509,6 +314,60 @@ const TransactionTopLabel = () => {
           </div>
         </div>
       </div>
+    </div>
+  );
+};
+
+const SalesTab = ({ sellerWalletAddress }: { sellerWalletAddress: string }) => {
+  const [sellerPurchases, setSellerPurchases] = useState<PurchasesInterface[]>(
+    []
+  );
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const fetchPurchases = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/purchases?seller_wallet_address=${sellerWalletAddress}`
+      );
+      setSellerPurchases(response.data);
+      setIsLoading(false);
+      return response.data;
+    } catch (error) {
+      setIsLoading(false);
+      console.log(`You got an error while fetching purchases: ${error}`);
+    }
+  };
+  useEffect(() => {
+    if (sellerWalletAddress) {
+      fetchPurchases();
+    }
+  }, [sellerWalletAddress]);
+
+  return (
+    <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-96">
+      {isLoading && (
+        <div className="flex justify-center mt-2">
+          <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
+        </div>
+      )}
+      {sellerPurchases &&
+        sellerPurchases.map((elem, key) => {
+          return (
+            <SalesLabel
+              key={key}
+              date={elem.created_at}
+              productName={elem.product_title}
+              buyer={elem.buyer_wallet_address}
+              quantity={12}
+              price={elem.amount}
+              status={elem.status}
+              hash={elem.transaction_hash}
+              claim="claim"
+            />
+          );
+        })}
     </div>
   );
 };

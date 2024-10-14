@@ -66,7 +66,7 @@ export default function SellerDashboard() {
         </div>
         <GraphWindow saleAmount={sellerAnalytics?.sale_amount} />
         <CurrentRank />
-        <Sales sellerWalletAddress={sellerWalletAddress} />
+        {/* <Sales sellerWalletAddress={sellerWalletAddress} /> */}
       </div>
     </div>
   );
@@ -268,11 +268,11 @@ const TotalEarningsSection = () => {
 const CurrentRank = () => {
   return (
     <div className="mt-6">
-      <p className="font-medium text-sm sm:text-lg md:text-xl">
+      <p className="font-medium text-sm sm:text-lg md:text-xl mb-2">
         Your Path to Level 3
       </p>
-      <div className="grid grid-cols-2 w-[100%] ">
-        <div className=" p-2 gap-x-1 md:gap-x-2 flex items-center ">
+      <div className="grid grid-cols-2 w-[100%]">
+        <div className="py-2 gap-x-2 flex items-center ">
           <input type="checkbox" />
           <div className="">
             <p className="text-[11px] md:text-[13px]">
@@ -283,7 +283,7 @@ const CurrentRank = () => {
             </p>
           </div>
         </div>
-        <div className=" p-2 gap-x-2 flex items-center ">
+        <div className="py-2 gap-x-2 flex items-center ">
           <input type="checkbox" />
           <div className="">
             <p className="text-[11px] md:text-[13px]">
@@ -294,7 +294,7 @@ const CurrentRank = () => {
             </p>
           </div>
         </div>
-        <div className=" p-2 gap-x-2 flex items-center ">
+        <div className="py-2 gap-x-2 flex items-center ">
           <input type="checkbox" />
           <div className="">
             <p className="text-[11px] md:text-[13px]">
@@ -305,7 +305,7 @@ const CurrentRank = () => {
             </p>
           </div>
         </div>
-        <div className=" p-2 gap-x-2 flex items-center ">
+        <div className="py-2 gap-x-2 flex items-center ">
           <input type="checkbox" />
           <div className="">
             <p className="text-[11px] md:text-[13px]">
@@ -457,7 +457,7 @@ export const SalesLabel = ({
           </div>
         ) : (
           <div className="flex text-[9px] md:text-[13px] items-center bg-opacity-45 border border-red-600 rounded-md h-6 px-1 bg-red-400 ">
-            <p>{status}</p>
+            <p>{status.length > 2 ? status : "pending"}</p>
           </div>
         )}
       </div>

@@ -155,7 +155,9 @@ export default function PageLanding() {
     <Suspense
       fallback={
         <div className="flex justify-center items-center h-screen">
-          <p>Loading...</p>
+          <p className="text-4xl md:text-5xl xl:text-6xl font-bold italic animate-pulse opacity-0 transition-opacity duration-2000 ease-in-out delay-500">
+            SENDIT
+          </p>
         </div>
       }
     >

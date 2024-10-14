@@ -112,7 +112,7 @@ const BorrowUSDCBannerBtn = () => {
           <p className="font-medium flex items-center text-[14px] md:text-[20px] text-white ">
             Promote with
           </p>
-          <Image className="w-60" src={solanablinkImg} alt="" />
+          <Image className="w-52 sm:w-60" src={solanablinkImg} alt="" />
           <div
             className="relative inline-block text-left ml-2"
             ref={dropdownRef}
@@ -136,7 +136,7 @@ const BorrowUSDCBannerBtn = () => {
               </svg>
             </button>
             {isOpen && (
-              <div className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+              <div className="absolute z-40 right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="px-1 py-1">
                   <button
                     className="text-gray-900 group flex rounded-md items-center w-full px-2 py-2 text-sm hover:bg-[#33555b] hover:text-white"
