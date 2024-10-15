@@ -1,11 +1,12 @@
-name: CI
+name: CI/CD
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+
 jobs:
-  build:
+  build-and-test:
     runs-on: self-hosted-deploy
     steps:
       - uses: actions/checkout@v4
@@ -46,3 +47,20 @@ jobs:
 
       - name: Build project
         run: pnpm run build
+
+  deploy:
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      - name: Deploy to Vercel
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: vercel deploy --prod --token $VERCEL_TOKEN
