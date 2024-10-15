@@ -33,11 +33,13 @@ export default function page() {
           <p className="text-sm mt-2 text-[#52525C]">Categories:</p>
           <div className="grid grid-cols-1 md:grid-cols-2 mt-4 gap-x-4">
             <ProductCard
+              redirectHref="/product/add/category"
               img={matrixcube}
               title="Digital Products"
               examples="Things like: ebooks, skins, game skins"
             />
             <ProductCard
+              redirectHref=""
               img={ball}
               title="Digital Services"
               examples="COMING SOON…!"
@@ -53,14 +55,16 @@ const ProductCard = ({
   img,
   title,
   examples,
+  redirectHref,
 }: {
   img: string | StaticImageData;
   title: string;
   examples: string;
+  redirectHref: string;
 }) => {
   return (
     <Link
-      href={"/product/add/category"}
+      href={redirectHref}
       className="border rounded-lg border-[#E5E5E5] bg-[#F5F5F5]  flex flex-col items-center justify-center h-[450px] hover:bg-[#e5e5e5] transition-all duration-300"
     >
       <Image className="w-24" src={img} alt="" />

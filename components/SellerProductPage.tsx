@@ -6,13 +6,12 @@ import randomstatic from "@/public/randomstatic.png";
 import circlemedal from "@/public/circlemedal.svg";
 import logodesign from "@/public/marqueeicons/logodesign.png";
 import Link from "next/link";
-import { ProductAnalytics } from "@/lib/models";
+import { CategoryInterface, ProductAnalytics } from "@/lib/models";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 import spinnerthree from "@/public/loaders/spinnerthree.svg";
-import { format } from "path";
 
 export default function SellerProductPage() {
   const [productAnalytics, setProductsAnalytics] = useState<ProductAnalytics[]>(
@@ -74,24 +73,24 @@ export default function SellerProductPage() {
             </Link>
           </div>
           <div className="grid grid-cols-12 gap-x-4 mt-3 gap-y-2 md:gap-y-0">
-            <div className="h-10 border p-[2px] rounded-md col-span-12 md:col-span-5 grid grid-cols-5 items-center bg-[#EEEEEF] gap-x-1 text-xs md:text-[13px] lg:text-sm">
-              <div className="h-8 border rounded-sm flex items-center justify-center bg-white ">
+            <div className="h-10 border border-[#DEDEDE] p-[2px] rounded-[8px] col-span-12 md:col-span-5 grid grid-cols-5 items-center bg-[#EAEAEB] gap-x-1 text-xs md:text-[13px] lg:text-sm">
+              <div className="h-8 text-[#6C7E7F] border rounded-[6px] flex items-center justify-center bg-[#FFF] shadow-md">
                 All
               </div>
-              <div className="h-8 rounded-sm flex items-center justify-center">
+              <div className="h-8 text-[#6C7E7F] rounded-[6px] flex items-center justify-center">
                 Active
               </div>
-              <div className="h-8 rounded-sm flex items-center justify-center">
+              <div className="h-8 text-[#6C7E7F] rounded-[6px] flex items-center justify-center">
                 Inactive
               </div>
-              <div className="h-8 rounded-sm flex items-center justify-center">
+              <div className="h-8 text-[#6C7E7F] rounded-[6px] flex items-center justify-center">
                 Archived
               </div>
-              <div className="h-8 rounded-sm flex items-center justify-center">
+              <div className="h-8 text-[#6C7E7F] rounded-[6px] flex items-center justify-center">
                 Draft
               </div>
             </div>
-            <div className="h-10 border text-xs md:text-[13px] lg:text-sm rounded-md col-span-4 md:col-span-2 flex items-center justify-center gap-x-1">
+            <div className="h-10 border border-[#DEDEDE] text-xs md:text-[13px] lg:text-sm rounded-md col-span-4 md:col-span-2 flex items-center justify-center gap-x-1">
               <p>Digital Product</p>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +107,7 @@ export default function SellerProductPage() {
                 </g>
               </svg>
             </div>
-            <div className="h-10 border rounded-md col-span-8 md:col-span-5 flex items-center pl-2">
+            <div className="h-10 border border-[#DEDEDE] rounded-md col-span-8 md:col-span-5 flex items-center pl-2">
               <svg
                 className="mr-2"
                 width="15"
@@ -138,7 +137,7 @@ export default function SellerProductPage() {
               <p>0 Selected</p>
             </div>
             <div className="w-[50%] grid grid-cols-5 gap-x-3 text-[#A9BACA] text-xs md:text-[13px] lg:text-sm">
-              <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#d1d9e2] transition-all duration-300">
+              <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#dde4ed] transition-all duration-300">
                 <svg
                   width="14"
                   height="14"
@@ -147,55 +146,62 @@ export default function SellerProductPage() {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M10.4993 1.16663L12.8327 3.49996M1.16602 12.8333L1.91058 10.1032C1.95916 9.9251 1.98345 9.83604 2.02073 9.75299C2.05384 9.67925 2.09452 9.60916 2.14212 9.54383C2.19572 9.47025 2.261 9.40498 2.39154 9.27443L8.41937 3.24661C8.53487 3.1311 8.59262 3.07335 8.65922 3.05171C8.7178 3.03268 8.7809 3.03268 8.83948 3.05171C8.90608 3.07335 8.96383 3.1311 9.07933 3.24661L10.7527 4.91998C10.8682 5.03548 10.926 5.09323 10.9476 5.15983C10.9666 5.21841 10.9666 5.28151 10.9476 5.34009C10.926 5.40669 10.8682 5.46444 10.7527 5.57994L4.72488 11.6078C4.59433 11.7383 4.52906 11.8036 4.45548 11.8572C4.39015 11.9048 4.32005 11.9455 4.24632 11.9786C4.16327 12.0159 4.07421 12.0401 3.8961 12.0887L1.16602 12.8333Z"
-                    stroke="#A9BACA"
+                    d="M10.5003 1.1665L12.8337 3.49984M1.16699 12.8332L1.91156 10.1031C1.96014 9.92498 1.98442 9.83592 2.02171 9.75287C2.05482 9.67913 2.0955 9.60904 2.14309 9.54371C2.1967 9.47013 2.26197 9.40486 2.39252 9.27431L8.42034 3.24649C8.53585 3.13098 8.5936 3.07323 8.6602 3.05159C8.71878 3.03256 8.78188 3.03256 8.84046 3.05159C8.90705 3.07323 8.9648 3.13098 9.08031 3.24649L10.7537 4.91985C10.8692 5.03536 10.9269 5.09311 10.9486 5.15971C10.9676 5.21829 10.9676 5.28139 10.9486 5.33997C10.9269 5.40656 10.8692 5.46432 10.7537 5.57982L4.72585 11.6076C4.59531 11.7382 4.53003 11.8035 4.45646 11.8571C4.39113 11.9047 4.32103 11.9453 4.24729 11.9785C4.16424 12.0157 4.07519 12.04 3.89707 12.0886L1.16699 12.8332Z"
+                    stroke="#6C7E7F"
                     strokeWidth="1.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                 </svg>
 
-                <p className="hidden md:flex">Edit</p>
+                <p className="hidden md:flex text-[#6C7E7F]">Edit</p>
               </div>
-              <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#d1d9e2] transition-all duration-300">
+              <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#dde4ed] transition-all duration-300">
                 <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M10.4993 1.16663L12.8327 3.49996M1.16602 12.8333L1.91058 10.1032C1.95916 9.9251 1.98345 9.83604 2.02073 9.75299C2.05384 9.67925 2.09452 9.60916 2.14212 9.54383C2.19572 9.47025 2.261 9.40498 2.39154 9.27443L8.41937 3.24661C8.53487 3.1311 8.59262 3.07335 8.65922 3.05171C8.7178 3.03268 8.7809 3.03268 8.83948 3.05171C8.90608 3.07335 8.96383 3.1311 9.07933 3.24661L10.7527 4.91998C10.8682 5.03548 10.926 5.09323 10.9476 5.15983C10.9666 5.21841 10.9666 5.28151 10.9476 5.34009C10.926 5.40669 10.8682 5.46444 10.7527 5.57994L4.72488 11.6078C4.59433 11.7383 4.52906 11.8036 4.45548 11.8572C4.39015 11.9048 4.32005 11.9455 4.24632 11.9786C4.16327 12.0159 4.07421 12.0401 3.8961 12.0887L1.16602 12.8333Z"
-                    stroke="#A9BACA"
+                    d="M4.54167 7.75V4.25M7.45833 7.75V4.25M3.55 11.25H8.45C9.43009 11.25 9.92014 11.25 10.2945 11.0593C10.6238 10.8915 10.8915 10.6238 11.0593 10.2945C11.25 9.92014 11.25 9.43009 11.25 8.45V3.55C11.25 2.56991 11.25 2.07986 11.0593 1.70552C10.8915 1.37623 10.6238 1.10852 10.2945 0.940739C9.92014 0.75 9.43009 0.75 8.45 0.75H3.55C2.56991 0.75 2.07986 0.75 1.70552 0.940739C1.37623 1.10852 1.10852 1.37623 0.940739 1.70552C0.75 2.07986 0.75 2.56991 0.75 3.55V8.45C0.75 9.43009 0.75 9.92014 0.940739 10.2945C1.10852 10.6238 1.37623 10.8915 1.70552 11.0593C2.07986 11.25 2.56991 11.25 3.55 11.25Z"
+                    stroke="#6C7E7F"
                     strokeWidth="1.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                 </svg>
 
-                <p className="hidden md:flex">Edit</p>
+                <p className="hidden md:flex text-[#6C7E7F]">Pause</p>
               </div>
-              <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#d1d9e2] transition-all duration-300">
+              <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#dde4ed] transition-all duration-300">
                 <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M10.4993 1.16663L12.8327 3.49996M1.16602 12.8333L1.91058 10.1032C1.95916 9.9251 1.98345 9.83604 2.02073 9.75299C2.05384 9.67925 2.09452 9.60916 2.14212 9.54383C2.19572 9.47025 2.261 9.40498 2.39154 9.27443L8.41937 3.24661C8.53487 3.1311 8.59262 3.07335 8.65922 3.05171C8.7178 3.03268 8.7809 3.03268 8.83948 3.05171C8.90608 3.07335 8.96383 3.1311 9.07933 3.24661L10.7527 4.91998C10.8682 5.03548 10.926 5.09323 10.9476 5.15983C10.9666 5.21841 10.9666 5.28151 10.9476 5.34009C10.926 5.40669 10.8682 5.46444 10.7527 5.57994L4.72488 11.6078C4.59433 11.7383 4.52906 11.8036 4.45548 11.8572C4.39015 11.9048 4.32005 11.9455 4.24632 11.9786C4.16327 12.0159 4.07421 12.0401 3.8961 12.0887L1.16602 12.8333Z"
-                    stroke="#A9BACA"
+                    d="M4.54167 4.22978C4.54167 3.95136 4.54167 3.81215 4.59985 3.73444C4.65055 3.66671 4.72817 3.62434 4.81255 3.61831C4.90939 3.61139 5.02649 3.68667 5.26069 3.83723L8.01437 5.60745C8.21759 5.73809 8.3192 5.80342 8.3543 5.88648C8.38497 5.95905 8.38497 6.04095 8.3543 6.11352C8.3192 6.19658 8.21759 6.26191 8.01437 6.39255L5.26069 8.16277C5.02649 8.31333 4.90939 8.38861 4.81255 8.38169C4.72817 8.37566 4.65055 8.33329 4.59985 8.26556C4.54167 8.18785 4.54167 8.04864 4.54167 7.77022V4.22978Z"
+                    stroke="#6C7E7F"
+                    stroke-width="1.4"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  />
+                  <path
+                    d="M0.75 3.55C0.75 2.56991 0.75 2.07986 0.940739 1.70552C1.10852 1.37623 1.37623 1.10852 1.70552 0.940739C2.07986 0.75 2.56991 0.75 3.55 0.75H8.45C9.43009 0.75 9.92014 0.75 10.2945 0.940739C10.6238 1.10852 10.8915 1.37623 11.0593 1.70552C11.25 2.07986 11.25 2.56991 11.25 3.55V8.45C11.25 9.43009 11.25 9.92014 11.0593 10.2945C10.8915 10.6238 10.6238 10.8915 10.2945 11.0593C9.92014 11.25 9.43009 11.25 8.45 11.25H3.55C2.56991 11.25 2.07986 11.25 1.70552 11.0593C1.37623 10.8915 1.10852 10.6238 0.940739 10.2945C0.75 9.92014 0.75 9.43009 0.75 8.45V3.55Z"
+                    stroke="#6C7E7F"
                     strokeWidth="1.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                 </svg>
 
-                <p className="hidden md:flex">Edit</p>
+                <p className="hidden md:flex text-[#6C7E7F]">Activate</p>
               </div>
-              <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#d1d9e2] transition-all duration-300">
+              <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#dde4ed] transition-all duration-300">
                 <svg
                   width="14"
                   height="14"
@@ -204,34 +210,34 @@ export default function SellerProductPage() {
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M10.4993 1.16663L12.8327 3.49996M1.16602 12.8333L1.91058 10.1032C1.95916 9.9251 1.98345 9.83604 2.02073 9.75299C2.05384 9.67925 2.09452 9.60916 2.14212 9.54383C2.19572 9.47025 2.261 9.40498 2.39154 9.27443L8.41937 3.24661C8.53487 3.1311 8.59262 3.07335 8.65922 3.05171C8.7178 3.03268 8.7809 3.03268 8.83948 3.05171C8.90608 3.07335 8.96383 3.1311 9.07933 3.24661L10.7527 4.91998C10.8682 5.03548 10.926 5.09323 10.9476 5.15983C10.9666 5.21841 10.9666 5.28151 10.9476 5.34009C10.926 5.40669 10.8682 5.46444 10.7527 5.57994L4.72488 11.6078C4.59433 11.7383 4.52906 11.8036 4.45548 11.8572C4.39015 11.9048 4.32005 11.9455 4.24632 11.9786C4.16327 12.0159 4.07421 12.0401 3.8961 12.0887L1.16602 12.8333Z"
-                    stroke="#A9BACA"
+                    d="M4.66699 4.6665V3.03317C4.66699 2.37978 4.66699 2.05308 4.79415 1.80352C4.906 1.58399 5.08448 1.40552 5.304 1.29366C5.55357 1.1665 5.88026 1.1665 6.53366 1.1665H10.967C11.6204 1.1665 11.9471 1.1665 12.1966 1.29366C12.4162 1.40552 12.5946 1.58399 12.7065 1.80352C12.8337 2.05308 12.8337 2.37978 12.8337 3.03317V7.4665C12.8337 8.1199 12.8337 8.4466 12.7065 8.69616C12.5946 8.91568 12.4162 9.09416 12.1966 9.20601C11.9471 9.33317 11.6204 9.33317 10.967 9.33317H9.33366M3.03366 12.8332H7.46699C8.12039 12.8332 8.44708 12.8332 8.69665 12.706C8.91617 12.5942 9.09465 12.4157 9.2065 12.1962C9.33366 11.9466 9.33366 11.6199 9.33366 10.9665V6.53317C9.33366 5.87978 9.33366 5.55308 9.2065 5.30352C9.09465 5.08399 8.91617 4.90552 8.69665 4.79366C8.44708 4.6665 8.12039 4.6665 7.46699 4.6665H3.03366C2.38026 4.6665 2.05357 4.6665 1.804 4.79366C1.58448 4.90552 1.406 5.08399 1.29415 5.30352C1.16699 5.55308 1.16699 5.87978 1.16699 6.53317V10.9665C1.16699 11.6199 1.16699 11.9466 1.29415 12.1962C1.406 12.4157 1.58448 12.5942 1.804 12.706C2.05357 12.8332 2.38026 12.8332 3.03366 12.8332Z"
+                    stroke="#6C7E7F"
                     strokeWidth="1.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                 </svg>
 
-                <p className="hidden md:flex">Edit</p>
+                <p className="hidden md:flex text-[#6C7E7F]">Duplicate</p>
               </div>
-              <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#d1d9e2] transition-all duration-300">
+              <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#dde4ed] transition-all duration-300">
                 <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
+                  width="12"
+                  height="12"
+                  viewBox="0 0 12 12"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path
-                    d="M10.4993 1.16663L12.8327 3.49996M1.16602 12.8333L1.91058 10.1032C1.95916 9.9251 1.98345 9.83604 2.02073 9.75299C2.05384 9.67925 2.09452 9.60916 2.14212 9.54383C2.19572 9.47025 2.261 9.40498 2.39154 9.27443L8.41937 3.24661C8.53487 3.1311 8.59262 3.07335 8.65922 3.05171C8.7178 3.03268 8.7809 3.03268 8.83948 3.05171C8.90608 3.07335 8.96383 3.1311 9.07933 3.24661L10.7527 4.91998C10.8682 5.03548 10.926 5.09323 10.9476 5.15983C10.9666 5.21841 10.9666 5.28151 10.9476 5.34009C10.926 5.40669 10.8682 5.46444 10.7527 5.57994L4.72488 11.6078C4.59433 11.7383 4.52906 11.8036 4.45548 11.8572C4.39015 11.9048 4.32005 11.9455 4.24632 11.9786C4.16327 12.0159 4.07421 12.0401 3.8961 12.0887L1.16602 12.8333Z"
-                    stroke="#A9BACA"
+                    d="M4.25 0.75H7.75M0.75 2.5H11.25M10.0833 2.5L9.67425 8.63625C9.61287 9.5569 9.58219 10.0172 9.38334 10.3663C9.20828 10.6735 8.94423 10.9206 8.62597 11.0748C8.26448 11.25 7.80314 11.25 6.88045 11.25H5.11955C4.19686 11.25 3.73552 11.25 3.37403 11.0748C3.05578 10.9206 2.79172 10.6735 2.61666 10.3663C2.41781 10.0172 2.38713 9.5569 2.32575 8.63625L1.91667 2.5"
+                    stroke="#6C7E7F"
                     strokeWidth="1.4"
                     strokeLinecap="round"
                     strokeLinejoin="round"
                   />
                 </svg>
 
-                <p className="hidden md:flex">Edit</p>
+                <p className="hidden md:flex text-[#6C7E7F]">Delete</p>
               </div>
             </div>
           </div>
@@ -331,8 +337,8 @@ const ProductSales = ({
 
   const formattedDate = date.toLocaleString("en-US", options);
   return (
-    <div className="mt-3 border rounded-xl h-48">
-      <div className="flex rounded-t-xl justify-between items-center p-3 h-12 border-b bg-[#F9F9FD]">
+    <div className="mt-3 border border-[#DEDEDE] rounded-xl h-48">
+      <div className="flex rounded-t-xl justify-between items-center p-3 h-12 border-b border-[#DEDEDE] bg-[#F9F9FD]">
         <input type="checkbox" />
         <div className="flex gap-x-2">
           <a
@@ -348,7 +354,7 @@ const ProductSales = ({
         </div>
       </div>
       <div className="grid grid-cols-10 h-36 ">
-        <div className="p-4 border-r  col-span-7  flex flex-col justify-between">
+        <div className="p-4 border-r border-[#DEDEDE] col-span-7  flex flex-col justify-between">
           <Link
             href={`/product/${productId}`}
             className="flex items-center gap-x-3"
