@@ -187,3 +187,16 @@ export interface ProductAnalytics {
   average_rating: number;
   review_count: number;
 }
+
+export interface AffiliateAnalytics {
+  sale_amount: number;
+  sale_count: number;
+  user: {
+    created_at: string;
+    id: number;
+    seller_reg_tx_hash: string;
+    updated_at: string;
+    wallet_address: string;
+  };
+  user_id: number;
+}

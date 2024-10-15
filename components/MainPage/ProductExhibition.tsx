@@ -1136,9 +1136,9 @@ export const HotProductCard = ({
   return (
     <Link
       href={redirectHref}
-      className="p-1 border border-[#ccccce] rounded-lg hover:bg-[#e7e7e9] hover:border-[#ababae] hover:shadow-lg transition-all duration-300"
+      className="p-1 border border-[#DEDEDE] rounded-lg hover:bg-[#e7e7e9] hover:border-[#ababae] hover:shadow-lg transition-all duration-300"
     >
-      <div className="relative w-full h-0 pb-[60%] overflow-hidden rounded border border-[#ccccce]">
+      <div className="relative w-full h-0 pb-[60%] overflow-hidden rounded border border-[#DEDEDE]">
         <img
           src={img}
           alt=""

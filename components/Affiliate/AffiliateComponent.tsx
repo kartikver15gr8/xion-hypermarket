@@ -7,7 +7,7 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { toast } from "sonner";
 import spinnerthree from "@/public/loaders/spinnerthree.svg";
-import { PurchasesInterface } from "@/lib/models";
+import { AffiliateAnalytics, PurchasesInterface } from "@/lib/models";
 import ape from "@/public/ape.png";
 
 export default function AffiliateComponent() {
@@ -184,10 +184,7 @@ const SalesOverview = () => {
                 date={item.created_at}
                 productName={item.product_title}
                 productId={item.product_id}
-                buyer={`${item.buyer_wallet_address.slice(
-                  0,
-                  6
-                )}...${item.buyer_wallet_address.slice(-5)}`}
+                buyer={item.buyer_wallet_address}
                 quantity={1}
                 price={`${item.amount} SOL`}
                 status={item.status}
@@ -241,7 +238,9 @@ const SalesLabel = ({
           {productName}
         </a>
       </p>
-      <p className="text-[9px] md:text-[13px] col-span-2">{buyer}</p>
+      <p className="text-[9px] md:text-[13px] col-span-2">
+        {buyer ? `${buyer.slice(0, 3)}...${buyer.slice(-4)}` : ""}
+      </p>
       <p className="text-[9px] md:text-[13px] col-span-1">{quantity}</p>
       <p className="text-[9px] md:text-[13px] col-span-1">{price}</p>
       <div className="text-[9px] md:text-[13px] flex items-center col-span-1">
@@ -251,12 +250,14 @@ const SalesLabel = ({
           </div>
         ) : (
           <div className="flex text-[9px] md:text-[13px] items-center bg-opacity-45 border border-red-600 rounded-md h-6 px-1 bg-red-400 ">
-            <p>{status}</p>
+            <p>{status ? "pending" : "NA"}</p>
           </div>
         )}
       </div>
       <div className="text-[9px] md:text-[13px] col-span-2 flex items-center">
-        <p>{hash}</p>
+        <p className="w-10 sm:w-12 md:w-16">
+          {hash ? `${hash.slice(0, 3)}…${hash.slice(-3)}` : ""}
+        </p>
         <svg
           className="w-3 ml-1"
           viewBox="0 0 14 14"
@@ -280,6 +281,31 @@ const SalesLabel = ({
 };
 
 const MidSection = () => {
+  const [affiliateAnalytics, setAffiliateAnalytics] = useState<
+    AffiliateAnalytics[]
+  >([]);
+  const affiliateWalletAddress = useRecoilValue(phantomWallet);
+
+  const fetchAffiliateAnalytics = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/analytics/affiliate?affiliate_wallet_address=${affiliateWalletAddress}`
+      );
+      setAffiliateAnalytics(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(
+        `You got an error while fetching affiliate analytics: ${error}`
+      );
+    }
+  };
+
+  useEffect(() => {
+    if (affiliateWalletAddress) {
+      fetchAffiliateAnalytics();
+    }
+  }, [affiliateWalletAddress]);
+
   return (
     <div className="border rounded-2xl grid grid-cols-3 bg-white mt-4">
       <div className="p-2 sm:p-3 md:p-4">
