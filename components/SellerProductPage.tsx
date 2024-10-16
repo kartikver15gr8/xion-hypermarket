@@ -19,6 +19,47 @@ export default function SellerProductPage() {
   );
   const [isLoading, setIsLoading] = useState(false);
   const sellerWalletAddress = useRecoilValue(phantomWallet);
+  const [categoryId, setCategoryId] = useState<number | undefined>();
+  const [categories, setCategories] = useState<CategoryInterface[]>([]);
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [allChecked, setAllChecked] = useState(false);
+
+  const filteredProducts =
+    categoryId === undefined || null
+      ? productAnalytics
+      : productAnalytics.filter(
+          (elem) => elem.product.category_id === categoryId
+        );
+
+  const handleChange = (event: any) => {
+    const selectedCategoryId = event.target.value;
+    if (categories) {
+      const selectedCategory = categories.find(
+        (category) => category.id === parseInt(selectedCategoryId)
+      );
+      // @ts-ignore
+      setSelectedCategory(selectedCategory);
+      setCategoryId(selectedCategory?.id);
+    }
+  };
+
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/categories`
+      );
+      setCategories(response.data);
+      return response.data;
+    } catch (error) {
+      console.log(`Error while fetching categories: ${error}`);
+    }
+  };
+
+  useEffect(() => {
+    if (sellerWalletAddress) {
+      fetchCategories();
+    }
+  }, [sellerWalletAddress]);
 
   const fetchProductAnalytics = async () => {
     try {
@@ -91,8 +132,24 @@ export default function SellerProductPage() {
               </div>
             </div>
             <div className="h-10 border border-[#DEDEDE] text-xs md:text-[13px] lg:text-sm rounded-md col-span-4 md:col-span-2 flex items-center justify-center gap-x-1">
-              <p>Digital Product</p>
-              <svg
+              {/* <p>Digital Product</p> */}
+              {categories && (
+                <select
+                  className=" outline-none"
+                  id="category-select"
+                  //@ts-ignore
+                  value={selectedCategory?.id || ""}
+                  onChange={handleChange}
+                >
+                  <option value="">All Categories</option>
+                  {categories.map((category) => (
+                    <option key={category.id} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
+                </select>
+              )}
+              {/* <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="1em"
                 height="1em"
@@ -105,7 +162,7 @@ export default function SellerProductPage() {
                     d="M12.707 15.707a1 1 0 0 1-1.414 0L5.636 10.05A1 1 0 1 1 7.05 8.636l4.95 4.95l4.95-4.95a1 1 0 0 1 1.414 1.414z"
                   />
                 </g>
-              </svg>
+              </svg> */}
             </div>
             <div className="h-10 border border-[#DEDEDE] rounded-md col-span-8 md:col-span-5 flex items-center pl-2">
               <svg
@@ -133,8 +190,13 @@ export default function SellerProductPage() {
           </div>
           <div className="mt-3 flex items-center justify-between">
             <div className="flex gap-x-1 items-center">
-              <input type="checkbox" />
-              <p>0 Selected</p>
+              <input
+                type="checkbox"
+                onChange={(e) => {
+                  setAllChecked(e.target.checked);
+                }}
+              />
+              <p>{allChecked ? `All Selected` : `Select All`}</p>
             </div>
             <div className="w-[50%] grid grid-cols-5 gap-x-3 text-[#A9BACA] text-xs md:text-[13px] lg:text-sm">
               <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#dde4ed] transition-all duration-300">
@@ -248,8 +310,8 @@ export default function SellerProductPage() {
             </div>
           )}
 
-          {productAnalytics &&
-            productAnalytics.map((elem, key) => {
+          {filteredProducts &&
+            filteredProducts.map((elem, key) => {
               return (
                 <ProductSales
                   key={key}
@@ -261,9 +323,16 @@ export default function SellerProductPage() {
                   productViews={elem.views}
                   status={elem.product.status}
                   dateCreated={elem.product.created_at}
+                  allChecked={allChecked}
                 />
               );
             })}
+
+          {filteredProducts.length == 0 && (
+            <div className="mt-3 border border-[#DEDEDE] rounded-xl h-48 flex items-center justify-center">
+              <p className="text-xl"> No Products with this category</p>
+            </div>
+          )}
 
           {/* <ProductSales />
           <ProductSales />
@@ -316,6 +385,7 @@ const ProductSales = ({
   productSold,
   dateCreated,
   status,
+  allChecked,
 }: {
   productId: number;
   productName: string;
@@ -325,6 +395,7 @@ const ProductSales = ({
   productSold: number;
   dateCreated: string;
   status: string;
+  allChecked: boolean;
 }) => {
   const dateStr = dateCreated;
   const date = new Date(dateStr);
@@ -339,7 +410,11 @@ const ProductSales = ({
   return (
     <div className="mt-3 border border-[#DEDEDE] rounded-xl h-48">
       <div className="flex rounded-t-xl justify-between items-center p-3 h-12 border-b border-[#DEDEDE] bg-[#F9F9FD]">
-        <input type="checkbox" />
+        {allChecked ? (
+          <input type="checkbox" checked={allChecked} />
+        ) : (
+          <input type="checkbox" />
+        )}
         <div className="flex gap-x-2">
           <a
             href={`https://dial.to/?action=solana-action%3Ahttps%3A%2F%2Fblinks.sendit.markets%2Fapi%2Factions%2Fmint-nft%2F${productId}&cluster=devnet`}
