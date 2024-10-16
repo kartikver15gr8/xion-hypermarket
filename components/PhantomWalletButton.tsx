@@ -9,6 +9,7 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 import { toast } from "sonner";
 import axios from "axios";
+import { userIdState } from "@/store/atom/userIdState";
 
 const PhantomWalletButton: React.FC = () => {
   const { select, wallet, connect, disconnect, connected, publicKey } =
@@ -18,6 +19,7 @@ const PhantomWalletButton: React.FC = () => {
   const [phantomAddress, setPhantomAddress] = useRecoilState(phantomWallet);
   const walletAddr = useRecoilValue(phantomWallet);
   const [userExist, setUserExist] = useState(true);
+  const [userStateId, setUserStateId] = useRecoilState(userIdState);
 
   useEffect(() => {
     if ("solana" in window) {
@@ -32,7 +34,7 @@ const PhantomWalletButton: React.FC = () => {
           `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/signup`,
           { wallet_address: walletAddress }
         );
-        console.log(response.data);
+        setUserStateId(response.data.rowId);
         return response.data;
       } catch (error) {
         console.log(`You got an error while creating a new user: ${error}`);
@@ -100,6 +102,9 @@ const PhantomWalletButton: React.FC = () => {
         // console.log(response.data);
         // console.log(response.data.WalletAddress);
         setUserExist(true);
+        // console.log(response.data);
+        setUserStateId(response.data.id);
+        // console.log(response.data.id);
         return response.data;
       } catch (error) {
         setUserExist(false);
