@@ -230,6 +230,20 @@ const SalesLabel = ({
 
   const formattedDate = purchaseDate.toLocaleString("en-US", options);
 
+  const handleCopy = () => {
+    if (hash) {
+      navigator.clipboard
+        .writeText(hash)
+        .then(() => {
+          toast.info("Copied Transaction Hash!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+          toast.info("Failed to copy Tnx Hash!");
+        });
+    }
+  };
+
   return (
     <div className="border-b px-2 grid grid-cols-12 items-center w-full h-10">
       <p className="text-[9px] md:text-[13px] col-span-1">{formattedDate}</p>
@@ -254,7 +268,10 @@ const SalesLabel = ({
           </div>
         )}
       </div>
-      <div className="text-[9px] md:text-[13px] col-span-2 flex items-center">
+      <div
+        onClick={handleCopy}
+        className="text-[9px] md:text-[13px] col-span-2 flex items-center"
+      >
         <p className="w-10 sm:w-12 md:w-16">
           {hash ? `${hash.slice(0, 3)}…${hash.slice(-3)}` : ""}
         </p>

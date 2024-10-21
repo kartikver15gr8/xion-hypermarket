@@ -49,7 +49,7 @@ export default function FullNav() {
     navigator.clipboard
       .writeText(walletAddress)
       .then(() => {
-        console.log("Wallet address copied to clipboard");
+        // console.log("Wallet address copied to clipboard");
         toast.success("Wallet address copied to clipboard");
       })
       .catch((err) => {
@@ -440,7 +440,7 @@ const PortfolioButton = () => {
     navigator.clipboard
       .writeText(walletAddress)
       .then(() => {
-        console.log("Wallet address copied to clipboard");
+        // console.log("Wallet address copied to clipboard");
         toast.success("Wallet address copied to clipboard");
       })
       .catch((err) => {

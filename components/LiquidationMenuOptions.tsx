@@ -26,7 +26,7 @@ export default function LiquidationMenuOptions({
     navigator.clipboard
       .writeText(walletAddress)
       .then(() => {
-        console.log("Wallet address copied to clipboard");
+        // console.log("Wallet address copied to clipboard");
         toast.success("Wallet address copied to clipboard");
       })
       .catch((err) => {

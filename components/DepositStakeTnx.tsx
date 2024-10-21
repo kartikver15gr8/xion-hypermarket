@@ -61,14 +61,14 @@ export default function DepositStakeTnx() {
 
       const amount = 100;
       const amount_lamports = amountToStake * LAMPORTS_PER_SOL;
-      console.log(amount_lamports);
+      // console.log(amount_lamports);
 
       const sellerPubKey = new PublicKey(walletAddress);
-      console.log("sellerPubkey", sellerPubKey.toBase58());
+      // console.log("sellerPubkey", sellerPubKey.toBase58());
       // getting pdas
       const pdas = await getPdas();
-      console.log("PDAS: ", JSON.stringify(pdas));
-      console.log("SellerLevelList", pdas.sellersLevelList.toBase58());
+      // console.log("PDAS: ", JSON.stringify(pdas));
+      // console.log("SellerLevelList", pdas.sellersLevelList.toBase58());
 
       // initiating transaction
       const tx = await solanaMarketplaceProgram.methods

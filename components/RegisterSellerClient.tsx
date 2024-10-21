@@ -106,11 +106,18 @@ const RegisterSellerClient: React.FC = () => {
 
   const updateTransactionHash = async (tx_hash: string) => {
     try {
+      const formData = new FormData();
+      formData.append("tx_hash", tx_hash);
+
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/user/${userIdFromRecoil}/seller_registration`,
-        tx_hash
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
-      // console.log(response.data);
       return response.data;
     } catch (error) {
       console.log(`you got an error: ${error}`);

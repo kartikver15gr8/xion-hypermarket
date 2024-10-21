@@ -33,11 +33,9 @@ export default function SellerDashboardOptions({
     navigator.clipboard
       .writeText(walletAddress)
       .then(() => {
-        console.log("Wallet address copied to clipboard");
         toast.success("Wallet address copied to clipboard");
       })
       .catch((err) => {
-        console.error("Failed to copy wallet address: ", err);
         toast.error("Failed to copy wallet address");
       });
   }, [walletAddress]);

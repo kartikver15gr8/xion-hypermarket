@@ -51,7 +51,7 @@ const PhantomWalletButton: React.FC = () => {
         const response = await axios.put(
           `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/analytics/refresh/seller`
         );
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
       } catch (error) {
         console.log(`You got an error while refreshing analytics: ${error}`);
@@ -67,7 +67,7 @@ const PhantomWalletButton: React.FC = () => {
         const response = await axios.put(
           `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/analytics/refresh/product`
         );
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
       } catch (error) {
         console.log(`You got an error while refreshing analytics: ${error}`);
@@ -82,7 +82,7 @@ const PhantomWalletButton: React.FC = () => {
         const response = await axios.put(
           `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/analytics/refresh/affiliate`
         );
-        console.log(response.data);
+        // console.log(response.data);
         return response.data;
       } catch (error) {
         console.log(`You got an error while refreshing analytics: ${error}`);
