@@ -37,7 +37,7 @@ export default function ProductUpload() {
       setImageUrl(url);
       // console.log("Uploaded Image URL:", url); // Log or save this URL to your database
     } else {
-      console.log("");
+      console.log("No files");
     }
   };
 
@@ -53,9 +53,9 @@ export default function ProductUpload() {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${userWalletAddress}`
       );
-      console.log(response.data);
+      // console.log(response.data);
       setUserId(response.data.id);
-      console.log(response.data.id);
+      // console.log(response.data.id);
     } catch (error) {
       console.log(`You got error while fetching UserId: ${error}`);
     }

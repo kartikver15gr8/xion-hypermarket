@@ -2,12 +2,12 @@ import { Metadata } from "next";
 import { ProductInterface } from "@/lib/models";
 
 async function getProduct(productId: string): Promise<ProductInterface> {
-  console.log(`Fetching product with ID: ${productId}`);
+  // console.log(`Fetching product with ID: ${productId}`);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?product_id=${productId}`
   );
   const data = await response.json();
-  console.log("Fetched product data:", data[0]);
+  // console.log("Fetched product data:", data[0]);
   return data[0];
 }
 
@@ -16,7 +16,7 @@ export async function generateMetadata({
 }: {
   params: { product: string };
 }): Promise<Metadata> {
-  console.log("Generating metadata for product:", params.product);
+  // console.log("Generating metadata for product:", params.product);
   const product = await getProduct(params.product);
 
   return {

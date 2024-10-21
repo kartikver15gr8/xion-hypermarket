@@ -25,13 +25,13 @@ export default function ProcessPurchase({ productId }: { productId: number }) {
 
   const fetchProductData = async () => {
     try {
-      console.log(`Fetching product with ID: ${productId}`);
+      // console.log(`Fetching product with ID: ${productId}`);
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?product_id=${productId}`
       );
 
       if (response.data && response.data.length > 0) {
-        console.log("Product Details:", response.data[0]);
+        // console.log("Product Details:", response.data[0]);
         setProductById(response.data[0]);
       } else {
         console.error("No product found for the given ID.");
@@ -50,7 +50,7 @@ export default function ProcessPurchase({ productId }: { productId: number }) {
       );
 
       if (response.data && response.data.length > 0) {
-        console.log("Seller Details:", response.data[0]);
+        // console.log("Seller Details:", response.data[0]);
         setSellerWalletAddress(response.data[0].WalletAddress);
       } else {
         console.error("No seller found for the given UserID.");
@@ -84,13 +84,13 @@ export default function ProcessPurchase({ productId }: { productId: number }) {
 
         const buyerPubKey = new PublicKey(walletAddress);
         const sellerPubKey = new PublicKey(sellerWalletAddress);
-        console.log("buyerPubkey", buyerPubKey.toBase58());
-        console.log("sellerPubkey", sellerPubKey.toBase58());
+        // console.log("buyerPubkey", buyerPubKey.toBase58());
+        // console.log("sellerPubkey", sellerPubKey.toBase58());
         // get PDA
         const pdas = await getPdas();
-        console.log("PDAS: ", JSON.stringify(pdas));
+        // console.log("PDAS: ", JSON.stringify(pdas));
 
-        console.log("SellerLevelList", pdas.sellersLevelList.toBase58());
+        // console.log("SellerLevelList", pdas.sellersLevelList.toBase58());
 
         const tx = await solanaMarketplaceProgram.methods
           .processPurchase({
@@ -141,7 +141,7 @@ export default function ProcessPurchase({ productId }: { productId: number }) {
         console.log("No productById");
       }
     } catch (error) {
-      console.log(`Error while processing purchase: ${error}`);
+      // console.log(`Error while processing purchase: ${error}`);
       toast.error(`Registration failed: ${error} `);
     }
   };

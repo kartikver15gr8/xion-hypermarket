@@ -230,6 +230,20 @@ const SalesLabel = ({
 
   const formattedDate = purchaseDate.toLocaleString("en-US", options);
 
+  const handleCopy = () => {
+    if (hash) {
+      navigator.clipboard
+        .writeText(hash)
+        .then(() => {
+          toast.info("Copied Transaction Hash!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+          toast.info("Failed to copy Tnx Hash!");
+        });
+    }
+  };
+
   return (
     <div className="border-b px-2 grid grid-cols-12 items-center w-full h-10">
       <p className="text-[9px] md:text-[13px] col-span-1">{formattedDate}</p>
@@ -254,7 +268,10 @@ const SalesLabel = ({
           </div>
         )}
       </div>
-      <div className="text-[9px] md:text-[13px] col-span-2 flex items-center">
+      <div
+        onClick={handleCopy}
+        className="text-[9px] md:text-[13px] col-span-2 flex items-center"
+      >
         <p className="w-10 sm:w-12 md:w-16">
           {hash ? `${hash.slice(0, 3)}…${hash.slice(-3)}` : ""}
         </p>
@@ -281,9 +298,8 @@ const SalesLabel = ({
 };
 
 const MidSection = () => {
-  const [affiliateAnalytics, setAffiliateAnalytics] = useState<
-    AffiliateAnalytics[]
-  >([]);
+  const [affiliateAnalytics, setAffiliateAnalytics] =
+    useState<AffiliateAnalytics>();
   const affiliateWalletAddress = useRecoilValue(phantomWallet);
 
   const fetchAffiliateAnalytics = async () => {
@@ -291,7 +307,9 @@ const MidSection = () => {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/analytics/affiliate?affiliate_wallet_address=${affiliateWalletAddress}`
       );
-      setAffiliateAnalytics(response.data);
+      setAffiliateAnalytics(response.data[0]);
+      // console.log(response.data[0]);
+
       return response.data;
     } catch (error) {
       console.log(
@@ -327,7 +345,9 @@ const MidSection = () => {
             />
           </svg>
         </div>
-        <p className="font-bold text-3xl md:text-4xl my-3">$205</p>
+        <p className="font-bold text-3xl md:text-4xl my-3">
+          {affiliateAnalytics ? affiliateAnalytics.sale_amount : "$0"}
+        </p>
         <div className="flex gap-x-1 text-[11px] sm:text-[12px] md:text-[14px]">
           <div className="flex items-center text-green-500">
             <svg
@@ -368,7 +388,7 @@ const MidSection = () => {
             />
           </svg>
         </div>
-        <p className="font-bold text-3xl md:text-4xl my-3">40</p>
+        <p className="font-bold text-3xl md:text-4xl my-3">0</p>
 
         <div className="text-[11px] sm:text-[12px] md:text-[14px]">
           <p className="text-[#A6ACB7]">Rank 1</p>
@@ -403,7 +423,9 @@ const MidSection = () => {
             />
           </svg>
         </div>
-        <p className="font-bold text-3xl md:text-4xl my-3">70</p>
+        <p className="font-bold text-3xl md:text-4xl my-3">
+          {affiliateAnalytics ? affiliateAnalytics.sale_count : "0"}
+        </p>
         <div className="mt-8 text-[10px] md:text-[12px]">
           <p className="text-[#A6ACB7]">Top Product</p>
           <p className="text-black font-medium text-[14px]">

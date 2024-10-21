@@ -33,7 +33,7 @@ export default function NewBottomNav() {
     },
   ];
 
-  console.log(activeTooltip);
+  // console.log(activeTooltip);
 
   return (
     <div className="absolute bottom-0 w-full justify-center  flex h-24 p-2">

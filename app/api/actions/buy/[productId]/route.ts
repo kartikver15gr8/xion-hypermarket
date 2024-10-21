@@ -30,11 +30,11 @@ const agent = new https.Agent({
 
 export const GET = async (req: Request) => {
   const url = req.url;
-  console.log(`this is the dynamic url: ${url}`);
+  // console.log(`this is the dynamic url: ${url}`);
   let a = url.split("/buy/");
   let productId = a[1];
 
-  console.log(`This is the productId: ${productId}`);
+  // console.log(`This is the productId: ${productId}`);
   //   http://localhost:3000/api/actions/buy/9
 
   let dataTwo;
@@ -47,8 +47,8 @@ export const GET = async (req: Request) => {
       }
     );
     dataTwo = await response.data;
-    console.log(dataTwo);
-    console.log(dataTwo[0].Price);
+    // console.log(dataTwo);
+    // console.log(dataTwo[0].Price);
   } catch (err) {
     console.log(`Error: ${err}`);
   }

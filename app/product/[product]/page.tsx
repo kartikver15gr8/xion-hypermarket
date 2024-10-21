@@ -379,10 +379,11 @@ const ProductReviews = ({
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/reviews?product_id=${productId}`
       );
-      console.log("the reviews");
+      // console.log("the reviews");
 
-      console.log(response.data);
+      // console.log(response.data);
       setProductReviews(response.data);
+      return response.data;
     } catch (error) {
       console.log(
         `You got an error while fetching the product reviews: ${error}`
@@ -487,8 +488,8 @@ const PostReviewTab = ({ productId }: { productId: number }) => {
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${walletAddress}`
       );
       // console.log("This is the user: ");
-      console.log(response.data);
-      console.log(response.data.id);
+      // console.log(response.data);
+      // console.log(response.data.id);
       setUserId(response.data.id);
     } catch (error) {
       console.log(`Error while fetching UserId: ${error}`);
@@ -515,7 +516,7 @@ const PostReviewTab = ({ productId }: { productId: number }) => {
         }
       );
 
-      console.log(response.data);
+      // console.log(response.data);
       setAddReviewWindowVisibility(false);
       return response.data;
     } catch (error) {

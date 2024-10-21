@@ -13,6 +13,7 @@ import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 import { PurchasesInterface, SellerAnalytics } from "@/lib/models";
 import spinnerthree from "@/public/loaders/spinnerthree.svg";
+import { toast } from "sonner";
 
 export default function SellerDashboard() {
   const [sellerAnalytics, setSellerAnalytics] = useState<SellerAnalytics>({
@@ -440,6 +441,20 @@ export const SalesLabel = ({
   };
   const formattedDate = newDate.toLocaleString("en-US", options);
 
+  const handleCopy = () => {
+    if (hash) {
+      navigator.clipboard
+        .writeText(hash)
+        .then(() => {
+          toast.info("Copied Transaction Hash!");
+        })
+        .catch((err) => {
+          console.error("Failed to copy: ", err);
+          toast.info("Failed to copy Tnx Hash!");
+        });
+    }
+  };
+
   return (
     <div className="border-b px-2 grid grid-cols-12 items-center w-full h-10">
       <p className="text-[9px] md:text-[13px] col-span-1">{formattedDate}</p>
@@ -461,7 +476,10 @@ export const SalesLabel = ({
           </div>
         )}
       </div>
-      <div className="text-[9px] md:text-[13px] col-span-2 flex items-center">
+      <div
+        onClick={handleCopy}
+        className="text-[9px] md:text-[13px] col-span-2 flex items-center"
+      >
         <p>{`${hash.slice(0, 3)}…${hash.slice(-3)}`}</p>
         <svg
           className="w-3 ml-1"

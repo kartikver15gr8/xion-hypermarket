@@ -18,7 +18,7 @@ export default function TestSwagger() {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/users?wallet_address=${walletAddress}`
       );
-      console.log(response.data);
+      // console.log(response.data);
       setUser(response.data);
     } catch (error) {
       console.log(`and here you got an error: ${error}`);
@@ -31,7 +31,7 @@ export default function TestSwagger() {
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/signup`,
         { wallet_address: walletAddress }
       );
-      console.log(response.data);
+      // console.log(response.data);
     } catch (err) {
       console.log(`You got an error: ${err}`);
     }
@@ -54,7 +54,7 @@ export default function TestSwagger() {
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products`
       );
-      console.log(response.data);
+      // console.log(response.data);
       setProducts(response.data);
     } catch (error) {
       console.log(`Error while fetching products: ${error}`);
@@ -70,7 +70,7 @@ export default function TestSwagger() {
           name: name,
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
     } catch (error) {
       console.log(`Error:${error}`);
     }
