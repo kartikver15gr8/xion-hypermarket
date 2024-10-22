@@ -14,6 +14,7 @@ import { phantomWallet } from "@/store/atom/phantomWallet";
 import { PurchasesInterface, SellerAnalytics } from "@/lib/models";
 import spinnerthree from "@/public/loaders/spinnerthree.svg";
 import { toast } from "sonner";
+import ShareClaimPurchase from "./ShareClaimPurchase";
 
 export default function SellerDashboard() {
   const [sellerAnalytics, setSellerAnalytics] = useState<SellerAnalytics>({
@@ -496,9 +497,10 @@ export const SalesLabel = ({
           />
         </svg>
       </div>
-      <button className="text-[9px] md:text-[13px] rounded-md h-6 bg-black text-white col-span-1 hover:bg-[#5a5c5d] transition-all duration-300">
+      {/* <button className="text-[9px] md:text-[13px] rounded-md h-6 bg-black text-white col-span-1 hover:bg-[#5a5c5d] transition-all duration-300">
         {claim}
-      </button>
+      </button> */}
+      <ShareClaimPurchase buyerWalletAddress={buyer} />
     </div>
   );
 };
