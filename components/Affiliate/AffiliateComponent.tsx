@@ -9,6 +9,8 @@ import { toast } from "sonner";
 import spinnerthree from "@/public/loaders/spinnerthree.svg";
 import { AffiliateAnalytics, PurchasesInterface } from "@/lib/models";
 import ape from "@/public/ape.png";
+import React from "react";
+import { jsPDF } from "jspdf";
 
 export default function AffiliateComponent() {
   return (
@@ -82,6 +84,49 @@ const SalesOverview = () => {
     }
   }, [walletAddress]);
 
+  const exportPDF = () => {
+    const doc = new jsPDF();
+
+    // Header
+    doc.setFontSize(20);
+    doc.text("Sendit Markets", 10, 10); // Adjust Y position for header
+
+    // Title
+    doc.setFontSize(14);
+    doc.text("Affiliate and Commission", 10, 20);
+
+    // Set font size for product details
+    doc.setFontSize(12);
+
+    // Add product details to PDF
+    salesData.forEach((product, index) => {
+      const text = `Date: ${product.created_at}, Product Name: ${
+        product.product_filename
+      }, Buyer: ${product.buyer_wallet_address.slice(
+        0,
+        3
+      )}...${product.buyer_wallet_address.slice(-4)}, Quantity: ${1}, Price: ${
+        product.amount
+      }`;
+      doc.text(text, 10, 30 + index * 10); // Adjust Y position for each product
+    });
+
+    // Footer
+    // const pageCount = doc.internal.getNumberOfPages();
+    // for (let i = 1; i <= pageCount; i++) {
+    //   doc.setPage(i);
+    //   doc.setFontSize(10);
+    //   doc.text(
+    //     "Your Brand Name - Page " + i,
+    //     10,
+    //     doc.internal.pageSize.height - 10
+    //   ); // Adjust Y position for footer
+    // }
+
+    // Save the PDF
+    doc.save("product-list.pdf");
+  };
+
   const getSales = async () => {
     try {
       setIsLoading(true);
@@ -141,7 +186,10 @@ const SalesOverview = () => {
             placeholder="Search"
           />
         </div>
-        <div className="col-span-2 gap-x-2 text-white rounded-lg flex items-center justify-center bg-[#4E6465]">
+        <div
+          onClick={exportPDF}
+          className="col-span-2 gap-x-2 text-white rounded-lg flex items-center justify-center bg-[#4E6465]"
+        >
           <svg
             className="w-2 md:w-3"
             viewBox="0 0 14 15"
