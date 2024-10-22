@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useState } from "react";
-import sendit_logo from "@/public/sendit_logo.svg";
 import sendit_white_ape from "@/public/sendit_white_ape.svg";
-import sendit_white_logo from "@/public/sendit_white_logo.svg";
 import Image from "next/image";
 import portolio_ape from "@/public/_static/illustrations/portfolio_ape.png";
 import shinegradient from "@/public/_static/background/shinegradient.png";

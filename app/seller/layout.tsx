@@ -1,7 +1,6 @@
 import React from "react";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import LiquidationSidebar from "@/components/LiquidationSidebar";
 import { teachersFont } from "../fonts/fonts";
 import KeplrButton from "@/components/KeplrButton";
 import SellerSidebar from "@/components/SellerSidebar";

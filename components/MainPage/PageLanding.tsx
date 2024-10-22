@@ -81,23 +81,23 @@ function PageLandingContent() {
     setFilteredProducts(filtered);
   };
 
-  useEffect(() => {
-    const fetchAllProducts = async () => {
-      if (typeof window === "undefined") return;
+  // useEffect(() => {
+  //   const fetchAllProducts = async () => {
+  //     if (typeof window === "undefined") return;
 
-      try {
-        const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products`
-        );
-        setAllProducts(response.data);
-        setFilteredProducts(response.data);
-      } catch (error) {
-        console.log(`Got an error while fetching the products: ${error}`);
-      }
-    };
+  //     try {
+  //       const response = await axios.get(
+  //         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products`
+  //       );
+  //       setAllProducts(response.data);
+  //       setFilteredProducts(response.data);
+  //     } catch (error) {
+  //       console.log(`Got an error while fetching the products: ${error}`);
+  //     }
+  //   };
 
-    fetchAllProducts();
-  }, []);
+  //   fetchAllProducts();
+  // }, []);
 
   return (
     <div className="pt-16 relative flex justify-center h-[500px] md:h-[570px] lg:h-[600px] border-black overflow-hidden">
@@ -149,7 +149,6 @@ function PageLandingContent() {
   );
 }
 
-// Wrapper component
 export default function PageLanding() {
   return (
     <Suspense
