@@ -3,7 +3,6 @@ import React from "react";
 import senditLogo from "@/public/sendit_logo.svg";
 import Image from "next/image";
 import background_noise from "@/public/background_noise.png";
-import LiquidationMenuOptions from "./LiquidationMenuOptions";
 import noisebg from "@/public/_static/background/noisebg.png";
 import SideReveal from "./framerEffects/SideReveal";
 import { useRecoilValue } from "recoil";

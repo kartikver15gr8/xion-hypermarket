@@ -1,5 +1,5 @@
 "use client";
-import BorrowUSDCBannerBtn from "@/components/BorrowUSDCBannerBtn";
+
 import Image, { StaticImageData } from "next/image";
 import React, { useEffect } from "react";
 import { useState } from "react";
@@ -27,6 +27,7 @@ import { ProductsMarquee } from "@/components/ProductsMarquee";
 import ShareProcessPurchase from "@/components/ShareProcessPurchase";
 import homeIconSVG from "@/public/homeicon.svg";
 import Link from "next/link";
+import PromoteWithBlinksBtn from "@/components/PromoteWithBlinksBtn";
 
 export default function Product({ params }: any) {
   const router = useRouter();
@@ -139,7 +140,7 @@ const ProductDetails = ({
           />
         </div>
         <div className="lg:col-span-2 col-span-1 sm:col-span-1 md:col-span-1">
-          <BorrowUSDCBannerBtn />
+          <PromoteWithBlinksBtn />
           <div className="flex items-center mt-4 justify-between">
             <p className="font-bold text-xl">{productName}</p>
 
