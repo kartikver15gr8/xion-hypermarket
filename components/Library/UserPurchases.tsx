@@ -174,20 +174,8 @@ const PurchasedProducts = ({ userId }: { userId: number }) => {
           })}
         </div>
       ) : (
-        <div className="h-20 overflow-y-auto  hide-scrollbar scroll-smooth">
-          <ProductLabel
-            productImg="https://ucarecdn.com/deb46443-1cf0-4ec1-bb33-f86d93cfb949/e15545c9453e489ca7dbe8dd427b00e3.webp"
-            productId={0}
-            productName="string"
-            price="string"
-            purchaseDate="string"
-            sellerDetails="string"
-            fileSize="string"
-            fileType="string"
-            checkSum="string"
-            transactionHash="string"
-            productFile=""
-          />
+        <div className="h-20 flex items-center justify-center">
+          <p className="font-medium text-[16px]">No Purchases Yet!</p>
         </div>
       )}
     </div>
