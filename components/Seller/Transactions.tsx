@@ -14,6 +14,8 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 import spinnerthree from "@/public/loaders/spinnerthree.svg";
+import { jsPDF } from "jspdf";
+import { imageBase64 } from "@/utils/imageBase";
 
 const Active =
   "h-10 text-[#4E6465] flex items-center justify-center gap-x-2 border-b-2 border-[#4E6465]";
@@ -207,6 +209,80 @@ export const OrderOveriewCard = () => {
 
 export const SalesOverview = () => {
   const walletAddress = useRecoilValue(phantomWallet);
+  const [sellerPurchases, setSellerPurchases] = useState<PurchasesInterface[]>(
+    []
+  );
+  const [isLoading, setIsLoading] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
+
+  const fetchPurchases = async () => {
+    try {
+      setIsLoading(true);
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/purchases?seller_wallet_address=${walletAddress}`
+      );
+      setSellerPurchases(response.data);
+      setIsLoading(false);
+      return response.data;
+    } catch (error) {
+      setIsLoading(false);
+      console.log(`You got an error while fetching purchases: ${error}`);
+    }
+  };
+  useEffect(() => {
+    if (walletAddress) {
+      fetchPurchases();
+    }
+  }, [walletAddress]);
+
+  const exportPDF = () => {
+    setIsExporting(true);
+    const doc = new jsPDF({
+      orientation: "p",
+      unit: "mm",
+      format: "a4",
+    });
+
+    const imageBase = imageBase64;
+
+    const imgWidth = 15;
+    const imgHeight = 15;
+    doc.addImage(imageBase, "PNG", 10, 10, imgWidth, imgHeight);
+
+    const textX = imgWidth + 12;
+
+    doc.setFont("helvetica");
+    doc.setFontSize(18);
+    doc.text("SENDIT", textX, 16);
+    doc.setFontSize(18);
+    doc.text("MARKETPLACE", textX, 24);
+
+    doc.setFontSize(16);
+    doc.text("Transactions Summary", 10, 45);
+
+    doc.setFontSize(12);
+
+    sellerPurchases.forEach((product, index) => {
+      const text = `${index + 1}.   Product Name: ${product.product_title},
+      Buyer Address: ${product.buyer_wallet_address},
+      Amount: $${product.amount}
+      Tx Hash: ${product.transaction_hash.slice(
+        0,
+        10
+      )}...${product.transaction_hash.slice(-4)}`;
+      doc.text(text, 10, imgHeight + 40 + index * 24);
+    });
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    doc.setLineWidth(0.5);
+    doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
+
+    doc.save("product-list.pdf");
+    setIsExporting(false);
+  };
+
   return (
     <div className="mt-8">
       <p className="font-medium text-xl">Sales Overview</p>
@@ -251,7 +327,10 @@ export const SalesOverview = () => {
             placeholder="Search"
           />
         </div>
-        <div className="col-span-2 gap-x-2 text-white rounded-lg flex items-center justify-center bg-[#4E6465]">
+        <div
+          onClick={exportPDF}
+          className="col-span-2 gap-x-2 text-white rounded-lg flex items-center justify-center bg-[#4E6465]"
+        >
           <svg
             className="w-2 md:w-3"
             viewBox="0 0 14 15"
@@ -280,7 +359,29 @@ export const SalesOverview = () => {
         <p className="text-[11px] md:text-[13px] col-span-2">Hash</p>
         <p className="text-[11px] md:text-[13px] col-span-1">Claim</p>
       </div>
-      <SalesTab sellerWalletAddress={walletAddress} />
+      <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-96">
+        {isLoading && (
+          <div className="flex justify-center mt-2">
+            <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
+          </div>
+        )}
+        {sellerPurchases &&
+          sellerPurchases.map((elem, key) => {
+            return (
+              <SalesLabel
+                key={key}
+                date={elem.created_at}
+                productName={elem.product_title}
+                buyer={elem.buyer_wallet_address}
+                quantity={12}
+                price={elem.amount}
+                status={elem.status}
+                hash={elem.transaction_hash}
+                claim="claim"
+              />
+            );
+          })}
+      </div>
     </div>
   );
 };
@@ -318,56 +419,105 @@ const TransactionTopLabel = () => {
   );
 };
 
-const SalesTab = ({ sellerWalletAddress }: { sellerWalletAddress: string }) => {
-  const [sellerPurchases, setSellerPurchases] = useState<PurchasesInterface[]>(
-    []
-  );
+// const SalesTab = ({ sellerWalletAddress }: { sellerWalletAddress: string }) => {
+//   const [sellerPurchases, setSellerPurchases] = useState<PurchasesInterface[]>(
+//     []
+//   );
 
-  const [isLoading, setIsLoading] = useState(false);
+//   const [isLoading, setIsLoading] = useState(false);
+//   const [isExporting, setIsExporting] = useState(false);
 
-  const fetchPurchases = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/purchases?seller_wallet_address=${sellerWalletAddress}`
-      );
-      setSellerPurchases(response.data);
-      setIsLoading(false);
-      return response.data;
-    } catch (error) {
-      setIsLoading(false);
-      console.log(`You got an error while fetching purchases: ${error}`);
-    }
-  };
-  useEffect(() => {
-    if (sellerWalletAddress) {
-      fetchPurchases();
-    }
-  }, [sellerWalletAddress]);
+//   const fetchPurchases = async () => {
+//     try {
+//       setIsLoading(true);
+//       const response = await axios.get(
+//         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/purchases?seller_wallet_address=${sellerWalletAddress}`
+//       );
+//       setSellerPurchases(response.data);
+//       setIsLoading(false);
+//       return response.data;
+//     } catch (error) {
+//       setIsLoading(false);
+//       console.log(`You got an error while fetching purchases: ${error}`);
+//     }
+//   };
+//   useEffect(() => {
+//     if (sellerWalletAddress) {
+//       fetchPurchases();
+//     }
+//   }, [sellerWalletAddress]);
 
-  return (
-    <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-96">
-      {isLoading && (
-        <div className="flex justify-center mt-2">
-          <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
-        </div>
-      )}
-      {sellerPurchases &&
-        sellerPurchases.map((elem, key) => {
-          return (
-            <SalesLabel
-              key={key}
-              date={elem.created_at}
-              productName={elem.product_title}
-              buyer={elem.buyer_wallet_address}
-              quantity={12}
-              price={elem.amount}
-              status={elem.status}
-              hash={elem.transaction_hash}
-              claim="claim"
-            />
-          );
-        })}
-    </div>
-  );
-};
+//   const exportPDF = () => {
+//     setIsExporting(true);
+//     const doc = new jsPDF({
+//       orientation: "p",
+//       unit: "mm",
+//       format: "a4",
+//     });
+
+//     const imageBase = imageBase64;
+
+//     const imgWidth = 15;
+//     const imgHeight = 15;
+//     doc.addImage(imageBase, "PNG", 10, 10, imgWidth, imgHeight);
+
+//     const textX = imgWidth + 12;
+
+//     doc.setFont("helvetica");
+//     doc.setFontSize(18);
+//     doc.text("SENDIT", textX, 16);
+//     doc.setFontSize(18);
+//     doc.text("MARKETPLACE", textX, 25);
+
+//     doc.setFontSize(16);
+//     doc.text("Transactions Summary", 10, 45);
+
+//     doc.setFontSize(12);
+
+//     sellerPurchases.forEach((product, index) => {
+//       const text = `${index + 1}.   Product Name: ${product.product_title},
+//       Buyer Address: ${product.buyer_wallet_address},
+//       Amount: $${product.amount}
+//       Tx Hash: ${product.transaction_hash.slice(
+//         0,
+//         10
+//       )}...${product.transaction_hash.slice(-4)}`;
+//       doc.text(text, 10, imgHeight + 40 + index * 24);
+//     });
+
+//     const pageWidth = doc.internal.pageSize.getWidth();
+//     const pageHeight = doc.internal.pageSize.getHeight();
+
+//     doc.setLineWidth(0.5);
+//     doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
+
+//     doc.save("product-list.pdf");
+//     setIsExporting(false);
+//   };
+
+//   return (
+//     <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-96">
+//       {isLoading && (
+//         <div className="flex justify-center mt-2">
+//           <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
+//         </div>
+//       )}
+//       {sellerPurchases &&
+//         sellerPurchases.map((elem, key) => {
+//           return (
+//             <SalesLabel
+//               key={key}
+//               date={elem.created_at}
+//               productName={elem.product_title}
+//               buyer={elem.buyer_wallet_address}
+//               quantity={12}
+//               price={elem.amount}
+//               status={elem.status}
+//               hash={elem.transaction_hash}
+//               claim="claim"
+//             />
+//           );
+//         })}
+//     </div>
+//   );
+// };

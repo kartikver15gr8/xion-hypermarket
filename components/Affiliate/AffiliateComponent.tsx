@@ -11,6 +11,7 @@ import { AffiliateAnalytics, PurchasesInterface } from "@/lib/models";
 import ape from "@/public/ape.png";
 import React from "react";
 import { jsPDF } from "jspdf";
+import { imageBase64 } from "@/utils/imageBase";
 
 export default function AffiliateComponent() {
   return (
@@ -75,6 +76,8 @@ const SalesOverview = () => {
   const [salesData, setSalesData] = useState<PurchasesInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isExporting, setIsExporting] = useState(false);
+
   useEffect(() => {
     if (!walletAddress) {
       toast.error("Please connect your wallet first");
@@ -84,47 +87,52 @@ const SalesOverview = () => {
     }
   }, [walletAddress]);
 
+  const imageBase = imageBase64;
+
   const exportPDF = () => {
-    const doc = new jsPDF();
-
-    // Header
-    doc.setFontSize(20);
-    doc.text("Sendit Markets", 10, 10); // Adjust Y position for header
-
-    // Title
-    doc.setFontSize(14);
-    doc.text("Affiliate and Commission", 10, 20);
-
-    // Set font size for product details
-    doc.setFontSize(12);
-
-    // Add product details to PDF
-    salesData.forEach((product, index) => {
-      const text = `Date: ${product.created_at}, Product Name: ${
-        product.product_filename
-      }, Buyer: ${product.buyer_wallet_address.slice(
-        0,
-        3
-      )}...${product.buyer_wallet_address.slice(-4)}, Quantity: ${1}, Price: ${
-        product.amount
-      }`;
-      doc.text(text, 10, 30 + index * 10); // Adjust Y position for each product
+    setIsExporting(true);
+    const doc = new jsPDF({
+      orientation: "p",
+      unit: "mm",
+      format: "a4",
     });
 
-    // Footer
-    // const pageCount = doc.internal.getNumberOfPages();
-    // for (let i = 1; i <= pageCount; i++) {
-    //   doc.setPage(i);
-    //   doc.setFontSize(10);
-    //   doc.text(
-    //     "Your Brand Name - Page " + i,
-    //     10,
-    //     doc.internal.pageSize.height - 10
-    //   ); // Adjust Y position for footer
-    // }
+    const imgWidth = 15;
+    const imgHeight = 15;
+    doc.addImage(imageBase, "PNG", 10, 10, imgWidth, imgHeight);
 
-    // Save the PDF
+    const textX = imgWidth + 12;
+
+    doc.setFont("helvetica");
+    doc.setFontSize(18);
+    doc.text("SENDIT", textX, 16);
+    doc.setFontSize(18);
+    doc.text("MARKETPLACE", textX, 24);
+
+    doc.setFontSize(16);
+    doc.text("Affiliate Sales & Commission", 10, 45);
+
+    doc.setFontSize(12);
+
+    salesData.forEach((product, index) => {
+      const text = `${index + 1}.   Product Name: ${product.product_title},
+      Buyer Address: ${product.buyer_wallet_address},
+      Amount: $${product.amount}
+      Tx Hash: ${product.transaction_hash.slice(
+        0,
+        10
+      )}...${product.transaction_hash.slice(-4)}`;
+      doc.text(text, 10, imgHeight + 40 + index * 24);
+    });
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    doc.setLineWidth(0.5);
+    doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
+
     doc.save("product-list.pdf");
+    setIsExporting(false);
   };
 
   const getSales = async () => {
@@ -205,7 +213,9 @@ const SalesOverview = () => {
             />
           </svg>
 
-          <p className="text-xs md:text-[13px] lg:text-sm">Export</p>
+          <p className="text-xs md:text-[13px] lg:text-sm">
+            {isExporting ? "Exporting…" : "Export"}
+          </p>
         </div>
       </div>
       <div className="px-2 mb-1 grid grid-cols-12 items-center mt-5 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">

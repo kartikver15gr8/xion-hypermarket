@@ -3,42 +3,48 @@
 import React from "react";
 import { jsPDF } from "jspdf";
 
-const ProductList: React.FC<{
+export const ProductList = ({
+  products,
+  imageBase64,
+}: {
   products: { id: number; name: string; price: number }[];
-}> = ({ products }) => {
+  imageBase64: string;
+}) => {
   const exportPDF = () => {
-    const doc = new jsPDF();
-
-    // Header
-    doc.setFontSize(20);
-    doc.text("Sendit Markets", 10, 10); // Adjust Y position for header
-
-    // Title
-    doc.setFontSize(14);
-    doc.text("Affiliate and Commission", 10, 20);
-
-    // Set font size for product details
-    doc.setFontSize(12);
-
-    // Add product details to PDF
-    products.forEach((product, index) => {
-      const text = `ID: ${product.id}, Name: ${product.name}, Price: $${product.price}`;
-      doc.text(text, 10, 30 + index * 10); // Adjust Y position for each product
+    const doc = new jsPDF({
+      orientation: "p",
+      unit: "mm",
+      format: "a4",
     });
 
-    // Footer
-    // const pageCount = doc.internal.getNumberOfPages();
-    // for (let i = 1; i <= pageCount; i++) {
-    //   doc.setPage(i);
-    //   doc.setFontSize(10);
-    //   doc.text(
-    //     "Your Brand Name - Page " + i,
-    //     10,
-    //     doc.internal.pageSize.height - 10
-    //   ); // Adjust Y position for footer
-    // }
+    const imgWidth = 15;
+    const imgHeight = 15;
+    doc.addImage(imageBase64, "PNG", 10, 10, imgWidth, imgHeight);
 
-    // Save the PDF
+    const textX = imgWidth + 12;
+
+    doc.setFont("helvetica");
+    doc.setFontSize(18);
+    doc.text("SENDIT", textX, 16);
+    doc.setFontSize(18);
+    doc.text("MARKETPLACE", textX, 25);
+
+    doc.setFontSize(16);
+    doc.text("Transactions Summary", 10, 45);
+
+    doc.setFontSize(12);
+
+    products.forEach((product, index) => {
+      const text = `ID: ${product.id}, Name: ${product.name}, Price: $${product.price}`;
+      doc.text(text, 10, imgHeight + 40 + index * 5);
+    });
+
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const pageHeight = doc.internal.pageSize.getHeight();
+
+    doc.setLineWidth(0.5);
+    doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
+
     doc.save("product-list.pdf");
   };
 
@@ -56,5 +62,3 @@ const ProductList: React.FC<{
     </div>
   );
 };
-
-export default ProductList;
