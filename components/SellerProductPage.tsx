@@ -17,19 +17,33 @@ export default function SellerProductPage() {
   const [productAnalytics, setProductsAnalytics] = useState<ProductAnalytics[]>(
     []
   );
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const sellerWalletAddress = useRecoilValue(phantomWallet);
   const [categoryId, setCategoryId] = useState<number | undefined>();
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [allChecked, setAllChecked] = useState(false);
+  const [searchKeysProducts, setSearchKeysProducts] = useState("");
 
-  const filteredProducts =
-    categoryId === undefined || null
-      ? productAnalytics
-      : productAnalytics.filter(
-          (elem) => elem.product.category_id === categoryId
-        );
+  // const filteredProducts =
+  //   categoryId === undefined || null
+  //     ? productAnalytics.filter((product) =>
+  //         product.product.name
+  //           .toLowerCase()
+  //           .includes(searchKeysProducts.toLowerCase())
+  //       )
+  //     : productAnalytics.filter(
+  //         (elem) => elem.product.category_id === categoryId
+  //       );
+
+  const filteredProducts = productAnalytics.filter((product) => {
+    const matchesSearch = product.product.name
+      .toLowerCase()
+      .includes(searchKeysProducts.toLowerCase());
+    const matchesCategory =
+      categoryId === undefined || product.product.category_id === categoryId;
+    return matchesSearch && matchesCategory;
+  });
 
   const handleChange = (event: any) => {
     const selectedCategoryId = event.target.value;
@@ -185,7 +199,32 @@ export default function SellerProductPage() {
                 className="h-full w-full outline-none rounded-r-lg"
                 type="text"
                 placeholder="Search"
+                onChange={(e) => {
+                  setSearchKeysProducts(e.target.value);
+                }}
               />
+              {/* <div className="flex items-center justify-center w-9 h-8 rounded mr-1 bg-[#575758] hover:bg-[#5b7376] transition-all duration-300">
+                <svg
+                  className="w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <g fill="none">
+                    <path
+                      fill="white"
+                      d="m7.24 4.535l11.944 5.658c1.525.722 1.525 2.892 0 3.614L7.24 19.466c-1.415.67-3.017-.472-2.844-2.028l.58-5.216a2 2 0 0 0 0-.442l-.58-5.216c-.173-1.557 1.429-2.7 2.844-2.029"
+                      opacity="0.25"
+                    />
+                    <path
+                      stroke="white"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="m5 12l-.604-5.437C4.223 5.007 5.825 3.864 7.24 4.535l11.944 5.658c1.525.722 1.525 2.892 0 3.614L7.24 19.466c-1.415.67-3.017-.472-2.844-2.028zm0 0h7"
+                    />
+                  </g>
+                </svg>
+              </div> */}
             </div>
           </div>
           <div className="mt-3 flex items-center justify-between">
@@ -198,7 +237,7 @@ export default function SellerProductPage() {
               />
               <p>{allChecked ? `All Selected` : `Select All`}</p>
             </div>
-            <div className="w-[50%] grid grid-cols-5 gap-x-3 text-[#A9BACA] text-xs md:text-[13px] lg:text-sm">
+            {/* <div className="w-[50%] grid grid-cols-5 gap-x-3 text-[#A9BACA] text-xs md:text-[13px] lg:text-sm">
               <div className="h-10 flex gap-x-2 items-center justify-center bg-[#ECF0F3] rounded-xl hover:bg-[#dde4ed] transition-all duration-300">
                 <svg
                   width="14"
@@ -301,36 +340,31 @@ export default function SellerProductPage() {
 
                 <p className="hidden md:flex text-[#6C7E7F]">Delete</p>
               </div>
-            </div>
+            </div> */}
           </div>
 
-          {isLoading && (
-            <div className="flex justify-center mt-6">
-              <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
-            </div>
-          )}
-
-          {filteredProducts &&
-            filteredProducts.map((elem, key) => {
-              return (
-                <ProductSales
-                  key={key}
-                  productId={elem.product_id}
-                  productName={elem.product.name}
-                  productCategory={elem.product.category.name}
-                  productImage={elem.product.thumbnail_url}
-                  productSold={elem.sales}
-                  productViews={elem.views}
-                  status={elem.product.status}
-                  dateCreated={elem.product.created_at}
-                  allChecked={allChecked}
-                />
-              );
-            })}
-
-          {filteredProducts.length == 0 && (
+          {filteredProducts.length > 0 ? (
+            filteredProducts.map((elem, key) => (
+              <ProductSales
+                key={key}
+                productId={elem.product_id}
+                productName={elem.product.name}
+                productCategory={elem.product.category.name}
+                productImage={elem.product.thumbnail_url}
+                productSold={elem.sales}
+                productViews={elem.views}
+                status={elem.product.status}
+                dateCreated={elem.product.created_at}
+                allChecked={allChecked}
+              />
+            ))
+          ) : (
             <div className="mt-3 border border-[#DEDEDE] rounded-xl h-48 flex items-center justify-center">
-              <p className="text-xl"> No Products with this category</p>
+              {isLoading ? (
+                <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
+              ) : (
+                <p className="text-xl"> No Products with key</p>
+              )}
             </div>
           )}
 
@@ -397,6 +431,12 @@ const ProductSales = ({
   status: string;
   allChecked: boolean;
 }) => {
+  const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+  const togglePopup = () => {
+    setIsPopupVisible(!isPopupVisible);
+  };
+
   const dateStr = dateCreated;
   const date = new Date(dateStr);
 
@@ -419,13 +459,52 @@ const ProductSales = ({
           <a
             href={`https://dial.to/?action=solana-action%3Ahttps%3A%2F%2Fblinks.sendit.markets%2Fapi%2Factions%2Fmint-nft%2F${productId}&cluster=devnet`}
             target="_blank"
-            className="flex items-center bg-opacity-65 border rounded-md h-6 px-1 bg-black text-white border-black "
+            className="flex items-center bg-opacity-65 border rounded-md h-6 px-1 bg-black text-white border-black"
           >
             <p>Mint as NFT</p>
           </a>
-          <div className="flex items-center bg-opacity-45 border border-green-600 rounded-md h-6 px-1 bg-green-400 ">
+          <div className="flex items-center bg-opacity-45 border border-green-600 rounded-md h-6 px-1 bg-green-400">
             <p>{status}</p>
           </div>
+          <div
+            className="flex items-center w-fit cursor-pointer"
+            onClick={togglePopup}
+          >
+            <svg
+              className="w-4 hover:rotate-90 transition-all duration-200"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 20 20"
+            >
+              <path
+                fill="#767676"
+                d="M10.001 7.8a2.2 2.2 0 1 0 0 4.402A2.2 2.2 0 0 0 10 7.8zm0-2.6A2.2 2.2 0 1 0 9.999.8a2.2 2.2 0 0 0 .002 4.4m0 9.6a2.2 2.2 0 1 0 0 4.402a2.2 2.2 0 0 0 0-4.402"
+              />
+            </svg>
+          </div>
+
+          {/* Popup Window */}
+          {isPopupVisible && (
+            <div className="absolute w-36 bg-white border rounded-md shadow-lg p-1">
+              <ul>
+                {["Edit", "Pause", "Activate", "Duplicate", "Delete"].map(
+                  (option) => (
+                    <li
+                      key={option}
+                      className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200"
+                    >
+                      {option}
+                    </li>
+                  )
+                )}
+              </ul>
+              <button
+                onClick={togglePopup}
+                className="mt-1 w-full font-medium text-white bg-[#6a8688] border border-[#4E6465] hover:bg-[#223D40] transition-all duration-200 flex items-center justify-center rounded"
+              >
+                Close
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <div className="grid grid-cols-10 h-36 ">
