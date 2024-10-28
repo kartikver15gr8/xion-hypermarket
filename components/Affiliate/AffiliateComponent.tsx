@@ -78,6 +78,12 @@ const SalesOverview = () => {
 
   const [isExporting, setIsExporting] = useState(false);
 
+  const [searchKeyTx, setSearchKeyTx] = useState("");
+
+  const filteredSalesData = salesData.filter((sales) =>
+    sales.product_title.toLowerCase().includes(searchKeyTx.toLowerCase())
+  );
+
   useEffect(() => {
     if (!walletAddress) {
       toast.error("Please connect your wallet first");
@@ -192,6 +198,8 @@ const SalesOverview = () => {
             className="h-full w-full outline-none rounded-r-lg"
             type="text"
             placeholder="Search"
+            value={searchKeyTx}
+            onChange={(e) => setSearchKeyTx(e.target.value)}
           />
         </div>
         <div
@@ -235,7 +243,7 @@ const SalesOverview = () => {
         </div>
       ) : (
         <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-96">
-          {salesData.map((item: PurchasesInterface, key) => {
+          {filteredSalesData.map((item: PurchasesInterface, key) => {
             return (
               <SalesLabel
                 key={key}

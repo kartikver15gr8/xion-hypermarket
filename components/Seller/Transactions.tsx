@@ -213,74 +213,70 @@ export const SalesOverview = () => {
     []
   );
   const [isLoading, setIsLoading] = useState(false);
-  const [isExporting, setIsExporting] = useState(false);
+  const [searchKeyTx, setSearchKeyTx] = useState("");
 
-  const fetchPurchases = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/purchases?seller_wallet_address=${walletAddress}`
-      );
-      setSellerPurchases(response.data);
-      setIsLoading(false);
-      return response.data;
-    } catch (error) {
-      setIsLoading(false);
-      console.log(`You got an error while fetching purchases: ${error}`);
-    }
-  };
   useEffect(() => {
     if (walletAddress) {
       fetchPurchases();
     }
   }, [walletAddress]);
 
+  const fetchPurchases = async () => {
+    setIsLoading(true);
+    try {
+      const response = await axios.get(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/purchases?seller_wallet_address=${walletAddress}`
+      );
+      setSellerPurchases(response.data);
+    } catch (error) {
+      console.error(`Error fetching purchases: ${error}`);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const filteredSellerPurchases = sellerPurchases.filter((transaction) =>
+    transaction.product_title.toLowerCase().includes(searchKeyTx.toLowerCase())
+  );
+
   const exportPDF = () => {
-    setIsExporting(true);
     const doc = new jsPDF({
       orientation: "p",
       unit: "mm",
       format: "a4",
     });
 
-    const imageBase = imageBase64;
-
-    const imgWidth = 15;
-    const imgHeight = 15;
-    doc.addImage(imageBase, "PNG", 10, 10, imgWidth, imgHeight);
-
-    const textX = imgWidth + 12;
+    doc.addImage(imageBase64, "PNG", 10, 10, 15, 15); // Assuming imageBase64 is defined elsewhere
 
     doc.setFont("helvetica");
     doc.setFontSize(18);
-    doc.text("SENDIT", textX, 16);
-    doc.setFontSize(18);
-    doc.text("MARKETPLACE", textX, 24);
-
+    doc.text("SENDIT", 27, 16);
+    doc.text("MARKETPLACE", 27, 24);
     doc.setFontSize(16);
     doc.text("Transactions Summary", 10, 45);
-
     doc.setFontSize(12);
 
     sellerPurchases.forEach((product, index) => {
-      const text = `${index + 1}.   Product Name: ${product.product_title},
-      Buyer Address: ${product.buyer_wallet_address},
-      Amount: $${product.amount}
-      Tx Hash: ${product.transaction_hash.slice(
+      const text = `${index + 1}. Product Name: ${
+        product.product_title
+      }, Buyer Address: ${product.buyer_wallet_address}, Amount: $${
+        product.amount
+      }, Tx Hash: ${product.transaction_hash.slice(
         0,
         10
       )}...${product.transaction_hash.slice(-4)}`;
-      doc.text(text, 10, imgHeight + 40 + index * 24);
+      doc.text(text, 10, 55 + index * 24); // Adjusted Y position for clarity
     });
 
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-
     doc.setLineWidth(0.5);
-    doc.rect(5, 5, pageWidth - 10, pageHeight - 10);
+    doc.rect(
+      5,
+      5,
+      doc.internal.pageSize.getWidth() - 10,
+      doc.internal.pageSize.getHeight() - 10
+    );
 
     doc.save("product-list.pdf");
-    setIsExporting(false);
   };
 
   return (
@@ -325,11 +321,13 @@ export const SalesOverview = () => {
             className="h-full w-full outline-none rounded-r-lg"
             type="text"
             placeholder="Search"
+            value={searchKeyTx}
+            onChange={(e) => setSearchKeyTx(e.target.value)}
           />
         </div>
         <div
           onClick={exportPDF}
-          className="col-span-2 gap-x-2 text-white rounded-lg flex items-center justify-center bg-[#4E6465]"
+          className="col-span-2 gap-x-2 text-white rounded-lg flex items-center justify-center bg-[#4E6465] cursor-pointer"
         >
           <svg
             className="w-2 md:w-3"
@@ -345,7 +343,6 @@ export const SalesOverview = () => {
               strokeLinejoin="round"
             />
           </svg>
-
           <p className="text-xs md:text-[13px] lg:text-sm">Export</p>
         </div>
       </div>
@@ -360,32 +357,37 @@ export const SalesOverview = () => {
         <p className="text-[11px] md:text-[13px] col-span-1">Claim</p>
       </div>
       <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-96">
-        {isLoading && (
+        {isLoading ? (
           <div className="flex justify-center mt-2">
             <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
           </div>
+        ) : filteredSellerPurchases.length > 0 ? (
+          filteredSellerPurchases.map((elem) => (
+            <SalesLabel
+              key={elem.transaction_hash}
+              date={elem.created_at}
+              productName={elem.product_title}
+              buyer={elem.buyer_wallet_address}
+              quantity={1}
+              price={elem.amount}
+              status={elem.status}
+              hash={elem.transaction_hash}
+              claim={"claim"}
+            />
+          ))
+        ) : (
+          <div className="mt-3 border border-[#DEDEDE] rounded-xl h-48 flex items-center justify-center">
+            {isLoading ? (
+              <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
+            ) : (
+              <p className="text-xl"> No sale with this key</p>
+            )}
+          </div>
         )}
-        {sellerPurchases &&
-          sellerPurchases.map((elem, key) => {
-            return (
-              <SalesLabel
-                key={key}
-                date={elem.created_at}
-                productName={elem.product_title}
-                buyer={elem.buyer_wallet_address}
-                quantity={12}
-                price={elem.amount}
-                status={elem.status}
-                hash={elem.transaction_hash}
-                claim="claim"
-              />
-            );
-          })}
       </div>
     </div>
   );
 };
-
 const TransactionTopLabel = () => {
   return (
     <div className="relative border-b w-[100%] px-[20px] sm:px-[20px] md:px-[40px] lg:px-[60px] xl:px-20">
