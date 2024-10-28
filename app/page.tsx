@@ -9,6 +9,7 @@ import BlurFade from "@/components/magicui/blur-fade";
 import PageLanding from "@/components/MainPage/PageLanding";
 import FinalBidsLabel from "@/components/MainPage/FinalBidsLabel";
 import ProductExhibition from "@/components/MainPage/ProductExhibition";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
       <PageLanding />
       {/* <FinalBidsLabel /> */}
       <ProductExhibition />
+      <Footer />
     </div>
   );
 }

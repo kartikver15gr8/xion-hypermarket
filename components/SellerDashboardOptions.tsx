@@ -15,9 +15,9 @@ import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 
 const isActiveTab =
-  "flex  text-black hover:text-black transition-all duration-300 backdrop-blur-lg ";
+  "flex  text-black hover:text-black transition-all duration-300 backdrop-blur-lg border border-[#dbdad8] py-2 mb-[4px] w-full rounded-md pl-5 bg-[#ececef] ";
 const isInactiveTab =
-  "flex  text-[#9b9898] hover:text-black transition-all duration-300 backdrop-blur-lg ";
+  "flex  text-[#9b9898] hover:text-black transition-all duration-300 backdrop-blur-lg py-2 mb-[4px] w-full rounded-md pl-5 ";
 
 export default function SellerDashboardOptions({
   portfolio,
@@ -72,7 +72,7 @@ export default function SellerDashboardOptions({
           />
         </div> */}
         <div>
-          <p className="font-medium text-[15px]">SELLER ID</p>
+          <p className="font-medium text-[15px]">SELLER PROFILE</p>
           <p className="text-[11px]">
             {`${sellerWalletAddress.slice(0, 3)}…${sellerWalletAddress.slice(
               -3
@@ -80,7 +80,7 @@ export default function SellerDashboardOptions({
             `}
           </p>
         </div>
-        <div className=" gap-y-2 ml-4">
+        {/* <div className=" gap-y-2 ml-4">
           <svg
             className="w-2"
             xmlns="http://www.w3.org/2000/svg"
@@ -95,20 +95,20 @@ export default function SellerDashboardOptions({
           >
             <path fill="black" d="M7.5 12L0 4h15z" />
           </svg>
-        </div>
+        </div> */}
       </Link>
-      <div className="flex flex-col mt-10 ml-3 p-2 h-[400px]">
-        <p className="text-[14px] text-[#C9C9CB] ">PORTAL</p>
-        <div className="flex gap-x-3 w-[198px] mt-2">
-          <div className="h-56 w-[2px] bg-[#C9C9CB] rounded-full"></div>
-          <ul className="flex flex-col font-normal gap-y-3">
+      <div className="flex flex-col my-2 px-2 h-[400px]">
+        {/* <p className="text-[14px] text-[#C9C9CB] ">PORTAL</p> */}
+        <div className="flex gap-x-3 w-[198px]">
+          {/* <div className="h-56 w-[2px] bg-[#C9C9CB] rounded-full"></div> */}
+          <ul className="flex flex-col font-normal py-2 mb-[4px] w-full rounded-md px-1">
             <Link href="/seller/dashboard">
               <li
                 className={
                   pathname == "/seller/dashboard" ? isActiveTab : isInactiveTab
                 }
               >
-                <p className="">Dashboard</p>
+                <p className="text-[18px]">Dashboard</p>
               </li>
             </Link>
             <Link href="/seller/products">
@@ -117,7 +117,7 @@ export default function SellerDashboardOptions({
                   pathname == "/seller/products" ? isActiveTab : isInactiveTab
                 }
               >
-                <p className=" ">Products</p>
+                <p className="text-[18px] ">Products</p>
               </li>
             </Link>
             <Link href="/seller/transactions">
@@ -128,7 +128,7 @@ export default function SellerDashboardOptions({
                     : isInactiveTab
                 }
               >
-                <p className=" ">Transactions</p>
+                <p className="text-[18px] ">Transactions</p>
               </li>
             </Link>
             <Link href="">
@@ -137,7 +137,7 @@ export default function SellerDashboardOptions({
                   pathname == "/seller/analytics" ? isActiveTab : isInactiveTab
                 }
               >
-                <p className="">Analytics</p>
+                <p className="text-[18px]">Analytics</p>
               </li>
             </Link>
 
@@ -147,13 +147,15 @@ export default function SellerDashboardOptions({
                   pathname == "/seller/earnings" ? isActiveTab : isInactiveTab
                 }
               >
-                <p className=" ">Earnings</p>
+                <p className="text-[18px] ">Earnings</p>
               </li>
             </Link>
           </ul>
         </div>
         {/* <RegisterSeller /> */}
-        <ShareRegisterSeller />
+        <div className="mt-10">
+          <ShareRegisterSeller />
+        </div>
       </div>
     </div>
   );

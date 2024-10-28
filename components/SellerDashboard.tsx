@@ -59,7 +59,7 @@ export default function SellerDashboard() {
         {/* <MidSection /> */}
         {/* <TotalEarningsSection /> */}
         <div className="">
-          <p className="text-sm md:text-[15px]">Accounts Statistics</p>
+          <p className="text-xs md:text-[13px]">ACCOUNT STATISTICS</p>
           <MidSectionTwo
             unitsSold={sellerAnalytics?.sale_count}
             avgRating={sellerAnalytics?.average_rating}
@@ -85,9 +85,6 @@ const TopLabel = () => {
         className="opacity-[4%]"
       />
       <div className="h-20 grid grid-cols-2">
-        <div className=" h-full flex items-center">
-          <p className="text-sm lg:text-lg font-medium">User Welcome Ape</p>
-        </div>
         <div className=" h-full flex items-center gap-x-2">
           <div className="relative  flex items-center justify-center">
             <Image className="w-8 md:w-10 xl:w-12" src={hex} alt="" />
@@ -101,6 +98,9 @@ const TopLabel = () => {
             </div>
             <p className="text-[11px] text-[#959594]">Next:Establised Seller</p>
           </div>
+        </div>
+        <div className=" h-full flex items-center">
+          <p className="text-sm lg:text-lg font-medium">User Welcome Ape</p>
         </div>
       </div>
     </div>
@@ -515,8 +515,8 @@ const MidSectionTwo = ({
   totalViews: string | number;
 }) => {
   return (
-    <div className="grid grid-cols-3">
-      <div className="p-4">
+    <div className="grid grid-cols-3 mt-4 mb-5 border border-[#DEDEDE] rounded-xl bg-[#FFF]">
+      <div className="p-4 border-r border-[#DEDEDE]">
         <div className=" flex items-center gap-x-1">
           <p className="text-xs md:text-[13px]">TOTAL UNITS SOLD</p>
           <svg
@@ -539,7 +539,7 @@ const MidSectionTwo = ({
           {unitsSold ? unitsSold : 0}
         </p>
       </div>
-      <div className=" p-4">
+      <div className=" p-4 border-r border-[#DEDEDE]">
         <div className=" flex items-center gap-x-1">
           <p className="text-xs md:text-[13px]">AVERAGE RATINGS</p>
           <svg
@@ -657,7 +657,7 @@ export const GraphWindow = ({
   saleAmount: string | number;
 }) => {
   return (
-    <div className="border rounded-xl h-72 bg-white p-4 grid grid-cols-12">
+    <div className="border border-[#DEDEDE] rounded-xl h-72 bg-white p-4 grid grid-cols-12">
       <div className="col-span-3 sm:col-span-4 flex flex-col justify-between">
         <div className="flex items-center gap-x-1">
           <p className="text-xs md:text-[13px]">TOTAL SALES</p>
