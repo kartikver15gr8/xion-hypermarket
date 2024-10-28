@@ -141,10 +141,10 @@ const RegisterSellerClient: React.FC = () => {
   };
 
   return (
-    <div className="pt-16">
+    <div className="">
       <button
         onClick={handleOnClick}
-        className="px-4 py-2 bg-[#223D40] text-white rounded-lg hover:bg-[#426d72] transition-colors"
+        className="px-4 py-2 w-full bg-[#223D40] text-white rounded-md hover:bg-[#426d72] transition-colors"
         disabled={isRegistering || !walletAddress}
       >
         {isRegistering ? "Registering..." : `Register as Seller`}

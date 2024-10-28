@@ -737,7 +737,7 @@ const ReviewCard = ({
   return (
     <Link
       href={redirectHref}
-      className="p-[5px] border-[1px] border-[#7e7e7f] rounded-xl shadow-lg "
+      className="p-[5px] border-[1px] border-[#cdcdce] rounded-xl shadow-md bg-[#fefefd] "
     >
       <figure
         className={cn(
@@ -749,7 +749,7 @@ const ReviewCard = ({
         )}
       >
         <div className=" flex items-center h-16 lg:h-20 justify-center gap-x-2">
-          <div className="relative bg-white border border-[#c3c3c6] flex items-center justify-center rounded-lg w-16 h-16 lg:w-20  lg:h-20 ">
+          <div className="relative bg-white border border-[#cdcdce] flex items-center justify-center rounded-lg w-16 h-16 lg:w-20  lg:h-20 ">
             <Image
               className="w-[100%] rounded-md z-10 "
               alt=""
@@ -1136,7 +1136,7 @@ export const HotProductCard = ({
   return (
     <Link
       href={redirectHref}
-      className="p-1 border border-[#DEDEDE] rounded-lg hover:bg-[#e7e7e9] hover:border-[#ababae] hover:shadow-lg transition-all duration-300"
+      className="p-1 border border-[#DEDEDE] bg-[#fefefd] rounded-lg hover:bg-[#e7e7e9] hover:border-[#ababae] hover:shadow-lg transition-all duration-300"
     >
       <div className="relative w-full h-0 pb-[60%] overflow-hidden rounded border border-[#DEDEDE]">
         <img
