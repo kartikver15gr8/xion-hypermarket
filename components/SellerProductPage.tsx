@@ -12,6 +12,7 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 import spinnerthree from "@/public/loaders/spinnerthree.svg";
+import { toast, Toaster } from "sonner";
 
 export default function SellerProductPage() {
   const [productAnalytics, setProductsAnalytics] = useState<ProductAnalytics[]>(
@@ -446,6 +447,18 @@ const ProductSales = ({
     day: "2-digit",
   };
 
+  const deleteProduct = async () => {
+    try {
+      const response = await axios.delete(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/product/${productId}`
+      );
+      console.log(response.data);
+      toast.info("Product Deleted!");
+    } catch (error) {
+      console.log(`You got an error while making the delete call: ${error}`);
+    }
+  };
+
   const formattedDate = date.toLocaleString("en-US", options);
   return (
     <div className="mt-3 border border-[#DEDEDE] rounded-xl h-48">
@@ -486,16 +499,24 @@ const ProductSales = ({
           {isPopupVisible && (
             <div className="absolute w-36 bg-white border rounded-md shadow-lg p-1">
               <ul>
-                {["Edit", "Pause", "Activate", "Duplicate", "Delete"].map(
-                  (option) => (
-                    <li
-                      key={option}
-                      className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200"
-                    >
-                      {option}
-                    </li>
-                  )
-                )}
+                <li className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200">
+                  Edit
+                </li>
+                <li className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200">
+                  Duplicate
+                </li>
+                <li
+                  onClick={deleteProduct}
+                  className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200"
+                >
+                  Delete
+                </li>
+                <li className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200">
+                  Draft
+                </li>
+                <li className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200">
+                  Pause
+                </li>
               </ul>
               <button
                 onClick={togglePopup}
