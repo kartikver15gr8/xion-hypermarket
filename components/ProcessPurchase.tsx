@@ -91,8 +91,8 @@ export default function ProcessPurchase({ productId }: { productId: number }) {
         // console.log("PDAS: ", JSON.stringify(pdas));
 
         // console.log("SellerLevelList", pdas.sellersLevelList.toBase58());
-
         const tx = await solanaMarketplaceProgram.methods
+          //@ts-ignore
           .processPurchase({
             priceLamports: new BN(amount_lamports),
             affiliate: null,
