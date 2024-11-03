@@ -7,14 +7,6 @@ import kody from "@/public/kody.svg";
 import noisebg from "@/public/_static/background/noisebg.png";
 import { Button } from "@/components/ui/button";
 import kind from "@/public/kind.svg";
-import Trending_AI_UX_Patterns from "@/public/designuxone.svg";
-import Design_System_UI_Kit_for_Figma from "@/public/designuxtwo.svg";
-import Warp_Tools_for_Figma from "@/public/designuxthree.svg";
-import How_to_Design_Better_UI from "@/public/designuxfour.svg";
-import designfive from "@/public/designproductfive.svg";
-import Telegram_Insiders_Group from "@/public/telegraminsider.svg";
-import MEV_Bots from "@/public/mevbots.svg";
-import Rain_Drops_Simulator from "@/public/raindropapeicon.svg";
 import TOP_100_VCs_LIST from "@/public/hotproductone.svg";
 import axios from "axios";
 import { ProductInterface } from "@/lib/models";
@@ -28,12 +20,11 @@ import ShareProcessPurchase from "@/components/ShareProcessPurchase";
 import homeIconSVG from "@/public/homeicon.svg";
 import Link from "next/link";
 import PromoteWithBlinksBtn from "@/components/PromoteWithBlinksBtn";
+import MarkdownRenderer from "@/components/MarkdownRenderer";
 
 export default function Product({ params }: any) {
-  const router = useRouter();
   const [productId, setProductId] = useState(params.product);
   const [productById, setProductById] = useState<ProductInterface>();
-  const [bannerImg, setBannerImg] = useState(TOP_100_VCs_LIST);
 
   // Fetch product data based on productId
   const fetchProductData = async () => {
@@ -404,7 +395,8 @@ const ProductReviews = ({
         <p className="font-bold text-lg">Description:</p>
         <p className="text-[#8B8B92] text-[13px]">Version 3.0 is out now!</p>
         <div className="mt-4">
-          <p className="text-sm md:text-[15px]">{productDescription}</p>
+          {/* <p className="text-sm md:text-[15px]">{productDescription}</p> */}
+          <MarkdownRenderer content={productDescription} />
         </div>
       </div>
       <div className="lg:col-span-2 col-span-1 sm:col-span-1 md:col-span-1">
