@@ -17,6 +17,12 @@ import { Widget } from "@uploadcare/react-widget";
 
 const uploadcarekey = process.env.NEXT_PUBLIC_UPLOADCARE_KEY || "";
 
+const statusActive =
+  "h-8 text-[#6C7E7F] border rounded-[6px] flex items-center justify-center bg-[#FFF] shadow-md";
+
+const statusInactive =
+  "h-8 text-[#6C7E7F] rounded-[6px] flex items-center justify-center";
+
 export default function SellerProductPage() {
   const [productAnalytics, setProductsAnalytics] = useState<ProductAnalytics[]>(
     []
@@ -28,6 +34,7 @@ export default function SellerProductPage() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [allChecked, setAllChecked] = useState(false);
   const [searchKeysProducts, setSearchKeysProducts] = useState("");
+  const [productStatusState, setProductStatusState] = useState(5);
 
   const filteredProducts = productAnalytics.filter((product) => {
     const matchesSearch = product.product.name
@@ -35,7 +42,14 @@ export default function SellerProductPage() {
       .includes(searchKeysProducts.toLowerCase());
     const matchesCategory =
       categoryId === undefined || product.product.category_id === categoryId;
-    return matchesSearch && matchesCategory;
+
+    if (productStatusState == 5) {
+      return matchesSearch && matchesCategory;
+    } else {
+      const matchedStatus =
+        product.product.status == productStatusState.toString();
+      return matchesSearch && matchesCategory && matchedStatus;
+    }
   });
 
   const handleChange = (event: any) => {
@@ -122,19 +136,54 @@ export default function SellerProductPage() {
           </div>
           <div className="grid grid-cols-12 gap-x-4 mt-3 gap-y-2 md:gap-y-0">
             <div className="h-10 border border-[#DEDEDE] p-[2px] rounded-[8px] col-span-12 md:col-span-5 grid grid-cols-5 items-center bg-[#EAEAEB] gap-x-1 text-xs md:text-[13px] lg:text-sm">
-              <div className="h-8 text-[#6C7E7F] border rounded-[6px] flex items-center justify-center bg-[#FFF] shadow-md">
+              <div
+                onClick={() => {
+                  setProductStatusState(5);
+                }}
+                className={
+                  productStatusState == 5 ? statusActive : statusInactive
+                }
+              >
                 All
               </div>
-              <div className="h-8 text-[#6C7E7F] rounded-[6px] flex items-center justify-center">
+              <div
+                onClick={() => {
+                  setProductStatusState(1);
+                }}
+                className={
+                  productStatusState == 1 ? statusActive : statusInactive
+                }
+              >
                 Active
               </div>
-              <div className="h-8 text-[#6C7E7F] rounded-[6px] flex items-center justify-center">
+              <div
+                onClick={() => {
+                  setProductStatusState(2);
+                }}
+                className={
+                  productStatusState == 2 ? statusActive : statusInactive
+                }
+              >
                 Inactive
               </div>
-              <div className="h-8 text-[#6C7E7F] rounded-[6px] flex items-center justify-center">
+              <div
+                onClick={() => {
+                  setProductStatusState(3);
+                }}
+                className={
+                  productStatusState == 3 ? statusActive : statusInactive
+                }
+              >
                 Archived
               </div>
-              <div className="h-8 text-[#6C7E7F] rounded-[6px] flex items-center justify-center">
+              <div
+                onClick={() => {
+                  setProductStatusState(0);
+                }}
+                className={
+                  productStatusState == 0 ? statusActive : statusInactive
+                }
+              >
                 Draft
               </div>
             </div>
@@ -206,6 +255,10 @@ export default function SellerProductPage() {
                 productImage={elem.product.thumbnail_url}
                 productSold={elem.sales}
                 productViews={elem.views}
+                productPrice={elem.product.price}
+                productFile={elem.product.filename}
+                productDescription={elem.product.description}
+                productComparePrice={elem.product.compare_price}
                 status={elem.product.status}
                 dateCreated={elem.product.created_at}
                 allChecked={allChecked}
@@ -269,6 +322,10 @@ const ProductSales = ({
   productImage,
   productSold,
   dateCreated,
+  productDescription,
+  productFile,
+  productPrice,
+  productComparePrice,
   status,
   allChecked,
   userId,
@@ -278,6 +335,10 @@ const ProductSales = ({
   productName: string;
   productCategory: string;
   productViews: number;
+  productDescription: string;
+  productPrice: string;
+  productComparePrice: string;
+  productFile: string;
   productImage: string;
   productSold: number;
   dateCreated: string;
@@ -358,6 +419,62 @@ const ProductSales = ({
     }
   };
 
+  const duplicateProduct = async () => {
+    try {
+      // const url = `https://files.sendit.markets/products/${productFile}`;
+      // const filedata = await fetch(url);
+      // const file = filedata.formData;
+      const response = await axios.post(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/upload`,
+        {
+          file: productFile,
+          name: productName,
+          description: productDescription,
+          price: productPrice,
+          compare_price: productComparePrice,
+          thumbnail_url: productImage,
+          user_id: userId,
+          category_id: categoryId,
+          status: 0,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      console.log(`You got an error while duplicating the product`);
+      toast.error("Error while duplicating the product");
+    }
+  };
+
+  const updateProductStatus = async (
+    newStatus: number,
+    successMessage: string
+  ) => {
+    try {
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/product/${productId}`,
+        {
+          status: newStatus,
+        },
+        {
+          headers: {
+            accept: "application/json",
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      toast.info(successMessage);
+      return response.data;
+    } catch (error) {
+      toast.error(`Got an error while updating the product status`);
+    }
+  };
+
   const formattedDate = date.toLocaleString("en-US", options);
   return (
     <div className="mt-3 border border-[#DEDEDE] rounded-xl ">
@@ -376,7 +493,7 @@ const ProductSales = ({
             <p>Mint as NFT</p>
           </a>
           <div className="flex items-center bg-opacity-45 border border-green-600 rounded-md h-6 px-1 bg-green-400">
-            <p>{status}</p>
+            <p>{(status = 1 ? "Active" : "Inactive")}</p>
           </div>
           <div
             className="flex items-center w-fit cursor-pointer"
@@ -404,7 +521,10 @@ const ProductSales = ({
                 >
                   Edit
                 </li>
-                <li className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200">
+                <li
+                  onClick={duplicateProduct}
+                  className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200"
+                >
                   Duplicate
                 </li>
                 <li
@@ -413,11 +533,31 @@ const ProductSales = ({
                 >
                   Delete
                 </li>
-                <li className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200">
+                <li
+                  onClick={() =>
+                    updateProductStatus(0, "Product is in draft now!")
+                  }
+                  className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200"
+                >
                   Draft
                 </li>
-                <li className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200">
-                  Pause
+
+                <li
+                  onClick={() =>
+                    updateProductStatus(2, "Product is now inactive!")
+                  }
+                  className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200"
+                >
+                  Inactive
+                </li>
+
+                <li
+                  onClick={() =>
+                    updateProductStatus(3, "Product has been archived!")
+                  }
+                  className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200"
+                >
+                  Archive
                 </li>
               </ul>
               <button

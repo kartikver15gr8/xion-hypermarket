@@ -111,6 +111,7 @@ export default function ProductUpload() {
           thumbnail_url: imageUrl,
           user_id: userId,
           category_id: categoryId,
+          status: 1,
         },
         {
           headers: {
