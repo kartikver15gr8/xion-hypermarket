@@ -8,7 +8,7 @@ export default function page() {
     <div className="pt-16 min-h-screen bg-[#FAF9F5] flex flex-col items-center">
       <div className="w-[70%]">
         <div className="flex gap-x-1 mt-10 items-center">
-          <svg
+          {/* <svg
             className="w-3"
             viewBox="0 0 18 13"
             fill="none"
@@ -21,7 +21,7 @@ export default function page() {
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-          </svg>
+          </svg> */}
 
           <p className="font-bold text-3xl italic">ADD PRODUCT</p>
         </div>
