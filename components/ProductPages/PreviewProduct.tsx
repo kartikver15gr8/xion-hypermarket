@@ -1,102 +1,64 @@
 "use client";
-
-import Image, { StaticImageData } from "next/image";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import { useSearchParams } from "next/navigation";
+import PromoteWithBlinksBtn from "../PromoteWithBlinksBtn";
+import Image from "next/image";
+import React, { useState } from "react";
 import kody from "@/public/kody.svg";
 import noisebg from "@/public/_static/background/noisebg.png";
 import { Button } from "@/components/ui/button";
 import kind from "@/public/kind.svg";
-import axios from "axios";
-import { ProductInterface } from "@/lib/models";
 import star from "@/public/_static/illustrations/star.svg";
+
 import { ReviewInterface } from "@/lib/models";
 import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
-import { ProductsMarquee } from "@/components/ProductsMarquee";
-import ShareProcessPurchase from "@/components/ShareProcessPurchase";
 import homeIconSVG from "@/public/homeicon.svg";
-import Link from "next/link";
-import PromoteWithBlinksBtn from "@/components/PromoteWithBlinksBtn";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 
-export default function Product({ params }: any) {
-  const [productId, setProductId] = useState(params.product);
-  const [productById, setProductById] = useState<ProductInterface>();
+export default function PreviewProduct() {
+  const searchParams = useSearchParams();
 
-  // Fetch product data based on productId
-  const fetchProductData = async () => {
-    try {
-      // console.log(`Fetching product with ID: ${productId}`);
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?product_id=${productId}`
-      );
-      setProductById(response.data[0]);
-    } catch (error) {
-      console.error(`Error fetching product data: ${error}`);
-    }
-  };
+  const title = searchParams.get("title");
 
-  const updateViews = async () => {
-    try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/product/${productId}/view`
-      );
-      // console.log(response.data);
-      return response.data;
-    } catch (error) {
-      console.log(`You got an error while updating views: ${error}`);
-    }
-  };
-
-  useEffect(() => {
-    if (productId) {
-      updateViews();
-    }
-  }, [productId]);
-
-  useEffect(() => {
-    if (productId) {
-      fetchProductData();
-    }
-  }, [productId]);
+  const price = searchParams.get("price");
+  const compareprice = searchParams.get("compareprice");
+  const imageUrl = searchParams.get("imgurl");
+  const category = searchParams.get("category");
 
   return (
-    <div className="pt-16 pb-20 w-full min-h-screen px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[200px] ">
-      {productById && (
-        <FolderStructure
-          product={productById.name}
-          productCategory={productById.category.name}
-          redirectUrl={`/product/category/${productById.category_id}`}
-        />
-      )}
-      {productById && (
-        <ProductDetails
-          comparePrice={
-            productById.compare_price ? productById.compare_price : "NA"
-          }
-          bannerImg={productById.thumbnail_url}
-          productName={productById.name}
-          price={`${productById.price} SOL`}
-          productId={productById.id}
-          fileName={productById.filename}
-          fileSize={productById.file_size}
-          sellerAddress={productById.seller_wallet_address}
-        />
-      )}
-      {productById && (
-        <ProductReviews
-          productId={productId}
-          productDescription={productById.description}
-        />
-      )}
+    <div className="">
+      <div className="pb-20 w-full min-h-screen px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[200px] ">
+        {title && category && (
+          <FolderStructurePreview
+            product={title}
+            productCategory={category}
+            redirectUrl={`/product/category/${category}`}
+          />
+        )}
 
-      {productById && <ProductsMarquee />}
+        {compareprice && imageUrl && title && (
+          <ProductDetailsPreview
+            comparePrice={compareprice}
+            bannerImg={imageUrl}
+            productName={title}
+            price={`${price} SOL`}
+            productId={0}
+            fileName={"preview product"}
+            fileSize={0}
+            sellerAddress={""}
+          />
+        )}
+
+        <ProductReviews
+          productId={0}
+          productDescription={"This is your demo description"}
+        />
+      </div>
     </div>
   );
 }
 
-const ProductDetails = ({
+const ProductDetailsPreview = ({
   bannerImg,
   productName,
   price,
@@ -133,16 +95,10 @@ const ProductDetails = ({
           <div className="flex items-center mt-4 justify-between">
             <p className="font-bold text-xl">{productName}</p>
 
-            <Link
-              href={`/product/seller/${sellerAddress}`}
-              className="flex items-center gap-x-2 z-30"
-            >
+            <div className="flex items-center gap-x-1">
               <Image src={kody} className="w-5 h-5 rounded-full" alt="" />
-              <p className="text-xs md:text-sm">
-                sold by:
-                {` ${sellerAddress.slice(0, 2)}…${sellerAddress.slice(-2)}`}
-              </p>
-            </Link>
+              <p className="text-xs md:text-sm">sold by: 0x45h…34x</p>
+            </div>
           </div>
           <div className="mt-4 mb-1 flex items-center justify-between text-xs md:text-sm">
             <div className="border flex items-center w-36 h-12 rounded bg-[#F7F7F5]">
@@ -250,31 +206,23 @@ const ProductDetails = ({
               <div className="border bg-white z-10 flex items-center px-2 h-10 w-28">
                 <p>{price}</p>
                 {/* <input
-                  type="number"
-                  className="flex items-center p-1 h-full w-full outline-none "
-                /> */}
+                    type="number"
+                    className="flex items-center p-1 h-full w-full outline-none "
+                  /> */}
               </div>
             </div>
             {/* <p className="text-xs md:text-[12px] font-medium mt-1">
-              Available in Wallet: 2000 USDC
-            </p> */}
+                Available in Wallet: 2000 USDC
+              </p> */}
           </div>
 
           <div className="grid grid-cols-2 gap-x-2 h-14 mt-4 w-full">
             <Button className="text-black h-full bg-inherit border border-[#959592] hover:bg-[#dfdfdc] transition-all duration-200">
               Add to Basket!
             </Button>
-            {/* {buyerId == 0 ? (
-              <Button
-                disabled={true}
-                className="h-full hover:bg-[#095492] transition-all duration-200"
-              >
-                Buy Now!
-              </Button>
-            ) : (
-              <ShareProcessPurchase productId={productId} />
-            )} */}
-            <ShareProcessPurchase productId={productId} />
+            <Button className="text-white bg-black h-full border border-[#959592] hover:bg-[#222122] transition-all duration-200">
+              Add to Basket!
+            </Button>
           </div>
           <div className="flex p-2 mt-5 rounded border h-16 items-center relative overflow-hidden">
             <p className="text-[12px]">
@@ -293,7 +241,7 @@ const ProductDetails = ({
   );
 };
 
-const FolderStructure = ({
+const FolderStructurePreview = ({
   product,
   productCategory,
   redirectUrl,
@@ -304,15 +252,13 @@ const FolderStructure = ({
 }) => {
   return (
     <div className="flex items-center gap-x-3 mt-5 border-b pb-1 border-[##E8E7E5]">
-      <Link href={"/"} className="w-fit">
-        <Image
-          className="w-4"
-          src={homeIconSVG}
-          alt="home"
-          width={50}
-          height={50}
-        />
-      </Link>
+      <Image
+        className="w-4"
+        src={homeIconSVG}
+        alt="home"
+        width={50}
+        height={50}
+      />
 
       <svg
         width="6"
@@ -329,9 +275,7 @@ const FolderStructure = ({
         />
       </svg>
 
-      <Link href={redirectUrl} className=" z-40">
-        <p className=" cursor-pointer">{productCategory}</p>
-      </Link>
+      <p className=" cursor-pointer">{productCategory}</p>
 
       <svg
         width="6"
@@ -362,30 +306,6 @@ const ProductReviews = ({
 }) => {
   const [productReviews, setProductReviews] = useState<ReviewInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-
-  const fetchReviews = async () => {
-    try {
-      setIsLoading(true);
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/reviews?product_id=${productId}`
-      );
-      // console.log("the reviews");
-
-      // console.log(response.data);
-      setProductReviews(response.data);
-      return response.data;
-    } catch (error) {
-      console.log(
-        `You got an error while fetching the product reviews: ${error}`
-      );
-      setIsLoading(false);
-    }
-    setIsLoading(false);
-  };
-
-  useEffect(() => {
-    fetchReviews();
-  }, []);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-5 xl:gap-x-4 2xl:gap-x-8 px-2 pt-2 xl:justify-between 2xl:justify-evenly gap-y-4 sm:gap-y-4 md:gap-y-4 lg:gap-y-0 mb-10">
@@ -450,16 +370,8 @@ const RatingLabel = ({
           />
         ))}
       </div>
-      {/* <p>{description}</p> */}
+
       <p>{displayedDescription}</p>
-      {/* {description.length > 100 && (
-        <button
-          onClick={toggleDescription}
-          className="text-blue-500 underline mt-2"
-        >
-          {isFullDescriptionVisible ? "Show Less" : "Show Full"}
-        </button>
-      )} */}
     </div>
   );
 };
@@ -471,57 +383,10 @@ const PostReviewTab = ({ productId }: { productId: number }) => {
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
   const [userId, setUserId] = useState(null);
-  // console.log(rating);
-
-  const fetchUserId = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${walletAddress}`
-      );
-      // console.log("This is the user: ");
-      // console.log(response.data);
-      // console.log(response.data.id);
-      setUserId(response.data.id);
-    } catch (error) {
-      console.log(`Error while fetching UserId: ${error}`);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserId();
-  }, []);
 
   const toggleReviewWindowVisibility = () => {
     setAddReviewWindowVisibility(!reviewWindowVisibility);
   };
-
-  const postReviewAction = async () => {
-    try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/reviews`,
-        {
-          comment: comment,
-          product_id: Number(productId),
-          rating: rating,
-          user_id: userId,
-        }
-      );
-
-      // console.log(response.data);
-      setAddReviewWindowVisibility(false);
-      return response.data;
-    } catch (error) {
-      console.log(`You got an error while posting review: ${error}`);
-    }
-  };
-
-  // Review post body
-  // {
-  //   "comment": "Amazing product so far, very helpful bots",
-  //   "product_id": 21,
-  //   "rating": 4,
-  //   "user_id": 4
-  // }
 
   return (
     <div className="">
@@ -574,10 +439,7 @@ const PostReviewTab = ({ productId }: { productId: number }) => {
               setComment(e.target.value);
             }}
           ></textarea>
-          <button
-            onClick={postReviewAction}
-            className="border h-12 rounded-lg w-full bg-[#223D40] text-white font-medium hover:bg-[#416c70] transition-all duration-300"
-          >
+          <button className="border h-12 rounded-lg w-full bg-[#223D40] text-white font-medium hover:bg-[#416c70] transition-all duration-300">
             Post Review
           </button>
         </div>
