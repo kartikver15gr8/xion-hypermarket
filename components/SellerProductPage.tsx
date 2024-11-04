@@ -421,28 +421,8 @@ const ProductSales = ({
 
   const duplicateProduct = async () => {
     try {
-      // const url = `https://files.sendit.markets/products/${productFile}`;
-      // const filedata = await fetch(url);
-      // const file = filedata.formData;
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/upload`,
-        {
-          file: productFile,
-          name: productName,
-          description: productDescription,
-          price: productPrice,
-          compare_price: productComparePrice,
-          thumbnail_url: productImage,
-          user_id: userId,
-          category_id: categoryId,
-          status: 0,
-        },
-        {
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "multipart/form-data",
-          },
-        }
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/product/${productId}/duplicate`
       );
       return response.data;
     } catch (error) {
