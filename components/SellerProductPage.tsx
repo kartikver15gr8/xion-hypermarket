@@ -495,12 +495,11 @@ const ProductSales = ({
           {isPopupVisible && (
             <div className="absolute w-36 bg-white border rounded-md shadow-lg p-1">
               <ul>
-                <li
-                  onClick={toggleEditState}
-                  className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200"
-                >
-                  Edit
-                </li>
+                <Link href={`/seller/products/edit/${productId}`}>
+                  <li className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200">
+                    Edit
+                  </li>
+                </Link>
                 <li
                   onClick={duplicateProduct}
                   className="px-2 rounded-sm py-1 flex items-center cursor-pointer hover:bg-[#EAEAEB] transition-all duration-200"
