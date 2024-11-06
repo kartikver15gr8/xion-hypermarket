@@ -3,13 +3,9 @@
 import Image, { StaticImageData } from "next/image";
 import { Button } from "../ui/button";
 import senditcoin from "@/public/coins/senditcoin.png";
-import bitlock from "@/public/_static/background/bitlock.png";
-import perc from "@/public/_static/background/perc.png";
-import cube from "@/public/_static/background/cube.png";
+
 import invertcube from "@/public/invertcube.svg";
-import block from "@/public/_static/background/block.png";
-import allcoinsbg from "@/public/_static/background/allcoinsbg.png";
-import bidtable from "@/public/_static/background/table.png";
+
 import galacticspace from "@/public/_static/background/galacticspace.png";
 import randomstatic from "@/public/randomstatic.png";
 import jungle from "@/public/_static/background/jungle.png";
@@ -18,16 +14,12 @@ import { cn } from "@/lib/utils";
 import Marquee from "@/components/magicui/marquee";
 import coinbg from "@/public/_static/background/coinbg.png";
 import solana from "@/public/coins/solana.png";
-import neutron from "@/public/coins/neutron.png";
+
 import bitcoin from "@/public/coins/btc.png";
 import ethereum from "@/public/coins/ethereum.png";
-import akash from "@/public/coins/akt.png";
-import injective from "@/public/coins/injective.png";
-import atom from "@/public/coins/cosmos.png";
-import dydx from "@/public/coins/dydx.png";
-import celestia from "@/public/coins/tia.png";
+
 import osmosis from "@/public/coins/osmo.png";
-import usdccoin from "@/public/coins/usdccoin.png";
+
 import Link from "next/link";
 import circleshade from "@/public/circleshade.svg";
 import senditape from "@/public/sendit_ape.svg";
@@ -39,44 +31,20 @@ import productfour from "@/public/productfour.svg";
 import productfive from "@/public/productfive.svg";
 import productsix from "@/public/productsix.svg";
 import chingari from "@/public/chingari.svg";
-import hotproductone from "@/public/hotproductone.svg";
-import mevbot from "@/public/mevbots.svg";
-import raindropape from "@/public/raindropapeicon.svg";
-import telegraminsider from "@/public/telegraminsider.svg";
+
 import creativestrategy from "@/public/creativestrategy.svg";
 import flstudio from "@/public/flstudio.svg";
 import gaming from "@/public/gaming.svg";
-import warrior from "@/public/warrior.svg";
-import sportgloves from "@/public/sportgloves.svg";
-import legendary from "@/public/legendarytreat.svg";
+
 import gamecurrency from "@/public/gamecurrency.svg";
-import reaper from "@/public/reaperwream.svg";
-import designuxone from "@/public/designuxone.svg";
-import designuxtwo from "@/public/designuxtwo.svg";
-import designuxthree from "@/public/designuxthree.svg";
-import designuxfour from "@/public/designuxfour.svg";
-import apesbanner from "@/public/_static/background/apesbanner.png";
+
 import gamecard from "@/public/_static/illustrations/gamecard.png";
 import blinkscard from "@/public/_static/illustrations/Blinks.png";
 import gameski from "@/public/_static/illustrations/gameski.png";
-import locket from "@/public/_static/illustrations/locketr.png";
+
 import ecom from "@/public/_static/illustrations/ecom.png";
 import shopify from "@/public/_static/illustrations/shopifyprod.png";
-import ball from "@/public/ball.png";
-import shopifyicon from "@/public/icon/shopifyicon.png";
 
-import globe from "@/public/_static/background/globe.png";
-import puzzle from "@/public/_static/background/puzzle.png";
-import puzzletwo from "@/public/_static/background/puzzletwo.png";
-import fidget from "@/public/_static/background/fidget.png";
-import layers from "@/public/_static/background/layer.png";
-import speaker from "@/public/_static/background/speaker.png";
-import fidgetcat from "@/public/categoryPngs/fidget_cat.png";
-import globecat from "@/public/categoryPngs/globe_cat.png";
-import layercat from "@/public/categoryPngs/layers_cat.png";
-import miccam from "@/public/categoryPngs/mic_cam.png";
-import puzzlecat from "@/public/categoryPngs/puzzle_cat.png";
-import cubecat from "@/public/categoryPngs/cube_cat.png";
 import bannerbgtwo from "@/public/_static/background/bannerbgtwo.png";
 
 // marquee icons
@@ -95,7 +63,6 @@ import markettooling from "@/public/marqueeicons/markettool.png";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import spinnerthree from "@/public/loaders/spinnerthree.svg";
-import spinnerfour from "@/public/loaders/spinnerfour.svg";
 
 const reviews = [
   {
@@ -170,6 +137,7 @@ export default function ProductExhibition() {
         <Category />
         {/* <NewThisWeek /> */}
         {/* <TopRanking sectionTitle="Top Deals" /> */}
+        <Trading />
         <DappCard />
         {/* <NewArrival /> */}
         {/* <DiscountTokens /> */}
@@ -1492,6 +1460,102 @@ const DesignUIUX = () => {
               ))}
           </>
         )}
+      </div>
+    </div>
+  );
+};
+
+const Trading = () => {
+  const [showAll, setShowAll] = useState(false);
+
+  const toggleShowAll = () => {
+    setShowAll(!showAll);
+  };
+
+  return (
+    <div className="relative overflow-hidden flex flex-col mt-10 rounded-xl  border bg-[#F7F7F7] p-2 md:p-3 lg:p-4 xl:px-5 xl:py-10">
+      <Image
+        src={invertcube}
+        className="absolute top-0 w-[200px] right-[14%] opacity-10"
+        alt="cube"
+      />
+      <div className="flex items-center justify-between">
+        <div className="">
+          <div className=" flex items-center gap-x-2">
+            <Image src={chingari} alt="" className="w-5" />
+            <p className="font-medium text-2xl">Trading</p>
+          </div>
+        </div>
+
+        <div
+          onClick={toggleShowAll}
+          className="flex items-center gap-x-1 bg-black text-white rounded px-2 h-8 hover:bg-[#7e7d7d] transition-all duration-300 cursor-pointer"
+        >
+          <p className="text-[12px] sm:text-[14px]">
+            {showAll ? "Show Less" : "Show All"}
+          </p>
+          <svg
+            className="w-2 sm:w-3"
+            viewBox="0 0 12 12"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.33398 5.99967H10.6673M10.6673 5.99967L6.00065 1.33301M10.6673 5.99967L6.00065 10.6663"
+              stroke="#ffffff"
+              strokeWidth="1.28"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </div>
+      </div>
+
+      <div className="mt-5 w-full grid grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-2 xl:gap-y-3 xl:gap-x-3">
+        <HotProductCard
+          key={89}
+          redirectHref={`/product/${89}`}
+          img={"https://ucarecdn.com/219f9793-bdfc-4da9-9ed8-62854b907625/"}
+          category={"How To Guides"}
+          productName={"The ULTIMATE FOREX Trading Alpha Group *DISCORD*"}
+          description={
+            "😄\r\nBeginner Friendly Community\r\nLearn Forex Trading Live: We specialize in welcoming new traders. Learn how to trade forex no matter your experience\r\n🎥\r\nPrivate Livestreams\r\nGain access to our exclusive livestreams with real-time scanning memecoins\r\n🤖\r\nPotion Exclusive Bots\r\nFrom bots that check if a coins socials have been reused to bots that check who the top holders are\r\n👀\r\nTweet Trackers\r\nTrack the most notable Influencers on Forex Twitter & see what alpha they are spewing out on the timeline.\r\n💰\r\nWallet Trackers\r\nTracking the best traders on the blockchain with Hyper-Speed Trackers. Spotting INSIDER Plays before it happens.\r\n📈\r\nVolume Monitors\r\nSpot what coins are getting the most volume INSTANTLY\r\n🧑‍🤝‍🧑\r\n24/7 Support\r\nRound-the-clock assistance from our mods. We're here to help you around the clock."
+          }
+          price={`${0.7} SOL one time payment`}
+        />
+        <HotProductCard
+          key={90}
+          redirectHref={`/product/${90}`}
+          img={"https://ucarecdn.com/e4c58f49-7b7e-4261-a310-4f10ff1e833e/"}
+          category={"Bots"}
+          productName={"MEME Coin Sniper BOT on SOLANA"}
+          description={
+            "💰\r\nAffordable Signals\r\nWe provide Signals Access at a great price. Anyone can receive the signals and make money from their trades.\r\n📈\r\nHigh Winrate\r\nThe winrate of our signals ranges from 80 to 90%..\r\n🧑‍💻\r\nSupport\r\nYou can get assistance from our support with any queries. We are incredibly kind and cordial.\r\n🔍\r\nProfessional Traders\r\nOur skilled traders are here to assist you. They'll assist you with any issue.\r\n⭐\r\nEasy to understand\r\nOur signals are really simple to interpret. You can learn when to buy and when to sell from the signals."
+          }
+          price={`${2} SOL one time payment`}
+        />
+        <HotProductCard
+          key={93}
+          redirectHref={`/product/${93}`}
+          img={"https://ucarecdn.com/31ab51c1-e9f5-40ce-a6fc-307deae61814/"}
+          category={"How To Guides"}
+          productName={"SENDIT Meme Alpha Call Group *Discord*"}
+          description={
+            "💰\r\nAffordable Signals\r\nWe provide Signals Access at a great price. Anyone can receive the signals and make money from their trades.\r\n📈\r\nHigh Winrate\r\nThe winrate of our signals ranges from 80 to 90%..\r\n🧑‍💻\r\nSupport\r\nYou can get assistance from our support with any queries. We are incredibly kind and cordial.\r\n🔍\r\nProfessional Traders\r\nOur skilled traders are here to assist you. They'll assist you with any issue.\r\n⭐\r\nEasy to understand\r\nOur signals are really simple to interpret. You can learn when to buy and when to sell from the signals."
+          }
+          price={`${2.5} SOL one time payment`}
+        />
+        <HotProductCard
+          key={94}
+          redirectHref={`/product/${94}`}
+          img={"https://ucarecdn.com/a0a7a44a-8b44-4bff-ad65-94d3a82379f1/"}
+          category={"SaaS Apps"}
+          productName={"PUMP Fun MEME Sniper Bot"}
+          description={
+            "💰\r\nAffordable Signals\r\nWe provide Signals Access at a great price. Anyone can receive the signals and make money from their trades.\r\n📈\r\nHigh Winrate\r\nThe winrate of our signals ranges from 80 to 90%..\r\n🧑‍💻\r\nSupport\r\nYou can get assistance from our support with any queries. We are incredibly kind and cordial.\r\n🔍\r\nProfessional Traders\r\nOur skilled traders are here to assist you. They'll assist you with any issue.\r\n⭐\r\nEasy to understand\r\nOur signals are really simple to interpret. You can learn when to buy and when to sell from the signals."
+          }
+          price={`${3.2} SOL one time payment`}
+        />
       </div>
     </div>
   );

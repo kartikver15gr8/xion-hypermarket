@@ -62,15 +62,6 @@ export default function SellerDashboardOptions({
           height={200}
         />
 
-        {/* <div className="h-12 w-12 rounded-md">
-          <Image
-            className="w-full h-full rounded-md"
-            src={portfolio_ape}
-            alt=""
-            width={200}
-            height={200}
-          />
-        </div> */}
         <div>
           <p className="font-medium text-[15px]">SELLER PROFILE</p>
           <p className="text-[11px]">
@@ -80,32 +71,16 @@ export default function SellerDashboardOptions({
             `}
           </p>
         </div>
-        {/* <div className=" gap-y-2 ml-4">
-          <svg
-            className="w-2"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 15 15"
-          >
-            <path fill="black" d="m7.5 3l7.5 8H0z" />
-          </svg>
-          <svg
-            className="w-2"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 15 15"
-          >
-            <path fill="black" d="M7.5 12L0 4h15z" />
-          </svg>
-        </div> */}
       </Link>
       <div className="flex flex-col my-2 px-2 h-[400px]">
-        {/* <p className="text-[14px] text-[#C9C9CB] ">PORTAL</p> */}
         <div className="flex gap-x-3 w-[198px]">
-          {/* <div className="h-56 w-[2px] bg-[#C9C9CB] rounded-full"></div> */}
           <ul className="flex flex-col font-normal py-2 mb-[4px] w-full rounded-md px-1">
             <Link href="/seller/dashboard">
               <li
                 className={
-                  pathname == "/seller/dashboard" ? isActiveTab : isInactiveTab
+                  pathname.includes("/seller/dashboard")
+                    ? isActiveTab
+                    : isInactiveTab
                 }
               >
                 <p className="text-[18px]">Dashboard</p>
@@ -114,7 +89,9 @@ export default function SellerDashboardOptions({
             <Link href="/seller/products">
               <li
                 className={
-                  pathname == "/seller/products" ? isActiveTab : isInactiveTab
+                  pathname.includes("/seller/products")
+                    ? isActiveTab
+                    : isInactiveTab
                 }
               >
                 <p className="text-[18px] ">Products</p>
@@ -123,7 +100,7 @@ export default function SellerDashboardOptions({
             <Link href="/seller/transactions">
               <li
                 className={
-                  pathname == "/seller/transactions"
+                  pathname.includes("/seller/transactions")
                     ? isActiveTab
                     : isInactiveTab
                 }
