@@ -456,17 +456,6 @@ const CategoryCard = ({
 const DappCard = () => {
   return (
     <div className="relative rounded-xl mt-10 h-[200px] md:h-[300px] shadow-[inset_-90px_70px_90px_rgba(0,0,0,0.1)] overflow-hidden bg-[#D1D1D2]">
-      {/* <Image
-        src={allcoinsbg}
-        alt="Background"
-        className="opacity-[10%]  absolute bg-blend-luminosity -right-20 w-[600px] md:w-[1100px] h-full"
-      />
-      <Image
-        src={bidtable}
-        alt="Background"
-        className="hidden lg:flex absolute -top-20 right-0 lg:w-[750px] fade-bottom"
-      /> */}
-
       <Image
         src={bannerbgtwo}
         alt="Background"
@@ -474,37 +463,18 @@ const DappCard = () => {
         layout="fill"
         objectFit="cover"
       />
-      <div className="relative px-4 lg:px-16 pt-4 lg:pt-10 h-full flex flex-col items-center">
-        {/* <div className="flex items-center gap-x-1 md:gap-x-2 w-fit">
-          <svg
-            width="20"
-            height="20"
-            viewBox="0 0 20 20"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M10 0C4.5 0 0 4.5 0 10C0 15.5 4.5 20 10 20C15.5 20 20 15.5 20 10C20 4.5 15.5 0 10 0ZM6.83 5.05C7.81 5.05 8.6 5.84 8.6 6.83C8.6 7.81 7.81 8.6 6.83 8.6C5.84 8.6 5.05 7.81 5.05 6.83C5.05 5.84 5.84 5.05 6.83 5.05ZM13.22 15C12.24 15 11.45 14.2 11.45 13.22C11.45 12.24 12.24 11.45 13.22 11.45C14.2 11.45 15 12.24 15 13.22C15 14.2 14.2 15 13.22 15ZM6.5 15.03L5 13.53L13.53 5L15.03 6.5L6.5 15.03Z"
-              fill="#050505"
-            />
-          </svg>
-
-          <p className="font-medium">DAPP</p>
-        </div> */}
-        <div className="w-fit flex flex-col items-center text-white">
-          <p className="font-bold text-[16px] md:text-[20px] xl:text-[32px]">
+      <div className="relative px-4 lg:px-16 h-full flex flex-col items-center justify-center">
+        <div className="w-fit flex flex-col items-center text-white ">
+          <p className="font-bold text-[16px] md:text-[20px] xl:text-[40px]">
             INSTANT CHECKOUT
           </p>
-          <p className="font-bold text-[16px] md:text-[20px] xl:text-[32px]">
+          <p className="font-bold text-[16px] md:text-[20px] xl:text-[40px]">
             WITH CRYPTO
           </p>
-          <p className="text-xs md:text-sm mt-1 md:mt-2 lg:mt-3  lg:mb-4">
-            Instant Checkout with Crypto
-          </p>
         </div>
-        <Button className="px-2 mt-4 lg:mt-2 md:px-4 w-36 lg:w-52 rounded-lg text-md bg-white text-black  hover:bg-[#e1e4e7] transition-all duration-300 ">
+        {/* <Button className="px-2 mt-4 lg:mt-2 md:px-4 w-36 lg:w-52 rounded-lg text-md bg-white text-black  hover:bg-[#e1e4e7] transition-all duration-300 ">
           Connect Wallet
-        </Button>
+        </Button> */}
       </div>
     </div>
   );
@@ -1265,54 +1235,60 @@ const GamingCollectibles = () => {
       </div>
       <div className="grid grid-cols-12 gap-x-4 mt-6">
         <GamingCollectiblesCard
+          productId={97}
           className="col-span-12 sm:col-span-4 border rounded "
-          img={gamecard}
-          category="Digital Product"
-          title="Data 2 Skin: Anti-Mage/Lore"
-          description="Get Mage Skin"
-          price="150 SOL one time payment"
+          img={"https://ucarecdn.com/6e7a148e-1f3c-4dba-96b2-687d56eeab0b/"}
+          category="Design Templates"
+          title="Photoshop Layers and After Effects"
+          description="Get the best bundle for video editing and photoshop"
+          price="12 SOL one time payment"
         />
 
-        <div className="col-span-12 sm:col-span-8  grid grid-cols-2 sm:grid-cols-3 gap-x-3">
-          <GamingCollectiblesCard
-            className=""
-            img={gamecurrency}
+        <div className="col-span-12 sm:col-span-8  grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-3">
+          <HotProductCard
+            key={45}
+            redirectHref={`/product/45`}
+            img={"https://ucarecdn.com/321c8d0f-c6be-4d00-8e26-537399b10d15/"}
+            category="Marketing Tools"
+            productName="Mr Woke Top 10 VCs List"
+            description="its sooo goodd"
+            price="$1 one time payment"
+          />
+          <HotProductCard
+            key={36}
+            redirectHref={`/product/36`}
+            img={"https://ucarecdn.com/19c16028-b2c1-49c3-aceb-f4d9978f1196/"}
             category="Digital Product"
-            title="$140 in Game Currency"
-            description="Life Beyond: Voucher for $140 worth of in-game currency"
-            price="$150 one time payment"
+            productName="Productivity Tools"
+            description="Get the best productivity tools"
+            price="$12 one time payment"
           />
-          <GamingCollectiblesCard
-            className=""
-            img={shopify}
-            category="Digital Service"
-            title="Content Writing"
-            description="Get help with writing high-quality blog posts, articles or any other content."
-            price="$150 one time payment"
-          />
-          <GamingCollectiblesCard
-            className=""
-            img={ecom}
-            category="Digital Service"
-            title="Ecommerce Sales Boosting"
-            description="This group is your go-to hub for the latest meme coin picks, trending coins."
-            price="$150 one time payment"
-          />
-          <GamingCollectiblesCard
-            className=""
-            img={gameski}
+          <HotProductCard
+            key={35}
+            redirectHref={`/product/35`}
+            img={"https://ucarecdn.com/9c9b5673-4a29-4b31-8298-046f80a50392/"}
             category="Digital Product"
-            title="Legends of Mage Skin"
-            description="Get Mage Skin"
-            price="$150 one time payment"
+            productName="DevTools"
+            description="DevTools kit for programmers"
+            price="$394 one time payment"
           />
-          <GamingCollectiblesCard
-            className=""
-            img={blinkscard}
-            category="Digital Service"
-            title="Blinks for tokens on solana"
-            description="Upgrade your in-game style with this unusual Defiant Spartan skin"
-            price="$21 one time payment"
+          <HotProductCard
+            key={33}
+            redirectHref={`/product/33`}
+            img={"https://ucarecdn.com/cf0746de-0b53-4bac-a092-95588fd3dcad/"}
+            category="SaaS Product"
+            productName="Notion AI"
+            description="Notion AI guide"
+            price="$23 one time payment"
+          />
+          <HotProductCard
+            key={32}
+            redirectHref={`/product/32`}
+            img={"https://ucarecdn.com/155fe04a-921e-4487-b3a9-5ec9eeb20445/"}
+            category="SaaS Apps"
+            productName="Trading Guide"
+            description="Get best crypto trading guide written by experts."
+            price="$10 one time payment"
           />
 
           <div className="relative border rounded lg:rounded-xl flex px-1 md:px-2 xl:px-4 justify-center flex-col text-white shadow-[inset_-90px_70px_90px_rgba(0,0,0,0.8)] bg-[#666565]">
@@ -1359,18 +1335,30 @@ const GamingCollectiblesCard = ({
   description,
   price,
   className,
+  productId,
 }: {
-  img: StaticImageData | string;
+  img: undefined | string;
   category: string;
   title: string;
   description: string;
   price: string;
   className: string;
+  productId: number;
 }) => {
   return (
-    <div className={`${className}`}>
+    <Link
+      href={`/product/${productId}`}
+      className={`${className} bg-inherit hover:bg-[#e7e7e9] hover:border-[#ababae] hover:shadow-lg transition-all duration-300`}
+    >
       <div className="p-1">
-        <Image src={img} alt="" className="rounded w-full" />
+        {/* <Image src={img} alt="" className="rounded w-full" /> */}
+        <div className="relative w-full pb-[110%] overflow-hidden rounded border border-[#DEDEDE]">
+          <img
+            src={img}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </div>
         <div className="p-1">
           <p className="text-[10px] bg-[#EEEEEF] w-fit mt-2">{category}</p>
           <p className="font-bold text-lg mt-2">{title}</p>
@@ -1378,7 +1366,7 @@ const GamingCollectiblesCard = ({
           <p className="mt-2">{price}</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
