@@ -57,10 +57,6 @@ function SearchForm({
 function PageLandingContent() {
   const router = useRouter();
   const search = useSearchParams();
-  const [allProducts, setAllProducts] = useState<ProductInterface[]>([]);
-  const [filteredProducts, setFilteredProducts] = useState<ProductInterface[]>(
-    []
-  );
   const [searchQuery, setSearchQuery] = useState<string>("");
 
   const onSearch = (event: React.FormEvent) => {
@@ -74,30 +70,7 @@ function PageLandingContent() {
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
-
-    const filtered = allProducts.filter((product) =>
-      product.name.toLowerCase().includes(query)
-    );
-    setFilteredProducts(filtered);
   };
-
-  // useEffect(() => {
-  //   const fetchAllProducts = async () => {
-  //     if (typeof window === "undefined") return;
-
-  //     try {
-  //       const response = await axios.get(
-  //         `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products`
-  //       );
-  //       setAllProducts(response.data);
-  //       setFilteredProducts(response.data);
-  //     } catch (error) {
-  //       console.log(`Got an error while fetching the products: ${error}`);
-  //     }
-  //   };
-
-  //   fetchAllProducts();
-  // }, []);
 
   return (
     <div className="pt-16 relative flex justify-center h-[500px] md:h-[570px] lg:h-[600px] border-black overflow-hidden">

@@ -2,9 +2,7 @@
 
 import Link from "next/link";
 import { useCallback, useState } from "react";
-import sendit_logo from "@/public/sendit_logo.svg";
 import sendit_white_ape from "@/public/sendit_white_ape.svg";
-import sendit_white_logo from "@/public/sendit_white_logo.svg";
 import Image from "next/image";
 import portolio_ape from "@/public/_static/illustrations/portfolio_ape.png";
 import shinegradient from "@/public/_static/background/shinegradient.png";
@@ -15,11 +13,10 @@ import { toast } from "sonner";
 import { walletState } from "@/store/atom/walletDetails";
 import ape from "@/public/ape.png";
 import { Button } from "./ui/button";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useKeplr } from "@/hooks/useKeplr";
 import WalletConnectWindow from "./WalletConnectWindow";
 import PhantomWalletButton from "./PhantomWalletButton";
-import shopBag from "@/public/shopbag.svg";
 
 const isActive =
   "relative text-[14px] md:text-[16px] bg-[#dcdfe0] lg:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200";
@@ -35,15 +32,6 @@ export default function FullNav() {
   const [isOpen, setIsOpen] = useState(false);
   const walletAddress = useRecoilValue(walletState);
   const [walletWindowActive, setWalletWindowActive] = useState(false);
-  const {
-    keplrConnected,
-    userAddress,
-    connectWallet,
-    disconnectWallet,
-    balance,
-    add,
-    bal,
-  } = useKeplr();
 
   const copyToClipboard = useCallback(() => {
     navigator.clipboard
@@ -65,6 +53,8 @@ export default function FullNav() {
   const toggleWalletConnect = () => {
     setWalletWindowActive(!walletWindowActive);
   };
+
+  const pathname = usePathname();
 
   return (
     <div className="absolute w-full flex flex-col p-2 sm:p-0">
@@ -107,12 +97,11 @@ export default function FullNav() {
         {/* Navigation Items */}
         <NavItems />
 
-        {/* Will render PortfolioButton and Signin/Register button according to the userstate */}
-
         {/* <ConnectButton toggleWindow={toggleWalletConnect} /> */}
         <div className="hidden sm:flex items-center gap-x-1">
-          <BecomeSeller />
+          {/* <BecomeSeller /> */}
           {/* <ConnectWithWallet /> */}
+          {pathname != "/" && <SearchForm />}
           <PhantomWalletButton />
         </div>
 
@@ -216,61 +205,8 @@ export default function FullNav() {
                 />
                 <div className="flex flex-col mx-[8px]">
                   <p className="text-[18px] font-medium">Become a Seller</p>
-                  {/* <p className="text-[12px] text-[#949493]">
-                    {walletAddress
-                      ? `${walletAddress.slice(0, 6)}...${walletAddress.slice(
-                          -5
-                        )}`
-                      : "sendit...vucmr"}
-                  </p> */}
                 </div>
               </Link>
-              {/*  Portfolio button */}
-              {/* <div
-                onClick={copyToClipboard}
-                className="w-1/6 flex justify-center items-center h-full  relative bg-no-repeat bg-center"
-              >
-                <Image
-                  src={shinegradient}
-                  alt="Background"
-                  layout="fill"
-                  objectFit="cover"
-                  className="opacity-[20%]"
-                />
-                <Image
-                  src={noisebg}
-                  alt="Background"
-                  layout="fill"
-                  objectFit="cover"
-                  className="opacity-[5%]"
-                />
-                <svg
-                  className="w-6 rotate-90 z-10 hover:-rotate-90 transition-all duration-200"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 512 512"
-                >
-                  <rect
-                    width="336"
-                    height="336"
-                    x="128"
-                    y="128"
-                    fill="none"
-                    stroke="#4B4B54"
-                    strokeLinejoin="round"
-                    strokeWidth="32"
-                    rx="57"
-                    ry="57"
-                  />
-                  <path
-                    fill="none"
-                    stroke="#4B4B54"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="32"
-                    d="m383.5 128l.5-24a56.16 56.16 0 0 0-56-56H112a64.19 64.19 0 0 0-64 64v216a56.16 56.16 0 0 0 56 56h24"
-                  />
-                </svg>
-              </div> */}
             </motion.div>
           </div>
         </motion.div>
@@ -346,22 +282,7 @@ const itemVariants = {
 
 const NavItems = () => {
   const [activeTooltip, setActiveTooltip] = useState<number | null>(null);
-  // const menuItems: MenuItem[] = [
-  //   { text: "Shop now", tooltip: "Buy discounts!", href: "/liquidation" },
-  //   { text: "Ape Bank", tooltip: "Get cash now!", href: "/borrow" },
-  //   {
-  //     text: "Earn",
-  //     tooltip: "Earn rewards and incentives!",
-  //     href: "/earnmore",
-  //   },
 
-  //   { text: "Portfolio", tooltip: "Check your portfolio!", href: "/portfolio" },
-  //   {
-  //     text: "Achievements",
-  //     tooltip: "View your accomplishments",
-  //     href: "/achievements",
-  //   },
-  // ];
   const menuItems: MenuItem[] = [
     {
       text: "Explore",
@@ -567,3 +488,53 @@ const BecomeSeller = () => {
     </Link>
   );
 };
+
+function SearchForm() {
+  const router = useRouter();
+
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const onSearch = (event: React.FormEvent) => {
+    if (searchQuery.length >= 1) {
+      event.preventDefault();
+      const encodedSearchQuery = encodeURI(searchQuery);
+      router.push(`/search?q=${encodedSearchQuery}`);
+    }
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const query = event.target.value.toLowerCase();
+    setSearchQuery(query);
+  };
+  return (
+    <form onSubmit={onSearch} className=" rounded-full  bg-[#EEEEEF]">
+      <div className="flex border-[1.5px] border-[#303030] h-10 p-1 w-[200px] lg:w-[250px]  items-center rounded-full bg-inherit">
+        <input
+          className="outline-none placeholder-[#262626] w-full h-full p-2 rounded-full text-[#262626] bg-inherit"
+          type="text"
+          placeholder="Search"
+          onChange={handleSearchChange}
+        />
+        <button
+          type="submit"
+          className="flex items-center justify-center p-2 rounded-full bg-black hover:bg-[#52525C] transition-all duration-300"
+        >
+          <svg
+            className="w-4 h-4"
+            viewBox="0 0 15 14"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M13.5 13L10.6 10.1M12.1667 6.33333C12.1667 9.27885 9.77885 11.6667 6.83333 11.6667C3.88781 11.6667 1.5 9.27885 1.5 6.33333C1.5 3.38781 3.88781 1 6.83333 1C9.77885 1 12.1667 3.38781 12.1667 6.33333Z"
+              stroke="#FEFEFD"
+              strokeWidth="1.33333"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+    </form>
+  );
+}
