@@ -9,6 +9,7 @@ import FullNav from "@/components/FullNav";
 import { siteConfig } from "@/config/site-config";
 import SolanaWalletProvider from "@/components/SolanaWalletProvider";
 import React, { createContext, useContext } from "react";
+import Providers from "@/utils/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,10 +26,12 @@ export default function RootLayout({
         <RecoilRootWrapper>
           {/* <HamburgerNav /> */}
           {/* <Navigation /> */}
-          <SolanaWalletProvider>
-            <FullNav />
-            {children}
-          </SolanaWalletProvider>
+          <Providers>
+            <SolanaWalletProvider>
+              <FullNav />
+              {children}
+            </SolanaWalletProvider>
+          </Providers>
           {/* <BottomNav /> */}
         </RecoilRootWrapper>
         <ClientToaster />
