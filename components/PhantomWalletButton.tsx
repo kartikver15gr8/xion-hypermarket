@@ -172,7 +172,7 @@ const PhantomWalletButton: React.FC = () => {
         <div className="">
           <button
             onClick={() => setShowPopup(!showPopup)}
-            className="w-10 h-10 bg-[#eeeeee] shadow-inner rounded-full border border-[#616161] hidden sm:flex sm:items-center sm:justify-center bg-inherit p-2 text-white md:text-[12px] text-[11px] lg:text-[14px] xl:text-[16px] hover:bg-[#9b9b9d] transition-all duration-300"
+            className="w-10 h-10 bg-[#eeeeee] shadow-inner rounded-full border-2 border-[#616161] hidden sm:flex sm:items-center sm:justify-center bg-inherit p-2 text-white md:text-[12px] text-[11px] lg:text-[14px] xl:text-[16px] hover:bg-[#9b9b9d] transition-all duration-300"
           >
             {showPopup ? (
               <svg
@@ -231,7 +231,10 @@ const PopupMenu: React.FC<PopupMenuProps> = ({
   return (
     <div className="absolute bg-white border rounded-md  p-2 right-1 md:right-5 lg:right-10 top-14 shadow-inner">
       <Link href="/seller/dashboard">
-        <button className="block rounded w-full text-left py-1 px-2 hover:bg-gray-200 transition-all duration-300">
+        <button
+          onClick={onClose}
+          className="block rounded w-full text-left py-1 px-2 hover:bg-gray-200 transition-all duration-300"
+        >
           Dashboard
         </button>
       </Link>
