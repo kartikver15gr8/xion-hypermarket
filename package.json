@@ -21,6 +21,7 @@
     "@heroicons/react": "^2.1.5",
     "@keplr-wallet/types": "^0.12.127",
     "@prisma/client": "5.19.1",
+    "@privy-io/react-auth": "^1.93.0",
     "@radix-ui/react-slider": "^1.2.0",
     "@radix-ui/react-slot": "^1.1.0",
     "@solana/actions": "^1.6.4",
