@@ -17,6 +17,7 @@ import { usePathname, useRouter } from "next/navigation";
 import { useKeplr } from "@/hooks/useKeplr";
 import WalletConnectWindow from "./WalletConnectWindow";
 import PhantomWalletButton from "./PhantomWalletButton";
+import PrivyConnection from "./PrivyConnection";
 
 const isActive =
   "relative text-[14px] md:text-[16px] bg-[#dcdfe0] lg:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200";
@@ -102,7 +103,8 @@ export default function FullNav() {
           {/* <BecomeSeller /> */}
           {/* <ConnectWithWallet /> */}
           {pathname != "/" && <SearchForm />}
-          <PhantomWalletButton />
+          {/* <PhantomWalletButton /> */}
+          <PrivyConnection />
         </div>
 
         {/* Below is the Ape icon for phone screen UI */}
