@@ -16,7 +16,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
         appearance: {
           theme: "light",
           accentColor: "#676FFF",
-          logo: "https://your-logo-url",
+          logo: "https://ucarecdn.com/0e53b504-0a39-4cfb-ae1f-7466e2d43e5b/bgremovedprivy.png",
           walletChainType: "solana-only",
           landingHeader: "Connect to Sendit",
         },
