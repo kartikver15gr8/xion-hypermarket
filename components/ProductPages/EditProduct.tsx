@@ -22,7 +22,7 @@ export default function EditProduct({ productId }: { productId: number }) {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
   const [categoryName, setCategoryName] = useState<string | undefined>("");
-  const [categoryId, setCategoryId] = useState<number | undefined>();
+  const [categoryId, setCategoryId] = useState<number | string | undefined>();
 
   const [userId, setUserId] = useState<number | undefined>();
   const [title, setTitle] = useState<string | undefined>("");
@@ -71,12 +71,12 @@ export default function EditProduct({ productId }: { productId: number }) {
     const selectedCategoryId = event.target.value;
     if (categories) {
       const selectedCategory = categories.find(
-        (category) => category.id === parseInt(selectedCategoryId)
+        (category) => category.ID === selectedCategoryId
       );
       // @ts-ignore
       setSelectedCategory(selectedCategory);
-      setCategoryId(selectedCategory?.id);
-      setCategoryName(selectedCategory?.name);
+      setCategoryId(selectedCategory?.ID);
+      setCategoryName(selectedCategory?.Name);
     }
   };
 
@@ -221,8 +221,8 @@ export default function EditProduct({ productId }: { productId: number }) {
               >
                 <option value="">Select a category</option>
                 {categories.map((category) => (
-                  <option key={category.id} value={category.id}>
-                    {category.name}
+                  <option key={category.ID} value={category.ID}>
+                    {category.Name}
                   </option>
                 ))}
               </select>

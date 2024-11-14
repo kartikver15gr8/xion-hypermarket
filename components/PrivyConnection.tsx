@@ -10,40 +10,59 @@ import { useRecoilState, useRecoilValue } from "recoil";
 import { toast } from "sonner";
 
 export default function PrivyConnection() {
-  const { login, logout, user, authenticated, ready } = usePrivy();
+  const { login, logout, user, authenticated, ready, getAccessToken } =
+    usePrivy();
   const [walletAddress, setWalletAddress] = useState("");
   const [userExist, setUserExist] = useState(true);
   const [showPopup, setShowPopup] = useState(false);
   const [phantomAddress, setPhantomAddress] = useRecoilState(phantomWallet);
   const walletAddr = useRecoilValue(phantomWallet);
   const [userStateId, setUserStateId] = useRecoilState(userIdState);
+  const [privyAccessToken, setPrivyAccessToken] = useState("");
+  const [externalId, setExternalId] = useState("");
 
   useEffect(() => {
     const postUser = async () => {
       try {
         const response = await axios.post(
-          `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/signup`,
-          { wallet_address: walletAddress }
+          `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/admin/signup`,
+          {},
+          {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${privyAccessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
         );
-        setUserStateId(response.data.rowId);
-        return response.data;
+
+        console.log("User created successfully:", response.data);
       } catch (error) {
-        console.log(`You got an error while creating a new user: ${error}`);
+        console.error(`Error creating user: ${error}`);
       }
     };
-    if (!userExist) {
+
+    if (privyAccessToken && !userExist) {
       postUser();
     }
-  }, [userExist, walletAddress]);
+  }, [privyAccessToken, userExist]);
 
   useEffect(() => {
     const checkUserExist = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${walletAddress}`
+          `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/admin/user/${externalId}`,
+          {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${privyAccessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
         );
         setUserExist(true);
-        setUserStateId(response.data.id);
+        setUserStateId(response.data.ID);
+
         return response.data;
       } catch (error) {
         setUserExist(false);
@@ -52,19 +71,36 @@ export default function PrivyConnection() {
         );
       }
     };
-    if (walletAddress !== "") {
+    if (privyAccessToken && externalId) {
       checkUserExist();
     }
-  }, [walletAddress]);
+  }, [externalId, privyAccessToken]);
 
   useEffect(() => {
-    if (authenticated && user?.wallet?.address) {
-      setWalletAddress(user.wallet.address);
-      setPhantomAddress(user.wallet.address);
-      toast.info("Successfully connected to Phantom");
-    } else {
-      setWalletAddress("");
-    }
+    const fetchToken = async () => {
+      try {
+        const token = await getAccessToken();
+        if (user) {
+          setExternalId(user.id);
+        }
+        if (token) {
+          setPrivyAccessToken(token);
+        }
+        if (authenticated && user?.wallet?.address) {
+          setWalletAddress(user.wallet.address);
+          setPhantomAddress(user.wallet.address);
+
+          console.log(`walletAddress: ${user.wallet.address}`);
+          console.log(`privyToken: ${privyAccessToken}`);
+          toast.info("Successfully connected to Phantom");
+        } else {
+          setWalletAddress("");
+        }
+      } catch (error) {
+        console.log(`Error while executing fetchToken: ${error}`);
+      }
+    };
+    fetchToken();
   }, [authenticated, user, setPhantomAddress]);
 
   const handleLogout = async () => {

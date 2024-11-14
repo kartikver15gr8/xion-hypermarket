@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductInterface } from "@/lib/models";
+import { ProductInterface, ProductInterfaceTwo } from "@/lib/models";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useState, useCallback } from "react";
@@ -12,7 +12,7 @@ import { Suspense } from "react";
 function SearchContent() {
   const search = useSearchParams();
   const searchQuery = search ? search.get("q") : null;
-  const [allProducts, setAllProducts] = useState<ProductInterface[]>([]);
+  const [allProducts, setAllProducts] = useState<ProductInterfaceTwo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -22,8 +22,8 @@ function SearchContent() {
     setIsLoading(true);
     setError(null);
     try {
-      const response = await axios.get<ProductInterface[]>(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?limit=40`
+      const response = await axios.get<ProductInterfaceTwo[]>(
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/products?limit=40`
       );
       setAllProducts(response.data);
     } catch (error) {
@@ -43,9 +43,9 @@ function SearchContent() {
     const lowerQuery = searchQuery.toLowerCase();
     return allProducts.filter(
       (product) =>
-        product.name.toLowerCase().includes(lowerQuery) ||
-        product.description.toLowerCase().includes(lowerQuery) ||
-        product.category.name.toLowerCase().includes(lowerQuery)
+        product.Name.toLowerCase().includes(lowerQuery) ||
+        product.Description.toLowerCase().includes(lowerQuery) ||
+        product.Category.Name.toLowerCase().includes(lowerQuery)
     );
   }, [allProducts, searchQuery]);
 
@@ -82,12 +82,12 @@ function SearchContent() {
             {filteredProducts.map((product, key) => (
               <HotProductCard
                 key={key}
-                redirectHref={`/product/${product.id}`}
-                img={product.thumbnail_url}
-                category={product.category.name}
-                productName={product.name}
-                description={product.description}
-                price={`$${product.price} one time payment`}
+                redirectHref={`/product/${product.ID}`}
+                img={product.ThumbnailURL}
+                category={product.Category.Name}
+                productName={product.Name}
+                description={product.Description}
+                price={`$${product.Price} one time payment`}
               />
             ))}
           </div>

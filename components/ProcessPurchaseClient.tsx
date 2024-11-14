@@ -30,7 +30,7 @@ declare const window: PhantomWindow;
 export default function ProcessPurchaseClient({
   productId,
 }: {
-  productId: number;
+  productId: number | string;
 }) {
   const router = useRouter();
 

@@ -8,7 +8,7 @@ import noisebg from "@/public/_static/background/noisebg.png";
 import { Button } from "@/components/ui/button";
 import kind from "@/public/kind.svg";
 import axios from "axios";
-import { ProductInterface } from "@/lib/models";
+import { ProductInterface, ProductInterfaceTwo } from "@/lib/models";
 import star from "@/public/_static/illustrations/star.svg";
 import { ReviewInterface } from "@/lib/models";
 import { useRecoilValue } from "recoil";
@@ -22,14 +22,14 @@ import MarkdownRenderer from "@/components/MarkdownRenderer";
 
 export default function Product({ params }: any) {
   const [productId, setProductId] = useState(params.product);
-  const [productById, setProductById] = useState<ProductInterface>();
+  const [productById, setProductById] = useState<ProductInterfaceTwo>();
 
   // Fetch product data based on productId
   const fetchProductData = async () => {
     try {
       // console.log(`Fetching product with ID: ${productId}`);
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?product_id=${productId}`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/products?product_id=${productId}`
       );
       setProductById(response.data[0]);
     } catch (error) {
@@ -65,29 +65,29 @@ export default function Product({ params }: any) {
     <div className="pt-16 pb-20 w-full min-h-screen px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[200px] ">
       {productById && (
         <FolderStructure
-          product={productById.name}
-          productCategory={productById.category.name}
-          redirectUrl={`/product/category/${productById.category_id}`}
+          product={productById.Name}
+          productCategory={productById.Category.Name}
+          redirectUrl={`/product/category/${productById.CategoryID}`}
         />
       )}
       {productById && (
         <ProductDetails
           comparePrice={
-            productById.compare_price ? productById.compare_price : "NA"
+            productById.ComparePrice ? productById.ComparePrice : "NA"
           }
-          bannerImg={productById.thumbnail_url}
-          productName={productById.name}
-          price={`${productById.price} SOL`}
-          productId={productById.id}
-          fileName={productById.filename}
-          fileSize={productById.file_size}
+          bannerImg={productById.ThumbnailURL}
+          productName={productById.Name}
+          price={`${productById.Price} SOL`}
+          productId={productById.ID}
+          fileName={productById.Filename}
+          fileSize={productById.FileSize}
           sellerAddress={productById.seller_wallet_address}
         />
       )}
       {productById && (
         <ProductReviews
           productId={productId}
-          productDescription={productById.description}
+          productDescription={productById.Description}
         />
       )}
 
@@ -109,9 +109,9 @@ const ProductDetails = ({
   bannerImg: string;
   productName: string;
   price: string;
-  productId: number;
+  productId: number | string;
   comparePrice: string | number;
-  fileSize: string | number;
+  fileSize: bigint | number;
   fileName: string;
   sellerAddress: string;
 }) => {

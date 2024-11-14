@@ -10,9 +10,13 @@ import { useRouter } from "next/navigation";
 import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 import MarkdownEditor from "@/components/MarkdownEditor";
+import { usePrivy } from "@privy-io/react-auth";
+import { userIdState } from "@/store/atom/userIdState";
+import Link from "next/link";
 
 const uploadcarekey = process.env.NEXT_PUBLIC_UPLOADCARE_KEY || "";
 export default function ProductUpload() {
+  const { user, authenticated, getAccessToken } = usePrivy();
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -20,6 +24,7 @@ export default function ProductUpload() {
   const [comparePrice, setComparePrice] = useState("");
   const [file, setFile] = useState(null);
   const [newDescription, setNewDescription] = useState("");
+  const user_id = useRecoilValue(userIdState);
 
   const handleMarkdownChange = (value?: string) => {
     if (value) {
@@ -35,10 +40,8 @@ export default function ProductUpload() {
 
   const handleFileUpload = (fileInfo: any) => {
     if (fileInfo) {
-      // Get the uploaded file's URL
       const url = fileInfo.cdnUrl;
       setImageUrl(url);
-      // console.log("Uploaded Image URL:", url); // Log or save this URL to your database
     } else {
       console.log("No files");
     }
@@ -48,29 +51,30 @@ export default function ProductUpload() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
   const [categoryName, setCategoryName] = useState<string | undefined>("");
-  const [categoryId, setCategoryId] = useState<number | undefined>();
+  const [categoryId, setCategoryId] = useState<string | number | undefined>();
   const userWalletAddress = useRecoilValue(phantomWallet);
   const [userId, setUserId] = useState(0);
+  const [privyAccessToken, setPrivyAccessToken] = useState("");
 
-  const fetchUserId = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${userWalletAddress}`
-      );
-      // console.log(response.data);
-      setUserId(response.data.id);
-      // console.log(response.data.id);
-    } catch (error) {
-      console.log(`You got error while fetching UserId: ${error}`);
-    }
-  };
+  // const fetchUserId = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${userWalletAddress}`
+  //     );
+  //     // console.log(response.data);
+
+  //     setUserId(response.data.id);
+  //     // console.log(response.data.id);
+  //   } catch (error) {
+  //     console.log(`You got error while fetching UserId: ${error}`);
+  //   }
+  // };
 
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/categories`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/categories`
       );
-      // console.log(response.data);
       setCategories(response.data);
     } catch (error) {
       console.log(`You got an error: ${error}`);
@@ -78,7 +82,7 @@ export default function ProductUpload() {
   };
 
   useEffect(() => {
-    fetchUserId();
+    // fetchUserId();
     fetchCategories();
   }, []);
 
@@ -86,27 +90,34 @@ export default function ProductUpload() {
     const selectedCategoryId = event.target.value;
     if (categories) {
       const selectedCategory = categories.find(
-        (category) => category.id === parseInt(selectedCategoryId)
+        (category) => category.ID === selectedCategoryId
       );
       // @ts-ignore
       setSelectedCategory(selectedCategory);
-      setCategoryId(selectedCategory?.id);
-      setCategoryName(selectedCategory?.name);
-      // console.log(selectedCategory?.ID);
-      // console.log(selectedCategory?.Name);
-      // console.log(selectedCategory?.ID);
+
+      setCategoryId(selectedCategory?.ID);
+      setCategoryName(selectedCategory?.Name);
     }
   };
-  const logEnvDada = () => {
-    // console.log(`${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/api/v1/upload`);
-    // console.log(`Category: ${categoryId}`);
-    router.push("/seller/dashboard");
-  };
+
+  useEffect(() => {
+    const fetchToken = async () => {
+      try {
+        const token = await getAccessToken();
+        if (token) {
+          setPrivyAccessToken(token);
+        }
+      } catch (error) {
+        console.log("You got an error while executing fetchToken()");
+      }
+    };
+    fetchToken();
+  }, []);
 
   const formSubmit = async () => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/upload`,
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/admin/upload`,
         {
           file: file,
           name: title,
@@ -114,13 +125,14 @@ export default function ProductUpload() {
           price: price,
           compare_price: comparePrice,
           thumbnail_url: imageUrl,
-          user_id: userId,
+          user_id: user_id,
           category_id: categoryId,
           status: 1,
         },
         {
           headers: {
             Accept: "application/json",
+            Authorization: `Bearer ${privyAccessToken}`,
             "Content-Type": "multipart/form-data",
           },
         }
@@ -185,19 +197,11 @@ export default function ProductUpload() {
               type="text"
               className="border w-full h-12 p-2 flex items-center rounded outline-none"
               placeholder="Enter title"
-              onChange={(e) => {
+              onChange={(e: any) => {
                 setTitle(e.target.value);
               }}
             />
           </div>
-          {/* <div className="">
-          <p className="text-xs mb-2">Tags:</p>
-          <input
-            type="text"
-            className="border w-full h-12 p-2 flex items-center rounded outline-none"
-            placeholder="Enter title"
-          />
-        </div> */}
         </div>
         <p className="mt-3 text-xs mb-2">Description</p>
 
@@ -207,31 +211,24 @@ export default function ProductUpload() {
           minHeight={300}
         />
       </div>
-      {/* <Tags /> */}
+
       <div className="mt-5 p-4 flex flex-col bg-white rounded-xl border">
-        {/* <label htmlFor="category-select">Select a Category:</label> */}
         {categories && (
           <select
             className=" outline-none"
             id="category-select"
             //@ts-ignore
-            value={selectedCategory?.id || ""}
+            value={selectedCategory?.ID || ""}
             onChange={handleChange}
           >
             <option value="">Select a category</option>
             {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
+              <option key={category.ID} value={category.ID}>
+                {category.Name}
               </option>
             ))}
           </select>
         )}
-        {/* {selectedCategory && (
-        <div className="text-xs mt-2">
-          <p>Selected Category ID: {selectedCategory.ID}</p>
-          <p>Selected Category Name: {selectedCategory.Name}</p>
-        </div>
-      )} */}
       </div>
       {/* <Pricing /> */}
       <div className="mt-4 p-4 rounded-xl border bg-white">
@@ -400,12 +397,11 @@ export default function ProductUpload() {
         </div>
       </div>
       <div className="w-full flex justify-end items-center mt-4">
-        <Button
-          onClick={logEnvDada}
-          className="mr-2 border rounded w-36 bg-white text-black hover:bg-slate-200 transition-all duration-200"
-        >
-          Check Dashboard
-        </Button>
+        <Link href={"/seller/dashboard"}>
+          <Button className="mr-2 border rounded w-36 bg-white text-black hover:bg-slate-200 transition-all duration-200">
+            Check Dashboard
+          </Button>
+        </Link>
 
         <Button onClick={formSubmit} className="rounded w-36">
           List Product

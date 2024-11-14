@@ -29,7 +29,7 @@ export default function SellerProductPage() {
   );
   const [isLoading, setIsLoading] = useState(true);
   const sellerWalletAddress = useRecoilValue(phantomWallet);
-  const [categoryId, setCategoryId] = useState<number | undefined>();
+  const [categoryId, setCategoryId] = useState<string | number | undefined>();
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [allChecked, setAllChecked] = useState(false);
@@ -56,18 +56,18 @@ export default function SellerProductPage() {
     const selectedCategoryId = event.target.value;
     if (categories) {
       const selectedCategory = categories.find(
-        (category) => category.id === parseInt(selectedCategoryId)
+        (category) => category.ID === selectedCategoryId
       );
       // @ts-ignore
       setSelectedCategory(selectedCategory);
-      setCategoryId(selectedCategory?.id);
+      setCategoryId(selectedCategory?.ID);
     }
   };
 
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/categories`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/categories`
       );
       setCategories(response.data);
       return response.data;
@@ -199,8 +199,8 @@ export default function SellerProductPage() {
                 >
                   <option value="">All Categories</option>
                   {categories.map((category) => (
-                    <option key={category.id} value={category.id}>
-                      {category.name}
+                    <option key={category.ID} value={category.ID}>
+                      {category.Name}
                     </option>
                   ))}
                 </select>
