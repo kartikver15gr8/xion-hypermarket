@@ -48,7 +48,7 @@ export default function ProductUpload() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
   const [categoryName, setCategoryName] = useState<string | undefined>("");
-  const [categoryId, setCategoryId] = useState<number | undefined>();
+  const [categoryId, setCategoryId] = useState<string | number | undefined>();
   const userWalletAddress = useRecoilValue(phantomWallet);
   const [userId, setUserId] = useState(0);
 
@@ -68,7 +68,7 @@ export default function ProductUpload() {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/categories`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/fetch/categories`
       );
       // console.log(response.data);
       setCategories(response.data);
@@ -86,12 +86,12 @@ export default function ProductUpload() {
     const selectedCategoryId = event.target.value;
     if (categories) {
       const selectedCategory = categories.find(
-        (category) => category.id === parseInt(selectedCategoryId)
+        (category) => category.ID === selectedCategoryId
       );
       // @ts-ignore
       setSelectedCategory(selectedCategory);
-      setCategoryId(selectedCategory?.id);
-      setCategoryName(selectedCategory?.name);
+      setCategoryId(selectedCategory?.ID);
+      setCategoryName(selectedCategory?.Name);
       // console.log(selectedCategory?.ID);
       // console.log(selectedCategory?.Name);
       // console.log(selectedCategory?.ID);
@@ -235,16 +235,16 @@ export default function ProductUpload() {
           >
             <option value="">Select a category</option>
             {categories.map((category) => (
-              <option key={category.id} value={category.id}>
-                {category.name}
+              <option key={category.ID} value={category.ID}>
+                {category.Name}
               </option>
             ))}
           </select>
         )}
         {/* {selectedCategory && (
         <div className="text-xs mt-2">
-          <p>Selected Category ID: {selectedCategory.ID}</p>
-          <p>Selected Category Name: {selectedCategory.Name}</p>
+          <p>Selected Category ID: {selectedcategory.ID}</p>
+          <p>Selected Category Name: {selectedcategory.Name}</p>
         </div>
       )} */}
       </div>
