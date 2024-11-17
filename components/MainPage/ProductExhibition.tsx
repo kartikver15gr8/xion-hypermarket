@@ -286,7 +286,7 @@ const CoinCard = ({
   );
 };
 
-import { CategoryInterface } from "@/lib/models";
+import { CategoryInterface, ProductInterfaceTwo } from "@/lib/models";
 import { categoryImages } from "@/lib/categoryimg";
 
 const Category = () => {
@@ -303,7 +303,7 @@ const Category = () => {
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/categories`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/categories`
       );
       // console.log(response.data);
       setCategories(response.data);
@@ -343,59 +343,16 @@ const Category = () => {
               .slice(0, showAll ? categories.length : 6)
               .map((elem, key) => (
                 <CategoryCard
-                  id={elem.id}
+                  id={elem.ID}
                   key={key}
-                  bg={elem.thumbnail_url}
-                  categoryName={elem.name}
-                  description={elem.description}
+                  bg={elem.ThumbnailURL}
+                  categoryName={elem.Name}
+                  description={elem.Description}
                   bgClass="opacity-[13%] bg-blend-luminosity absolute w-[250px] -bottom-[40px] -right-[40px]"
                 />
               ))}
           </>
         )}
-
-        {/* <CategoryCard
-          bg={globe}
-          categoryName="How To Guides"
-          description="Step-by-step guides for easy learning"
-          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[250px] -bottom-[85px] -right-[40px]  "
-        />
-        <CategoryCard
-          bg={layers}
-          categoryName="SaaS Apps"
-          description="Cloud solutions to power your business"
-          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[270px] -right-[40px] -bottom-[40px]"
-        />
-        <CategoryCard
-          bg={speaker}
-          categoryName="Marketing Tools"
-          description="Boost your reach with powerful tools"
-          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[300px] top-[10px] -right-[90px]"
-        />
-        <CategoryCard
-          bg={fidget}
-          categoryName="Bots"
-          description="Automated solutions for seamless workflows"
-          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[330px] top-[30px] -right-[60px]"
-        />
-        <CategoryCard
-          bg={puzzle}
-          categoryName="Game Assets"
-          description="Creative assets for immersive games"
-          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[310px] top-[10px] -right-[50px]"
-        />
-        <CategoryCard
-          bg={puzzletwo}
-          categoryName="Design Templates"
-          description="Customizable templates for any project"
-          bgClass="opacity-[13%] bg-blend-luminosity absolute w-[290px] -right-[60px] top-[10px]"
-        /> */}
-        {/* <CategoryCard
-          bg={block}
-          categoryName="Design"
-          description="Branding, Fonts, Graphics, Icons, UI/UX Templates and more."
-          bgClass="opacity-[34%] bg-blend-luminosity absolute w-[290px] h-[190px] -bottom-[90px] -right-20"
-        /> */}
       </div>
     </div>
   );
@@ -409,7 +366,7 @@ const CategoryCard = ({
   bgClass,
 }: {
   bg: StaticImageData | string;
-  id: number;
+  id: number | string;
   categoryName: string;
   description: string;
   bgClass: string;
@@ -960,7 +917,7 @@ import { ProductInterface } from "@/lib/models";
 import { useRouter } from "next/navigation";
 
 const HotDigitalProducts = () => {
-  const [products, setProducts] = useState<ProductInterface[]>([]);
+  const [products, setProducts] = useState<ProductInterfaceTwo[]>([]);
   const [loading, setLoading] = useState(true);
 
   const [showAll, setShowAll] = useState(false);
@@ -973,7 +930,7 @@ const HotDigitalProducts = () => {
     try {
       // fetching by specific category
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?category_id=7`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/products?category_id=4ce9b528-3454-48ff-b0da-b5989eab5580`
       );
       // console.log(response.data);
 
@@ -1041,12 +998,12 @@ const HotDigitalProducts = () => {
               .map((elem, key) => (
                 <HotProductCard
                   key={key}
-                  redirectHref={`/product/${elem.id}`}
-                  img={elem.thumbnail_url}
-                  category={elem.category.name}
-                  productName={elem.name}
-                  description={elem.description}
-                  price={`${elem.price} SOL one time payment`}
+                  redirectHref={`/product/${elem.ID}`}
+                  img={elem.ThumbnailURL}
+                  category={elem.Category.Name}
+                  productName={elem.Name}
+                  description={elem.Description}
+                  price={`${elem.Price} SOL one time payment`}
                 />
               ))}
           </>

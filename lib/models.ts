@@ -5,10 +5,12 @@ export interface AffiliateLink {
 }
 
 export interface CategoryInterface {
-  id: number;
-  name: string;
-  description: string;
-  thumbnail_url: string;
+  ID: string | number;
+  Name: string;
+  Description: string;
+  ThumbnailURL: string;
+  Slug: string;
+  Products: any;
 }
 
 export interface ReviewInterface {
@@ -74,6 +76,38 @@ export interface ProductInterface {
   view_count: number;
   created_at: string;
   updated_at: string;
+  seller_wallet_address: string;
+}
+
+export interface ProductInterfaceTwo {
+  ID: string;
+  Name: string;
+  Description: string;
+  status: string;
+  Filename: string;
+  FileType: string;
+  FileSize: number | bigint;
+  FileChecksum: string;
+  Price: number;
+  ComparePrice: number;
+  SellerID: string;
+  CategoryID: string;
+  ThumbnailURL: string;
+  ViewCount: number;
+  CreatedAt: string;
+  UpdatedAt: string;
+  Slug: string;
+  Seller: null;
+  Category: {
+    ID: string;
+    Name: string;
+    Description: string;
+    ThumbnailURL: string;
+    Slug: string;
+    Products: null;
+  };
+  ProductAnalytics: null;
+  Reviews: null;
   seller_wallet_address: string;
 }
 

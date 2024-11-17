@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { ProductInterface } from "@/lib/models";
+import { ProductInterface, ProductInterfaceTwo } from "@/lib/models";
 import axios from "axios";
 import lushBanner from "@/public/_static/background/lushhomebanner.png";
 import Image from "next/image";
@@ -13,14 +13,14 @@ export default function ProductByCategory({ params }: any) {
   const [categoryDescription, setCategoryDescription] = useState("");
   const [loading, setLoading] = useState(true);
   const [productsByCategory, setProductsByCategory] = useState<
-    ProductInterface[]
+    ProductInterfaceTwo[]
   >([]);
 
   const fetchProductsByCategory = async () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?category_id=${categoryId}`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/products?category_id=${categoryId}`
       );
       //   console.log(response.data);
       setProductsByCategory(response.data);
@@ -37,22 +37,22 @@ export default function ProductByCategory({ params }: any) {
   }, []);
 
   useEffect(() => {
-    if (categoryId == 7) {
+    if (categoryId == "0fd8d3bc-d077-46c7-a244-e1a8ea867720") {
       setCategoryName("How To Guides");
       setCategoryDescription("Step-by-step guides for easy learning");
-    } else if (categoryId == 8) {
+    } else if (categoryId == "2b093eaa-49ef-46cd-a4a2-83624d6b2ea6") {
       setCategoryName("SaaS Apps");
       setCategoryDescription("Cloud solutions to power your business");
-    } else if (categoryId == 9) {
+    } else if (categoryId == "89730406-ec55-4557-b436-499c0c3fef26") {
       setCategoryName("Marketing Tools");
       setCategoryDescription("Boost your reach with powerful tools");
-    } else if (categoryId == 10) {
+    } else if (categoryId == "9990f0e3-9371-41fc-882c-cec213580ff1") {
       setCategoryName("Bots");
       setCategoryDescription("Automated solutions for seamless workflows");
-    } else if (categoryId == 11) {
+    } else if (categoryId == "5a8fc928-f89f-4282-89cd-44687951c566") {
       setCategoryName("Game Assets");
       setCategoryDescription("Creative Assets for immersive games");
-    } else if (categoryId == 12) {
+    } else if (categoryId == "4ce9b528-3454-48ff-b0da-b5989eab5580") {
       setCategoryName("Design Templates");
       setCategoryDescription("Customizable templates for any project");
     }
@@ -79,12 +79,12 @@ export default function ProductByCategory({ params }: any) {
             return (
               <HotProductCard
                 key={key}
-                redirectHref={`/product/${elem.id}`}
-                img={elem.thumbnail_url}
+                redirectHref={`/product/${elem.ID}`}
+                img={elem.ThumbnailURL}
                 category="Digital Product"
-                productName={elem.name}
-                description={elem.description}
-                price={`$${elem.price} one time payment`}
+                productName={elem.Name}
+                description={elem.Description}
+                price={`$${elem.Price} one time payment`}
               />
             );
           })}
