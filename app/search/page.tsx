@@ -82,7 +82,7 @@ function SearchContent() {
             {filteredProducts.map((product, key) => (
               <HotProductCard
                 key={key}
-                redirectHref={`/product/${product.ID}`}
+                redirectHref={`/product/${product.Slug}`}
                 img={product.ThumbnailURL}
                 category={product.Category.Name}
                 productName={product.Name}

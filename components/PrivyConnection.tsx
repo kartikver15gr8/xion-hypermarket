@@ -106,6 +106,7 @@ export default function PrivyConnection() {
   const handleLogout = async () => {
     await logout();
     setShowPopup(false);
+    setUserStateId("");
     toast.info("Disconnected from Phantom");
   };
 
