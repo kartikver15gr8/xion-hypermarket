@@ -21,15 +21,19 @@ import PromoteWithBlinksBtn from "@/components/PromoteWithBlinksBtn";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 
 export default function Product({ params }: any) {
-  const [productId, setProductId] = useState(params.product);
+  // const [productId, setProductId] = useState(params.product);
+  const [slug, setSlug] = useState(params.product);
   const [productById, setProductById] = useState<ProductInterfaceTwo>();
 
   // Fetch product data based on productId
   const fetchProductData = async () => {
     try {
       // console.log(`Fetching product with ID: ${productId}`);
+      // const response = await axios.get(
+      //   `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/products?product_id=${productId}`
+      // );
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/products?product_id=${productId}`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/products?slug=${slug}`
       );
       setProductById(response.data[0]);
     } catch (error) {
@@ -37,29 +41,29 @@ export default function Product({ params }: any) {
     }
   };
 
-  const updateViews = async () => {
-    try {
-      const response = await axios.put(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/product/${productId}/view`
-      );
-      // console.log(response.data);
-      return response.data;
-    } catch (error) {
-      console.log(`You got an error while updating views: ${error}`);
-    }
-  };
+  // const updateViews = async () => {
+  //   try {
+  //     const response = await axios.put(
+  //       `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/product/${productId}/view`
+  //     );
+  //     // console.log(response.data);
+  //     return response.data;
+  //   } catch (error) {
+  //     console.log(`You got an error while updating views: ${error}`);
+  //   }
+  // };
+
+  // useEffect(() => {
+  //   if (productId) {
+  //     updateViews();
+  //   }
+  // }, [productId]);
 
   useEffect(() => {
-    if (productId) {
-      updateViews();
-    }
-  }, [productId]);
-
-  useEffect(() => {
-    if (productId) {
+    if (slug) {
       fetchProductData();
     }
-  }, [productId]);
+  }, [slug]);
 
   return (
     <div className="pt-16 pb-20 w-full min-h-screen px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[200px] ">
@@ -80,13 +84,14 @@ export default function Product({ params }: any) {
           price={`${productById.Price} SOL`}
           productId={productById.ID}
           fileName={productById.Filename}
+          checksum={productById.FileChecksum}
           fileSize={productById.FileSize}
           sellerAddress={productById.seller_wallet_address}
         />
       )}
       {productById && (
         <ProductReviews
-          productId={productId}
+          // productId={productId}
           productDescription={productById.Description}
         />
       )}
@@ -104,6 +109,7 @@ const ProductDetails = ({
   comparePrice,
   fileSize,
   fileName,
+  checksum,
   sellerAddress,
 }: {
   bannerImg: string;
@@ -112,7 +118,8 @@ const ProductDetails = ({
   productId: number | string;
   comparePrice: string | number;
   fileSize: bigint | number;
-  fileName: string;
+  fileName?: string;
+  checksum: string;
   sellerAddress: string;
 }) => {
   return (
@@ -186,9 +193,9 @@ const ProductDetails = ({
                   />
                 </svg>
 
-                <p>File Name</p>
+                <p>Checksum</p>
               </div>
-              <p>{fileName}</p>
+              <p>{`${checksum.slice(0, 4)}...${checksum.slice(-4)}`}</p>
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-x-1">
@@ -358,7 +365,7 @@ const ProductReviews = ({
   productId,
 }: {
   productDescription: string;
-  productId: number;
+  productId?: number;
 }) => {
   const [productReviews, setProductReviews] = useState<ReviewInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -383,9 +390,9 @@ const ProductReviews = ({
     setIsLoading(false);
   };
 
-  useEffect(() => {
-    fetchReviews();
-  }, []);
+  // useEffect(() => {
+  //   fetchReviews();
+  // }, []);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-5 xl:gap-x-4 2xl:gap-x-8 px-2 pt-2 xl:justify-between 2xl:justify-evenly gap-y-4 sm:gap-y-4 md:gap-y-4 lg:gap-y-0 mb-10">
@@ -398,7 +405,7 @@ const ProductReviews = ({
         </div>
       </div>
       <div className="lg:col-span-2 col-span-1 sm:col-span-1 md:col-span-1">
-        <PostReviewTab productId={productId} />
+        {/* <PostReviewTab productId={productId} /> */}
         <p className="font-bold text-lg mt-2">Ratings:</p>
         {productReviews.length > 0 && (
           <div className="mt-2 relative overflow-y-auto hide-scrollbar scroll-smooth h-60 border rounded-lg w-[100%]">
