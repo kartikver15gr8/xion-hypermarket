@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import { solanaMarketplaceProgram } from "@/utils/constants";
 import { userIdState } from "@/store/atom/userIdState";
 import axios from "axios";
+import { usePrivy } from "@privy-io/react-auth";
 
 interface PhantomWindow extends Window {
   solana?: {
@@ -28,14 +29,28 @@ const RegisterSellerClient: React.FC = () => {
   const walletAddress = useRecoilValue(phantomWallet);
   const [isRegistering, setIsRegistering] = useState<boolean>(false);
   const userIdFromRecoil = useRecoilValue(userIdState);
+  const { user, authenticated, getAccessToken } = usePrivy();
+
+  const [accessToken, setAccessToken] = useState<string | null>("");
 
   useEffect(() => {
+    const setAccessTokenUser = async () => {
+      try {
+        const token = await getAccessToken();
+        if (token) {
+          setAccessToken(token);
+        }
+      } catch (error) {
+        console.log("Unable to set Access token");
+      }
+    };
     const commitment: Commitment = "confirmed";
     setConnection(new Connection(clusterApiUrl("devnet"), commitment));
+    setAccessTokenUser();
   }, []);
 
   const registerSellerTransaction = async () => {
-    if (!walletAddress) {
+    if (!user?.wallet?.address) {
       toast.error("Please connect your wallet first");
       return;
     }
@@ -48,7 +63,7 @@ const RegisterSellerClient: React.FC = () => {
     try {
       setIsRegistering(true);
 
-      const publicKey = new PublicKey(walletAddress);
+      const publicKey = new PublicKey(user.wallet.address);
       const tx = await solanaMarketplaceProgram.methods
         .registerSeller()
         .accounts({
@@ -110,10 +125,12 @@ const RegisterSellerClient: React.FC = () => {
       formData.append("tx_hash", tx_hash);
 
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/user/${userIdFromRecoil}/seller_registration`,
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/admin/user/${userIdFromRecoil}/seller_registration`,
         formData,
         {
           headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${accessToken}`,
             "Content-Type": "multipart/form-data",
           },
         }

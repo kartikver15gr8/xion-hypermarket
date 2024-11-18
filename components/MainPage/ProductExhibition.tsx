@@ -998,7 +998,7 @@ const HotDigitalProducts = () => {
               .map((elem, key) => (
                 <HotProductCard
                   key={key}
-                  redirectHref={`/product/${elem.ID}`}
+                  redirectHref={`/product/${elem.Slug}`}
                   img={elem.ThumbnailURL}
                   category={elem.Category.Name}
                   productName={elem.Name}
