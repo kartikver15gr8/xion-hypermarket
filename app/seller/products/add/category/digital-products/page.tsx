@@ -211,7 +211,6 @@ export default function ProductUpload() {
           minHeight={300}
         />
       </div>
-
       <div className="mt-5 p-4 flex flex-col bg-white rounded-xl border">
         {categories && (
           <select
@@ -280,18 +279,10 @@ export default function ProductUpload() {
               </div>
             </div>
           </div>
-          {/* <div>
-          <p className="text-xs mb-1">Accept Offers</p>
-          <div className="border rounded flex justify-between h-12">
-            <input
-              className="flex p-2 items-center rounded-l  outline-none"
-              type="text"
-              placeholder="Yes/ No"
-            />
-          </div>
-        </div> */}
         </div>
       </div>
+      {/* Subscription Section */}
+
       {/* <AddMedia /> */}
       <div className="border rounded-xl p-4 mt-5 bg-white">
         <p>Media</p>

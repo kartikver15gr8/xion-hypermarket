@@ -1,29 +1,30 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { toast } from "sonner";
 import spinnerthree from "@/public/loaders/spinnerthree.svg";
-import { AffiliateAnalytics, PurchasesInterface } from "@/lib/models";
+import {
+  AffiliateAnalytics,
+  AffiliateAnalyticsTwo,
+  PurchasesInterface,
+} from "@/lib/models";
 import ape from "@/public/ape.png";
 import React from "react";
 import { jsPDF } from "jspdf";
 import { imageBase64 } from "@/utils/imageBase";
+import { usePrivy } from "@privy-io/react-auth";
+import Link from "next/link";
 
 export default function AffiliateComponent() {
   return (
     <div>
       <TopBar />
       <div className="flex items-center gap-x-5 mt-10">
-        <p className="text-3xl font-bold italic">
-          Affiliate Sales & Commission
-        </p>
-        {/* <button className="border rounded-md bg-green-300 bg-opacity-40 border-green-600 h-7 px-1">
-          Completed
-        </button> */}
+        <p className="text-3xl font-medium">Affiliate Sales & Commission</p>
       </div>
       <MidSection />
       <SalesOverview />
@@ -71,6 +72,10 @@ const TopBar = () => {
   );
 };
 
+const activeTab =
+  "border-b-2 flex items-center w-32 h-8 justify-center border-[#114026]";
+const inActiveTab = "border-b-2 flex h-8 items-center w-32 justify-center ";
+
 const SalesOverview = () => {
   const walletAddress = useRecoilValue(phantomWallet);
   const [salesData, setSalesData] = useState<PurchasesInterface[]>([]);
@@ -83,6 +88,19 @@ const SalesOverview = () => {
   const filteredSalesData = salesData.filter((sales) =>
     sales.product_title.toLowerCase().includes(searchKeyTx.toLowerCase())
   );
+
+  const [selected, setSelected] = useState<"mylinks" | "productstosell">(
+    "mylinks"
+  );
+
+  const selectProductsToSell = () => {
+    setSelected("productstosell");
+    toast.info("Switched to Products to Sell section");
+  };
+  const selectMyLinks = () => {
+    setSelected("mylinks");
+    toast.info("Switched to My Links section");
+  };
 
   useEffect(() => {
     if (!walletAddress) {
@@ -158,6 +176,23 @@ const SalesOverview = () => {
 
   return (
     <div className="mt-8">
+      <div className="flex items-center  mb-8">
+        <div
+          onClick={selectMyLinks}
+          className={selected == "mylinks" ? activeTab : inActiveTab}
+        >
+          <p>My Links</p>
+        </div>
+        <div
+          onClick={selectProductsToSell}
+          className={selected == "productstosell" ? activeTab : inActiveTab}
+        >
+          <p>Products to Sell</p>
+        </div>
+      </div>
+      <p className="font-medium text-xl my-4">
+        Choose Products to Promote and Earn
+      </p>
       {/* <p className="font-medium text-xl">Sales Overview</p> */}
       <div className="grid grid-cols-12 mt-4 gap-x-2 md:gap-x-4 lg:gap-x-8 h-10">
         <div className="col-span-2 border rounded-lg flex items-center justify-center gap-x-1 md:gap-x-2">
@@ -226,67 +261,312 @@ const SalesOverview = () => {
           </p>
         </div>
       </div>
-      <div className="px-2 mb-1 grid grid-cols-12 items-center mt-5 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
-        <p className="text-[11px] md:text-[13px] col-span-1">Date</p>
-        <p className="text-[11px] md:text-[13px] col-span-3">Product Name</p>
-        <p className="text-[11px] md:text-[13px] col-span-2">Buyer</p>
-        <p className="text-[11px] md:text-[13px] col-span-1">Quantity</p>
-        <p className="text-[11px] md:text-[13px] col-span-1">Price</p>
-        <p className="text-[11px] md:text-[13px] col-span-1">Status</p>
-        <p className="text-[11px] md:text-[13px] col-span-2">Hash</p>
-        <p className="text-[11px] md:text-[13px] col-span-1">Claim</p>
-      </div>
+      {selected == "productstosell" ? (
+        <>
+          {/* <div className="px-2 mb-1 grid grid-cols-12 items-center mt-5 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
+            <p className="text-[11px] md:text-[13px] col-span-1">Date</p>
+            <p className="text-[11px] md:text-[13px] col-span-3">
+              Product Name
+            </p>
+            <p className="text-[11px] md:text-[13px] col-span-2">Buyer</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">Quantity</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">Price</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">Status</p>
+            <p className="text-[11px] md:text-[13px] col-span-2">Hash</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">Claim</p>
+          </div> */}
+          <div className="px-2 mb-1 grid grid-cols-12 items-center mt-5 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
+            <p className="text-[11px] md:text-[13px] col-span-4">PRODUCT</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">RATINGS</p>
+            <p className="text-[11px] md:text-[13px] col-span-2">PRICE</p>
+            <p className="text-[11px] md:text-[13px] col-span-3">COMMISSION</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">LINKS</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">BLINKS</p>
+          </div>
 
-      {isLoading ? (
-        <div className="flex justify-center mt-2">
-          <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
-        </div>
+          {isLoading ? (
+            <div className="flex justify-center mt-2">
+              <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
+            </div>
+          ) : (
+            <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-96">
+              {filteredSalesData.map((item: PurchasesInterface, key) => {
+                return (
+                  <SalesLabel
+                    key={key}
+                    productId={item.product_id}
+                    productImg={item.product_thumbnail_url}
+                    productName={item.product_title}
+                    price={item.amount.toFixed(2)}
+                    // fileDetails={item.product_filename}
+                    purchaseDate={item.created_at}
+                    fileSize={item.product_file_size}
+                    fileType={item.product_file_type}
+                    checkSum={item.product_file_checksum}
+                    transactionHash={item.transaction_hash}
+                    sellerDetails={item.seller_wallet_address}
+                    productFile={item.product_filename}
+                    ratings={4}
+                    commission={"10% fixed"}
+                    links="https://sendit.markets"
+                    blinks="https://sendit.markets"
+                    productDescription="Product description"
+                  />
+                );
+              })}
+            </div>
+          )}
+        </>
       ) : (
-        <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-96">
-          {filteredSalesData.map((item: PurchasesInterface, key) => {
-            return (
-              <SalesLabel
-                key={key}
-                date={item.created_at}
-                productName={item.product_title}
-                productId={item.product_id}
-                buyer={item.buyer_wallet_address}
-                quantity={1}
-                price={`${item.amount} SOL`}
-                status={item.status}
-                hash={item.transaction_hash}
-                claim="claim"
-              />
-            );
-          })}
+        <div className="mt-5">
+          <p className="text-lg font-medium">Your Referral Links</p>
+          <p className="text-sm text-[#8B8B93]">
+            Share these links to earn commissions on every sale.
+          </p>
+          <div className="">
+            <div className="border-b grid grid-cols-2 items-center h-28 w-[100%] md:w-[90%] lg:w-[70%]">
+              <p className="font-medium">Referral Link</p>
+              <div className="flex gap-x-2">
+                <div className="border border-[#C9C9CB] bg-[#F7F7F7] rounded-md flex items-center px-2 w-[300px] h-8">
+                  <p>sendit</p>
+                </div>
+                <button className="border border-[#C9C9CB] rounded-md flex items-center gap-x-1 h-8 px-2 w-[80px] justify-center">
+                  <svg
+                    className="w-3"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.75333 12.7728L7.69267 13.8335C6.2282 15.2979 3.85383 15.2979 2.38937 13.8335C0.924899 12.369 0.924899 9.99465 2.38937 8.53018L3.45003 7.46952M12.996 8.53018L14.0566 7.46952C15.5211 6.00506 15.5211 3.63069 14.0566 2.16622C12.5922 0.701754 10.2178 0.701755 8.75333 2.16622L7.69267 3.22688M5.598 10.6248L10.848 5.37484"
+                      stroke="#4B4B54"
+                      strokeWidth="1.35"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <p className="text-sm">Copy</p>
+                </button>
+              </div>
+            </div>
+            <div className="border-b grid grid-cols-2 items-center h-28 w-[100%] md:w-[90%] lg:w-[70%]">
+              <p className="font-medium">Referral Code</p>
+              <div className="flex gap-x-2">
+                <div className="border border-[#C9C9CB] bg-[#F7F7F7] rounded-md flex items-center px-2 w-[300px] h-8">
+                  <p>REF-DEDGB546</p>
+                </div>
+                <button className="border border-[#C9C9CB] rounded-md flex items-center gap-x-1 h-8 px-2 w-[80px] justify-center">
+                  <svg
+                    className="w-3"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.75333 12.7728L7.69267 13.8335C6.2282 15.2979 3.85383 15.2979 2.38937 13.8335C0.924899 12.369 0.924899 9.99465 2.38937 8.53018L3.45003 7.46952M12.996 8.53018L14.0566 7.46952C15.5211 6.00506 15.5211 3.63069 14.0566 2.16622C12.5922 0.701754 10.2178 0.701755 8.75333 2.16622L7.69267 3.22688M5.598 10.6248L10.848 5.37484"
+                      stroke="#4B4B54"
+                      strokeWidth="1.35"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <p className="text-sm">Copy</p>
+                </button>
+              </div>
+            </div>
+            <div className="border-b grid grid-cols-2 items-center h-28 w-[100%] md:w-[90%] lg:w-[70%]">
+              <p className="font-medium">Solana Blink Referral</p>
+              <div className="flex gap-x-2">
+                <div className="border border-[#C9C9CB] bg-[#F7F7F7] rounded-md flex items-center px-2 w-[300px] h-8">
+                  <p>Generate Blinks</p>
+                </div>
+                <button className="border border-[#C9C9CB] rounded-md flex items-center gap-x-1 h-8 px-2 w-[80px] justify-center">
+                  <svg
+                    className="w-3"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.75333 12.7728L7.69267 13.8335C6.2282 15.2979 3.85383 15.2979 2.38937 13.8335C0.924899 12.369 0.924899 9.99465 2.38937 8.53018L3.45003 7.46952M12.996 8.53018L14.0566 7.46952C15.5211 6.00506 15.5211 3.63069 14.0566 2.16622C12.5922 0.701754 10.2178 0.701755 8.75333 2.16622L7.69267 3.22688M5.598 10.6248L10.848 5.37484"
+                      stroke="#4B4B54"
+                      strokeWidth="1.35"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <p className="text-sm">Copy</p>
+                </button>
+              </div>
+            </div>
+            <div className=" grid grid-cols-2 items-center h-28 w-[100%] md:w-[90%] lg:w-[70%]">
+              <p className="font-medium">Invitations</p>
+              <div className="flex gap-x-2">
+                <div className="border border-[#C9C9CB] bg-[#F7F7F7] rounded-md flex items-center px-2 w-[300px] h-8">
+                  <p>Email</p>
+                </div>
+                <button className="border border-[#C9C9CB] rounded-md flex items-center gap-x-1 h-8 px-2 w-[80px] justify-center">
+                  <svg
+                    className="w-3"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.09968 8.00009H2.97469M2.91119 8.21871L1.16 13.4497C1.02243 13.8607 0.95364 14.0662 1.00301 14.1927C1.04588 14.3026 1.13795 14.3859 1.25156 14.4176C1.38239 14.4541 1.57999 14.3652 1.97519 14.1874L14.5088 8.54724C14.8945 8.37366 15.0874 8.28686 15.147 8.16629C15.1988 8.06154 15.1988 7.93863 15.147 7.83388C15.0874 7.71331 14.8945 7.62652 14.5088 7.45294L1.97082 1.81088C1.57681 1.63358 1.3798 1.54493 1.24911 1.58129C1.1356 1.61287 1.04354 1.69596 1.00052 1.80565C0.950988 1.93194 1.01904 2.13697 1.15515 2.54704L2.91168 7.83923C2.93506 7.90966 2.94675 7.94488 2.95136 7.98089C2.95545 8.01285 2.95541 8.04521 2.95124 8.07715C2.94653 8.11316 2.93475 8.14834 2.91119 8.21871Z"
+                      stroke="#52525C"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+
+                  <p className="text-sm">Send</p>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
   );
 };
 
+// const SalesLabel = ({
+//   date,
+//   productName,
+//   buyer,
+//   quantity,
+//   price,
+//   status,
+//   hash,
+//   claim,
+//   productId,
+// }: {
+//   date: string;
+//   productName: string;
+//   buyer: string;
+//   quantity: number;
+//   price: string;
+//   status: string;
+//   hash: string;
+//   claim: string;
+//   productId?: number;
+// }) => {
+//   const purchaseDate = new Date(date);
+
+//   const options: Intl.DateTimeFormatOptions = {
+//     year: "numeric",
+//     month: "2-digit",
+//     day: "2-digit",
+//   };
+
+//   const formattedDate = purchaseDate.toLocaleString("en-US", options);
+
+//   const handleCopy = () => {
+//     if (hash) {
+//       navigator.clipboard
+//         .writeText(hash)
+//         .then(() => {
+//           toast.info("Copied Transaction Hash!");
+//         })
+//         .catch((err) => {
+//           console.error("Failed to copy: ", err);
+//           toast.info("Failed to copy Tnx Hash!");
+//         });
+//     }
+//   };
+
+//   return (
+//     <div className="border-b px-2 grid grid-cols-12 items-center w-full h-10">
+//       <p className="text-[9px] md:text-[13px] col-span-1">{formattedDate}</p>
+//       <p className="text-[9px] md:text-[13px] col-span-3">
+//         <a href={`/product/${productId}`} target="_blank">
+//           {productName}
+//         </a>
+//       </p>
+//       <p className="text-[9px] md:text-[13px] col-span-2">
+//         {buyer ? `${buyer.slice(0, 3)}...${buyer.slice(-4)}` : ""}
+//       </p>
+//       <p className="text-[9px] md:text-[13px] col-span-1">{quantity}</p>
+//       <p className="text-[9px] md:text-[13px] col-span-1">{price}</p>
+//       <div className="text-[9px] md:text-[13px] flex items-center col-span-1">
+//         {status == "confirmed" ? (
+//           <div className="flex text-[9px] md:text-[13px] items-center bg-opacity-45 border border-green-600 rounded-md h-6 px-1 bg-green-400 ">
+//             <p>{status}</p>
+//           </div>
+//         ) : (
+//           <div className="flex text-[9px] md:text-[13px] items-center bg-opacity-45 border border-red-600 rounded-md h-6 px-1 bg-red-400 ">
+//             <p>{status ? "pending" : "NA"}</p>
+//           </div>
+//         )}
+//       </div>
+//       <div
+//         onClick={handleCopy}
+//         className="text-[9px] md:text-[13px] col-span-2 flex items-center"
+//       >
+//         <p className="w-10 sm:w-12 md:w-16">
+//           {hash ? `${hash.slice(0, 3)}…${hash.slice(-3)}` : ""}
+//         </p>
+//         <svg
+//           className="w-3 ml-1"
+//           viewBox="0 0 14 14"
+//           fill="none"
+//           xmlns="http://www.w3.org/2000/svg"
+//         >
+//           <path
+//             d="M4.66797 4.6665V3.03317C4.66797 2.37978 4.66797 2.05308 4.79513 1.80352C4.90698 1.58399 5.08546 1.40552 5.30498 1.29366C5.55454 1.1665 5.88124 1.1665 6.53464 1.1665H10.968C11.6214 1.1665 11.9481 1.1665 12.1976 1.29366C12.4171 1.40552 12.5956 1.58399 12.7075 1.80352C12.8346 2.05308 12.8346 2.37978 12.8346 3.03317V7.4665C12.8346 8.1199 12.8346 8.4466 12.7075 8.69616C12.5956 8.91568 12.4171 9.09416 12.1976 9.20601C11.9481 9.33317 11.6214 9.33317 10.968 9.33317H9.33464M3.03464 12.8332H7.46797C8.12136 12.8332 8.44806 12.8332 8.69762 12.706C8.91715 12.5942 9.09562 12.4157 9.20748 12.1962C9.33464 11.9466 9.33464 11.6199 9.33464 10.9665V6.53317C9.33464 5.87978 9.33464 5.55308 9.20748 5.30352C9.09562 5.08399 8.91715 4.90552 8.69762 4.79366C8.44806 4.6665 8.12136 4.6665 7.46797 4.6665H3.03464C2.38124 4.6665 2.05454 4.6665 1.80498 4.79366C1.58546 4.90552 1.40698 5.08399 1.29513 5.30352C1.16797 5.55308 1.16797 5.87978 1.16797 6.53317V10.9665C1.16797 11.6199 1.16797 11.9466 1.29513 12.1962C1.40698 12.4157 1.58546 12.5942 1.80498 12.706C2.05454 12.8332 2.38124 12.8332 3.03464 12.8332Z"
+//             stroke="#8B8B92"
+//             strokeWidth="1.1375"
+//             strokeLinecap="round"
+//             strokeLinejoin="round"
+//           />
+//         </svg>
+//       </div>
+//       <button className="text-[9px] md:text-[13px] rounded-md h-6 bg-black text-white col-span-1 hover:bg-[#5a5c5d] transition-all duration-300">
+//         {claim}
+//       </button>
+//     </div>
+//   );
+// };
+
 const SalesLabel = ({
-  date,
-  productName,
-  buyer,
-  quantity,
-  price,
-  status,
-  hash,
-  claim,
   productId,
+  productImg,
+  productName,
+  productDescription,
+  price,
+  purchaseDate,
+  sellerDetails,
+  fileSize,
+  fileType,
+  checkSum,
+  transactionHash,
+  productFile,
+  ratings,
+  commission,
+  links,
+  blinks,
 }: {
-  date: string;
-  productName: string;
-  buyer: string;
-  quantity: number;
-  price: string;
-  status: string;
-  hash: string;
-  claim: string;
   productId?: number;
+  productImg: string | StaticImageData;
+  productName: string;
+  productDescription: string;
+  price: string;
+  purchaseDate: string;
+  sellerDetails: string;
+  fileSize: string;
+  fileType: string;
+  checkSum: string;
+  transactionHash: string;
+  productFile: string;
+  ratings: number | string;
+  commission: number | string;
+  links: string;
+  blinks: string;
 }) => {
-  const purchaseDate = new Date(date);
+  const dateStr = purchaseDate;
+  const date = new Date(dateStr);
 
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
@@ -294,12 +574,12 @@ const SalesLabel = ({
     day: "2-digit",
   };
 
-  const formattedDate = purchaseDate.toLocaleString("en-US", options);
+  const formattedDate = date.toLocaleString("en-US", options);
 
   const handleCopy = () => {
-    if (hash) {
+    if (transactionHash) {
       navigator.clipboard
-        .writeText(hash)
+        .writeText(transactionHash)
         .then(() => {
           toast.info("Copied Transaction Hash!");
         })
@@ -310,54 +590,108 @@ const SalesLabel = ({
     }
   };
 
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownload = async () => {
+    const url = `https://files.sendit.markets/products/${productFile}`;
+
+    try {
+      setIsDownloading(true);
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // Create a blob from the response
+      const blob = await response.blob();
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = productFile; // Set the file name for download
+      document.body.appendChild(link); // Append to body
+      link.click(); // Trigger the download
+      document.body.removeChild(link); // Clean up
+      setIsDownloading(false);
+    } catch (error) {
+      setIsDownloading(false);
+      console.error("Download failed:", error);
+    }
+  };
+
   return (
-    <div className="border-b px-2 grid grid-cols-12 items-center w-full h-10">
-      <p className="text-[9px] md:text-[13px] col-span-1">{formattedDate}</p>
-      <p className="text-[9px] md:text-[13px] col-span-3">
-        <a href={`/product/${productId}`} target="_blank">
-          {productName}
-        </a>
-      </p>
-      <p className="text-[9px] md:text-[13px] col-span-2">
-        {buyer ? `${buyer.slice(0, 3)}...${buyer.slice(-4)}` : ""}
-      </p>
-      <p className="text-[9px] md:text-[13px] col-span-1">{quantity}</p>
-      <p className="text-[9px] md:text-[13px] col-span-1">{price}</p>
-      <div className="text-[9px] md:text-[13px] flex items-center col-span-1">
-        {status == "confirmed" ? (
-          <div className="flex text-[9px] md:text-[13px] items-center bg-opacity-45 border border-green-600 rounded-md h-6 px-1 bg-green-400 ">
-            <p>{status}</p>
+    <div className="border-b px-2 grid grid-cols-12 items-center w-full h-16">
+      <Link
+        href={`/product/${productId}`}
+        className="col-span-4 flex items-center gap-x-2"
+      >
+        <Image
+          src={productImg}
+          alt="product"
+          className=" w-8 h-8 rounded-md"
+          width={20}
+          height={20}
+        />
+
+        {productName.length > 20 ? (
+          <div>
+            <p className="text-[11px] md:text-[15px]">
+              {productName.slice(0, 20)}...
+            </p>
+            <p className="text-[9px] md:text-[13px] text-[#898991]">
+              {productDescription.slice(0, 20)}...
+            </p>
           </div>
         ) : (
-          <div className="flex text-[9px] md:text-[13px] items-center bg-opacity-45 border border-red-600 rounded-md h-6 px-1 bg-red-400 ">
-            <p>{status ? "pending" : "NA"}</p>
+          <div>
+            <p className="text-[11px] md:text-[15px]">{productName}</p>
+            <p className="text-[9px] md:text-[13px] text-[#898991]">
+              {productDescription}
+            </p>
           </div>
         )}
+      </Link>
+      <p className="text-[9px] md:text-[13px] col-span-1">{`${ratings} Stars`}</p>
+      <p className="text-[9px] md:text-[13px] col-span-2">{`${price} SOL`}</p>
+      <p className="text-[9px] md:text-[13px] col-span-3">{`${commission}`}</p>
+
+      <div className="col-span-1  ">
+        {/* <p className="text-xs">{`${links.slice(0, 4)}...${links.slice(-2)}`}</p> */}
+        <button className="border border-[#52525C] w-7 h-7 rounded-md flex items-center justify-center bg-white hover:bg-[#E4E4E5] transition-all duration-200">
+          <svg
+            width="12"
+            height="13"
+            viewBox="0 0 12 13"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.41242 10.3778L5.58746 11.2027C4.44843 12.3418 2.6017 12.3418 1.46267 11.2027C0.323641 10.0637 0.323641 8.21698 1.46267 7.07795L2.28763 6.25299M9.71225 7.07795L10.5372 6.25299C11.6762 5.11396 11.6762 3.26723 10.5372 2.1282C9.39818 0.989168 7.55145 0.989169 6.41242 2.1282L5.58746 2.95316M3.95827 8.70712L8.04161 4.62379"
+              stroke="#52525C"
+              strokeWidth="1.05"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
       </div>
-      <div
-        onClick={handleCopy}
-        className="text-[9px] md:text-[13px] col-span-2 flex items-center"
-      >
-        <p className="w-10 sm:w-12 md:w-16">
-          {hash ? `${hash.slice(0, 3)}…${hash.slice(-3)}` : ""}
-        </p>
+
+      <button className="col-span-1 w-16 rounded-md flex items-center px-2 h-8 gap-x-1 bg-gradient-to-r from-[#8E50F3] via-[#6586D7] to-[#4AC9B7]">
         <svg
-          className="w-3 ml-1"
-          viewBox="0 0 14 14"
+          width="12"
+          height="13"
+          viewBox="0 0 12 13"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M4.66797 4.6665V3.03317C4.66797 2.37978 4.66797 2.05308 4.79513 1.80352C4.90698 1.58399 5.08546 1.40552 5.30498 1.29366C5.55454 1.1665 5.88124 1.1665 6.53464 1.1665H10.968C11.6214 1.1665 11.9481 1.1665 12.1976 1.29366C12.4171 1.40552 12.5956 1.58399 12.7075 1.80352C12.8346 2.05308 12.8346 2.37978 12.8346 3.03317V7.4665C12.8346 8.1199 12.8346 8.4466 12.7075 8.69616C12.5956 8.91568 12.4171 9.09416 12.1976 9.20601C11.9481 9.33317 11.6214 9.33317 10.968 9.33317H9.33464M3.03464 12.8332H7.46797C8.12136 12.8332 8.44806 12.8332 8.69762 12.706C8.91715 12.5942 9.09562 12.4157 9.20748 12.1962C9.33464 11.9466 9.33464 11.6199 9.33464 10.9665V6.53317C9.33464 5.87978 9.33464 5.55308 9.20748 5.30352C9.09562 5.08399 8.91715 4.90552 8.69762 4.79366C8.44806 4.6665 8.12136 4.6665 7.46797 4.6665H3.03464C2.38124 4.6665 2.05454 4.6665 1.80498 4.79366C1.58546 4.90552 1.40698 5.08399 1.29513 5.30352C1.16797 5.55308 1.16797 5.87978 1.16797 6.53317V10.9665C1.16797 11.6199 1.16797 11.9466 1.29513 12.1962C1.40698 12.4157 1.58546 12.5942 1.80498 12.706C2.05454 12.8332 2.38124 12.8332 3.03464 12.8332Z"
-            stroke="#8B8B92"
-            strokeWidth="1.1375"
+            d="M6.41242 10.3778L5.58746 11.2027C4.44843 12.3418 2.6017 12.3418 1.46267 11.2027C0.323641 10.0637 0.323641 8.21698 1.46267 7.07795L2.28763 6.25299M9.71225 7.07795L10.5372 6.25299C11.6762 5.11396 11.6762 3.26723 10.5372 2.1282C9.39818 0.989168 7.55145 0.989169 6.41242 2.1282L5.58746 2.95316M3.95827 8.70712L8.04161 4.62379"
+            stroke="white"
+            strokeWidth="1.05"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
         </svg>
-      </div>
-      <button className="text-[9px] md:text-[13px] rounded-md h-6 bg-black text-white col-span-1 hover:bg-[#5a5c5d] transition-all duration-300">
-        {claim}
+        <p className="font-medium text-white">copy</p>
       </button>
     </div>
   );
@@ -365,16 +699,39 @@ const SalesLabel = ({
 
 const MidSection = () => {
   const [affiliateAnalytics, setAffiliateAnalytics] =
-    useState<AffiliateAnalytics>();
+    useState<AffiliateAnalyticsTwo>();
   const affiliateWalletAddress = useRecoilValue(phantomWallet);
+  const { user, getAccessToken } = usePrivy();
+  const [privyAccessToken, setPrivyAccessToken] = useState("");
+
+  const fetchAccessToken = async () => {
+    try {
+      const token = await getAccessToken();
+      if (token) {
+        setPrivyAccessToken(token);
+      }
+    } catch (error) {
+      toast.info(`Error`);
+    }
+  };
 
   const fetchAffiliateAnalytics = async () => {
+    if (!user?.id) {
+      return;
+    }
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/analytics/affiliate?affiliate_wallet_address=${affiliateWalletAddress}`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/admin/analytics/affiliate?affiliate_external_id=${user.id}`,
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${privyAccessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       setAffiliateAnalytics(response.data[0]);
-      // console.log(response.data[0]);
+      console.log(response.data[0]);
 
       return response.data;
     } catch (error) {
@@ -385,13 +742,14 @@ const MidSection = () => {
   };
 
   useEffect(() => {
+    fetchAccessToken();
     if (affiliateWalletAddress) {
       fetchAffiliateAnalytics();
     }
   }, [affiliateWalletAddress]);
 
   return (
-    <div className="border rounded-2xl grid grid-cols-3 bg-white mt-4">
+    <div className="border rounded-2xl grid grid-cols-3 bg-white mt-4 shadow-lg">
       <div className="p-2 sm:p-3 md:p-4">
         <div className=" flex items-center gap-x-1">
           <p className="text-xs md:text-[13px]">TOTAL EARNED</p>
@@ -412,7 +770,7 @@ const MidSection = () => {
           </svg>
         </div>
         <p className="font-bold text-3xl md:text-4xl my-3">
-          {affiliateAnalytics ? affiliateAnalytics.sale_amount : "$0"}
+          {affiliateAnalytics ? `$${affiliateAnalytics.SaleAmount}` : "$0"}
         </p>
         <div className="flex gap-x-1 text-[11px] sm:text-[12px] md:text-[14px]">
           <div className="flex items-center text-green-500">
@@ -490,7 +848,7 @@ const MidSection = () => {
           </svg>
         </div>
         <p className="font-bold text-3xl md:text-4xl my-3">
-          {affiliateAnalytics ? affiliateAnalytics.sale_count : "0"}
+          {affiliateAnalytics ? affiliateAnalytics.SaleCount : "0"}
         </p>
         <div className="mt-8 text-[10px] md:text-[12px]">
           <p className="text-[#A6ACB7]">Top Product</p>

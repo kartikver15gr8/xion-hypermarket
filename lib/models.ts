@@ -86,28 +86,45 @@ export interface ProductInterfaceTwo {
   status: string;
   Filename: string;
   FileType: string;
-  FileSize: number | bigint;
+  FileSize: number | any;
   FileChecksum: string;
-  Price: number;
-  ComparePrice: number;
+  Price: number | any;
+  ComparePrice: number | any;
   SellerID: string;
   CategoryID: string;
   ThumbnailURL: string;
-  ViewCount: number;
+  ViewCount: number | any;
+  Slug: string;
   CreatedAt: string;
   UpdatedAt: string;
-  Slug: string;
-  Seller: null;
+  DeletedAt: null | any;
+  Seller: {
+    ID: string;
+    ExternalID: string;
+    Username: string;
+    SellerRegTxHash: string;
+    WalletAddress: string;
+    CreatedAt: string;
+    UpdatedAt: string;
+    DeletedAt: null | any;
+    Products: null | any;
+    Purchases: null | any;
+    SellerAnalytics: null | any;
+    AffiliateAnalytics: null | any;
+  };
   Category: {
     ID: string;
     Name: string;
     Description: string;
     ThumbnailURL: string;
     Slug: string;
-    Products: null;
+    CreatedAt: string;
+    UpdatedAt: string;
+    DeletedAt: null | any;
+    Products: null | any;
   };
-  ProductAnalytics: null;
-  Reviews: null;
+  ProductAnalytics: null | any;
+  Reviews: null | any;
   seller_wallet_address: string;
 }
 
@@ -233,4 +250,24 @@ export interface AffiliateAnalytics {
     wallet_address: string;
   };
   user_id: number;
+}
+
+export interface AffiliateAnalyticsTwo {
+  UserID: string;
+  SaleCount: number;
+  SaleAmount: number;
+  User: {
+    ID: string;
+    ExternalID: string;
+    Username: string;
+    SellerRegTxHash: string;
+    WalletAddress: string;
+    CreatedAt: string;
+    UpdatedAt: string;
+    DeletedAt: any;
+    Products: any;
+    Purchases: any;
+    SellerAnalytics: any;
+    AffiliateAnalytics: any;
+  };
 }
