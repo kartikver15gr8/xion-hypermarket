@@ -14,9 +14,11 @@ import { solanaMarketplaceProgram } from "@/utils/constants";
 import { BN } from "@coral-xyz/anchor";
 import { useRecoilValue } from "recoil";
 import axios from "axios";
-import { ProductInterface } from "@/lib/models";
+import { ProductInterface, ProductInterfaceTwo } from "@/lib/models";
 import { getPdas } from "@/utils/helpers";
 import { useRouter } from "next/navigation";
+import { userIdState } from "@/store/atom/userIdState";
+import { usePrivy } from "@privy-io/react-auth";
 
 interface PhantomWindow extends Window {
   solana?: {
@@ -34,45 +36,66 @@ export default function ProcessPurchaseClient({
 }) {
   const router = useRouter();
 
-  const walletAddress = useRecoilValue(phantomWallet);
-  const [productById, setProductById] = useState<ProductInterface | null>(null);
+  // const walletAddress = useRecoilValue(phantomWallet);
+  const [productById, setProductById] = useState<ProductInterfaceTwo | null>(
+    null
+  );
   const [sellerWalletAddress, setSellerWalletAddress] = useState("");
   const [connection, setConnection] = useState<Connection | null>(null);
   const [transactionHash, setTransactionHash] = useState("");
   const [loading, setLoading] = useState(false);
 
   const [buyerId, setBuyerId] = useState(0);
+  const buyerIdFromRecoil = useRecoilValue(userIdState);
+  const [privyAccessToken, setPrivyAccessToken] = useState<string | null>("");
+  const { user, getAccessToken } = usePrivy();
 
-  const fetchBuyerId = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${walletAddress}`
-      );
-      // console.log(`This is the user credentials ${response.data}`);
-      // console.log(response.data.id);
+  // const fetchBuyerId = async () => {
+  //   try {
+  //     const response = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${walletAddress}`
+  //     );
+  //     // console.log(`This is the user credentials ${response.data}`);
+  //     // console.log(response.data.id);
 
-      setBuyerId(response.data.id);
-      return response.data.id;
-    } catch (error) {
-      console.log(`You got an error while fetching the buyer id: ${error}`);
-    }
-  };
+  //     setBuyerId(response.data.id);
+  //     return response.data.id;
+  //   } catch (error) {
+  //     console.log(`You got an error while fetching the buyer id: ${error}`);
+  //   }
+  // };
 
   useEffect(() => {
+    const setAccessToken = async () => {
+      try {
+        const token = await getAccessToken();
+        if (token) {
+          setPrivyAccessToken(token);
+        }
+      } catch (error) {
+        console.log("Error while setting the PrivyAccessToken");
+      }
+    };
     const commitment: Commitment = "confirmed";
     setConnection(new Connection(clusterApiUrl("devnet"), commitment));
+
+    setAccessToken();
   }, []);
 
   const fetchProductData = async () => {
     try {
       // console.log(`Fetching product with ID: ${productId}`);
+      // const response = await axios.get(
+      //   `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?product_id=${productId}`
+      // );
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?product_id=${productId}`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/products?product_id=${productId}`
       );
 
       if (response.data && response.data.length > 0) {
-        // console.log("Product Details:", response.data[0]);
+        console.log("Product Details:", response.data[0]);
         setProductById(response.data[0]);
+        setSellerWalletAddress(response.data[0].Seller.WalletAddress);
       } else {
         console.error("No product found for the given ID.");
       }
@@ -81,24 +104,24 @@ export default function ProcessPurchaseClient({
     }
   };
 
-  const getSellerData = async () => {
-    if (!productById) return;
+  // const getSellerData = async () => {
+  //   if (!productById) return;
 
-    try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/users?user_id=${productById.user_id}`
-      );
+  //   try {
+  //     const response = await axios.get(
+  //       `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/users?user_id=${productById.user_id}`
+  //     );
 
-      if (response.data && response.data.length > 0) {
-        // console.log("Seller Details:", response.data[0]);
-        setSellerWalletAddress(response.data[0].wallet_address);
-      } else {
-        console.error("No seller found for the given UserID.");
-      }
-    } catch (error) {
-      console.error(`Error fetching seller data: ${error}`);
-    }
-  };
+  //     if (response.data && response.data.length > 0) {
+  //       // console.log("Seller Details:", response.data[0]);
+  //       setSellerWalletAddress(response.data[0].wallet_address);
+  //     } else {
+  //       console.error("No seller found for the given UserID.");
+  //     }
+  //   } catch (error) {
+  //     console.error(`Error fetching seller data: ${error}`);
+  //   }
+  // };
 
   useEffect(() => {
     if (productId) {
@@ -106,29 +129,36 @@ export default function ProcessPurchaseClient({
     }
   }, [productId]);
 
-  useEffect(() => {
-    if (productById) {
-      getSellerData();
-    }
-  }, [productById]);
+  // useEffect(() => {
+  //   if (productById) {
+  //     getSellerData();
+  //   }
+  // }, [productById]);
 
-  useEffect(() => {
-    if (walletAddress) {
-      fetchBuyerId();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (walletAddress) {
+  //     fetchBuyerId();
+  //   }
+  // }, []);
 
   const buyProduct = async (transactionHash: string) => {
     try {
       const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/purchases`,
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/admin/purchases`,
         {
           affiliate_link_id: 0,
-          amount: Number(productById?.price),
+          amount: Number(productById?.Price),
           product_id: productId,
           status: 1,
           transaction_hash: transactionHash,
-          user_id: buyerId,
+          user_id: buyerIdFromRecoil,
+        },
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${privyAccessToken}`,
+            "Content-Type": "application/json",
+          },
         }
       );
 
@@ -140,7 +170,7 @@ export default function ProcessPurchaseClient({
   };
 
   const makeProcessPurchase = async () => {
-    if (!walletAddress) {
+    if (!user?.wallet?.address) {
       toast.error("Please connect your wallet first");
       return;
     }
@@ -151,10 +181,11 @@ export default function ProcessPurchaseClient({
     }
 
     try {
-      if (productById) {
-        const amount_lamports = parseInt(productById?.price) * LAMPORTS_PER_SOL;
+      if (productById?.ID) {
+        const amount_lamports = parseInt(productById?.Price) * LAMPORTS_PER_SOL;
+        // console.log(amount_lamports);
 
-        const buyerPubKey = new PublicKey(walletAddress);
+        const buyerPubKey = new PublicKey(user.wallet.address);
         const sellerPubKey = new PublicKey(sellerWalletAddress);
         // console.log("buyerPubkey", buyerPubKey.toBase58());
         // console.log("sellerPubkey", sellerPubKey.toBase58());
@@ -227,6 +258,8 @@ export default function ProcessPurchaseClient({
     setLoading(true);
     try {
       const signature = await makeProcessPurchase();
+      // console.log(`Signature: ${signature}`);
+
       if (signature) {
         await buyProduct(signature);
       } else {
@@ -255,7 +288,7 @@ export default function ProcessPurchaseClient({
           >
             Buy Now!
           </button> */}
-          {buyerId && sellerWalletAddress && walletAddress ? (
+          {buyerIdFromRecoil && sellerWalletAddress && user?.wallet?.address ? (
             <button
               className="rounded-lg text-white bg-inherit font-medium h-14 w-full hover:bg-[#095492] transition-all duration-200"
               onClick={handleOnClick}

@@ -19,13 +19,13 @@ export default function page() {
           <p className="text-sm mt-2 text-[#52525C]">Categories:</p>
           <div className="grid grid-cols-1 gap-y-4 md:gap-y-0 md:grid-cols-3 mt-4 gap-x-4">
             <ProductCard
-              redirectHref="/seller/products/add/category"
+              redirectHref="/seller/products/add/category/digital-products"
               img={matrixcube}
               title="Digital Products"
               examples="Things like: ebooks, skins, game skins"
             />
             <ProductCard
-              redirectHref=""
+              redirectHref="/seller/products/add/category/private-groups"
               img={cubeik}
               title="Private Groups"
               examples="Crypto Alpha Groups!"

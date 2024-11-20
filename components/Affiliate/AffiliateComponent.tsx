@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 import axios from "axios";
 import { useRecoilValue } from "recoil";
@@ -17,6 +17,7 @@ import React from "react";
 import { jsPDF } from "jspdf";
 import { imageBase64 } from "@/utils/imageBase";
 import { usePrivy } from "@privy-io/react-auth";
+import Link from "next/link";
 
 export default function AffiliateComponent() {
   return (
@@ -262,7 +263,7 @@ const SalesOverview = () => {
       </div>
       {selected == "productstosell" ? (
         <>
-          <div className="px-2 mb-1 grid grid-cols-12 items-center mt-5 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
+          {/* <div className="px-2 mb-1 grid grid-cols-12 items-center mt-5 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
             <p className="text-[11px] md:text-[13px] col-span-1">Date</p>
             <p className="text-[11px] md:text-[13px] col-span-3">
               Product Name
@@ -273,6 +274,14 @@ const SalesOverview = () => {
             <p className="text-[11px] md:text-[13px] col-span-1">Status</p>
             <p className="text-[11px] md:text-[13px] col-span-2">Hash</p>
             <p className="text-[11px] md:text-[13px] col-span-1">Claim</p>
+          </div> */}
+          <div className="px-2 mb-1 grid grid-cols-12 items-center mt-5 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
+            <p className="text-[11px] md:text-[13px] col-span-4">PRODUCT</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">RATINGS</p>
+            <p className="text-[11px] md:text-[13px] col-span-2">PRICE</p>
+            <p className="text-[11px] md:text-[13px] col-span-3">COMMISSION</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">LINKS</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">BLINKS</p>
           </div>
 
           {isLoading ? (
@@ -285,15 +294,23 @@ const SalesOverview = () => {
                 return (
                   <SalesLabel
                     key={key}
-                    date={item.created_at}
-                    productName={item.product_title}
                     productId={item.product_id}
-                    buyer={item.buyer_wallet_address}
-                    quantity={1}
-                    price={`${item.amount} SOL`}
-                    status={item.status}
-                    hash={item.transaction_hash}
-                    claim="claim"
+                    productImg={item.product_thumbnail_url}
+                    productName={item.product_title}
+                    price={item.amount.toFixed(2)}
+                    // fileDetails={item.product_filename}
+                    purchaseDate={item.created_at}
+                    fileSize={item.product_file_size}
+                    fileType={item.product_file_type}
+                    checkSum={item.product_file_checksum}
+                    transactionHash={item.transaction_hash}
+                    sellerDetails={item.seller_wallet_address}
+                    productFile={item.product_filename}
+                    ratings={4}
+                    commission={"10% fixed"}
+                    links="https://sendit.markets"
+                    blinks="https://sendit.markets"
+                    productDescription="Product description"
                   />
                 );
               })}
@@ -415,28 +432,141 @@ const SalesOverview = () => {
   );
 };
 
+// const SalesLabel = ({
+//   date,
+//   productName,
+//   buyer,
+//   quantity,
+//   price,
+//   status,
+//   hash,
+//   claim,
+//   productId,
+// }: {
+//   date: string;
+//   productName: string;
+//   buyer: string;
+//   quantity: number;
+//   price: string;
+//   status: string;
+//   hash: string;
+//   claim: string;
+//   productId?: number;
+// }) => {
+//   const purchaseDate = new Date(date);
+
+//   const options: Intl.DateTimeFormatOptions = {
+//     year: "numeric",
+//     month: "2-digit",
+//     day: "2-digit",
+//   };
+
+//   const formattedDate = purchaseDate.toLocaleString("en-US", options);
+
+//   const handleCopy = () => {
+//     if (hash) {
+//       navigator.clipboard
+//         .writeText(hash)
+//         .then(() => {
+//           toast.info("Copied Transaction Hash!");
+//         })
+//         .catch((err) => {
+//           console.error("Failed to copy: ", err);
+//           toast.info("Failed to copy Tnx Hash!");
+//         });
+//     }
+//   };
+
+//   return (
+//     <div className="border-b px-2 grid grid-cols-12 items-center w-full h-10">
+//       <p className="text-[9px] md:text-[13px] col-span-1">{formattedDate}</p>
+//       <p className="text-[9px] md:text-[13px] col-span-3">
+//         <a href={`/product/${productId}`} target="_blank">
+//           {productName}
+//         </a>
+//       </p>
+//       <p className="text-[9px] md:text-[13px] col-span-2">
+//         {buyer ? `${buyer.slice(0, 3)}...${buyer.slice(-4)}` : ""}
+//       </p>
+//       <p className="text-[9px] md:text-[13px] col-span-1">{quantity}</p>
+//       <p className="text-[9px] md:text-[13px] col-span-1">{price}</p>
+//       <div className="text-[9px] md:text-[13px] flex items-center col-span-1">
+//         {status == "confirmed" ? (
+//           <div className="flex text-[9px] md:text-[13px] items-center bg-opacity-45 border border-green-600 rounded-md h-6 px-1 bg-green-400 ">
+//             <p>{status}</p>
+//           </div>
+//         ) : (
+//           <div className="flex text-[9px] md:text-[13px] items-center bg-opacity-45 border border-red-600 rounded-md h-6 px-1 bg-red-400 ">
+//             <p>{status ? "pending" : "NA"}</p>
+//           </div>
+//         )}
+//       </div>
+//       <div
+//         onClick={handleCopy}
+//         className="text-[9px] md:text-[13px] col-span-2 flex items-center"
+//       >
+//         <p className="w-10 sm:w-12 md:w-16">
+//           {hash ? `${hash.slice(0, 3)}…${hash.slice(-3)}` : ""}
+//         </p>
+//         <svg
+//           className="w-3 ml-1"
+//           viewBox="0 0 14 14"
+//           fill="none"
+//           xmlns="http://www.w3.org/2000/svg"
+//         >
+//           <path
+//             d="M4.66797 4.6665V3.03317C4.66797 2.37978 4.66797 2.05308 4.79513 1.80352C4.90698 1.58399 5.08546 1.40552 5.30498 1.29366C5.55454 1.1665 5.88124 1.1665 6.53464 1.1665H10.968C11.6214 1.1665 11.9481 1.1665 12.1976 1.29366C12.4171 1.40552 12.5956 1.58399 12.7075 1.80352C12.8346 2.05308 12.8346 2.37978 12.8346 3.03317V7.4665C12.8346 8.1199 12.8346 8.4466 12.7075 8.69616C12.5956 8.91568 12.4171 9.09416 12.1976 9.20601C11.9481 9.33317 11.6214 9.33317 10.968 9.33317H9.33464M3.03464 12.8332H7.46797C8.12136 12.8332 8.44806 12.8332 8.69762 12.706C8.91715 12.5942 9.09562 12.4157 9.20748 12.1962C9.33464 11.9466 9.33464 11.6199 9.33464 10.9665V6.53317C9.33464 5.87978 9.33464 5.55308 9.20748 5.30352C9.09562 5.08399 8.91715 4.90552 8.69762 4.79366C8.44806 4.6665 8.12136 4.6665 7.46797 4.6665H3.03464C2.38124 4.6665 2.05454 4.6665 1.80498 4.79366C1.58546 4.90552 1.40698 5.08399 1.29513 5.30352C1.16797 5.55308 1.16797 5.87978 1.16797 6.53317V10.9665C1.16797 11.6199 1.16797 11.9466 1.29513 12.1962C1.40698 12.4157 1.58546 12.5942 1.80498 12.706C2.05454 12.8332 2.38124 12.8332 3.03464 12.8332Z"
+//             stroke="#8B8B92"
+//             strokeWidth="1.1375"
+//             strokeLinecap="round"
+//             strokeLinejoin="round"
+//           />
+//         </svg>
+//       </div>
+//       <button className="text-[9px] md:text-[13px] rounded-md h-6 bg-black text-white col-span-1 hover:bg-[#5a5c5d] transition-all duration-300">
+//         {claim}
+//       </button>
+//     </div>
+//   );
+// };
+
 const SalesLabel = ({
-  date,
-  productName,
-  buyer,
-  quantity,
-  price,
-  status,
-  hash,
-  claim,
   productId,
+  productImg,
+  productName,
+  productDescription,
+  price,
+  purchaseDate,
+  sellerDetails,
+  fileSize,
+  fileType,
+  checkSum,
+  transactionHash,
+  productFile,
+  ratings,
+  commission,
+  links,
+  blinks,
 }: {
-  date: string;
-  productName: string;
-  buyer: string;
-  quantity: number;
-  price: string;
-  status: string;
-  hash: string;
-  claim: string;
   productId?: number;
+  productImg: string | StaticImageData;
+  productName: string;
+  productDescription: string;
+  price: string;
+  purchaseDate: string;
+  sellerDetails: string;
+  fileSize: string;
+  fileType: string;
+  checkSum: string;
+  transactionHash: string;
+  productFile: string;
+  ratings: number | string;
+  commission: number | string;
+  links: string;
+  blinks: string;
 }) => {
-  const purchaseDate = new Date(date);
+  const dateStr = purchaseDate;
+  const date = new Date(dateStr);
 
   const options: Intl.DateTimeFormatOptions = {
     year: "numeric",
@@ -444,12 +574,12 @@ const SalesLabel = ({
     day: "2-digit",
   };
 
-  const formattedDate = purchaseDate.toLocaleString("en-US", options);
+  const formattedDate = date.toLocaleString("en-US", options);
 
   const handleCopy = () => {
-    if (hash) {
+    if (transactionHash) {
       navigator.clipboard
-        .writeText(hash)
+        .writeText(transactionHash)
         .then(() => {
           toast.info("Copied Transaction Hash!");
         })
@@ -460,54 +590,108 @@ const SalesLabel = ({
     }
   };
 
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownload = async () => {
+    const url = `https://files.sendit.markets/products/${productFile}`;
+
+    try {
+      setIsDownloading(true);
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      // Create a blob from the response
+      const blob = await response.blob();
+      const link = document.createElement("a");
+      link.href = window.URL.createObjectURL(blob);
+      link.download = productFile; // Set the file name for download
+      document.body.appendChild(link); // Append to body
+      link.click(); // Trigger the download
+      document.body.removeChild(link); // Clean up
+      setIsDownloading(false);
+    } catch (error) {
+      setIsDownloading(false);
+      console.error("Download failed:", error);
+    }
+  };
+
   return (
-    <div className="border-b px-2 grid grid-cols-12 items-center w-full h-10">
-      <p className="text-[9px] md:text-[13px] col-span-1">{formattedDate}</p>
-      <p className="text-[9px] md:text-[13px] col-span-3">
-        <a href={`/product/${productId}`} target="_blank">
-          {productName}
-        </a>
-      </p>
-      <p className="text-[9px] md:text-[13px] col-span-2">
-        {buyer ? `${buyer.slice(0, 3)}...${buyer.slice(-4)}` : ""}
-      </p>
-      <p className="text-[9px] md:text-[13px] col-span-1">{quantity}</p>
-      <p className="text-[9px] md:text-[13px] col-span-1">{price}</p>
-      <div className="text-[9px] md:text-[13px] flex items-center col-span-1">
-        {status == "confirmed" ? (
-          <div className="flex text-[9px] md:text-[13px] items-center bg-opacity-45 border border-green-600 rounded-md h-6 px-1 bg-green-400 ">
-            <p>{status}</p>
+    <div className="border-b px-2 grid grid-cols-12 items-center w-full h-16">
+      <Link
+        href={`/product/${productId}`}
+        className="col-span-4 flex items-center gap-x-2"
+      >
+        <Image
+          src={productImg}
+          alt="product"
+          className=" w-8 h-8 rounded-md"
+          width={20}
+          height={20}
+        />
+
+        {productName.length > 20 ? (
+          <div>
+            <p className="text-[11px] md:text-[15px]">
+              {productName.slice(0, 20)}...
+            </p>
+            <p className="text-[9px] md:text-[13px] text-[#898991]">
+              {productDescription.slice(0, 20)}...
+            </p>
           </div>
         ) : (
-          <div className="flex text-[9px] md:text-[13px] items-center bg-opacity-45 border border-red-600 rounded-md h-6 px-1 bg-red-400 ">
-            <p>{status ? "pending" : "NA"}</p>
+          <div>
+            <p className="text-[11px] md:text-[15px]">{productName}</p>
+            <p className="text-[9px] md:text-[13px] text-[#898991]">
+              {productDescription}
+            </p>
           </div>
         )}
+      </Link>
+      <p className="text-[9px] md:text-[13px] col-span-1">{`${ratings} Stars`}</p>
+      <p className="text-[9px] md:text-[13px] col-span-2">{`${price} SOL`}</p>
+      <p className="text-[9px] md:text-[13px] col-span-3">{`${commission}`}</p>
+
+      <div className="col-span-1  ">
+        {/* <p className="text-xs">{`${links.slice(0, 4)}...${links.slice(-2)}`}</p> */}
+        <button className="border border-[#52525C] w-7 h-7 rounded-md flex items-center justify-center bg-white hover:bg-[#E4E4E5] transition-all duration-200">
+          <svg
+            width="12"
+            height="13"
+            viewBox="0 0 12 13"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M6.41242 10.3778L5.58746 11.2027C4.44843 12.3418 2.6017 12.3418 1.46267 11.2027C0.323641 10.0637 0.323641 8.21698 1.46267 7.07795L2.28763 6.25299M9.71225 7.07795L10.5372 6.25299C11.6762 5.11396 11.6762 3.26723 10.5372 2.1282C9.39818 0.989168 7.55145 0.989169 6.41242 2.1282L5.58746 2.95316M3.95827 8.70712L8.04161 4.62379"
+              stroke="#52525C"
+              strokeWidth="1.05"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </button>
       </div>
-      <div
-        onClick={handleCopy}
-        className="text-[9px] md:text-[13px] col-span-2 flex items-center"
-      >
-        <p className="w-10 sm:w-12 md:w-16">
-          {hash ? `${hash.slice(0, 3)}…${hash.slice(-3)}` : ""}
-        </p>
+
+      <button className="col-span-1 w-16 rounded-md flex items-center px-2 h-8 gap-x-1 bg-gradient-to-r from-[#8E50F3] via-[#6586D7] to-[#4AC9B7]">
         <svg
-          className="w-3 ml-1"
-          viewBox="0 0 14 14"
+          width="12"
+          height="13"
+          viewBox="0 0 12 13"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
           <path
-            d="M4.66797 4.6665V3.03317C4.66797 2.37978 4.66797 2.05308 4.79513 1.80352C4.90698 1.58399 5.08546 1.40552 5.30498 1.29366C5.55454 1.1665 5.88124 1.1665 6.53464 1.1665H10.968C11.6214 1.1665 11.9481 1.1665 12.1976 1.29366C12.4171 1.40552 12.5956 1.58399 12.7075 1.80352C12.8346 2.05308 12.8346 2.37978 12.8346 3.03317V7.4665C12.8346 8.1199 12.8346 8.4466 12.7075 8.69616C12.5956 8.91568 12.4171 9.09416 12.1976 9.20601C11.9481 9.33317 11.6214 9.33317 10.968 9.33317H9.33464M3.03464 12.8332H7.46797C8.12136 12.8332 8.44806 12.8332 8.69762 12.706C8.91715 12.5942 9.09562 12.4157 9.20748 12.1962C9.33464 11.9466 9.33464 11.6199 9.33464 10.9665V6.53317C9.33464 5.87978 9.33464 5.55308 9.20748 5.30352C9.09562 5.08399 8.91715 4.90552 8.69762 4.79366C8.44806 4.6665 8.12136 4.6665 7.46797 4.6665H3.03464C2.38124 4.6665 2.05454 4.6665 1.80498 4.79366C1.58546 4.90552 1.40698 5.08399 1.29513 5.30352C1.16797 5.55308 1.16797 5.87978 1.16797 6.53317V10.9665C1.16797 11.6199 1.16797 11.9466 1.29513 12.1962C1.40698 12.4157 1.58546 12.5942 1.80498 12.706C2.05454 12.8332 2.38124 12.8332 3.03464 12.8332Z"
-            stroke="#8B8B92"
-            strokeWidth="1.1375"
+            d="M6.41242 10.3778L5.58746 11.2027C4.44843 12.3418 2.6017 12.3418 1.46267 11.2027C0.323641 10.0637 0.323641 8.21698 1.46267 7.07795L2.28763 6.25299M9.71225 7.07795L10.5372 6.25299C11.6762 5.11396 11.6762 3.26723 10.5372 2.1282C9.39818 0.989168 7.55145 0.989169 6.41242 2.1282L5.58746 2.95316M3.95827 8.70712L8.04161 4.62379"
+            stroke="white"
+            strokeWidth="1.05"
             strokeLinecap="round"
             strokeLinejoin="round"
           />
         </svg>
-      </div>
-      <button className="text-[9px] md:text-[13px] rounded-md h-6 bg-black text-white col-span-1 hover:bg-[#5a5c5d] transition-all duration-300">
-        {claim}
+        <p className="font-medium text-white">copy</p>
       </button>
     </div>
   );
