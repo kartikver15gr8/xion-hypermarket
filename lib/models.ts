@@ -234,3 +234,23 @@ export interface AffiliateAnalytics {
   };
   user_id: number;
 }
+
+export interface AffiliateAnalyticsTwo {
+  UserID: string;
+  SaleCount: number;
+  SaleAmount: number;
+  User: {
+    ID: string;
+    ExternalID: string;
+    Username: string;
+    SellerRegTxHash: string;
+    WalletAddress: string;
+    CreatedAt: string;
+    UpdatedAt: string;
+    DeletedAt: any;
+    Products: any;
+    Purchases: any;
+    SellerAnalytics: any;
+    AffiliateAnalytics: any;
+  };
+}

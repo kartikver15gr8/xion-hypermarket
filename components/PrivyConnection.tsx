@@ -1,5 +1,6 @@
 "use client";
 
+import { cartState } from "@/store/atom/cartState";
 import { phantomWallet } from "@/store/atom/phantomWallet";
 import { userIdState } from "@/store/atom/userIdState";
 import { usePrivy } from "@privy-io/react-auth";
@@ -51,7 +52,7 @@ export default function PrivyConnection() {
     const checkUserExist = async () => {
       try {
         const response = await axios.get(
-          `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/admin/user/${externalId}`,
+          `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/admin/user`,
           {
             headers: {
               Accept: "application/json",
@@ -109,6 +110,12 @@ export default function PrivyConnection() {
     setUserStateId("");
     toast.info("Disconnected from Phantom");
   };
+  const [cartVal, setCartVal] = useRecoilState(cartState);
+
+  const setCartState = () => {
+    setCartVal(!cartVal);
+    setShowPopup(false);
+  };
 
   return (
     <div className="w-fit">
@@ -149,6 +156,7 @@ export default function PrivyConnection() {
               onBecomeSeller={() => console.log("Become a Seller clicked")}
               onDashboard={() => console.log("Dashboard clicked")}
               onLogout={handleLogout}
+              changeCartState={setCartState}
             />
           )}
         </div>
@@ -169,6 +177,7 @@ interface PopupMenuProps {
   onBecomeSeller: () => void;
   onDashboard: () => void;
   onLogout: () => void;
+  changeCartState: () => void;
 }
 
 const PopupMenu: React.FC<PopupMenuProps> = ({
@@ -176,6 +185,7 @@ const PopupMenu: React.FC<PopupMenuProps> = ({
   onBecomeSeller,
   onDashboard,
   onLogout,
+  changeCartState,
 }) => {
   return (
     <div className="absolute bg-white border rounded-md  p-2 right-1 md:right-5 lg:right-10 top-14 shadow-inner">
@@ -188,6 +198,12 @@ const PopupMenu: React.FC<PopupMenuProps> = ({
         </button>
       </Link>
 
+      <button
+        onClick={changeCartState}
+        className="block rounded w-full text-left py-1 px-2 hover:bg-gray-200 transition-all duration-300"
+      >
+        Check Cart
+      </button>
       <button
         onClick={onLogout}
         className="block rounded w-full text-left py-1 px-2 hover:bg-gray-200 transition-all duration-300"

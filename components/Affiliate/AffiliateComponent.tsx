@@ -7,23 +7,23 @@ import axios from "axios";
 import { useRecoilValue } from "recoil";
 import { toast } from "sonner";
 import spinnerthree from "@/public/loaders/spinnerthree.svg";
-import { AffiliateAnalytics, PurchasesInterface } from "@/lib/models";
+import {
+  AffiliateAnalytics,
+  AffiliateAnalyticsTwo,
+  PurchasesInterface,
+} from "@/lib/models";
 import ape from "@/public/ape.png";
 import React from "react";
 import { jsPDF } from "jspdf";
 import { imageBase64 } from "@/utils/imageBase";
+import { usePrivy } from "@privy-io/react-auth";
 
 export default function AffiliateComponent() {
   return (
     <div>
       <TopBar />
       <div className="flex items-center gap-x-5 mt-10">
-        <p className="text-3xl font-bold italic">
-          Affiliate Sales & Commission
-        </p>
-        {/* <button className="border rounded-md bg-green-300 bg-opacity-40 border-green-600 h-7 px-1">
-          Completed
-        </button> */}
+        <p className="text-3xl font-medium">Affiliate Sales & Commission</p>
       </div>
       <MidSection />
       <SalesOverview />
@@ -71,6 +71,10 @@ const TopBar = () => {
   );
 };
 
+const activeTab =
+  "border-b-2 flex items-center w-32 h-8 justify-center border-[#114026]";
+const inActiveTab = "border-b-2 flex h-8 items-center w-32 justify-center ";
+
 const SalesOverview = () => {
   const walletAddress = useRecoilValue(phantomWallet);
   const [salesData, setSalesData] = useState<PurchasesInterface[]>([]);
@@ -83,6 +87,19 @@ const SalesOverview = () => {
   const filteredSalesData = salesData.filter((sales) =>
     sales.product_title.toLowerCase().includes(searchKeyTx.toLowerCase())
   );
+
+  const [selected, setSelected] = useState<"mylinks" | "productstosell">(
+    "mylinks"
+  );
+
+  const selectProductsToSell = () => {
+    setSelected("productstosell");
+    toast.info("Switched to Products to Sell section");
+  };
+  const selectMyLinks = () => {
+    setSelected("mylinks");
+    toast.info("Switched to My Links section");
+  };
 
   useEffect(() => {
     if (!walletAddress) {
@@ -158,6 +175,23 @@ const SalesOverview = () => {
 
   return (
     <div className="mt-8">
+      <div className="flex items-center  mb-8">
+        <div
+          onClick={selectMyLinks}
+          className={selected == "mylinks" ? activeTab : inActiveTab}
+        >
+          <p>My Links</p>
+        </div>
+        <div
+          onClick={selectProductsToSell}
+          className={selected == "productstosell" ? activeTab : inActiveTab}
+        >
+          <p>Products to Sell</p>
+        </div>
+      </div>
+      <p className="font-medium text-xl my-4">
+        Choose Products to Promote and Earn
+      </p>
       {/* <p className="font-medium text-xl">Sales Overview</p> */}
       <div className="grid grid-cols-12 mt-4 gap-x-2 md:gap-x-4 lg:gap-x-8 h-10">
         <div className="col-span-2 border rounded-lg flex items-center justify-center gap-x-1 md:gap-x-2">
@@ -226,39 +260,155 @@ const SalesOverview = () => {
           </p>
         </div>
       </div>
-      <div className="px-2 mb-1 grid grid-cols-12 items-center mt-5 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
-        <p className="text-[11px] md:text-[13px] col-span-1">Date</p>
-        <p className="text-[11px] md:text-[13px] col-span-3">Product Name</p>
-        <p className="text-[11px] md:text-[13px] col-span-2">Buyer</p>
-        <p className="text-[11px] md:text-[13px] col-span-1">Quantity</p>
-        <p className="text-[11px] md:text-[13px] col-span-1">Price</p>
-        <p className="text-[11px] md:text-[13px] col-span-1">Status</p>
-        <p className="text-[11px] md:text-[13px] col-span-2">Hash</p>
-        <p className="text-[11px] md:text-[13px] col-span-1">Claim</p>
-      </div>
+      {selected == "productstosell" ? (
+        <>
+          <div className="px-2 mb-1 grid grid-cols-12 items-center mt-5 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
+            <p className="text-[11px] md:text-[13px] col-span-1">Date</p>
+            <p className="text-[11px] md:text-[13px] col-span-3">
+              Product Name
+            </p>
+            <p className="text-[11px] md:text-[13px] col-span-2">Buyer</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">Quantity</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">Price</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">Status</p>
+            <p className="text-[11px] md:text-[13px] col-span-2">Hash</p>
+            <p className="text-[11px] md:text-[13px] col-span-1">Claim</p>
+          </div>
 
-      {isLoading ? (
-        <div className="flex justify-center mt-2">
-          <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
-        </div>
+          {isLoading ? (
+            <div className="flex justify-center mt-2">
+              <Image className="w-10 lg:w-12" src={spinnerthree} alt="" />
+            </div>
+          ) : (
+            <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-96">
+              {filteredSalesData.map((item: PurchasesInterface, key) => {
+                return (
+                  <SalesLabel
+                    key={key}
+                    date={item.created_at}
+                    productName={item.product_title}
+                    productId={item.product_id}
+                    buyer={item.buyer_wallet_address}
+                    quantity={1}
+                    price={`${item.amount} SOL`}
+                    status={item.status}
+                    hash={item.transaction_hash}
+                    claim="claim"
+                  />
+                );
+              })}
+            </div>
+          )}
+        </>
       ) : (
-        <div className="relative overflow-y-auto hide-scrollbar scroll-smooth h-96">
-          {filteredSalesData.map((item: PurchasesInterface, key) => {
-            return (
-              <SalesLabel
-                key={key}
-                date={item.created_at}
-                productName={item.product_title}
-                productId={item.product_id}
-                buyer={item.buyer_wallet_address}
-                quantity={1}
-                price={`${item.amount} SOL`}
-                status={item.status}
-                hash={item.transaction_hash}
-                claim="claim"
-              />
-            );
-          })}
+        <div className="mt-5">
+          <p className="text-lg font-medium">Your Referral Links</p>
+          <p className="text-sm text-[#8B8B93]">
+            Share these links to earn commissions on every sale.
+          </p>
+          <div className="">
+            <div className="border-b grid grid-cols-2 items-center h-28 w-[100%] md:w-[90%] lg:w-[70%]">
+              <p className="font-medium">Referral Link</p>
+              <div className="flex gap-x-2">
+                <div className="border border-[#C9C9CB] bg-[#F7F7F7] rounded-md flex items-center px-2 w-[300px] h-8">
+                  <p>sendit</p>
+                </div>
+                <button className="border border-[#C9C9CB] rounded-md flex items-center gap-x-1 h-8 px-2 w-[80px] justify-center">
+                  <svg
+                    className="w-3"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.75333 12.7728L7.69267 13.8335C6.2282 15.2979 3.85383 15.2979 2.38937 13.8335C0.924899 12.369 0.924899 9.99465 2.38937 8.53018L3.45003 7.46952M12.996 8.53018L14.0566 7.46952C15.5211 6.00506 15.5211 3.63069 14.0566 2.16622C12.5922 0.701754 10.2178 0.701755 8.75333 2.16622L7.69267 3.22688M5.598 10.6248L10.848 5.37484"
+                      stroke="#4B4B54"
+                      strokeWidth="1.35"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <p className="text-sm">Copy</p>
+                </button>
+              </div>
+            </div>
+            <div className="border-b grid grid-cols-2 items-center h-28 w-[100%] md:w-[90%] lg:w-[70%]">
+              <p className="font-medium">Referral Code</p>
+              <div className="flex gap-x-2">
+                <div className="border border-[#C9C9CB] bg-[#F7F7F7] rounded-md flex items-center px-2 w-[300px] h-8">
+                  <p>REF-DEDGB546</p>
+                </div>
+                <button className="border border-[#C9C9CB] rounded-md flex items-center gap-x-1 h-8 px-2 w-[80px] justify-center">
+                  <svg
+                    className="w-3"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.75333 12.7728L7.69267 13.8335C6.2282 15.2979 3.85383 15.2979 2.38937 13.8335C0.924899 12.369 0.924899 9.99465 2.38937 8.53018L3.45003 7.46952M12.996 8.53018L14.0566 7.46952C15.5211 6.00506 15.5211 3.63069 14.0566 2.16622C12.5922 0.701754 10.2178 0.701755 8.75333 2.16622L7.69267 3.22688M5.598 10.6248L10.848 5.37484"
+                      stroke="#4B4B54"
+                      strokeWidth="1.35"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <p className="text-sm">Copy</p>
+                </button>
+              </div>
+            </div>
+            <div className="border-b grid grid-cols-2 items-center h-28 w-[100%] md:w-[90%] lg:w-[70%]">
+              <p className="font-medium">Solana Blink Referral</p>
+              <div className="flex gap-x-2">
+                <div className="border border-[#C9C9CB] bg-[#F7F7F7] rounded-md flex items-center px-2 w-[300px] h-8">
+                  <p>Generate Blinks</p>
+                </div>
+                <button className="border border-[#C9C9CB] rounded-md flex items-center gap-x-1 h-8 px-2 w-[80px] justify-center">
+                  <svg
+                    className="w-3"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M8.75333 12.7728L7.69267 13.8335C6.2282 15.2979 3.85383 15.2979 2.38937 13.8335C0.924899 12.369 0.924899 9.99465 2.38937 8.53018L3.45003 7.46952M12.996 8.53018L14.0566 7.46952C15.5211 6.00506 15.5211 3.63069 14.0566 2.16622C12.5922 0.701754 10.2178 0.701755 8.75333 2.16622L7.69267 3.22688M5.598 10.6248L10.848 5.37484"
+                      stroke="#4B4B54"
+                      strokeWidth="1.35"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <p className="text-sm">Copy</p>
+                </button>
+              </div>
+            </div>
+            <div className=" grid grid-cols-2 items-center h-28 w-[100%] md:w-[90%] lg:w-[70%]">
+              <p className="font-medium">Invitations</p>
+              <div className="flex gap-x-2">
+                <div className="border border-[#C9C9CB] bg-[#F7F7F7] rounded-md flex items-center px-2 w-[300px] h-8">
+                  <p>Email</p>
+                </div>
+                <button className="border border-[#C9C9CB] rounded-md flex items-center gap-x-1 h-8 px-2 w-[80px] justify-center">
+                  <svg
+                    className="w-3"
+                    viewBox="0 0 16 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M7.09968 8.00009H2.97469M2.91119 8.21871L1.16 13.4497C1.02243 13.8607 0.95364 14.0662 1.00301 14.1927C1.04588 14.3026 1.13795 14.3859 1.25156 14.4176C1.38239 14.4541 1.57999 14.3652 1.97519 14.1874L14.5088 8.54724C14.8945 8.37366 15.0874 8.28686 15.147 8.16629C15.1988 8.06154 15.1988 7.93863 15.147 7.83388C15.0874 7.71331 14.8945 7.62652 14.5088 7.45294L1.97082 1.81088C1.57681 1.63358 1.3798 1.54493 1.24911 1.58129C1.1356 1.61287 1.04354 1.69596 1.00052 1.80565C0.950988 1.93194 1.01904 2.13697 1.15515 2.54704L2.91168 7.83923C2.93506 7.90966 2.94675 7.94488 2.95136 7.98089C2.95545 8.01285 2.95541 8.04521 2.95124 8.07715C2.94653 8.11316 2.93475 8.14834 2.91119 8.21871Z"
+                      stroke="#52525C"
+                      strokeWidth="1.5"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+
+                  <p className="text-sm">Send</p>
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>
@@ -365,16 +515,39 @@ const SalesLabel = ({
 
 const MidSection = () => {
   const [affiliateAnalytics, setAffiliateAnalytics] =
-    useState<AffiliateAnalytics>();
+    useState<AffiliateAnalyticsTwo>();
   const affiliateWalletAddress = useRecoilValue(phantomWallet);
+  const { user, getAccessToken } = usePrivy();
+  const [privyAccessToken, setPrivyAccessToken] = useState("");
+
+  const fetchAccessToken = async () => {
+    try {
+      const token = await getAccessToken();
+      if (token) {
+        setPrivyAccessToken(token);
+      }
+    } catch (error) {
+      toast.info(`Error`);
+    }
+  };
 
   const fetchAffiliateAnalytics = async () => {
+    if (!user?.id) {
+      return;
+    }
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/analytics/affiliate?affiliate_wallet_address=${affiliateWalletAddress}`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/admin/analytics/affiliate?affiliate_external_id=${user.id}`,
+        {
+          headers: {
+            Accept: "application/json",
+            Authorization: `Bearer ${privyAccessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
       );
       setAffiliateAnalytics(response.data[0]);
-      // console.log(response.data[0]);
+      console.log(response.data[0]);
 
       return response.data;
     } catch (error) {
@@ -385,13 +558,14 @@ const MidSection = () => {
   };
 
   useEffect(() => {
+    fetchAccessToken();
     if (affiliateWalletAddress) {
       fetchAffiliateAnalytics();
     }
   }, [affiliateWalletAddress]);
 
   return (
-    <div className="border rounded-2xl grid grid-cols-3 bg-white mt-4">
+    <div className="border rounded-2xl grid grid-cols-3 bg-white mt-4 shadow-lg">
       <div className="p-2 sm:p-3 md:p-4">
         <div className=" flex items-center gap-x-1">
           <p className="text-xs md:text-[13px]">TOTAL EARNED</p>
@@ -412,7 +586,7 @@ const MidSection = () => {
           </svg>
         </div>
         <p className="font-bold text-3xl md:text-4xl my-3">
-          {affiliateAnalytics ? affiliateAnalytics.sale_amount : "$0"}
+          {affiliateAnalytics ? `$${affiliateAnalytics.SaleAmount}` : "$0"}
         </p>
         <div className="flex gap-x-1 text-[11px] sm:text-[12px] md:text-[14px]">
           <div className="flex items-center text-green-500">
@@ -490,7 +664,7 @@ const MidSection = () => {
           </svg>
         </div>
         <p className="font-bold text-3xl md:text-4xl my-3">
-          {affiliateAnalytics ? affiliateAnalytics.sale_count : "0"}
+          {affiliateAnalytics ? affiliateAnalytics.SaleCount : "0"}
         </p>
         <div className="mt-8 text-[10px] md:text-[12px]">
           <p className="text-[#A6ACB7]">Top Product</p>

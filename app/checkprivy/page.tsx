@@ -40,6 +40,11 @@ export default function CheckPrivy() {
       <p>{accesstoken ? accesstoken : "Nothing found"}</p>
       <p>{user?.id ? user.id : "no id"}</p>
       <p>{userId}</p>
+      <p>
+        {user?.wallet?.address
+          ? user.wallet.address
+          : "No wallet address found"}
+      </p>
     </div>
   );
 }

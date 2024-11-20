@@ -19,6 +19,8 @@ import homeIconSVG from "@/public/homeicon.svg";
 import Link from "next/link";
 import PromoteWithBlinksBtn from "@/components/PromoteWithBlinksBtn";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
+import { getAccessToken, usePrivy } from "@privy-io/react-auth";
+import { userIdState } from "@/store/atom/userIdState";
 
 export default function Product({ params }: any) {
   // const [productId, setProductId] = useState(params.product);
@@ -28,10 +30,6 @@ export default function Product({ params }: any) {
   // Fetch product data based on productId
   const fetchProductData = async () => {
     try {
-      // console.log(`Fetching product with ID: ${productId}`);
-      // const response = await axios.get(
-      //   `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/products?product_id=${productId}`
-      // );
       const response = await axios.get(
         `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/products?slug=${slug}`
       );
@@ -91,7 +89,7 @@ export default function Product({ params }: any) {
       )}
       {productById && (
         <ProductReviews
-          // productId={productId}
+          productId={productById.ID}
           productDescription={productById.Description}
         />
       )}
@@ -365,7 +363,7 @@ const ProductReviews = ({
   productId,
 }: {
   productDescription: string;
-  productId?: number;
+  productId?: number | string;
 }) => {
   const [productReviews, setProductReviews] = useState<ReviewInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -374,11 +372,10 @@ const ProductReviews = ({
     try {
       setIsLoading(true);
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/reviews?product_id=${productId}`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/reviews?product_id=${productId}`
       );
       // console.log("the reviews");
 
-      // console.log(response.data);
       setProductReviews(response.data);
       return response.data;
     } catch (error) {
@@ -390,9 +387,9 @@ const ProductReviews = ({
     setIsLoading(false);
   };
 
-  // useEffect(() => {
-  //   fetchReviews();
-  // }, []);
+  useEffect(() => {
+    fetchReviews();
+  }, []);
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-5 xl:gap-x-4 2xl:gap-x-8 px-2 pt-2 xl:justify-between 2xl:justify-evenly gap-y-4 sm:gap-y-4 md:gap-y-4 lg:gap-y-0 mb-10">
@@ -405,7 +402,7 @@ const ProductReviews = ({
         </div>
       </div>
       <div className="lg:col-span-2 col-span-1 sm:col-span-1 md:col-span-1">
-        {/* <PostReviewTab productId={productId} /> */}
+        <PostReviewTab productId={productId} />
         <p className="font-bold text-lg mt-2">Ratings:</p>
         {productReviews.length > 0 && (
           <div className="mt-2 relative overflow-y-auto hide-scrollbar scroll-smooth h-60 border rounded-lg w-[100%]">
@@ -471,24 +468,26 @@ const RatingLabel = ({
   );
 };
 
-const PostReviewTab = ({ productId }: { productId: number }) => {
+const PostReviewTab = ({
+  productId,
+}: {
+  productId: number | string | undefined;
+}) => {
   const [reviewWindowVisibility, setAddReviewWindowVisibility] =
     useState(false);
   const walletAddress = useRecoilValue(phantomWallet);
   const [comment, setComment] = useState("");
   const [rating, setRating] = useState(0);
-  const [userId, setUserId] = useState(null);
-  // console.log(rating);
+  const { user } = usePrivy();
+  const [privyAccessToken, setPrivyAccessToken] = useState("");
+  const userId = useRecoilValue(userIdState);
 
   const fetchUserId = async () => {
     try {
-      const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${walletAddress}`
-      );
-      // console.log("This is the user: ");
-      // console.log(response.data);
-      // console.log(response.data.id);
-      setUserId(response.data.id);
+      const token = await getAccessToken();
+      if (token) {
+        setPrivyAccessToken(token);
+      }
     } catch (error) {
       console.log(`Error while fetching UserId: ${error}`);
     }
@@ -504,31 +503,30 @@ const PostReviewTab = ({ productId }: { productId: number }) => {
 
   const postReviewAction = async () => {
     try {
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/reviews`,
-        {
-          comment: comment,
-          product_id: Number(productId),
-          rating: rating,
-          user_id: userId,
-        }
-      );
-
-      // console.log(response.data);
-      setAddReviewWindowVisibility(false);
-      return response.data;
+      if (privyAccessToken.length > 1) {
+        const response = await axios.post(
+          `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/admin/reviews`,
+          {
+            comment: comment,
+            product_id: productId,
+            rating: rating,
+            user_id: userId,
+          },
+          {
+            headers: {
+              Accept: "application/json",
+              Authorization: `Bearer ${privyAccessToken}`,
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        setAddReviewWindowVisibility(false);
+        return response.data;
+      }
     } catch (error) {
       console.log(`You got an error while posting review: ${error}`);
     }
   };
-
-  // Review post body
-  // {
-  //   "comment": "Amazing product so far, very helpful bots",
-  //   "product_id": 21,
-  //   "rating": 4,
-  //   "user_id": 4
-  // }
 
   return (
     <div className="">
