@@ -148,7 +148,7 @@ export default function ProductUpload() {
   };
 
   return (
-    <div className="pt-16 pb-20 sm:px-[20px] md:px-[40px] min-h-screen lg:px-[60px] xl:px-20 bg-[#FAF9F5] w-full relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth ">
+    <div className="pt-16 pb-20 px-[15px] sm:px-[20px] md:px-[40px] min-h-screen lg:px-[60px] xl:px-20 bg-[#FAF9F5] w-full relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth ">
       <div className="mt-5  flex justify-between items-center">
         <div className=" w-fit">
           <div className="flex gap-x-2 items-center ">

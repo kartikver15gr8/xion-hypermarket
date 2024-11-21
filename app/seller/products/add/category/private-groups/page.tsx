@@ -153,7 +153,7 @@ export default function ProductUpload() {
   };
 
   return (
-    <div className="pt-16 pb-20 sm:px-[20px] md:px-[40px] min-h-screen lg:px-[60px] xl:px-20 bg-[#FAF9F5] w-full relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth ">
+    <div className="pt-16 pb-20 px-[15px] sm:px-[20px] md:px-[40px] min-h-screen lg:px-[60px] xl:px-20 bg-[#FAF9F5] w-full relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth ">
       <div className="mt-5  flex justify-between items-center">
         <div className=" w-fit">
           <div className="flex gap-x-2 items-center ">
@@ -298,42 +298,46 @@ export default function ProductUpload() {
         <div className="grid grid-cols-2 gap-x-4 mt-2">
           <div className="border rounded-lg h-24 flex items-center px-2 gap-x-3">
             <Image
-              className="w-14"
+              className="w-10 md:w-12 lg:w-14"
               src="https://s3-alpha-sig.figma.com/img/c89a/0a74/93f942f4f36a009c22adc6177b140086?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=I1WoThr8zy7FjNSbR9~Rfgi~~HrE6ELvlNSwW92RCBDspmqDI3pQ6aJb1AKXTsmYWlnTlsxjtyjvEhE9nIJLzLDO5qLSWSeWqTfuAa9vuk-IE9OOov90XPYYfETFhVED~IeK-qgEtc0wZduH9Z8mZZiW3Oq2Oz-L61Ys6cTmYRJL9GBDeBXJ07SjdkkgxK13iKKcU6SNmA-GVa702qCq4M1lsoB19JvXO7x~Fjmuxdu6LSILU~cvwaWYRtW-soGdo7oeOhbptfQJFBPedyv-A9wJ2s5ONe7lnXbWSrQ7WOIJtscN5DOCqqxTIeCzDghY2qL7shKTTCHIFSVocQWlPA__"
               width={200}
               height={200}
               alt=""
             />
             <div>
-              <p className="font-medium text-lg">Discord</p>
-              <p className="text-[11px]">
+              <p className="font-medium text-[14px] md:text-[16px] lg:text-lg">
+                Discord
+              </p>
+              <p className="text-[10px] md:text-[11px]">
                 Offer exclusive access to your private Discord server
               </p>
             </div>
           </div>
           <div className="border rounded-lg h-24 flex items-center px-2 gap-x-3">
             <Image
-              className="w-14"
+              className="w-10 md:w-12 lg:w-14"
               src="https://s3-alpha-sig.figma.com/img/1d2b/bc7f/92849e7867a21edd110a2b0e8a256f6e?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CMFTdAWPEY2zRMwir~96rBNf5iuAy1T1xrpa~mX9LzAmV9yoplOm56x3BTCzFJYPBv1Sb2xwP5Yfkbe8zr9T-UHv~DRHvQsyh6KA00v9M5KmoI~apctonPhgnFxBEANmFhnWyoSCrFVioL463gDiTIjWNBpAV9txOJg-D6iKM7aeBoh6xlZai-T-rUyOjFu0Dw3XtmLJ01kouELtjKtu~doKk2q0pdXBIH1GC0J~TEx7szoylE7ERL7Va8dF0vZ9HNmJSZk~pAmBk5cChk1-BX5fFB46Pwh2OIN5wxh7~H388bnzpnqi8N8OvzqM64RkwAbrg68ouC5HwdWAw8UDOw__"
               width={200}
               height={200}
               alt=""
             />
             <div>
-              <p className="font-medium text-lg">Telegram</p>
-              <p className="text-[11px]">
+              <p className="font-medium text-[14px] md:text-[16px] lg:text-lg">
+                Telegram
+              </p>
+              <p className="text-[10px] md:text-[11px]">
                 Provide access to your private Telegram channel
               </p>
             </div>
           </div>
           <div className="border mt-2 p-1 px-2 flex items-center justify-between gap-x-1 rounded-sm border-[#E4E4E5]">
             <input
-              className="w-full outline-none h-8"
+              className="w-full outline-none h-8 "
               type="text"
               placeholder="Enter your discord link"
             />
             <svg
-              className="w-4"
+              className="w-3 md:w-4"
               viewBox="0 0 17 16"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -351,7 +355,7 @@ export default function ProductUpload() {
               placeholder="Enter your telegram group link"
             />
             <svg
-              className="w-4"
+              className="w-3 md:w-4"
               viewBox="0 0 17 16"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -363,7 +367,7 @@ export default function ProductUpload() {
             </svg>
           </div>
         </div>
-        <p className="mt-5 text-sm text-[#52525C]">
+        <p className="text-xs text-[#5D5D67] mt-5">
           Subscription Duration and Pricing
         </p>
         <div className="grid grid-cols-3 gap-x-3 mt-4">
