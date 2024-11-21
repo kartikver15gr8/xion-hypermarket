@@ -24,7 +24,9 @@ export default function AffiliateComponent() {
     <div>
       <TopBar />
       <div className="flex items-center gap-x-5 mt-10">
-        <p className="text-3xl font-medium">Affiliate Sales & Commission</p>
+        <p className="text-xl sm:text-2xl md:text-3xl font-medium">
+          Affiliate Sales & Commission
+        </p>
       </div>
       <MidSection />
       <SalesOverview />
@@ -73,8 +75,9 @@ const TopBar = () => {
 };
 
 const activeTab =
-  "border-b-2 flex items-center w-32 h-8 justify-center border-[#114026]";
-const inActiveTab = "border-b-2 flex h-8 items-center w-32 justify-center ";
+  "border-b-2 flex items-center w-28 md:w-32 h-8 justify-center border-[#114026] text-[14px] md:text-[16px] z-50";
+const inActiveTab =
+  "border-b-2 flex h-8 items-center w-28 md:w-32 justify-center text-[14px] md:text-[16px] z-50";
 
 const SalesOverview = () => {
   const walletAddress = useRecoilValue(phantomWallet);
@@ -176,7 +179,7 @@ const SalesOverview = () => {
 
   return (
     <div className="mt-8">
-      <div className="flex items-center  mb-8">
+      <div className="flex items-center">
         <div
           onClick={selectMyLinks}
           className={selected == "mylinks" ? activeTab : inActiveTab}
@@ -190,7 +193,7 @@ const SalesOverview = () => {
           <p>Products to Sell</p>
         </div>
       </div>
-      <p className="font-medium text-xl my-4">
+      <p className="font-medium text-lg md:text-xl mt-8">
         Choose Products to Promote and Earn
       </p>
       {/* <p className="font-medium text-xl">Sales Overview</p> */}
@@ -212,7 +215,7 @@ const SalesOverview = () => {
             />
           </svg>
         </div>
-        <div className="col-span-8 border rounded-lg flex items-center pl-3">
+        <div className="col-span-8 border rounded-lg flex items-center pl-3 z-50">
           <svg
             className="mr-3"
             width="15"
@@ -239,7 +242,7 @@ const SalesOverview = () => {
         </div>
         <div
           onClick={exportPDF}
-          className="col-span-2 gap-x-2 text-white rounded-lg flex items-center justify-center bg-[#4E6465]"
+          className="col-span-2 gap-x-2 text-white rounded-lg flex items-center justify-center bg-[#4E6465]  z-50"
         >
           <svg
             className="w-2 md:w-3"
@@ -276,12 +279,24 @@ const SalesOverview = () => {
             <p className="text-[11px] md:text-[13px] col-span-1">Claim</p>
           </div> */}
           <div className="px-2 mb-1 grid grid-cols-12 items-center mt-5 w-full h-7 rounded-lg shadow-[inset_0px_2px_10px_rgba(0,0,0,0.04)] bg-[#F7F7F7]">
-            <p className="text-[11px] md:text-[13px] col-span-4">PRODUCT</p>
-            <p className="text-[11px] md:text-[13px] col-span-1">RATINGS</p>
-            <p className="text-[11px] md:text-[13px] col-span-2">PRICE</p>
-            <p className="text-[11px] md:text-[13px] col-span-3">COMMISSION</p>
-            <p className="text-[11px] md:text-[13px] col-span-1">LINKS</p>
-            <p className="text-[11px] md:text-[13px] col-span-1">BLINKS</p>
+            <p className="text-[9px] sm:text-[11px] md:text-[13px] col-span-4">
+              PRODUCT
+            </p>
+            <p className="text-[9px] sm:text-[11px] md:text-[13px] col-span-1">
+              RATINGS
+            </p>
+            <p className="text-[9px] sm:text-[11px] md:text-[13px] col-span-2">
+              PRICE
+            </p>
+            <p className="text-[9px] sm:text-[11px] md:text-[13px] col-span-3">
+              COMMISSION
+            </p>
+            <p className="text-[9px] sm:text-[11px] md:text-[13px] col-span-1">
+              LINKS
+            </p>
+            <p className="text-[9px] sm:text-[11px] md:text-[13px] col-span-1">
+              BLINKS
+            </p>
           </div>
 
           {isLoading ? (
@@ -319,12 +334,12 @@ const SalesOverview = () => {
         </>
       ) : (
         <div className="mt-5">
-          <p className="text-lg font-medium">Your Referral Links</p>
+          <p className=" text-lg font-medium">Your Referral Links</p>
           <p className="text-sm text-[#8B8B93]">
             Share these links to earn commissions on every sale.
           </p>
           <div className="">
-            <div className="border-b grid grid-cols-2 items-center h-28 w-[100%] md:w-[90%] lg:w-[70%]">
+            <div className="border-b grid grid-cols-2 items-center h-20 sm:h-24 md:h-28 w-[100%] md:w-[90%] lg:w-[70%]">
               <p className="font-medium">Referral Link</p>
               <div className="flex gap-x-2">
                 <div className="border border-[#C9C9CB] bg-[#F7F7F7] rounded-md flex items-center px-2 w-[300px] h-8">
@@ -349,7 +364,7 @@ const SalesOverview = () => {
                 </button>
               </div>
             </div>
-            <div className="border-b grid grid-cols-2 items-center h-28 w-[100%] md:w-[90%] lg:w-[70%]">
+            <div className="border-b grid grid-cols-2 items-center h-20 sm:h-24 md:h-28 w-[100%] md:w-[90%] lg:w-[70%]">
               <p className="font-medium">Referral Code</p>
               <div className="flex gap-x-2">
                 <div className="border border-[#C9C9CB] bg-[#F7F7F7] rounded-md flex items-center px-2 w-[300px] h-8">
@@ -374,7 +389,7 @@ const SalesOverview = () => {
                 </button>
               </div>
             </div>
-            <div className="border-b grid grid-cols-2 items-center h-28 w-[100%] md:w-[90%] lg:w-[70%]">
+            <div className="border-b grid grid-cols-2 items-center h-20 sm:h-24 md:h-28 w-[100%] md:w-[90%] lg:w-[70%]">
               <p className="font-medium">Solana Blink Referral</p>
               <div className="flex gap-x-2">
                 <div className="border border-[#C9C9CB] bg-[#F7F7F7] rounded-md flex items-center px-2 w-[300px] h-8">
@@ -399,7 +414,7 @@ const SalesOverview = () => {
                 </button>
               </div>
             </div>
-            <div className=" grid grid-cols-2 items-center h-28 w-[100%] md:w-[90%] lg:w-[70%]">
+            <div className=" grid grid-cols-2 items-center h-20 sm:h-24 md:h-28 w-[100%] md:w-[90%] lg:w-[70%]">
               <p className="font-medium">Invitations</p>
               <div className="flex gap-x-2">
                 <div className="border border-[#C9C9CB] bg-[#F7F7F7] rounded-md flex items-center px-2 w-[300px] h-8">
@@ -654,31 +669,27 @@ const SalesLabel = ({
       <p className="text-[9px] md:text-[13px] col-span-2">{`${price} SOL`}</p>
       <p className="text-[9px] md:text-[13px] col-span-3">{`${commission}`}</p>
 
-      <div className="col-span-1  ">
-        {/* <p className="text-xs">{`${links.slice(0, 4)}...${links.slice(-2)}`}</p> */}
-        <button className="border border-[#52525C] w-7 h-7 rounded-md flex items-center justify-center bg-white hover:bg-[#E4E4E5] transition-all duration-200">
-          <svg
-            width="12"
-            height="13"
-            viewBox="0 0 12 13"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M6.41242 10.3778L5.58746 11.2027C4.44843 12.3418 2.6017 12.3418 1.46267 11.2027C0.323641 10.0637 0.323641 8.21698 1.46267 7.07795L2.28763 6.25299M9.71225 7.07795L10.5372 6.25299C11.6762 5.11396 11.6762 3.26723 10.5372 2.1282C9.39818 0.989168 7.55145 0.989169 6.41242 2.1282L5.58746 2.95316M3.95827 8.70712L8.04161 4.62379"
-              stroke="#52525C"
-              strokeWidth="1.05"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            />
-          </svg>
-        </button>
-      </div>
-
-      <button className="col-span-1 w-16 rounded-md flex items-center px-2 h-8 gap-x-1 bg-gradient-to-r from-[#8E50F3] via-[#6586D7] to-[#4AC9B7]">
+      <button className="col-span-1 border border-[#52525C] w-7 h-7 rounded-md flex items-center justify-center bg-white hover:bg-[#E4E4E5] transition-all duration-200">
         <svg
           width="12"
           height="13"
+          viewBox="0 0 12 13"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6.41242 10.3778L5.58746 11.2027C4.44843 12.3418 2.6017 12.3418 1.46267 11.2027C0.323641 10.0637 0.323641 8.21698 1.46267 7.07795L2.28763 6.25299M9.71225 7.07795L10.5372 6.25299C11.6762 5.11396 11.6762 3.26723 10.5372 2.1282C9.39818 0.989168 7.55145 0.989169 6.41242 2.1282L5.58746 2.95316M3.95827 8.70712L8.04161 4.62379"
+            stroke="#52525C"
+            strokeWidth="1.05"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
+      </button>
+
+      {/* <button className="col-span-1 w-10 md:w-16 rounded-md flex items-center px-2 h-8 gap-x-1 bg-gradient-to-r from-[#8E50F3] via-[#6586D7] to-[#4AC9B7]">
+        <svg
+          className="w-3 md:w-3"
           viewBox="0 0 12 13"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
@@ -691,7 +702,26 @@ const SalesLabel = ({
             strokeLinejoin="round"
           />
         </svg>
-        <p className="font-medium text-white">copy</p>
+        <p className="hidden sm:flex sm:relative font-medium text-white text-[10px] sm:text-[12px] lg:text-[14px]">
+          copy
+        </p>
+      </button> */}
+      <button className="border border-[#52525C] w-7 h-7 rounded-md flex items-center justify-center bg-white hover:bg-[#E4E4E5] transition-all duration-200">
+        <svg
+          width="12"
+          height="13"
+          viewBox="0 0 12 13"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M6.41242 10.3778L5.58746 11.2027C4.44843 12.3418 2.6017 12.3418 1.46267 11.2027C0.323641 10.0637 0.323641 8.21698 1.46267 7.07795L2.28763 6.25299M9.71225 7.07795L10.5372 6.25299C11.6762 5.11396 11.6762 3.26723 10.5372 2.1282C9.39818 0.989168 7.55145 0.989169 6.41242 2.1282L5.58746 2.95316M3.95827 8.70712L8.04161 4.62379"
+            stroke="#52525C"
+            strokeWidth="1.05"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        </svg>
       </button>
     </div>
   );
@@ -731,7 +761,7 @@ const MidSection = () => {
         }
       );
       setAffiliateAnalytics(response.data[0]);
-      console.log(response.data[0]);
+      // console.log(response.data[0]);
 
       return response.data;
     } catch (error) {
@@ -769,7 +799,7 @@ const MidSection = () => {
             />
           </svg>
         </div>
-        <p className="font-bold text-3xl md:text-4xl my-3">
+        <p className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl my-3">
           {affiliateAnalytics ? `$${affiliateAnalytics.SaleAmount}` : "$0"}
         </p>
         <div className="flex gap-x-1 text-[11px] sm:text-[12px] md:text-[14px]">
@@ -812,13 +842,15 @@ const MidSection = () => {
             />
           </svg>
         </div>
-        <p className="font-bold text-3xl md:text-4xl my-3">0</p>
+        <p className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl my-1 md:my-3">
+          0
+        </p>
 
         <div className="text-[11px] sm:text-[12px] md:text-[14px]">
           <p className="text-[#A6ACB7]">Rank 1</p>
           <div className="mt-1 flex items-center gap-x-1">
             <Image
-              className="w-5 border rounded-full border-black"
+              className=" w-4 md:w-5 border rounded-full border-black"
               src={ape}
               alt=""
               width={100}
@@ -847,12 +879,12 @@ const MidSection = () => {
             />
           </svg>
         </div>
-        <p className="font-bold text-3xl md:text-4xl my-3">
+        <p className="font-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl my-3">
           {affiliateAnalytics ? affiliateAnalytics.SaleCount : "0"}
         </p>
-        <div className="mt-8 text-[10px] md:text-[12px]">
+        <div className="mt-2 md:mt-8 text-[10px] md:text-[12px]">
           <p className="text-[#A6ACB7]">Top Product</p>
-          <p className="text-black font-medium text-[14px]">
+          <p className="text-black font-medium text-[10px] sm:text-[11px] md:text-[14px]">
             How to Design Better UI
           </p>
         </div>

@@ -153,7 +153,7 @@ export default function ProductUpload() {
   };
 
   return (
-    <div className="pt-16 pb-20 sm:px-[20px] md:px-[40px] min-h-screen lg:px-[60px] xl:px-20 bg-[#FAF9F5] w-full relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth ">
+    <div className="pt-16 pb-20 px-[15px] sm:px-[20px] md:px-[40px] min-h-screen lg:px-[60px] xl:px-20 bg-[#FAF9F5] w-full relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth ">
       <div className="mt-5  flex justify-between items-center">
         <div className=" w-fit">
           <div className="flex gap-x-2 items-center ">
@@ -295,78 +295,93 @@ export default function ProductUpload() {
         <p className="text-xs text-[#5D5D67] mt-2">
           Select platform and insert the invitation link
         </p>
-        <div className="grid grid-cols-2 gap-x-4 mt-2">
-          <div className="border rounded-lg h-24 flex items-center px-2 gap-x-3">
-            <Image
-              className="w-14"
-              src="https://s3-alpha-sig.figma.com/img/c89a/0a74/93f942f4f36a009c22adc6177b140086?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=I1WoThr8zy7FjNSbR9~Rfgi~~HrE6ELvlNSwW92RCBDspmqDI3pQ6aJb1AKXTsmYWlnTlsxjtyjvEhE9nIJLzLDO5qLSWSeWqTfuAa9vuk-IE9OOov90XPYYfETFhVED~IeK-qgEtc0wZduH9Z8mZZiW3Oq2Oz-L61Ys6cTmYRJL9GBDeBXJ07SjdkkgxK13iKKcU6SNmA-GVa702qCq4M1lsoB19JvXO7x~Fjmuxdu6LSILU~cvwaWYRtW-soGdo7oeOhbptfQJFBPedyv-A9wJ2s5ONe7lnXbWSrQ7WOIJtscN5DOCqqxTIeCzDghY2qL7shKTTCHIFSVocQWlPA__"
-              width={200}
-              height={200}
-              alt=""
-            />
-            <div>
-              <p className="font-medium text-lg">Discord</p>
-              <p className="text-[11px]">
-                Offer exclusive access to your private Discord server
-              </p>
+        <div className="grid grid-cols-1 gap-y-2 md:gap-y-0 md:grid-cols-2 gap-x-4 mt-2">
+          <div>
+            <a
+              href={process.env.NEXT_PUBLIC_DISCORD_CONNECT_URI}
+              target="_blank"
+              className="border rounded-lg h-24 flex items-center px-2 gap-x-3 hover:bg-[#E4E4E5] transition-all duration-300"
+            >
+              <Image
+                className="w-10 md:w-12 lg:w-14"
+                src="https://s3-alpha-sig.figma.com/img/c89a/0a74/93f942f4f36a009c22adc6177b140086?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=I1WoThr8zy7FjNSbR9~Rfgi~~HrE6ELvlNSwW92RCBDspmqDI3pQ6aJb1AKXTsmYWlnTlsxjtyjvEhE9nIJLzLDO5qLSWSeWqTfuAa9vuk-IE9OOov90XPYYfETFhVED~IeK-qgEtc0wZduH9Z8mZZiW3Oq2Oz-L61Ys6cTmYRJL9GBDeBXJ07SjdkkgxK13iKKcU6SNmA-GVa702qCq4M1lsoB19JvXO7x~Fjmuxdu6LSILU~cvwaWYRtW-soGdo7oeOhbptfQJFBPedyv-A9wJ2s5ONe7lnXbWSrQ7WOIJtscN5DOCqqxTIeCzDghY2qL7shKTTCHIFSVocQWlPA__"
+                width={200}
+                height={200}
+                alt=""
+              />
+              <div>
+                <p className="font-medium text-[14px] md:text-[16px] lg:text-lg">
+                  Discord
+                </p>
+                <p className="text-[10px] md:text-[11px]">
+                  Offer exclusive access to your private Discord server
+                </p>
+              </div>
+            </a>
+            <div className="border mt-2 p-1 px-2 flex items-center justify-between gap-x-1 rounded-sm border-[#E4E4E5]">
+              <input
+                className="w-full outline-none h-8 "
+                type="text"
+                placeholder="Enter your discord link"
+              />
+              <svg
+                className="w-3 md:w-4"
+                viewBox="0 0 17 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.75 15.5C6.55109 15.5 6.36032 15.421 6.21967 15.2803C6.07902 15.1397 6 14.9489 6 14.75C6 14.5511 6.07902 14.3603 6.21967 14.2197C6.36032 14.079 6.55109 14 6.75 14H13C13.5304 14 14.0391 13.7893 14.4142 13.4142C14.7893 13.0391 15 12.5304 15 12V4C15 3.46957 14.7893 2.96086 14.4142 2.58579C14.0391 2.21071 13.5304 2 13 2H6.75C6.55109 2 6.36032 1.92098 6.21967 1.78033C6.07902 1.63968 6 1.44891 6 1.25C6 1.05109 6.07902 0.860322 6.21967 0.71967C6.36032 0.579018 6.55109 0.5 6.75 0.5H13C13.9283 0.5 14.8185 0.868749 15.4749 1.52513C16.1313 2.1815 16.5 3.07174 16.5 4V12C16.5 12.9283 16.1313 13.8185 15.4749 14.4749C14.8185 15.1313 13.9283 15.5 13 15.5H6.75ZM6.741 4.199C6.81335 4.13214 6.89816 4.08019 6.9906 4.04612C7.08303 4.01205 7.18127 3.99652 7.2797 4.00042C7.37813 4.00432 7.47484 4.02757 7.56428 4.06885C7.65373 4.11013 7.73417 4.16863 7.801 4.241L10.801 7.491C10.929 7.62957 11.0002 7.81132 11.0002 8C11.0002 8.18868 10.929 8.37043 10.801 8.509L7.801 11.759C7.73409 11.8313 7.6536 11.8897 7.56412 11.9309C7.47464 11.9721 7.37792 11.9952 7.27949 11.999C7.18106 12.0028 7.08284 11.9872 6.99045 11.9531C6.89806 11.9189 6.81329 11.8669 6.741 11.8C6.66871 11.7331 6.6103 11.6526 6.56912 11.5631C6.52793 11.4736 6.50477 11.3769 6.50097 11.2785C6.49328 11.0797 6.56487 10.886 6.7 10.74L8.538 8.749H0.75C0.551088 8.749 0.360322 8.66998 0.21967 8.52933C0.0790177 8.38868 0 8.19791 0 7.999C0 7.80009 0.0790177 7.60932 0.21967 7.46867C0.360322 7.32802 0.551088 7.249 0.75 7.249H8.537L6.699 5.259C6.63214 5.18665 6.58019 5.10184 6.54612 5.0094C6.51205 4.91697 6.49652 4.81873 6.50042 4.7203C6.50432 4.62187 6.52757 4.52516 6.56885 4.43572C6.61013 4.34627 6.66863 4.26583 6.741 4.199Z"
+                  fill="#75757D"
+                />
+              </svg>
             </div>
           </div>
-          <div className="border rounded-lg h-24 flex items-center px-2 gap-x-3">
-            <Image
-              className="w-14"
-              src="https://s3-alpha-sig.figma.com/img/1d2b/bc7f/92849e7867a21edd110a2b0e8a256f6e?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CMFTdAWPEY2zRMwir~96rBNf5iuAy1T1xrpa~mX9LzAmV9yoplOm56x3BTCzFJYPBv1Sb2xwP5Yfkbe8zr9T-UHv~DRHvQsyh6KA00v9M5KmoI~apctonPhgnFxBEANmFhnWyoSCrFVioL463gDiTIjWNBpAV9txOJg-D6iKM7aeBoh6xlZai-T-rUyOjFu0Dw3XtmLJ01kouELtjKtu~doKk2q0pdXBIH1GC0J~TEx7szoylE7ERL7Va8dF0vZ9HNmJSZk~pAmBk5cChk1-BX5fFB46Pwh2OIN5wxh7~H388bnzpnqi8N8OvzqM64RkwAbrg68ouC5HwdWAw8UDOw__"
-              width={200}
-              height={200}
-              alt=""
-            />
-            <div>
-              <p className="font-medium text-lg">Telegram</p>
-              <p className="text-[11px]">
-                Provide access to your private Telegram channel
-              </p>
+          <div>
+            <a
+              href=""
+              className="border rounded-lg h-24 flex items-center px-2 gap-x-3 hover:bg-[#E4E4E5] transition-all duration-300"
+            >
+              <Image
+                className="w-10 md:w-12 lg:w-14"
+                src="https://s3-alpha-sig.figma.com/img/1d2b/bc7f/92849e7867a21edd110a2b0e8a256f6e?Expires=1733097600&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=CMFTdAWPEY2zRMwir~96rBNf5iuAy1T1xrpa~mX9LzAmV9yoplOm56x3BTCzFJYPBv1Sb2xwP5Yfkbe8zr9T-UHv~DRHvQsyh6KA00v9M5KmoI~apctonPhgnFxBEANmFhnWyoSCrFVioL463gDiTIjWNBpAV9txOJg-D6iKM7aeBoh6xlZai-T-rUyOjFu0Dw3XtmLJ01kouELtjKtu~doKk2q0pdXBIH1GC0J~TEx7szoylE7ERL7Va8dF0vZ9HNmJSZk~pAmBk5cChk1-BX5fFB46Pwh2OIN5wxh7~H388bnzpnqi8N8OvzqM64RkwAbrg68ouC5HwdWAw8UDOw__"
+                width={200}
+                height={200}
+                alt=""
+              />
+              <div>
+                <p className="font-medium text-[14px] md:text-[16px] lg:text-lg">
+                  Telegram
+                </p>
+                <p className="text-[10px] md:text-[11px]">
+                  Provide access to your private Telegram channel
+                </p>
+              </div>
+            </a>
+            <div className="border mt-2 p-1 px-2 flex items-center justify-between gap-x-1 rounded-sm border-[#E4E4E5]">
+              <input
+                className="w-full outline-none h-8"
+                type="text"
+                placeholder="Enter your telegram group link"
+              />
+              <svg
+                className="w-3 md:w-4"
+                viewBox="0 0 17 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M6.75 15.5C6.55109 15.5 6.36032 15.421 6.21967 15.2803C6.07902 15.1397 6 14.9489 6 14.75C6 14.5511 6.07902 14.3603 6.21967 14.2197C6.36032 14.079 6.55109 14 6.75 14H13C13.5304 14 14.0391 13.7893 14.4142 13.4142C14.7893 13.0391 15 12.5304 15 12V4C15 3.46957 14.7893 2.96086 14.4142 2.58579C14.0391 2.21071 13.5304 2 13 2H6.75C6.55109 2 6.36032 1.92098 6.21967 1.78033C6.07902 1.63968 6 1.44891 6 1.25C6 1.05109 6.07902 0.860322 6.21967 0.71967C6.36032 0.579018 6.55109 0.5 6.75 0.5H13C13.9283 0.5 14.8185 0.868749 15.4749 1.52513C16.1313 2.1815 16.5 3.07174 16.5 4V12C16.5 12.9283 16.1313 13.8185 15.4749 14.4749C14.8185 15.1313 13.9283 15.5 13 15.5H6.75ZM6.741 4.199C6.81335 4.13214 6.89816 4.08019 6.9906 4.04612C7.08303 4.01205 7.18127 3.99652 7.2797 4.00042C7.37813 4.00432 7.47484 4.02757 7.56428 4.06885C7.65373 4.11013 7.73417 4.16863 7.801 4.241L10.801 7.491C10.929 7.62957 11.0002 7.81132 11.0002 8C11.0002 8.18868 10.929 8.37043 10.801 8.509L7.801 11.759C7.73409 11.8313 7.6536 11.8897 7.56412 11.9309C7.47464 11.9721 7.37792 11.9952 7.27949 11.999C7.18106 12.0028 7.08284 11.9872 6.99045 11.9531C6.89806 11.9189 6.81329 11.8669 6.741 11.8C6.66871 11.7331 6.6103 11.6526 6.56912 11.5631C6.52793 11.4736 6.50477 11.3769 6.50097 11.2785C6.49328 11.0797 6.56487 10.886 6.7 10.74L8.538 8.749H0.75C0.551088 8.749 0.360322 8.66998 0.21967 8.52933C0.0790177 8.38868 0 8.19791 0 7.999C0 7.80009 0.0790177 7.60932 0.21967 7.46867C0.360322 7.32802 0.551088 7.249 0.75 7.249H8.537L6.699 5.259C6.63214 5.18665 6.58019 5.10184 6.54612 5.0094C6.51205 4.91697 6.49652 4.81873 6.50042 4.7203C6.50432 4.62187 6.52757 4.52516 6.56885 4.43572C6.61013 4.34627 6.66863 4.26583 6.741 4.199Z"
+                  fill="#75757D"
+                />
+              </svg>
             </div>
-          </div>
-          <div className="border mt-2 p-1 px-2 flex items-center justify-between gap-x-1 rounded-sm border-[#E4E4E5]">
-            <input
-              className="w-full outline-none h-8"
-              type="text"
-              placeholder="Enter your discord link"
-            />
-            <svg
-              className="w-4"
-              viewBox="0 0 17 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6.75 15.5C6.55109 15.5 6.36032 15.421 6.21967 15.2803C6.07902 15.1397 6 14.9489 6 14.75C6 14.5511 6.07902 14.3603 6.21967 14.2197C6.36032 14.079 6.55109 14 6.75 14H13C13.5304 14 14.0391 13.7893 14.4142 13.4142C14.7893 13.0391 15 12.5304 15 12V4C15 3.46957 14.7893 2.96086 14.4142 2.58579C14.0391 2.21071 13.5304 2 13 2H6.75C6.55109 2 6.36032 1.92098 6.21967 1.78033C6.07902 1.63968 6 1.44891 6 1.25C6 1.05109 6.07902 0.860322 6.21967 0.71967C6.36032 0.579018 6.55109 0.5 6.75 0.5H13C13.9283 0.5 14.8185 0.868749 15.4749 1.52513C16.1313 2.1815 16.5 3.07174 16.5 4V12C16.5 12.9283 16.1313 13.8185 15.4749 14.4749C14.8185 15.1313 13.9283 15.5 13 15.5H6.75ZM6.741 4.199C6.81335 4.13214 6.89816 4.08019 6.9906 4.04612C7.08303 4.01205 7.18127 3.99652 7.2797 4.00042C7.37813 4.00432 7.47484 4.02757 7.56428 4.06885C7.65373 4.11013 7.73417 4.16863 7.801 4.241L10.801 7.491C10.929 7.62957 11.0002 7.81132 11.0002 8C11.0002 8.18868 10.929 8.37043 10.801 8.509L7.801 11.759C7.73409 11.8313 7.6536 11.8897 7.56412 11.9309C7.47464 11.9721 7.37792 11.9952 7.27949 11.999C7.18106 12.0028 7.08284 11.9872 6.99045 11.9531C6.89806 11.9189 6.81329 11.8669 6.741 11.8C6.66871 11.7331 6.6103 11.6526 6.56912 11.5631C6.52793 11.4736 6.50477 11.3769 6.50097 11.2785C6.49328 11.0797 6.56487 10.886 6.7 10.74L8.538 8.749H0.75C0.551088 8.749 0.360322 8.66998 0.21967 8.52933C0.0790177 8.38868 0 8.19791 0 7.999C0 7.80009 0.0790177 7.60932 0.21967 7.46867C0.360322 7.32802 0.551088 7.249 0.75 7.249H8.537L6.699 5.259C6.63214 5.18665 6.58019 5.10184 6.54612 5.0094C6.51205 4.91697 6.49652 4.81873 6.50042 4.7203C6.50432 4.62187 6.52757 4.52516 6.56885 4.43572C6.61013 4.34627 6.66863 4.26583 6.741 4.199Z"
-                fill="#75757D"
-              />
-            </svg>
-          </div>
-          <div className="border mt-2 p-1 px-2 flex items-center justify-between gap-x-1 rounded-sm border-[#E4E4E5]">
-            <input
-              className="w-full outline-none h-8"
-              type="text"
-              placeholder="Enter your telegram group link"
-            />
-            <svg
-              className="w-4"
-              viewBox="0 0 17 16"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M6.75 15.5C6.55109 15.5 6.36032 15.421 6.21967 15.2803C6.07902 15.1397 6 14.9489 6 14.75C6 14.5511 6.07902 14.3603 6.21967 14.2197C6.36032 14.079 6.55109 14 6.75 14H13C13.5304 14 14.0391 13.7893 14.4142 13.4142C14.7893 13.0391 15 12.5304 15 12V4C15 3.46957 14.7893 2.96086 14.4142 2.58579C14.0391 2.21071 13.5304 2 13 2H6.75C6.55109 2 6.36032 1.92098 6.21967 1.78033C6.07902 1.63968 6 1.44891 6 1.25C6 1.05109 6.07902 0.860322 6.21967 0.71967C6.36032 0.579018 6.55109 0.5 6.75 0.5H13C13.9283 0.5 14.8185 0.868749 15.4749 1.52513C16.1313 2.1815 16.5 3.07174 16.5 4V12C16.5 12.9283 16.1313 13.8185 15.4749 14.4749C14.8185 15.1313 13.9283 15.5 13 15.5H6.75ZM6.741 4.199C6.81335 4.13214 6.89816 4.08019 6.9906 4.04612C7.08303 4.01205 7.18127 3.99652 7.2797 4.00042C7.37813 4.00432 7.47484 4.02757 7.56428 4.06885C7.65373 4.11013 7.73417 4.16863 7.801 4.241L10.801 7.491C10.929 7.62957 11.0002 7.81132 11.0002 8C11.0002 8.18868 10.929 8.37043 10.801 8.509L7.801 11.759C7.73409 11.8313 7.6536 11.8897 7.56412 11.9309C7.47464 11.9721 7.37792 11.9952 7.27949 11.999C7.18106 12.0028 7.08284 11.9872 6.99045 11.9531C6.89806 11.9189 6.81329 11.8669 6.741 11.8C6.66871 11.7331 6.6103 11.6526 6.56912 11.5631C6.52793 11.4736 6.50477 11.3769 6.50097 11.2785C6.49328 11.0797 6.56487 10.886 6.7 10.74L8.538 8.749H0.75C0.551088 8.749 0.360322 8.66998 0.21967 8.52933C0.0790177 8.38868 0 8.19791 0 7.999C0 7.80009 0.0790177 7.60932 0.21967 7.46867C0.360322 7.32802 0.551088 7.249 0.75 7.249H8.537L6.699 5.259C6.63214 5.18665 6.58019 5.10184 6.54612 5.0094C6.51205 4.91697 6.49652 4.81873 6.50042 4.7203C6.50432 4.62187 6.52757 4.52516 6.56885 4.43572C6.61013 4.34627 6.66863 4.26583 6.741 4.199Z"
-                fill="#75757D"
-              />
-            </svg>
           </div>
         </div>
-        <p className="mt-5 text-sm text-[#52525C]">
+        <p className="text-xs text-[#5D5D67] mt-5">
           Subscription Duration and Pricing
         </p>
-        <div className="grid grid-cols-3 gap-x-3 mt-4">
+        <div className="grid grid-cols-1 gap-y-2 lg:gap-y-0 lg:grid-cols-3 gap-x-3 mt-4">
           <div>
             <div className="flex items-center gap-x-1 mb-1">
               <input
@@ -564,26 +579,33 @@ export default function ProductUpload() {
       </div>
       {/* <Content /> */}
       <div className="mt-4 p-4 rounded-xl border bg-white">
-        <p className="text-lg mb-4">Upload Content</p>
+        <p className="text-[15px] md:text-lg mb-4">Upload Content</p>
         <div className=" grid grid-cols-1 gap-x-5 rounded-md h-48">
           <div className="border rounded-md">
             <div className="h-10 p-2 border-b bg-slate-200">
               <p>Content Being Bought</p>
             </div>
             <div className="flex flex-col items-center justify-center h-36">
-              <input type="file" onChange={handleFileChange} />
+              <input
+                className="text-xs sm:text-sm lg:text-[15px]"
+                type="file"
+                onChange={handleFileChange}
+              />
             </div>
           </div>
         </div>
       </div>
       <div className="w-full flex justify-end items-center mt-4">
         <Link href={"/seller/dashboard"}>
-          <Button className="mr-2 border rounded w-36 bg-white text-black hover:bg-slate-200 transition-all duration-200">
+          <Button className="mr-2 border rounded w-28 md:w-32 lg:w-36 text-xs md:text-sm bg-white text-black hover:bg-slate-200 transition-all duration-200">
             Check Dashboard
           </Button>
         </Link>
 
-        <Button onClick={formSubmit} className="rounded w-36">
+        <Button
+          onClick={formSubmit}
+          className="rounded w-28 md:w-32 lg:w-36 text-xs md:text-sm"
+        >
           List Product
         </Button>
       </div>
