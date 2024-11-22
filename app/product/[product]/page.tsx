@@ -113,7 +113,7 @@ const ProductDetails = ({
   bannerImg: string;
   productName: string;
   price: string;
-  productId: number | string;
+  productId: string;
   comparePrice: string | number;
   fileSize: bigint | number;
   fileName?: string;
