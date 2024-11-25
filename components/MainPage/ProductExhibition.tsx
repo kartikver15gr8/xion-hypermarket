@@ -131,13 +131,13 @@ export default function ProductExhibition() {
   return (
     <div className="mb-10">
       <div className="px-[10px] sm:px-[20px] md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[100px]">
+        <Trading />
         <DontMissBanner />
         <HotDigitalProducts />
         {/* <TopRanking sectionTitle="Top Ranking" /> */}
         <Category />
         {/* <NewThisWeek /> */}
         {/* <TopRanking sectionTitle="Top Deals" /> */}
-        <Trading />
         <DappCard />
         {/* <NewArrival /> */}
         {/* <DiscountTokens /> */}

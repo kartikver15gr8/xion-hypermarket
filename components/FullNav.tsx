@@ -25,6 +25,7 @@ import {
   DropdownItem,
 } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
+import { usePrivy } from "@privy-io/react-auth";
 
 const isActive =
   "relative text-[14px] md:text-[16px] bg-[#dcdfe0] lg:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200";
@@ -63,11 +64,12 @@ export default function FullNav() {
   };
 
   const pathname = usePathname();
+  const { user } = usePrivy();
 
   return (
     <div className="absolute w-full flex flex-col p-2 sm:p-0">
       <div className="items-center flex justify-between border border-[#cbccce] sm:border-[#e1e2e4] z-40 h-16 w-full shadow-sm rounded sm:rounded-none sm:bg-white p-[10px] backdrop-blur-md bg-[rgba(142,137,137,0.2)] md:px-8 lg:px-14 xl:px-16 2xl:px-[85px]">
-        <div className="flex gap-x-2 md:gap-x-3 lg:gap-x-5 xl:gap-x-10 items-center">
+        <div className="flex gap-x-2 md:gap-x-3 lg:gap-x-5 xl:gap-x-6 items-center">
           <Link href="/" className="hidden sm:flex">
             <div className="flex items-center">
               <Image className="w-10 " src={ape} alt="" />
@@ -76,6 +78,11 @@ export default function FullNav() {
               </p>
             </div>
           </Link>
+
+          <div className="flex gap-x-6 items-center">
+            <SearchForm />
+            <NavItems />
+          </div>
 
           <div className="sm:hidden w-fit flex ml-4">
             <motion.button
@@ -103,13 +110,13 @@ export default function FullNav() {
         </div>
 
         {/* Navigation Items */}
-        <NavItems />
 
         {/* <ConnectButton toggleWindow={toggleWalletConnect} /> */}
-        <div className="hidden sm:flex items-center gap-x-1">
-          {/* <BecomeSeller /> */}
+        <div className="hidden sm:flex items-center gap-x-2">
+          {/* <BecomeSeller text="Affiliate" /> */}
+          {!user?.wallet?.address && <BecomeSeller text="Sign In" />}
           {/* <ConnectWithWallet /> */}
-          {pathname != "/" && <SearchForm />}
+          {/* {pathname != "/" && <SearchForm />} */}
           {/* <PhantomWalletButton /> */}
           <PrivyConnection />
         </div>
@@ -309,8 +316,8 @@ const NavItems = () => {
   const pathname = usePathname();
 
   return (
-    <div className="h-full items-center hidden sm:flex">
-      <ul className="flex gap-x-2 lg:gap-x-8 text-[18px] font-medium">
+    <div className="h-full items-center hidden sm:flex  ">
+      <ul className="flex gap-x-2 lg:gap-x-8 text-[18px]">
         {/* <Link href={menuItems[0].href} key={0}>
           <li
             key={0}
@@ -329,29 +336,10 @@ const NavItems = () => {
         </Link> */}
 
         <li className="relative group">
-          <span className="text-black cursor-pointer">Business Assets</span>
-          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 rounded-xl font-normal hidden bg-white text-black group-hover:block  group-hover:w-52 p-1">
-            <DropdownList
-              feat="Template"
-              featSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M4 5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1zm0 8a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1zm10-1h6m-6 4h6m-6 4h6'/%3E%3C/svg%3E"
-            />
-            <DropdownList
-              feat="Social Media Tools"
-              featSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 48 48'%3E%3Cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' d='M10.211 37.789A19.5 19.5 0 0 1 24 4.5m13.789 5.711A19.5 19.5 0 0 1 24 43.5'/%3E%3Ccircle cx='34.804' cy='8.98' r='3.162' fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round'/%3E%3Ccircle cx='13.196' cy='39.02' r='3.162' fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round'/%3E%3Cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' d='m19.872 20.299l3.163 6.325l10.54-1.054l-6.324-12.65Z'/%3E%3Cpath fill='none' stroke='black' stroke-linecap='round' stroke-linejoin='round' d='m19.872 20.299l-4.216 2.108c-1.267.633-1.16 2.95-.527 4.217s2.423 2.741 3.69 2.108l4.216-2.108m-.932.538l2.635 5.27l-2.108 1.054l-2.635-5.27'/%3E%3C/svg%3E"
-            />
-            <DropdownList
-              feat="Trading Bots"
-              featSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 512 512'%3E%3Cpath fill='black' d='M512 310.829v-73.154c-3.616-38.626-31.154-38.29-73.143-36.576v146.306c67.411 7.006 70.837-19.505 73.143-36.576M73.143 347.405V201.1C31.153 199.386 3.616 199.05 0 237.676v73.154c2.306 17.07 5.732 43.582 73.143 36.576m-54.857 91.442h475.428V512H18.286zM328.32 73.08c-11.526-94.655-130.877-100.188-144.64 0zM21.482 32.86c9.852-18.592 36.27-19.676 47.438-1.947c9.628 15.282 1.753 34.795-14.068 40.43l.005 111.467H36.571V71.394C21.558 66.182 13.321 48.26 21.482 32.86m325.947 195.67c0 21.04-22.93 34.26-41.174 23.74c-18.245-10.519-18.245-36.96 0-47.48s41.174 2.7 41.174 23.74m-169.174 23.74c18.244 10.52 41.174-2.7 41.174-23.74s-22.93-34.26-41.174-23.74c-18.245 10.52-18.245 36.961 0 47.48m242.316-87.749V420.56H91.43V164.522c0-40.399 32.75-73.153 73.142-73.153H347.43c40.393 0 73.142 32.754 73.142 73.153M169.091 268.1c30.408 17.532 68.623-4.502 68.623-39.568s-38.215-57.1-68.623-39.567s-30.407 61.602 0 79.135m178.338 61.018H164.57v36.577h182.86zm18.285-100.586c0-35.065-38.215-57.1-68.623-39.567s-30.407 61.602 0 79.135c30.408 17.532 68.623-4.502 68.623-39.568'/%3E%3C/svg%3E"
-            />
-            <DropdownList
-              feat="Design Assets"
-              featSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M3.58 1.125a.5.5 0 0 1 .12.598a.3.3 0 0 0-.013.09c0 .063.016.183.167.333c.073.073.129.125.19.182c.05.046.103.094.17.16c.13.124.267.27.39.453c.255.383.396.862.396 1.559c0 .382-.063.74-.178 1.057C4.496 6.457 3.763 7 3 7s-1.496-.544-1.822-1.443A3.1 3.1 0 0 1 1 4.5c0-.326.087-.715.207-1.074s.288-.732.482-1.032c.231-.39.556-.717.808-.937a6 6 0 0 1 .432-.343l.03-.02l.009-.007l.003-.002l.002-.001a.5.5 0 0 1 .608.041M3 8a2.7 2.7 0 0 0 1.738-.628q.03.094.057.19C5 8.314 5 9.244 5 9.963V10c0 2.058-.385 3.28-.821 4.007a2.7 2.7 0 0 1-.638.747a1.7 1.7 0 0 1-.33.2S3.084 15 3 15a.8.8 0 0 1-.211-.046a1.7 1.7 0 0 1-.33-.2a2.7 2.7 0 0 1-.638-.747C1.385 13.281 1 12.058 1 10v-.036c0-.72 0-1.649.205-2.403q.026-.094.057-.19A2.7 2.7 0 0 0 3 8.002m3.998 2.973a4.5 4.5 0 0 1-1.016-.235Q6 10.362 6 9.96v-.296c.31.147.646.25.998.3V8a2 2 0 0 1 2-2h1.965a3.5 3.5 0 0 0-5.075-2.609a3.2 3.2 0 0 0-.384-.926A4.5 4.5 0 0 1 11.97 6h1.027a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-4a2 2 0 0 1-2-2zM11.971 7a4.5 4.5 0 0 1-3.973 3.973V12a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V8a1 1 0 0 0-1-1zm-1.008 0H8.998a1 1 0 0 0-1 1v1.965A3.5 3.5 0 0 0 10.963 7'/%3E%3C/svg%3E"
-            />
-          </ul>
-        </li>
-        <li className="relative group">
-          <span className="text-black cursor-pointer">Services</span>
-          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 rounded-xl font-normal hidden bg-white text-black group-hover:block group-hover:w-48 p-1">
+          <span className=" text-[14px] md:text-[16px] xl:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200">
+            Services
+          </span>
+          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 mt-2 rounded-xl font-normal hidden bg-white text-black  group-hover:block group-hover:w-48 p-1">
             <DropdownList
               feat="Marketing"
               featSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M14.25 2.1a1.25 1.25 0 0 0-1.17-.1L6.91 4.43a1.2 1.2 0 0 1-.46.09H2.5a1.25 1.25 0 0 0-1.25 1.25v.1H0v3h1.25V9a1.25 1.25 0 0 0 1.25 1.22L4 13.4a1.26 1.26 0 0 0 1.13.72h.63A1.25 1.25 0 0 0 7 12.87v-2.53l6.08 2.43a1.3 1.3 0 0 0 .47.09a1.3 1.3 0 0 0 .7-.22a1.25 1.25 0 0 0 .55-1V3.13a1.25 1.25 0 0 0-.55-1.03m-8.5 3.67V9H2.5V5.77zm0 7.1h-.63l-1.23-2.65h1.86zm1.62-3.72A2.3 2.3 0 0 0 7 9V5.7a2.3 2.3 0 0 0 .37-.11l6.18-2.46v8.48zm7.46-3.03v2.5a1.25 1.25 0 0 0 0-2.5'/%3E%3C/svg%3E"
@@ -372,8 +360,10 @@ const NavItems = () => {
           </ul>
         </li>
         <li className="relative group">
-          <span className="text-black cursor-pointer">Education</span>
-          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 rounded-xl font-normal hidden bg-white text-black group-hover:block group-hover:w-48 p-1">
+          <span className=" text-[14px] md:text-[16px] xl:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200">
+            Education
+          </span>
+          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 mt-2 rounded-xl font-normal hidden bg-white text-black group-hover:block group-hover:w-48 p-1">
             <DropdownList
               feat="Courses"
               featSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 32 32'%3E%3Cpath fill='black' d='M24 30H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16.618l-5-2.5l-5 2.5V4H8v24h16v-4h2v4a2.003 2.003 0 0 1-2 2m-3-14.118l3 1.5V4h-6v13.382Z'/%3E%3C/svg%3E"
@@ -391,8 +381,10 @@ const NavItems = () => {
           </ul>
         </li>
         <li className="relative group">
-          <span className="text-black cursor-pointer">Crypto & Trading</span>
-          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 rounded-xl font-normal hidden bg-white text-black group-hover:block group-hover:w-48 p-1">
+          <span className=" text-[14px] md:text-[16px] xl:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200">
+            Crypto & Trading
+          </span>
+          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 mt-2 rounded-xl font-normal hidden bg-white text-black group-hover:block group-hover:w-48 p-1">
             <DropdownList
               feat="Alpha Private Groups"
               featSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cg fill='none'%3E%3Ccircle cx='12' cy='9' r='1.5' stroke='black' stroke-linecap='round'/%3E%3Cpath stroke='black' d='M15.701 8.25a1.5 1.5 0 1 1 2.598 1.5a1.5 1.5 0 0 1-2.598-1.5Zm-10 0a1.5 1.5 0 1 1 2.598 1.5a1.5 1.5 0 0 1-2.598-1.5Z'/%3E%3Cpath fill='black' d='m20.364 15.512l.486-.116zM14.1 13.185l-.29-.406l-.533.38l.507.414zm1.28 2.325l-.489.103zm4.12.49h-5v1h5zm.378-.371a.25.25 0 0 1-.061.243a.43.43 0 0 1-.317.128v1c.8 0 1.57-.683 1.35-1.604zM16.5 13c1.226 0 1.99.409 2.482.912c.506.517.765 1.174.896 1.717l.972-.233c-.154-.642-.475-1.49-1.153-2.184C19.004 12.505 17.977 12 16.5 12zm-2.11.592c.478-.341 1.15-.592 2.11-.592v-1c-1.146 0-2.025.303-2.69.779zm-.606-.02c.653.534.964 1.362 1.107 2.04l.979-.205c-.162-.767-.54-1.863-1.454-2.609zm1.107 2.04a.28.28 0 0 1-.07.257a.44.44 0 0 1-.321.131v1c.804 0 1.561-.68 1.37-1.593zM9.9 13.185l.316.388l.507-.414l-.532-.38zm-6.264 2.327l.486.117zm4.984-.002l-.49-.103zM7.5 13c.96 0 1.631.25 2.11.592l.58-.814C9.526 12.304 8.647 12 7.5 12zm-3.378 2.629c.13-.543.39-1.2.896-1.717C5.51 13.409 6.274 13 7.5 13v-1c-1.478 0-2.504.505-3.197 1.212c-.678.693-1 1.542-1.153 2.184zM4.5 16a.43.43 0 0 1-.317-.128a.25.25 0 0 1-.06-.243l-.973-.233C2.93 16.317 3.7 17 4.5 17zm5 0h-5v1h5zm0 0a.44.44 0 0 1-.322-.13a.28.28 0 0 1-.07-.257l-.978-.206C7.938 16.319 8.696 17 9.5 17zm-.391-.387c.143-.68.454-1.507 1.107-2.04l-.632-.775c-.914.746-1.292 1.842-1.454 2.609z'/%3E%3Cpath stroke='black' stroke-linecap='round' d='M12 12.5c2.364 0 3.131 1.825 3.38 3.01c.114.54-.328.99-.88.99h-5c-.552 0-.994-.45-.88-.99c.249-1.185 1.016-3.01 3.38-3.01Zm6.5 9H20a1.5 1.5 0 0 0 1.5-1.5v-1.5m-3-16H20A1.5 1.5 0 0 1 21.5 4v1.5m-16 16H4A1.5 1.5 0 0 1 2.5 20v-1.5m3-16H4A1.5 1.5 0 0 0 2.5 4v1.5'/%3E%3C/g%3E%3C/svg%3E"
@@ -416,8 +408,10 @@ const NavItems = () => {
           </ul>
         </li>
         <li className="relative group">
-          <span className="text-black cursor-pointer">Software</span>
-          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 rounded-xl font-normal hidden bg-white text-black group-hover:block group-hover:w-48 p-1">
+          <span className=" text-[14px] md:text-[16px] xl:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200">
+            Software
+          </span>
+          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 mt-2 rounded-xl font-normal hidden bg-white text-black group-hover:block group-hover:w-48 p-1">
             <DropdownList
               feat="Code"
               featSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.05em' height='1em' viewBox='0 0 25 24'%3E%3Cpath fill='black' d='M15.058 4.163a.75.75 0 1 0-1.464-.326l-3.556 16a.75.75 0 1 0 1.465.326zM7.83 7.47a.75.75 0 0 1 0 1.06L4.36 12l3.47 3.47a.75.75 0 1 1-1.061 1.06l-4-4a.75.75 0 0 1 0-1.06l4-4a.75.75 0 0 1 1.06 0m9.44 0a.75.75 0 0 0 0 1.06l3.47 3.47l-3.47 3.47a.75.75 0 1 0 1.06 1.06l4-4a.75.75 0 0 0 0-1.06l-4-4a.75.75 0 0 0-1.06 0'/%3E%3C/svg%3E"
@@ -576,11 +570,11 @@ const ConnectWithWallet = () => {
   );
 };
 
-const BecomeSeller = () => {
+const BecomeSeller = ({ text }: { text: string }) => {
   return (
     <Link href="/seller/dashboard" className=" w-fit hidden sm:flex">
-      <Button className="rounded-lg bg-[#223d40] w-fit md:text-[12px] text-[11px] lg:text-[14px] xl:text-[16px]  hover:bg-[#626263] transition-all duration-300">
-        Become a Seller
+      <Button className="rounded text-[#1F3839]  w-fit md:text-[12px] text-[11px] px-4 lg:text-[14px] xl:text-[16px] border-[#979797] hover:bg-[#EEEEEF] transition-all duration-300">
+        {text}
       </Button>
     </Link>
   );
@@ -604,17 +598,17 @@ function SearchForm() {
     setSearchQuery(query);
   };
   return (
-    <form onSubmit={onSearch} className=" rounded-full  bg-[#EEEEEF]">
-      <div className="flex border-[1.5px] border-[#303030] h-10 p-1 w-[200px] lg:w-[250px]  items-center rounded-full bg-inherit">
+    <form onSubmit={onSearch} className=" rounded  ">
+      <div className="hidden lg:flex border-[1.5px] border-opacity-50 border-[#303030] h-10 p-1 w-[200px] lg:w-[250px]  items-center rounded bg-inherit">
         <input
-          className="outline-none placeholder-[#262626] w-full h-full p-2 rounded-full text-[#262626] bg-inherit"
+          className="outline-none placeholder-[#262626] w-full h-full p-2 rounded text-[#262626] bg-inherit"
           type="text"
           placeholder="Search"
           onChange={handleSearchChange}
         />
         <button
           type="submit"
-          className="flex items-center justify-center p-2 rounded-full bg-black hover:bg-[#52525C] transition-all duration-300"
+          className="flex items-center justify-center p-1 rounded bg-opacity-50 hover:bg-[#52525C] transition-all duration-300"
         >
           <svg
             className="w-4 h-4"
@@ -624,7 +618,7 @@ function SearchForm() {
           >
             <path
               d="M13.5 13L10.6 10.1M12.1667 6.33333C12.1667 9.27885 9.77885 11.6667 6.83333 11.6667C3.88781 11.6667 1.5 9.27885 1.5 6.33333C1.5 3.38781 3.88781 1 6.83333 1C9.77885 1 12.1667 3.38781 12.1667 6.33333Z"
-              stroke="#FEFEFD"
+              stroke="#979797"
               strokeWidth="1.33333"
               strokeLinecap="round"
               strokeLinejoin="round"

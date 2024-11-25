@@ -13,6 +13,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import { toast } from "sonner";
 import herobg from "@/public/_static/background/Hero.jpeg";
+import herotwo from "@/public/_static/background/newbanner.png";
 
 function SearchForm({
   onSearch,
@@ -74,9 +75,9 @@ function PageLandingContent() {
 
   return (
     <div className="pt-16 relative flex justify-center h-[500px] md:h-[570px] lg:h-[600px] border-black overflow-hidden">
-      <Image src={herobg} alt="Background" layout="fill" objectFit="cover" />
+      <Image src={herotwo} alt="Background" layout="fill" objectFit="cover" />
 
-      <Image
+      {/* <Image
         src={shopifyHome}
         className="absolute w-[100px] left-0 sm:left-5 md:left-[10%] lg:left-[13%] xl:left-[15%] opacity-20 sm:opacity-35 md:opacity-45 lg:opacity-80 sm:w-[120px] md:w-[130px] lg:w-[140px] xl:w-[150px] -rotate-6 top-20 h-fit"
         alt="shopify"
@@ -95,10 +96,10 @@ function PageLandingContent() {
         src={tradingHome}
         className="absolute sm:right-5 md:right-[5%] lg:right-[7%] xl:right-[10%] w-[100px] right-0 opacity-20 sm:opacity-35 md:opacity-45 lg:opacity-80 sm:w-[130px] md:w-[140px] lg:w-[160px] xl:w-[200px] rotate-6 bottom-5 h-fit"
         alt="trading"
-      />
+      /> */}
 
       <div className="w-full flex flex-col justify-center items-center z-10">
-        <div className="flex flex-col items-center text-white">
+        {/* <div className="flex flex-col items-center text-white">
           <p className="text-4xl md:text-5xl xl:text-6xl font-bold italic">
             WELCOME
           </p>
@@ -108,15 +109,15 @@ function PageLandingContent() {
           <p className="text-2xl mt-2 font-medium italic">
             BUY AND SELL ANYTHING!
           </p>
-        </div>
-        <div className="flex flex-col w-fit items-center mt-16">
+        </div> */}
+        {/* <div className="flex flex-col w-fit items-center mt-16">
           <div className="border p-[3px] rounded-[8px] w-fit">
             <SearchForm
               onSearch={onSearch}
               handleSearchChange={handleSearchChange}
             />
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
