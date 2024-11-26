@@ -14,6 +14,7 @@ import { Suspense } from "react";
 import { toast } from "sonner";
 import herobg from "@/public/_static/background/Hero.jpeg";
 import herotwo from "@/public/_static/background/newbanner.png";
+import tabbg from "@/public/_static/background/tabbg.png";
 
 function SearchForm({
   onSearch,

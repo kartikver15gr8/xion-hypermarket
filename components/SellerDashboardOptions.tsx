@@ -108,6 +108,16 @@ export default function SellerDashboardOptions({
                 <p className="text-[18px] ">Transactions</p>
               </li>
             </Link>
+            <Link href="/seller/ap">
+              <li
+                className={
+                  pathname.includes("/seller/ap") ? isActiveTab : isInactiveTab
+                }
+              >
+                <p className="text-[18px] ">Apps</p>
+              </li>
+            </Link>
+
             <Link href="">
               <li
                 className={
