@@ -147,7 +147,7 @@ export default function ProcessPurchaseClient({
         `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/admin/purchases`,
         {
           affiliate_link_id: 0,
-          amount: Number(productById?.Price),
+          amount: Number(productById?.price),
           product_id: productId,
           status: 1,
           transaction_hash: transactionHash,
@@ -181,8 +181,8 @@ export default function ProcessPurchaseClient({
     }
 
     try {
-      if (productById?.ID) {
-        const amount_lamports = parseInt(productById?.Price) * LAMPORTS_PER_SOL;
+      if (productById?.id) {
+        const amount_lamports = parseInt(productById?.price) * LAMPORTS_PER_SOL;
         // console.log(amount_lamports);
 
         const buyerPubKey = new PublicKey(user.wallet.address);

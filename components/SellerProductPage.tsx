@@ -56,11 +56,11 @@ export default function SellerProductPage() {
     const selectedCategoryId = event.target.value;
     if (categories) {
       const selectedCategory = categories.find(
-        (category) => category.ID === selectedCategoryId
+        (category) => category.id === selectedCategoryId
       );
       // @ts-ignore
       setSelectedCategory(selectedCategory);
-      setCategoryId(selectedCategory?.ID);
+      setCategoryId(selectedCategory?.id);
     }
   };
 
@@ -199,8 +199,8 @@ export default function SellerProductPage() {
                 >
                   <option value="">All Categories</option>
                   {categories.map((category) => (
-                    <option key={category.ID} value={category.ID}>
-                      {category.Name}
+                    <option key={category.id} value={category.id}>
+                      {category.name}
                     </option>
                   ))}
                 </select>

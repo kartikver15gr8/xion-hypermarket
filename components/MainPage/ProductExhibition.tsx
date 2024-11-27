@@ -343,11 +343,11 @@ const Category = () => {
               .slice(0, showAll ? categories.length : 6)
               .map((elem, key) => (
                 <CategoryCard
-                  id={elem.ID}
+                  id={elem.id}
                   key={key}
-                  bg={elem.ThumbnailURL}
-                  categoryName={elem.Name}
-                  description={elem.Description}
+                  bg={elem.thumbnail_url}
+                  categoryName={elem.name}
+                  description={elem.description}
                   bgClass="opacity-[13%] bg-blend-luminosity absolute w-[250px] -bottom-[40px] -right-[40px]"
                 />
               ))}
@@ -998,12 +998,12 @@ const HotDigitalProducts = () => {
               .map((elem, key) => (
                 <HotProductCard
                   key={key}
-                  redirectHref={`/product/${elem.Slug}`}
-                  img={elem.ThumbnailURL}
-                  category={elem.Category.Name}
-                  productName={elem.Name}
-                  description={elem.Description}
-                  price={`${elem.Price} SOL one time payment`}
+                  redirectHref={`/product/${elem.slug}`}
+                  img={elem.thumbnail_url}
+                  category={elem.category.name}
+                  productName={elem.name}
+                  description={elem.description}
+                  price={`${elem.price} SOL one time payment`}
                 />
               ))}
           </>
