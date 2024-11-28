@@ -685,14 +685,14 @@ const ReviewCard = ({
 };
 
 export function LiquidationsTokenMarquee() {
-  const [marqueeProducts, setMarqueeProducts] = useState<ProductInterface[]>(
+  const [marqueeProducts, setMarqueeProducts] = useState<ProductInterfaceTwo[]>(
     []
   );
 
   const fetchMarqueeProducts = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?limit=20`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/products?limit=20`
       );
       setMarqueeProducts(response.data);
       // console.log(response.data);
@@ -716,7 +716,7 @@ export function LiquidationsTokenMarquee() {
             key={review.name}
             {...review}
             imgUrl={review.thumbnail_url}
-            redirectHref={`/product/${review.id}`}
+            redirectHref={`/product/${review.slug}`}
           />
         ))}
       </Marquee>
@@ -726,7 +726,7 @@ export function LiquidationsTokenMarquee() {
             key={review.name}
             {...review}
             imgUrl={review.thumbnail_url}
-            redirectHref={`/product/${review.id}`}
+            redirectHref={`/product/${review.slug}`}
           />
         ))}
       </Marquee>
@@ -736,7 +736,7 @@ export function LiquidationsTokenMarquee() {
             key={review.name}
             {...review}
             imgUrl={review.thumbnail_url}
-            redirectHref={`/product/${review.id}`}
+            redirectHref={`/product/${review.slug}`}
           />
         ))}
       </Marquee>
