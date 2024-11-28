@@ -67,20 +67,20 @@ export default function Product({ params }: any) {
     <div className="pt-16 pb-20 w-full min-h-screen px-[11px] sm:px-[20px] md:px-[20px] lg:px-[30px] xl:px-[80px] 2xl:px-[200px] ">
       {productById && (
         <FolderStructure
-          product={productById.Name}
-          productCategory={productById.Category.Name}
-          redirectUrl={`/product/category/${productById.CategoryID}`}
+          product={productById.name}
+          productCategory={productById.category?.name}
+          redirectUrl={`/product/category/${productById.category_id}`}
         />
       )}
       {productById && (
         <ProductDetails
           comparePrice={
-            productById.ComparePrice ? productById.ComparePrice : "NA"
+            productById.compare_price ? productById.compare_price : "NA"
           }
-          bannerImg={productById.ThumbnailURL}
-          productName={productById.Name}
-          price={`${productById.Price} SOL`}
-          productId={productById.ID}
+          bannerImg={productById.thumbnail_url}
+          productName={productById.name}
+          price={`${productById.price} SOL`}
+          productId={productById.id}
           fileName={productById.Filename}
           checksum={productById.FileChecksum}
           fileSize={productById.FileSize}
@@ -89,8 +89,8 @@ export default function Product({ params }: any) {
       )}
       {productById && (
         <ProductReviews
-          productId={productById.ID}
-          productDescription={productById.Description}
+          productId={productById.id}
+          productDescription={productById.description}
         />
       )}
 
@@ -113,7 +113,7 @@ const ProductDetails = ({
   bannerImg: string;
   productName: string;
   price: string;
-  productId: number | string;
+  productId: string;
   comparePrice: string | number;
   fileSize: bigint | number;
   fileName?: string;
@@ -145,7 +145,7 @@ const ProductDetails = ({
               <Image src={kody} className="w-5 h-5 rounded-full" alt="" />
               <p className="text-xs md:text-sm">
                 sold by:
-                {` ${sellerAddress.slice(0, 2)}…${sellerAddress.slice(-2)}`}
+                {/* {` ${sellerAddress.slice(0, 2)}…${sellerAddress.slice(-2)}`} */}
               </p>
             </Link>
           </div>
@@ -193,7 +193,7 @@ const ProductDetails = ({
 
                 <p>Checksum</p>
               </div>
-              <p>{`${checksum.slice(0, 4)}...${checksum.slice(-4)}`}</p>
+              {/* <p>{`${checksum.slice(0, 4)}...${checksum.slice(-4)}`}</p> */}
             </div>
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-x-1">

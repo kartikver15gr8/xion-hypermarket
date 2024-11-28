@@ -4,11 +4,23 @@ import matrixcube from "@/public/matrixcube.png";
 import cubeik from "@/public/cubeik.png";
 import Link from "next/link";
 
+const tabActive = {
+  img: "w-24",
+  title: "font-medium text-2xl mt-4",
+  shortDes: "text-xs mt-3",
+};
+
+const tabInactive = {
+  img: "w-24 opacity-45",
+  title: "font-medium text-2xl mt-4 text-[#a8a8a8]",
+  shortDes: "text-xs mt-3 text-[#a8a8a8]",
+};
+
 export default function page() {
   return (
     <div className="pt-16 min-h-screen bg-[#FAF9F5] flex flex-col items-center w-full">
       <div className="w-[80%]">
-        <div className="flex gap-x-1 mt-10 items-center">
+        <div className="flex gap-x-1 mt-10 xl:mt-20 items-center">
           <p className="font-bold text-3xl italic">ADD PRODUCT</p>
         </div>
         <p className="text-xs text-[#52525C]">
@@ -22,19 +34,22 @@ export default function page() {
               redirectHref="/seller/products/add/category/digital-products"
               img={matrixcube}
               title="Digital Products"
-              examples="Things like: ebooks, skins, game skins"
+              examples="Ebooks, Softwares, Design Templates, and more..."
+              isActive={true}
             />
             <ProductCard
               redirectHref="/seller/products/add/category/private-groups"
               img={cubeik}
               title="Private Groups"
-              examples="Crypto Alpha Groups!"
+              examples="Alpha Groups!"
+              isActive={true}
             />
             <ProductCard
               redirectHref=""
               img={ball}
               title="Digital Services"
               examples="COMING SOON…!"
+              isActive={false}
             />
           </div>
         </div>
@@ -48,20 +63,28 @@ const ProductCard = ({
   title,
   examples,
   redirectHref,
+  isActive,
 }: {
   img: string | StaticImageData;
   title: string;
   examples: string;
   redirectHref: string;
+  isActive: boolean;
 }) => {
   return (
     <Link
       href={redirectHref}
-      className="border rounded-lg border-[#E5E5E5] bg-[#F5F5F5]  flex flex-col items-center justify-center h-[400px] hover:bg-[#e5e5e5] transition-all duration-300 z-50"
+      className="border rounded-lg border-[#E5E5E5] bg-[#F5F5F5]  flex flex-col items-center justify-center aspect-square hover:bg-[#e5e5e5] transition-all duration-300 z-50"
     >
-      <Image className="w-24" src={img} alt="" />
-      <p className="font-medium text-2xl mt-4">{title}</p>
-      <p className="text-xs mt-3">{examples}</p>
+      <Image
+        className={isActive ? tabActive.img : tabInactive.img}
+        src={img}
+        alt=""
+      />
+      <p className={isActive ? tabActive.title : tabInactive.title}>{title}</p>
+      <p className={isActive ? tabActive.shortDes : tabInactive.shortDes}>
+        {examples}
+      </p>
     </Link>
   );
 };

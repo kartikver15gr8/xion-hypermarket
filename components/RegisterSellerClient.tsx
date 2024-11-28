@@ -122,10 +122,10 @@ const RegisterSellerClient: React.FC = () => {
   const updateTransactionHash = async (tx_hash: string) => {
     try {
       const formData = new FormData();
-      formData.append("tx_hash", tx_hash);
+      formData.append("seller_reg_tx_hash", tx_hash);
 
-      const response = await axios.post(
-        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/admin/user/${userIdFromRecoil}/seller_registration`,
+      const response = await axios.put(
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/admin/user`,
         formData,
         {
           headers: {

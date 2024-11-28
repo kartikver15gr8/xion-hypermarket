@@ -5,12 +5,15 @@ export interface AffiliateLink {
 }
 
 export interface CategoryInterface {
-  ID: string | number;
-  Name: string;
-  Description: string;
-  ThumbnailURL: string;
-  Slug: string;
-  Products: any;
+  id: string | number;
+  name: string;
+  description: string;
+  thumbnail_url: string;
+  slug: string;
+  products?: ProductInterfaceTwo;
+  created_at: string;
+  updated_at: string;
+  deleted_at: any;
 }
 
 export interface ReviewInterface {
@@ -80,51 +83,28 @@ export interface ProductInterface {
 }
 
 export interface ProductInterfaceTwo {
-  ID: string;
-  Name: string;
-  Description: string;
+  id: string;
+  name: string;
+  description: string;
   status: string;
   Filename: string;
   FileType: string;
   FileSize: number | any;
   FileChecksum: string;
-  Price: number | any;
-  ComparePrice: number | any;
-  SellerID: string;
-  CategoryID: string;
-  ThumbnailURL: string;
-  ViewCount: number | any;
-  Slug: string;
-  CreatedAt: string;
-  UpdatedAt: string;
-  DeletedAt: null | any;
-  Seller: {
-    ID: string;
-    ExternalID: string;
-    Username: string;
-    SellerRegTxHash: string;
-    WalletAddress: string;
-    CreatedAt: string;
-    UpdatedAt: string;
-    DeletedAt: null | any;
-    Products: null | any;
-    Purchases: null | any;
-    SellerAnalytics: null | any;
-    AffiliateAnalytics: null | any;
-  };
-  Category: {
-    ID: string;
-    Name: string;
-    Description: string;
-    ThumbnailURL: string;
-    Slug: string;
-    CreatedAt: string;
-    UpdatedAt: string;
-    DeletedAt: null | any;
-    Products: null | any;
-  };
-  ProductAnalytics: null | any;
-  Reviews: null | any;
+  price: number | any;
+  compare_price: number | any;
+  seller_id: string;
+  category_id: string;
+  thumbnail_url: string;
+  view_count: number | any;
+  slug: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: null | any;
+  seller: User;
+  category: CategoryInterface;
+  product_analytics: null | any;
+  reviews: null | any;
   seller_wallet_address: string;
 }
 
@@ -178,6 +158,14 @@ export interface User {
   seller_reg_tx_hash: string;
   updated_at: string;
   wallet_address: string;
+  discord_id: string;
+  external_id: string;
+  products?: ProductInterfaceTwo;
+  purchases?: PurchasesInterface;
+  username?: string;
+  deleted_at?: null | string;
+  seller_analytics: any;
+  affiliate_analytics: any;
 }
 
 export interface UsersResponse {

@@ -43,9 +43,9 @@ function SearchContent() {
     const lowerQuery = searchQuery.toLowerCase();
     return allProducts.filter(
       (product) =>
-        product.Name.toLowerCase().includes(lowerQuery) ||
-        product.Description.toLowerCase().includes(lowerQuery) ||
-        product.Category.Name.toLowerCase().includes(lowerQuery)
+        product.name.toLowerCase().includes(lowerQuery) ||
+        product.description.toLowerCase().includes(lowerQuery) ||
+        product.category.name.toLowerCase().includes(lowerQuery)
     );
   }, [allProducts, searchQuery]);
 
@@ -82,12 +82,12 @@ function SearchContent() {
             {filteredProducts.map((product, key) => (
               <HotProductCard
                 key={key}
-                redirectHref={`/product/${product.Slug}`}
-                img={product.ThumbnailURL}
-                category={product.Category.Name}
-                productName={product.Name}
-                description={product.Description}
-                price={`$${product.Price} one time payment`}
+                redirectHref={`/product/${product.slug}`}
+                img={product.thumbnail_url}
+                category={product.category.name}
+                productName={product.name}
+                description={product.description}
+                price={`$${product.price} one time payment`}
               />
             ))}
           </div>

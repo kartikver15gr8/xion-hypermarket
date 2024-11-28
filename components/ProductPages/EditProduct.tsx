@@ -71,12 +71,12 @@ export default function EditProduct({ productId }: { productId: number }) {
     const selectedCategoryId = event.target.value;
     if (categories) {
       const selectedCategory = categories.find(
-        (category) => category.ID === selectedCategoryId
+        (category) => category.id === selectedCategoryId
       );
       // @ts-ignore
       setSelectedCategory(selectedCategory);
-      setCategoryId(selectedCategory?.ID);
-      setCategoryName(selectedCategory?.Name);
+      setCategoryId(selectedCategory?.id);
+      setCategoryName(selectedCategory?.name);
     }
   };
 
@@ -221,8 +221,8 @@ export default function EditProduct({ productId }: { productId: number }) {
               >
                 <option value="">Select a category</option>
                 {categories.map((category) => (
-                  <option key={category.ID} value={category.ID}>
-                    {category.Name}
+                  <option key={category.id} value={category.id}>
+                    {category.name}
                   </option>
                 ))}
               </select>

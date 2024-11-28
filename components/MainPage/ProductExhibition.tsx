@@ -131,13 +131,13 @@ export default function ProductExhibition() {
   return (
     <div className="mb-10">
       <div className="px-[10px] sm:px-[20px] md:px-[40px] lg:px-[60px] xl:px-[80px] 2xl:px-[100px]">
+        <Trading />
         <DontMissBanner />
         <HotDigitalProducts />
         {/* <TopRanking sectionTitle="Top Ranking" /> */}
         <Category />
         {/* <NewThisWeek /> */}
         {/* <TopRanking sectionTitle="Top Deals" /> */}
-        <Trading />
         <DappCard />
         {/* <NewArrival /> */}
         {/* <DiscountTokens /> */}
@@ -343,11 +343,11 @@ const Category = () => {
               .slice(0, showAll ? categories.length : 6)
               .map((elem, key) => (
                 <CategoryCard
-                  id={elem.ID}
+                  id={elem.id}
                   key={key}
-                  bg={elem.ThumbnailURL}
-                  categoryName={elem.Name}
-                  description={elem.Description}
+                  bg={elem.thumbnail_url}
+                  categoryName={elem.name}
+                  description={elem.description}
                   bgClass="opacity-[13%] bg-blend-luminosity absolute w-[250px] -bottom-[40px] -right-[40px]"
                 />
               ))}
@@ -685,14 +685,14 @@ const ReviewCard = ({
 };
 
 export function LiquidationsTokenMarquee() {
-  const [marqueeProducts, setMarqueeProducts] = useState<ProductInterface[]>(
+  const [marqueeProducts, setMarqueeProducts] = useState<ProductInterfaceTwo[]>(
     []
   );
 
   const fetchMarqueeProducts = async () => {
     try {
       const response = await axios.get(
-        `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/products?limit=20`
+        `${process.env.NEXT_PUBLIC_SWAGGER_API_V2}/products?limit=20`
       );
       setMarqueeProducts(response.data);
       // console.log(response.data);
@@ -716,7 +716,7 @@ export function LiquidationsTokenMarquee() {
             key={review.name}
             {...review}
             imgUrl={review.thumbnail_url}
-            redirectHref={`/product/${review.id}`}
+            redirectHref={`/product/${review.slug}`}
           />
         ))}
       </Marquee>
@@ -726,7 +726,7 @@ export function LiquidationsTokenMarquee() {
             key={review.name}
             {...review}
             imgUrl={review.thumbnail_url}
-            redirectHref={`/product/${review.id}`}
+            redirectHref={`/product/${review.slug}`}
           />
         ))}
       </Marquee>
@@ -736,7 +736,7 @@ export function LiquidationsTokenMarquee() {
             key={review.name}
             {...review}
             imgUrl={review.thumbnail_url}
-            redirectHref={`/product/${review.id}`}
+            redirectHref={`/product/${review.slug}`}
           />
         ))}
       </Marquee>
@@ -998,12 +998,12 @@ const HotDigitalProducts = () => {
               .map((elem, key) => (
                 <HotProductCard
                   key={key}
-                  redirectHref={`/product/${elem.Slug}`}
-                  img={elem.ThumbnailURL}
-                  category={elem.Category.Name}
-                  productName={elem.Name}
-                  description={elem.Description}
-                  price={`${elem.Price} SOL one time payment`}
+                  redirectHref={`/product/${elem.slug}`}
+                  img={elem.thumbnail_url}
+                  category={elem.category.name}
+                  productName={elem.name}
+                  description={elem.description}
+                  price={`${elem.price} SOL one time payment`}
                 />
               ))}
           </>
