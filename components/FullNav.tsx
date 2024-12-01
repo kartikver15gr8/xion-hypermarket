@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import sendit_white_ape from "@/public/sendit_white_ape.svg";
 import Image from "next/image";
 import portolio_ape from "@/public/_static/illustrations/portfolio_ape.png";
@@ -64,7 +64,7 @@ export default function FullNav() {
   };
 
   const pathname = usePathname();
-  const { user } = usePrivy();
+  const { user, login } = usePrivy();
 
   return (
     <div className="absolute w-full flex flex-col p-2 sm:p-0">
@@ -117,7 +117,7 @@ export default function FullNav() {
           {!user?.wallet?.address ? (
             <BecomeSeller text="Sign In" />
           ) : (
-            <Link href="/seller/dashboard" className=" w-fit hidden sm:flex">
+            <Link href="/affiliate" className=" w-fit hidden sm:flex">
               <Button className="rounded text-black  w-fit md:text-[12px] text-[11px] px-4 lg:text-[14px] xl:text-[16px] border-[#979797] hover:bg-[#EEEEEF] transition-all duration-300">
                 Become an Affiliate
               </Button>
@@ -579,12 +579,15 @@ const ConnectWithWallet = () => {
 };
 
 const BecomeSeller = ({ text }: { text: string }) => {
+  const { login } = usePrivy();
+
   return (
-    <Link href="/seller/dashboard" className=" w-fit hidden sm:flex">
-      <Button className="rounded text-[#1F3839]  w-fit md:text-[12px] text-[11px] px-4 lg:text-[14px] xl:text-[16px] border-[#979797] hover:bg-[#EEEEEF] transition-all duration-300">
-        {text}
-      </Button>
-    </Link>
+    <Button
+      onClick={login}
+      className="rounded text-[#1F3839]  w-fit md:text-[12px] text-[11px] px-4 lg:text-[14px] xl:text-[16px] border-[#979797] hover:bg-[#EEEEEF] transition-all duration-300"
+    >
+      {text}
+    </Button>
   );
 };
 

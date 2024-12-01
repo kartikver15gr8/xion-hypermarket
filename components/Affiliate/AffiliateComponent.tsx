@@ -93,7 +93,7 @@ const SalesOverview = () => {
   );
 
   const [selected, setSelected] = useState<"mylinks" | "productstosell">(
-    "mylinks"
+    "productstosell"
   );
 
   const selectProductsToSell = () => {
@@ -181,16 +181,16 @@ const SalesOverview = () => {
     <div className="mt-8">
       <div className="flex items-center">
         <div
-          onClick={selectMyLinks}
-          className={selected == "mylinks" ? activeTab : inActiveTab}
-        >
-          <p>My Links</p>
-        </div>
-        <div
           onClick={selectProductsToSell}
           className={selected == "productstosell" ? activeTab : inActiveTab}
         >
           <p>Products to Sell</p>
+        </div>
+        <div
+          onClick={selectMyLinks}
+          className={selected == "mylinks" ? activeTab : inActiveTab}
+        >
+          <p>My Links</p>
         </div>
       </div>
       <p className="font-medium text-lg md:text-xl mt-8">
