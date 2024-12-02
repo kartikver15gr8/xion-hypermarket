@@ -92,14 +92,9 @@ function PageLandingContent() {
 
   return (
     <div className="pt-16 relative flex justify-center h-[500px] md:h-[570px] lg:h-[600px] border-black overflow-hidden">
-      <Image
-        src={newbgsendit}
-        alt="Background"
-        layout="fill"
-        objectFit="cover"
-      />
+      <Image src={herotwo} alt="Background" layout="fill" objectFit="cover" />
 
-      <Image
+      {/* <Image
         src={figma}
         className="absolute w-[90px] left-0 sm:left-5 md:left-[5%] lg:left-[7%] xl:left-[9%] sm:w-[130px] md:w-[140px] lg:w-[160px] xl:w-[120px] -rotate-6 top-28 h-fit"
         alt="figma"
@@ -122,7 +117,7 @@ function PageLandingContent() {
         alt="x"
       />
 
-      {/* right side */}
+
 
       <Image
         src={disco}
@@ -144,10 +139,10 @@ function PageLandingContent() {
         src={twitch}
         className="absolute sm:right-5 md:right-[5%] lg:right-[7%] xl:right-[20%] w-[100px] right-0 sm:w-[130px] md:w-[140px] lg:w-[160px] xl:w-[110px] rotate-6 bottom-[30%] h-fit"
         alt="trading"
-      />
+      /> */}
 
       <div className="w-full flex flex-col justify-center items-center z-10">
-        <div className=" relative flex items-center  flex-col rounded-2xl h-[300px] w-[500px] bg-[#868686] border-b-4 border-[#515151] shadow-xl shadow-black px-4">
+        {/* <div className=" relative flex items-center  flex-col rounded-2xl h-[300px] w-[500px] bg-[#868686] border-b-4 border-[#515151] shadow-xl shadow-black px-4">
           <Image
             src={midjourney}
             className="absolute -left-10 w-[100px] right-0   xl:w-[76px] rotate-6 bottom-20 h-fit"
@@ -210,26 +205,6 @@ function PageLandingContent() {
               </svg>
               <p>Place Order</p>
             </div>
-          </div>
-        </div>
-
-        {/* <div className="flex flex-col items-center text-white">
-          <p className="text-4xl md:text-5xl xl:text-6xl font-bold italic">
-            WELCOME
-          </p>
-          <p className="text-4xl md:text-5xl xl:text-6xl font-bold italic">
-            TO THE JUNGLE!
-          </p>
-          <p className="text-2xl mt-2 font-medium italic">
-            BUY AND SELL ANYTHING!
-          </p>
-        </div> */}
-        {/* <div className="flex flex-col w-fit items-center mt-16">
-          <div className="border p-[3px] rounded-[8px] w-fit">
-            <SearchForm
-              onSearch={onSearch}
-              handleSearchChange={handleSearchChange}
-            />
           </div>
         </div> */}
       </div>
