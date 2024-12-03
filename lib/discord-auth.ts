@@ -16,7 +16,10 @@ interface TokenResponse {
 
 export async function initiateDiscordOAuth(): Promise<string> {
   const clientId = process.env.NEXT_PUBLIC_DISCORD_CLIENT_ID;
-  const redirectUri = process.env.NEXT_PUBLIC_DISCORD_REDIRECT_URI;
+  const redirectUri =
+    process.env.NODE_ENV === "production"
+      ? process.env.NEXT_PUBLIC_DISCORD_REDIRECT_URI
+      : process.env.NEXT_PUBLIC_DISCORD_TEST_REDIRECT_URI;
 
   if (!clientId || !redirectUri) {
     throw new Error("Missing Discord OAuth configuration");
