@@ -38,8 +38,6 @@ export default function PrivyConnection() {
             },
           }
         );
-
-        console.log("User created successfully:", response.data);
       } catch (error) {
         console.error(`Error creating user: ${error}`);
       }
@@ -69,9 +67,6 @@ export default function PrivyConnection() {
         return response.data;
       } catch (error) {
         setUserExist(false);
-        console.log(
-          `You got an error while checking the user existence: ${error}`
-        );
       }
     };
     if (privyAccessToken && externalId) {
@@ -93,8 +88,6 @@ export default function PrivyConnection() {
           setWalletAddress(user.wallet.address);
           setPhantomAddress(user.wallet.address);
 
-          console.log(`walletAddress: ${user.wallet.address}`);
-          console.log(`privyToken: ${privyAccessToken}`);
           toast.info("Successfully connected to Phantom");
         } else {
           setWalletAddress("");

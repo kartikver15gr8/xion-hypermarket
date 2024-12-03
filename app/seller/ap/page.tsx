@@ -1,16 +1,61 @@
 "use client";
 import SellerDashboard from "@/components/SellerDashboard";
 import SellerProductPage from "@/components/SellerProductPage";
+import { discordAccessToken } from "@/store/atom/discordAccessToken";
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { toast } from "sonner";
 
 export default function UserConnectedApps() {
   const [discordConnected, setDiscordconnected] = useState(false);
   const [teleConnected, setTeleconnected] = useState(false);
+
+  const [discord_access_token, setDiscordAccessToken] =
+    useRecoilState(discordAccessToken);
+
+  // Function to handle fetching access token
+  const fetchAccessToken = async (code: any) => {
+    try {
+      const response = await fetch("/api/discord/token", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          code,
+          redirectUri: process.env.NEXT_PUBLIC_DISCORD_REDIRECT_URI,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Access Token:", data.access_token); // Use the access token as needed
+        console.log("GuildId: ", data.guild.id);
+        console.log("GuildId: ", data.guild.name);
+
+        toast.info(`You got your discord access token: ${data.access_token}`);
+        setDiscordAccessToken(data.access_token);
+      } else {
+        console.error("Error fetching access token:", data);
+      }
+    } catch (error) {
+      console.error("Fetch error:", error);
+    }
+  };
+
+  // Example usage of fetchAccessToken with a mock code
+  useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const code = urlParams.get("code");
+    if (code) {
+      fetchAccessToken(code);
+    }
+  }, []);
+
   return (
     <div className="pt-16 w-full">
       <TopLabel />
-
       <div className="grid grid-cols-1 px-8 gap-y-2 md:gap-y-0 md:grid-cols-2 gap-x-4 mt-2">
         {discordConnected ? (
           <div>
@@ -30,7 +75,7 @@ export default function UserConnectedApps() {
                   Discord
                 </p>
                 <p className="text-[10px] md:text-[11px] lg:text-[15px]">
-                  Connected{" "}
+                  Connected
                 </p>
               </div>
             </a>
@@ -115,7 +160,7 @@ const TopLabel = () => {
     <div className="relative border-b w-[100%] px-[20px] sm:px-[20px] md:px-[40px] lg:px-[60px] xl:px-20">
       <div className="h-20 grid grid-cols-2 items-center">
         <div>
-          <p className="font-medium text-sm  lg:text-lg">Manage Your Apps</p>
+          <p className="font-medium text-sm lg:text-lg">Manage Your Apps</p>
         </div>
       </div>
     </div>
