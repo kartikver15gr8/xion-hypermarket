@@ -56,20 +56,6 @@ export default function ProductUpload() {
   const [userId, setUserId] = useState(0);
   const [privyAccessToken, setPrivyAccessToken] = useState("");
 
-  // const fetchUserId = async () => {
-  //   try {
-  //     const response = await axios.get(
-  //       `${process.env.NEXT_PUBLIC_BASE_SWAGGER_URL}/fetch/user/${userWalletAddress}`
-  //     );
-  //     // console.log(response.data);
-
-  //     setUserId(response.data.id);
-  //     // console.log(response.data.id);
-  //   } catch (error) {
-  //     console.log(`You got error while fetching UserId: ${error}`);
-  //   }
-  // };
-
   const fetchCategories = async () => {
     try {
       const response = await axios.get(
