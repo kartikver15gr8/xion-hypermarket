@@ -245,6 +245,30 @@ export default function ProductUpload() {
     }
   }, []);
 
+  const [telegramVerificationToken, setTelegramVerificationToken] =
+    useState("");
+
+  const generateTelegramVerificationToken = () => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    let result = "";
+    for (let i = 0; i < 6; i++) {
+      const randomIndex = Math.floor(Math.random() * chars.length);
+      result += chars[randomIndex];
+    }
+    setTelegramVerificationToken(result);
+    toast.info("Telegram verification token generated!");
+    return result;
+  };
+
+  const copyTeleToken = async () => {
+    try {
+      await navigator.clipboard.writeText(telegramVerificationToken);
+      toast.info("Verification Token Copied");
+    } catch (err) {
+      console.error("Failed to copy: ", err);
+    }
+  };
+
   return (
     <div className="pt-16 pb-20 px-[15px] sm:px-[20px] md:px-[40px] min-h-screen lg:px-[60px] xl:px-20 bg-[#FAF9F5] w-full relative overflow-y-auto hide-scrollbar h-[90vh] scroll-smooth ">
       <div className="mt-5  flex justify-between items-center">
@@ -677,11 +701,8 @@ export default function ProductUpload() {
               </div>
             </a>
           </div>
-          <div>
-            <a
-              href=""
-              className="border rounded-lg h-24 flex items-center px-2 gap-x-3 hover:bg-[#E4E4E5] transition-all duration-300"
-            >
+          <div className="border rounded-lg h-24 flex items-center hover:bg-[#E4E4E5] transition-all duration-300 justify-between">
+            <div className="flex items-center px-2 gap-x-3">
               <Image
                 className="w-10 md:w-12 lg:w-14"
                 src="https://s3-alpha-sig.figma.com/img/1d2b/bc7f/92849e7867a21edd110a2b0e8a256f6e?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KXCbXmfq1IjfOOzrGJzfWCl9Yl9UNj-SWz-mlmqH5Zfi~0-uKfDEpBVvBiLH-5N276OISTmZBs~v0XbJNwZavOwEKoZxa0S8~8nrh5irCkhsO5eSz62DTQawoVza297qf-ty8lwAUSlsj8yWkU1oHuGdNHqFnIyWju7PNN-P9jDNBrG6MUYJSMwJzG-9lTWqIOyMv3RrOeJf-nUYxIYQcTFYWy~0RPmsJYxUqYVGeH3Ivbjqim0v73LNB6~37POazuSAHUVXmbRglScZRgv4JTIrqmRhBNqjp54EEIRxsmfACjFcfiv1liKgHHi7vCM3GC34T-YcXUAJ8md9NHZ3ZQ__"
@@ -697,7 +718,30 @@ export default function ProductUpload() {
                   Provide access to your private Telegram channel
                 </p>
               </div>
-            </a>
+            </div>
+            <div className="flex items-center gap-x-2 mr-4">
+              <button
+                onClick={generateTelegramVerificationToken}
+                className="border bg-[#e0e4ea] border-[#b0b3b8] rounded px-2 hover:bg-[#586e6e] hover:text-white transition-all duration-300"
+              >
+                Generate
+              </button>
+              <button
+                onClick={copyTeleToken}
+                className="border bg-[#e0e4ea] border-[#b0b3b8] rounded p-1 flex items-center justify-center hover:bg-[#586e6e] transition-all duration-300"
+              >
+                <svg
+                  className="w-4"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    fill="currentColor"
+                    d="M9 18q-.825 0-1.412-.587T7 16V4q0-.825.588-1.412T9 2h9q.825 0 1.413.588T20 4v12q0 .825-.587 1.413T18 18zm0-2h9V4H9zm-4 6q-.825 0-1.412-.587T3 20V6h2v14h11v2zm4-6V4z"
+                  />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
       </div>
