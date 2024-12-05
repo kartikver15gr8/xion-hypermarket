@@ -73,6 +73,12 @@ export default function ProductUpload() {
     setTogglePayment(togglePayment == "onetime" ? "subscription" : "onetime");
   };
 
+  const [showSocials, setShowSocials] = useState(false);
+
+  const toggleShowSocials = () => {
+    setShowSocials(!showSocials);
+  };
+
   // for Tags
   const [selectedCategory, setSelectedCategory] = useState("");
   const [categories, setCategories] = useState<CategoryInterface[]>([]);
@@ -267,6 +273,16 @@ export default function ProductUpload() {
     } catch (err) {
       console.error("Failed to copy: ", err);
     }
+  };
+
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+  const handleCardClick = () => {
+    setIsPopupOpen(true);
+  };
+
+  const handleClosePopup = () => {
+    setIsPopupOpen(false);
   };
 
   return (
@@ -609,21 +625,29 @@ export default function ProductUpload() {
         </div>
       </div>
 
+      <div className="mt-5 flex justify-end">
+        <button
+          onClick={formSubmit}
+          className="bg-black text-white px-4 rounded-lg h-10 hover:bg-[#4B6161] transition-all duration-300"
+        >
+          Create product
+        </button>
+      </div>
+
       {/* <Content /> */}
       <div className="mt-4 p-4 rounded-xl border bg-white">
-        <p>What&apos;s Included</p>
-
+        <p className="mb-2">What&apos;s Included</p>
         <div className="grid grid-cols-2 gap-x-4">
           <div className="border h-16 p-2 rounded-lg flex items-center justify-between px-4">
-            <p>Private Group</p>
+            <p className="">Private Group</p>
             <button
-              onClick={handleToggle}
+              onClick={toggleShowSocials}
               className={`flex items-center justify-between w-16 h-8 rounded-full p-1 transition-colors duration-300 
-                ${isToggled ? "bg-blue-500" : "bg-gray-300"}`}
+                ${showSocials ? "bg-blue-500" : "bg-gray-300"}`}
             >
               <span
                 className={`w-6 h-6 rounded-full bg-white transition-transform duration-300 
-                ${isToggled ? "transform translate-x-8" : ""}`}
+                ${showSocials ? "transform translate-x-8" : ""}`}
               ></span>
             </button>
           </div>
@@ -641,110 +665,112 @@ export default function ProductUpload() {
             </button>
           </div>
         </div>
-        {toggleWhatIncluded ? (
-          <>
-            <p className="text-[15px] md:text-lg mb-4 mt-4">Upload Content</p>
-            <div className=" grid grid-cols-1 gap-x-5 rounded-md h-48">
-              <div className="border rounded-md">
-                <div className="h-10 p-2 border-b bg-slate-200">
-                  <p>Content Being Bought</p>
-                </div>
-                <div className="flex flex-col items-center justify-center h-36">
-                  <input
-                    className="text-xs sm:text-sm lg:text-[15px]"
-                    type="file"
-                    onChange={handleFileChange}
-                  />
-                </div>
-              </div>
-            </div>
-          </>
-        ) : (
-          <></>
-        )}
-      </div>
-      <div className="mt-5 flex justify-end">
-        <button
-          onClick={formSubmit}
-          className="bg-black text-white px-2 rounded-lg h-10 hover:bg-[#4B6161] transition-all duration-300"
+        <div
+          className={`overflow-hidden transition-all duration-1000 ease-in-out ${
+            toggleWhatIncluded
+              ? "max-h-screen opacity-100"
+              : "max-h-0 opacity-0"
+          }`}
         >
-          Create product
-        </button>
-      </div>
-      <div className="border rounded-xl px-4 py-5 mt-5 bg-white">
-        <div className="grid grid-cols-1 gap-y-2 md:gap-y-0 md:grid-cols-2 gap-x-4">
-          <div>
-            <a
-              href={"/api/auth/discord"}
-              className={
-                discordGuildId && discordServerName
-                  ? "border border-[#4B6161] bg-[#d9faf2] rounded-lg h-24 flex items-center px-2 gap-x-3 hover:bg-[#E4E4E5] transition-all duration-300"
-                  : "border rounded-lg h-24 flex items-center px-2 gap-x-3 hover:bg-[#E4E4E5] transition-all duration-300"
-              }
-            >
-              <Image
-                className="w-10 md:w-12 lg:w-14"
-                src="https://s3-alpha-sig.figma.com/img/c89a/0a74/93f942f4f36a009c22adc6177b140086?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=LySqO17PCfD1vsF1049b38Kaiu1Q9R2qs4Org2J8QcaXMboKRJw~UPOYINNusCUcG~CxnQMC8sx8viEKNeKomYUGaPd9PVIIpl5eV3HaRTcSAAU6s0YJBISJM7WZsPQg-HPczVxb0-WaFBo2mGpC7OWlJ7g7FrhfmqnoAmdDb~iDOUSvHmcGsXVLtFaoyDkQC6xY1h--kEUHEqKlQ4JnGyocOw4tr3Omw8vFzEIi~F0nE7AchatNLdgF3ys7kOUsfmKhsOzeOItCDu76Pwh-cGndtwVMKyjpSshuZQ8kZF3EVYzjkbDg5xytwANpl7g8aokqwiz5CSQuCbOKqy2ycg__"
-                width={200}
-                height={200}
-                alt=""
-              />
-              <div>
-                <p className="font-medium text-[14px] md:text-[16px] lg:text-lg">
-                  Discord
-                </p>
-                <p className="text-[10px] md:text-[11px]">
-                  {discordGuildId
-                    ? `connected server: ${discordServerName}`
-                    : `Offer exclusive access to your private Discord server`}
-                </p>
+          {toggleWhatIncluded ? (
+            <>
+              <p className="text-[15px] md:text-lg mb-4 mt-4">Upload Content</p>
+              <div className=" grid grid-cols-1 gap-x-5 rounded-md h-48">
+                <div className="border rounded-md">
+                  <div className="h-10 p-2 border-b bg-slate-200">
+                    <p>Content Being Bought</p>
+                  </div>
+                  <div className="flex flex-col items-center justify-center h-36">
+                    <input
+                      className="text-xs sm:text-sm lg:text-[15px]"
+                      type="file"
+                      onChange={handleFileChange}
+                    />
+                  </div>
+                </div>
               </div>
-            </a>
-          </div>
-          <div className="border rounded-lg h-24 flex items-center hover:bg-[#E4E4E5] transition-all duration-300 justify-between">
-            <div className="flex items-center px-2 gap-x-3">
-              <Image
-                className="w-10 md:w-12 lg:w-14"
-                src="https://s3-alpha-sig.figma.com/img/1d2b/bc7f/92849e7867a21edd110a2b0e8a256f6e?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KXCbXmfq1IjfOOzrGJzfWCl9Yl9UNj-SWz-mlmqH5Zfi~0-uKfDEpBVvBiLH-5N276OISTmZBs~v0XbJNwZavOwEKoZxa0S8~8nrh5irCkhsO5eSz62DTQawoVza297qf-ty8lwAUSlsj8yWkU1oHuGdNHqFnIyWju7PNN-P9jDNBrG6MUYJSMwJzG-9lTWqIOyMv3RrOeJf-nUYxIYQcTFYWy~0RPmsJYxUqYVGeH3Ivbjqim0v73LNB6~37POazuSAHUVXmbRglScZRgv4JTIrqmRhBNqjp54EEIRxsmfACjFcfiv1liKgHHi7vCM3GC34T-YcXUAJ8md9NHZ3ZQ__"
-                width={200}
-                height={200}
-                alt=""
-              />
-              <div>
-                <p className="font-medium text-[14px] md:text-[16px] lg:text-lg">
-                  Telegram
-                </p>
-                <p className="text-[10px] md:text-[11px]">
-                  Provide access to your private Telegram channel
-                </p>
+            </>
+          ) : (
+            <></>
+          )}
+        </div>
+        <div
+          className={`overflow-hidden transition-all duration-1000 ease-in-out ${
+            showSocials ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
+          }`}
+        >
+          {showSocials ? (
+            <>
+              <div className="grid grid-cols-1 gap-y-2 md:gap-y-0 md:grid-cols-2 gap-x-4 mt-4">
+                <div>
+                  <a
+                    href={"/api/auth/discord"}
+                    className={
+                      discordGuildId && discordServerName
+                        ? "border border-[#4B6161] bg-[#d9faf2] rounded-lg h-24 flex items-center px-2 gap-x-3 hover:bg-[#E4E4E5] transition-all duration-300"
+                        : "border rounded-lg h-24 flex items-center px-2 gap-x-3 hover:bg-[#E4E4E5] transition-all duration-300"
+                    }
+                  >
+                    <Image
+                      className="w-10 md:w-12 lg:w-14"
+                      src="https://s3-alpha-sig.figma.com/img/c89a/0a74/93f942f4f36a009c22adc6177b140086?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=LySqO17PCfD1vsF1049b38Kaiu1Q9R2qs4Org2J8QcaXMboKRJw~UPOYINNusCUcG~CxnQMC8sx8viEKNeKomYUGaPd9PVIIpl5eV3HaRTcSAAU6s0YJBISJM7WZsPQg-HPczVxb0-WaFBo2mGpC7OWlJ7g7FrhfmqnoAmdDb~iDOUSvHmcGsXVLtFaoyDkQC6xY1h--kEUHEqKlQ4JnGyocOw4tr3Omw8vFzEIi~F0nE7AchatNLdgF3ys7kOUsfmKhsOzeOItCDu76Pwh-cGndtwVMKyjpSshuZQ8kZF3EVYzjkbDg5xytwANpl7g8aokqwiz5CSQuCbOKqy2ycg__"
+                      width={200}
+                      height={200}
+                      alt=""
+                    />
+                    <div>
+                      <p className="font-medium text-[14px] md:text-[16px] lg:text-lg">
+                        Discord
+                      </p>
+                      <p className="text-[10px] md:text-[11px]">
+                        {discordGuildId
+                          ? `connected server: ${discordServerName}`
+                          : `Offer exclusive access to your private Discord server`}
+                      </p>
+                    </div>
+                  </a>
+                </div>
+                <>
+                  <div
+                    className="border rounded-lg h-24 flex items-center hover:bg-[#E4E4E5] transition-all duration-300 justify-between cursor-pointer"
+                    onClick={handleCardClick}
+                  >
+                    <div className="flex items-center px-2 gap-x-3">
+                      <Image
+                        className="w-10 md:w-12 lg:w-14"
+                        src="https://s3-alpha-sig.figma.com/img/1d2b/bc7f/92849e7867a21edd110a2b0e8a256f6e?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KXCbXmfq1IjfOOzrGJzfWCl9Yl9UNj-SWz-mlmqH5Zfi~0-uKfDEpBVvBiLH-5N276OISTmZBs~v0XbJNwZavOwEKoZxa0S8~8nrh5irCkhsO5eSz62DTQawoVza297qf-ty8lwAUSlsj8yWkU1oHuGdNHqFnIyWju7PNN-P9jDNBrG6MUYJSMwJzG-9lTWqIOyMv3RrOeJf-nUYxIYQcTFYWy~0RPmsJYxUqYVGeH3Ivbjqim0v73LNB6~37POazuSAHUVXmbRglScZRgv4JTIrqmRhBNqjp54EEIRxsmfACjFcfiv1liKgHHi7vCM3GC34T-YcXUAJ8md9NHZ3ZQ__"
+                        width={200}
+                        height={200}
+                        alt=""
+                      />
+                      <div>
+                        <p className="font-medium text-[14px] md:text-[16px] lg:text-lg">
+                          Telegram
+                        </p>
+                        <p className="text-[10px] md:text-[11px]">
+                          Provide access to your private Telegram channel
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  {isPopupOpen && (
+                    <TokenPopup
+                      onClose={handleClosePopup}
+                      onGenerate={generateTelegramVerificationToken}
+                      onCopy={copyTeleToken}
+                      telegramCode={telegramVerificationToken}
+                    />
+                  )}
+                </>
               </div>
-            </div>
-            <div className="flex items-center gap-x-2 mr-4">
-              <button
-                onClick={generateTelegramVerificationToken}
-                className="border bg-[#e0e4ea] border-[#b0b3b8] rounded px-2 hover:bg-[#586e6e] hover:text-white transition-all duration-300"
-              >
-                Generate
-              </button>
-              <button
-                onClick={copyTeleToken}
-                className="border bg-[#e0e4ea] border-[#b0b3b8] rounded p-1 flex items-center justify-center hover:bg-[#586e6e] transition-all duration-300"
-              >
-                <svg
-                  className="w-4"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    fill="currentColor"
-                    d="M9 18q-.825 0-1.412-.587T7 16V4q0-.825.588-1.412T9 2h9q.825 0 1.413.588T20 4v12q0 .825-.587 1.413T18 18zm0-2h9V4H9zm-4 6q-.825 0-1.412-.587T3 20V6h2v14h11v2zm4-6V4z"
-                  />
-                </svg>
-              </button>
-            </div>
-          </div>
+            </>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
+
       {/* <div>
         <p>{discordServerName}</p>
         <p>{discordGuildId}</p>
@@ -804,6 +830,119 @@ const Topbar = () => {
         </svg>
 
         <p>Preview</p>
+      </div>
+    </div>
+  );
+};
+
+const TokenPopup = ({
+  onClose,
+  onGenerate,
+  onCopy,
+  telegramCode,
+}: {
+  onClose: any;
+  onGenerate: any;
+  onCopy: any;
+  telegramCode: string;
+}) => {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10">
+      <div className="bg-white rounded-xl p-5 shadow-lg w-[700px]">
+        <div className="flex justify-between items-center">
+          <div className="flex gap-x-2 items-center">
+            <Image
+              className="w-6 md:w-7 lg:w-8"
+              src="https://s3-alpha-sig.figma.com/img/1d2b/bc7f/92849e7867a21edd110a2b0e8a256f6e?Expires=1734307200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KXCbXmfq1IjfOOzrGJzfWCl9Yl9UNj-SWz-mlmqH5Zfi~0-uKfDEpBVvBiLH-5N276OISTmZBs~v0XbJNwZavOwEKoZxa0S8~8nrh5irCkhsO5eSz62DTQawoVza297qf-ty8lwAUSlsj8yWkU1oHuGdNHqFnIyWju7PNN-P9jDNBrG6MUYJSMwJzG-9lTWqIOyMv3RrOeJf-nUYxIYQcTFYWy~0RPmsJYxUqYVGeH3Ivbjqim0v73LNB6~37POazuSAHUVXmbRglScZRgv4JTIrqmRhBNqjp54EEIRxsmfACjFcfiv1liKgHHi7vCM3GC34T-YcXUAJ8md9NHZ3ZQ__"
+              width={200}
+              height={200}
+              alt=""
+            />
+            <h2 className="text-lg font-semibold">Connect Your Telegram</h2>
+          </div>
+          <button onClick={onClose} className="">
+            <svg
+              className="w-7 hover:rotate-180 transition-all duration-300"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <path
+                fill="black"
+                d="m8.4 16.308l3.6-3.6l3.6 3.6l.708-.708l-3.6-3.6l3.6-3.6l-.708-.708l-3.6 3.6l-3.6-3.6l-.708.708l3.6 3.6l-3.6 3.6zM12.003 21q-1.866 0-3.51-.708q-1.643-.709-2.859-1.924t-1.925-2.856T3 12.003t.709-3.51Q4.417 6.85 5.63 5.634t2.857-1.925T11.997 3t3.51.709q1.643.708 2.859 1.922t1.925 2.857t.709 3.509t-.708 3.51t-1.924 2.859t-2.856 1.925t-3.509.709M12 20q3.35 0 5.675-2.325T20 12t-2.325-5.675T12 4T6.325 6.325T4 12t2.325 5.675T12 20m0-8"
+              />
+            </svg>
+          </button>
+        </div>
+        <div className="mt-4 border rounded-xl ">
+          <div className="rounded-t-xl border-b flex items-center h-12 px-4 bg-[#f2f3f4] justify-between">
+            <div className="flex items-center gap-x-2 ">
+              <h1 className="font-medium text-lg">Step 1:</h1>
+              <p className="">Add Sendit Bot to your Telegram</p>
+            </div>
+            <button className="border border-[#c0c0c0] bg-white px-2 text-sm h-8 rounded-lg hover:bg-[#4E6465] hover:text-white transition-all duration-200">
+              Watch Tutorial Video
+            </button>
+          </div>
+
+          <div className="border-b p-2 flex justify-center px-4 flex-col h-20">
+            <p className=" font-medium">Group</p>
+            <p className="text-sm text-[#7F7F7F]">
+              For a group, add Sendit bot as a member
+            </p>
+          </div>
+          <div className=" p-2 flex justify-center px-4 flex-col h-20">
+            <p className=" font-medium">Channel</p>
+            <p className="text-sm text-[#7F7F7F]">
+              For a channel, add Sendit bot as an admin
+            </p>
+          </div>
+        </div>
+        <div className="mt-4 border rounded-xl ">
+          <div className="rounded-t-xl border-b flex items-center gap-x-2 h-12 px-4 bg-[#f2f3f4]">
+            <h1 className="font-medium text-lg">Step 2:</h1>
+            <p className="">Generate and Verify the unique verification code</p>
+          </div>
+
+          <div className=" p-2 flex justify-center px-4 flex-col py-2">
+            <p className=" font-medium">Verify</p>
+            <ul className=" list-disc text-sm ml-4 mt-2 text-[#7F7F7F]">
+              <li>Generate the code by clicking on the generate button</li>
+              <li>
+                Paste it in your channel/group once the Sendit Bot is added
+              </li>
+            </ul>
+
+            <div className="flex justify-between items-center mt-3">
+              <p className="bg-[#E2E8F0] px-4 rounded">
+                {telegramCode ? telegramCode : ""}
+              </p>
+              <div className="flex gap-x-2">
+                <button
+                  onClick={onGenerate}
+                  className=" mt-3 h-8 bg-black text-white rounded-lg w-24 hover:bg-[#586e6e] hover:text-white transition-all duration-300"
+                >
+                  Generate
+                </button>
+                <button
+                  onClick={onCopy}
+                  className="flex items-center gap-x-1 mt-3 h-8 bg-black text-white rounded-lg w-24 justify-center hover:bg-[#586e6e] hover:text-white transition-all duration-300"
+                >
+                  <svg
+                    className="w-5"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      fill="white"
+                      d="M9.116 17q-.691 0-1.153-.462T7.5 15.385V4.615q0-.69.463-1.153T9.116 3h7.769q.69 0 1.153.462t.462 1.153v10.77q0 .69-.462 1.152T16.884 17zm0-1h7.769q.23 0 .423-.192t.192-.423V4.615q0-.23-.192-.423T16.884 4H9.116q-.231 0-.424.192t-.192.423v10.77q0 .23.192.423t.423.192m-3 4q-.69 0-1.153-.462T4.5 18.385V6.615h1v11.77q0 .23.192.423t.423.192h8.77v1zM8.5 16V4z"
+                    />
+                  </svg>
+                  Copy
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
