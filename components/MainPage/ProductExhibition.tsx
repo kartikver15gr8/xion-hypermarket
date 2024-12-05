@@ -1458,8 +1458,8 @@ const Trading = () => {
 
       <div className="mt-5 w-full grid grid-cols-2 lg:grid-cols-4 gap-x-2 gap-y-2 xl:gap-y-3 xl:gap-x-3">
         <HotProductCard
-          key={89}
-          redirectHref={`/product/${89}`}
+          key={"the-ultimate-forext-trading-alpha-group-discord"}
+          redirectHref={`/product/the-ultimate-forext-trading-alpha-group-discord`}
           img={"https://ucarecdn.com/219f9793-bdfc-4da9-9ed8-62854b907625/"}
           category={"How To Guides"}
           productName={"The ULTIMATE FOREX Trading Alpha Group *DISCORD*"}
@@ -1469,8 +1469,8 @@ const Trading = () => {
           price={`${0.7} SOL one time payment`}
         />
         <HotProductCard
-          key={90}
-          redirectHref={`/product/${90}`}
+          key={"meme-coin-bot"}
+          redirectHref={`/product/meme-coin-bot`}
           img={"https://ucarecdn.com/e4c58f49-7b7e-4261-a310-4f10ff1e833e/"}
           category={"Bots"}
           productName={"MEME Coin Sniper BOT on SOLANA"}
@@ -1480,8 +1480,8 @@ const Trading = () => {
           price={`${2} SOL one time payment`}
         />
         <HotProductCard
-          key={93}
-          redirectHref={`/product/${93}`}
+          key={"sendit-meme-alpha-call-group-discord"}
+          redirectHref={`/product/sendit-meme-alpha-call-group-discord`}
           img={"https://ucarecdn.com/31ab51c1-e9f5-40ce-a6fc-307deae61814/"}
           category={"How To Guides"}
           productName={"SENDIT Meme Alpha Call Group *Discord*"}
@@ -1491,8 +1491,8 @@ const Trading = () => {
           price={`${2.5} SOL one time payment`}
         />
         <HotProductCard
-          key={94}
-          redirectHref={`/product/${94}`}
+          key={"pump-fun-meme-sniper-bot"}
+          redirectHref={`/product/pump-fun-meme-sniper-bot`}
           img={"https://ucarecdn.com/a0a7a44a-8b44-4bff-ad65-94d3a82379f1/"}
           category={"SaaS Apps"}
           productName={"PUMP Fun MEME Sniper Bot"}
