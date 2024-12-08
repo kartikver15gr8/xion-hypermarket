@@ -347,7 +347,7 @@ const NavItems = () => {
           <span className=" text-[14px] md:text-[16px] xl:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200">
             Services
           </span>
-          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 mt-2 rounded-xl font-normal hidden bg-white text-black  group-hover:block group-hover:w-48 p-1">
+          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 mt-[1px] rounded-xl font-normal hidden bg-white text-black  group-hover:block group-hover:w-48 p-1">
             <DropdownList
               feat="Marketing"
               featSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 16 16'%3E%3Cpath fill='black' d='M14.25 2.1a1.25 1.25 0 0 0-1.17-.1L6.91 4.43a1.2 1.2 0 0 1-.46.09H2.5a1.25 1.25 0 0 0-1.25 1.25v.1H0v3h1.25V9a1.25 1.25 0 0 0 1.25 1.22L4 13.4a1.26 1.26 0 0 0 1.13.72h.63A1.25 1.25 0 0 0 7 12.87v-2.53l6.08 2.43a1.3 1.3 0 0 0 .47.09a1.3 1.3 0 0 0 .7-.22a1.25 1.25 0 0 0 .55-1V3.13a1.25 1.25 0 0 0-.55-1.03m-8.5 3.67V9H2.5V5.77zm0 7.1h-.63l-1.23-2.65h1.86zm1.62-3.72A2.3 2.3 0 0 0 7 9V5.7a2.3 2.3 0 0 0 .37-.11l6.18-2.46v8.48zm7.46-3.03v2.5a1.25 1.25 0 0 0 0-2.5'/%3E%3C/svg%3E"
@@ -371,7 +371,7 @@ const NavItems = () => {
           <span className=" text-[14px] md:text-[16px] xl:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200">
             Education
           </span>
-          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 mt-2 rounded-xl font-normal hidden bg-white text-black group-hover:block group-hover:w-48 p-1">
+          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 mt-[1px] rounded-xl font-normal hidden bg-white text-black group-hover:block group-hover:w-48 p-1">
             <DropdownList
               feat="Courses"
               featSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 32 32'%3E%3Cpath fill='black' d='M24 30H8a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v16.618l-5-2.5l-5 2.5V4H8v24h16v-4h2v4a2.003 2.003 0 0 1-2 2m-3-14.118l3 1.5V4h-6v13.382Z'/%3E%3C/svg%3E"
@@ -392,7 +392,7 @@ const NavItems = () => {
           <span className=" text-[14px] md:text-[16px] xl:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200">
             Crypto & Trading
           </span>
-          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 mt-2 rounded-xl font-normal hidden bg-white text-black group-hover:block group-hover:w-48 p-1">
+          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 mt-[1px] rounded-xl font-normal hidden bg-white text-black group-hover:block group-hover:w-48 p-1">
             <DropdownList
               feat="Alpha Private Groups"
               featSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'%3E%3Cg fill='none'%3E%3Ccircle cx='12' cy='9' r='1.5' stroke='black' stroke-linecap='round'/%3E%3Cpath stroke='black' d='M15.701 8.25a1.5 1.5 0 1 1 2.598 1.5a1.5 1.5 0 0 1-2.598-1.5Zm-10 0a1.5 1.5 0 1 1 2.598 1.5a1.5 1.5 0 0 1-2.598-1.5Z'/%3E%3Cpath fill='black' d='m20.364 15.512l.486-.116zM14.1 13.185l-.29-.406l-.533.38l.507.414zm1.28 2.325l-.489.103zm4.12.49h-5v1h5zm.378-.371a.25.25 0 0 1-.061.243a.43.43 0 0 1-.317.128v1c.8 0 1.57-.683 1.35-1.604zM16.5 13c1.226 0 1.99.409 2.482.912c.506.517.765 1.174.896 1.717l.972-.233c-.154-.642-.475-1.49-1.153-2.184C19.004 12.505 17.977 12 16.5 12zm-2.11.592c.478-.341 1.15-.592 2.11-.592v-1c-1.146 0-2.025.303-2.69.779zm-.606-.02c.653.534.964 1.362 1.107 2.04l.979-.205c-.162-.767-.54-1.863-1.454-2.609zm1.107 2.04a.28.28 0 0 1-.07.257a.44.44 0 0 1-.321.131v1c.804 0 1.561-.68 1.37-1.593zM9.9 13.185l.316.388l.507-.414l-.532-.38zm-6.264 2.327l.486.117zm4.984-.002l-.49-.103zM7.5 13c.96 0 1.631.25 2.11.592l.58-.814C9.526 12.304 8.647 12 7.5 12zm-3.378 2.629c.13-.543.39-1.2.896-1.717C5.51 13.409 6.274 13 7.5 13v-1c-1.478 0-2.504.505-3.197 1.212c-.678.693-1 1.542-1.153 2.184zM4.5 16a.43.43 0 0 1-.317-.128a.25.25 0 0 1-.06-.243l-.973-.233C2.93 16.317 3.7 17 4.5 17zm5 0h-5v1h5zm0 0a.44.44 0 0 1-.322-.13a.28.28 0 0 1-.07-.257l-.978-.206C7.938 16.319 8.696 17 9.5 17zm-.391-.387c.143-.68.454-1.507 1.107-2.04l-.632-.775c-.914.746-1.292 1.842-1.454 2.609z'/%3E%3Cpath stroke='black' stroke-linecap='round' d='M12 12.5c2.364 0 3.131 1.825 3.38 3.01c.114.54-.328.99-.88.99h-5c-.552 0-.994-.45-.88-.99c.249-1.185 1.016-3.01 3.38-3.01Zm6.5 9H20a1.5 1.5 0 0 0 1.5-1.5v-1.5m-3-16H20A1.5 1.5 0 0 1 21.5 4v1.5m-16 16H4A1.5 1.5 0 0 1 2.5 20v-1.5m3-16H4A1.5 1.5 0 0 0 2.5 4v1.5'/%3E%3C/g%3E%3C/svg%3E"
@@ -419,7 +419,7 @@ const NavItems = () => {
           <span className=" text-[14px] md:text-[16px] xl:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200">
             Software
           </span>
-          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 mt-2 rounded-xl font-normal hidden bg-white text-black group-hover:block group-hover:w-48 p-1">
+          <ul className="absolute left-1/2 -translate-x-1/2 pt-5 mt-[1px] rounded-xl font-normal hidden bg-white text-black group-hover:block group-hover:w-48 p-1">
             <DropdownList
               feat="Code"
               featSrc="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1.05em' height='1em' viewBox='0 0 25 24'%3E%3Cpath fill='black' d='M15.058 4.163a.75.75 0 1 0-1.464-.326l-3.556 16a.75.75 0 1 0 1.465.326zM7.83 7.47a.75.75 0 0 1 0 1.06L4.36 12l3.47 3.47a.75.75 0 1 1-1.061 1.06l-4-4a.75.75 0 0 1 0-1.06l4-4a.75.75 0 0 1 1.06 0m9.44 0a.75.75 0 0 0 0 1.06l3.47 3.47l-3.47 3.47a.75.75 0 1 0 1.06 1.06l4-4a.75.75 0 0 0 0-1.06l-4-4a.75.75 0 0 0-1.06 0'/%3E%3C/svg%3E"

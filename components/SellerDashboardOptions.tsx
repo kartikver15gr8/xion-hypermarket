@@ -118,7 +118,7 @@ export default function SellerDashboardOptions({
               </li>
             </Link>
 
-            <Link href="">
+            <Link href="/seller/analytics">
               <li
                 className={
                   pathname == "/seller/analytics" ? isActiveTab : isInactiveTab
@@ -128,7 +128,7 @@ export default function SellerDashboardOptions({
               </li>
             </Link>
 
-            <Link href="">
+            <Link href="/seller/earnings">
               <li
                 className={
                   pathname == "/seller/earnings" ? isActiveTab : isInactiveTab

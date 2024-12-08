@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import cartIcon from "@/public/svgIcons/cart.svg";
 import eyeIcon from "@/public/svgIcons/eye.svg";
 import ResponsiveLinearChart from "../ResponsiveLinearChart";
+import { ResponsiveBarChart } from "../ResponsiveBarChart";
 
 export default function Analytics() {
   return (
@@ -22,7 +23,8 @@ export default function Analytics() {
           <p className="text-sm md:text-[15px]">Accounts Statistics</p>
           <MidSection />
         </div>
-        <GraphWindow />
+        {/* <GraphWindow /> */}
+        <ResponsiveBarChart />
         <Affiliates />
         <TopProductSold />
       </div>
