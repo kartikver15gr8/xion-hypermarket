@@ -253,8 +253,8 @@ const PopupMenu: React.FC<PopupMenuProps> = ({
         </svg>
         <p>Cart</p>
       </button>
-      <button
-        onClick={changeCartState}
+      <Link
+        href={"/library"}
         className="flex items-center gap-x-2 border-b  rounded w-full text-left py-1 px-2 hover:bg-[#DDD] transition-all duration-300"
       >
         <svg
@@ -268,7 +268,7 @@ const PopupMenu: React.FC<PopupMenuProps> = ({
           />
         </svg>
         <p>Orders</p>
-      </button>
+      </Link>
       <button
         onClick={onLogout}
         className="flex items-center gap-x-2 rounded w-full text-left py-1 px-2 hover:bg-[#DDD] transition-all duration-300"

@@ -5,13 +5,17 @@ import { Button } from "../ui/button";
 import senditcoin from "@/public/coins/senditcoin.png";
 
 import invertcube from "@/public/invertcube.svg";
-
+import { ProductInterface } from "@/lib/models";
+import { useRouter } from "next/navigation";
+import WordRotate from "../ui/word-rotate";
 import galacticspace from "@/public/_static/background/galacticspace.png";
 import randomstatic from "@/public/randomstatic.png";
 import jungle from "@/public/_static/background/jungle.png";
 
+import coins from "@/public/_static/background/apesbanner.png";
 import { cn } from "@/lib/utils";
 import Marquee from "@/components/magicui/marquee";
+import bannerforDont from "@/public/_static/background/newbgsendit.png";
 import coinbg from "@/public/_static/background/coinbg.png";
 import solana from "@/public/coins/solana.png";
 
@@ -412,26 +416,27 @@ const CategoryCard = ({
 
 const DappCard = () => {
   return (
-    <div className="relative rounded-xl mt-10 h-[200px] md:h-[300px] shadow-[inset_-90px_70px_90px_rgba(0,0,0,0.1)] overflow-hidden bg-[#D1D1D2]">
+    <div className="relative bg-black rounded-xl mt-10 h-[200px] md:h-[300px] shadow-[inset_-90px_70px_90px_rgba(0,0,0,0.1)] overflow-hidden ">
       <Image
-        src={bannerbgtwo}
+        src={coins}
         alt="Background"
-        className=""
+        className="opacity-60"
         layout="fill"
         objectFit="cover"
       />
+
       <div className="relative px-4 lg:px-16 h-full flex flex-col items-center justify-center">
         <div className="w-fit flex flex-col items-center text-white ">
-          <p className="font-bold text-[16px] md:text-[20px] xl:text-[40px]">
-            INSTANT CHECKOUT
+          <p className="font-bold text-[20px] sm:text-[25px] md:text-[30px] lg:text-[35px] xl:text-[40px]">
+            Join Our Affiliates Program
           </p>
-          <p className="font-bold text-[16px] md:text-[20px] xl:text-[40px]">
-            WITH CRYPTO
+          <p className="font-medium text-[16px] sm:text-[25px] md:text-[30px] lg:text-[35px] xl:text-[25px]">
+            Earn Commissions in Crypto
           </p>
         </div>
-        {/* <Button className="px-2 mt-4 lg:mt-2 md:px-4 w-36 lg:w-52 rounded-lg text-md bg-white text-black  hover:bg-[#e1e4e7] transition-all duration-300 ">
-          Connect Wallet
-        </Button> */}
+        <Button className=" h-8 md:h-10 text-[12px] lg:text-[18px] mt-2 sm:mt-4 lg:mt-6 lg:w-52 rounded-lg  bg-white text-black  hover:bg-[#e1e4e7] transition-all duration-300 ">
+          Become an Affiliate
+        </Button>
       </div>
     </div>
   );
@@ -828,9 +833,14 @@ const DontMissBanner = () => {
   const router = useRouter();
 
   return (
-    <div className="relative overflow-hidden flex flex-col h-[200px] mt-10 rounded-xl">
-      <Image src={circleshade} className="absolute h-full opacity-70" alt="" />
-
+    <div className="relative overflow-hidden flex flex-col h-[200px] mt-10 rounded-xl  text-white">
+      <Image
+        src={bannerforDont}
+        className="opacity-100"
+        alt="Background"
+        layout="fill"
+        objectFit="cover"
+      />
       <Image
         src={productone}
         className="absolute w-[100px] opacity-45 lg:opacity-100 xl:w-[150px] rotate-6 top-5 xl:left-[18%] h-fit "
@@ -893,28 +903,26 @@ const DontMissBanner = () => {
           <Image
             src={senditape}
             alt=""
-            className="w-10 h-10"
+            className="w-10 h-10 invert"
             width={200}
             height={200}
           />
-          <p className="">Digital Marketplace</p>
+
+          <p className="">Earn in Crypto </p>
         </div>
-        <p className="text-4xl font-medium mt-1">Don&apos;t miss out</p>
+        <p className="text-4xl font-medium mt-1">Start Your Business Today</p>
         <Button
           onClick={() => {
             router.push("/product");
           }}
-          className="text-md mt-5 hover:bg-blue-500 transition-all duration-200"
+          className="text-md mt-5 bg-white text-black hover:bg-blue-500 transition-all duration-200"
         >
-          Buy now
+          Start Selling
         </Button>
       </div>
     </div>
   );
 };
-
-import { ProductInterface } from "@/lib/models";
-import { useRouter } from "next/navigation";
 
 const HotDigitalProducts = () => {
   const [products, setProducts] = useState<ProductInterfaceTwo[]>([]);
