@@ -192,10 +192,10 @@ function PageLandingContent() {
 
       <div className="w-full flex flex-col z-10 items-center justify-center ">
         <div className="relative  flex flex-col items-center">
-          <p className="text-4xl md:text-5xl xl:text-6xl text-white font-bold italic">
+          <p className="text-3xl md:text-5xl xl:text-6xl text-white font-bold italic">
             Welcome To
           </p>
-          <p className="text-4xl md:text-5xl xl:text-6xl text-white font-bold italic">
+          <p className="text-3xl md:text-5xl xl:text-6xl text-white font-bold italic">
             The Web3 Marketplace
           </p>
           <span className="relative text-lg xl:text-2xl text-white lg:mt-2 italic flex items-center w-fit ">
