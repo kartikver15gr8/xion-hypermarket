@@ -122,7 +122,7 @@ export default function FullNav() {
           {/* <BecomeSeller text="Affiliate" /> */}
           {!isConnected ? (
             // <BecomeSeller text="Sign In" />
-            <XionConnectBtn btnText="Sign in" />
+            <XionConnectBtn btnText="SIGN IN" />
           ) : (
             <Link href="/affiliate" className=" w-fit hidden sm:flex">
               <Button className="rounded text-black  w-fit md:text-[12px] text-[11px] px-4 lg:text-[14px] xl:text-[16px] border-[#979797] hover:bg-[#EEEEEF] transition-all duration-300">
@@ -134,7 +134,7 @@ export default function FullNav() {
           {/* {pathname != "/" && <SearchForm />} */}
           {/* <PhantomWalletButton /> */}
           {/* <PrivyConnection /> */}
-          <XionConnectBtn btnText="Sign up" />
+          <XionConnectBtn btnText="SIGN UP" />
         </div>
 
         {/* Below is the Ape icon for phone screen UI */}

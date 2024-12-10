@@ -12,7 +12,7 @@ import { useEffect } from "react";
 export default function XionConnectBtn({
   btnText,
 }: {
-  btnText: "Sign in" | "Sign up";
+  btnText: "SIGN IN" | "SIGN UP";
 }) {
   // Abstraxion hooks
   const {
@@ -32,7 +32,7 @@ export default function XionConnectBtn({
 
   return (
     <div className="">
-      {btnText == "Sign up" ? (
+      {btnText == "SIGN UP" ? (
         <button
           className="h-10 hidden sm:flex sm:items-center sm:justify-center rounded bg-[#1F3839] px-4 text-white md:text-[12px] text-[11px] lg:text-[14px] xl:text-[16px]  hover:bg-[#4e6466] transition-all duration-300 border border-black"
           onClick={() => {
