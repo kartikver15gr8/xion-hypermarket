@@ -21,6 +21,8 @@ import PromoteWithBlinksBtn from "@/components/PromoteWithBlinksBtn";
 import MarkdownRenderer from "@/components/MarkdownRenderer";
 import { getAccessToken, usePrivy } from "@privy-io/react-auth";
 import { userIdState } from "@/store/atom/userIdState";
+import shine from "@/public/_static/background/shinegradient.png";
+import usdcbanner from "@/public/usdctran.png";
 
 export default function Product({ params }: any) {
   // const [productId, setProductId] = useState(params.product);
@@ -134,7 +136,8 @@ const ProductDetails = ({
           />
         </div>
         <div className="lg:col-span-2 col-span-1 sm:col-span-1 md:col-span-1">
-          <PromoteWithBlinksBtn />
+          {/* <PromoteWithBlinksBtn /> */}
+          <XionAffiliateBanner />
           <div className="flex items-center mt-4 justify-between">
             <p className="font-bold text-xl">{productName}</p>
 
@@ -587,6 +590,42 @@ const PostReviewTab = ({
           </button>
         </div>
       )}
+    </div>
+  );
+};
+
+const XionAffiliateBanner = () => {
+  return (
+    <div className="flex relative h-16 items-center gap-x-2 mb-2 hover:shadow-xl transition-all duration-200 bg-black rounded">
+      <Image
+        src={noisebg}
+        alt="Background"
+        layout="fill"
+        objectFit="cover"
+        className="opacity-[5%] mix-blend-color-burn rounded"
+      />
+      <Image
+        src={shine}
+        alt="Background"
+        layout="fill"
+        objectFit="cover"
+        className="opacity-[41%] bg-blend-color rounded"
+      />
+      <Image
+        src={usdcbanner}
+        alt="Background"
+        layout="fill"
+        objectFit="cover"
+        className="opacity-[20%] bg-blend-luminosity rounded"
+      />
+      <Link
+        href={"/affiliate"}
+        className="relative z-10 w-full flex justify-center h-full items-center px-2 text-white font-medium  "
+      >
+        <p className="text-sm md:text-lg lg:text-sm xl:text-lg">
+          Become an Affiliate & EARN upto 30% Commsion in Crypto
+        </p>
+      </Link>
     </div>
   );
 };

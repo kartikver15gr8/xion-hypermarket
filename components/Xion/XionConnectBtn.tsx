@@ -7,7 +7,7 @@ import {
 } from "@burnt-labs/abstraxion";
 import { Button } from "@burnt-labs/ui";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function XionConnectBtn({
   btnText,
@@ -23,51 +23,89 @@ export default function XionConnectBtn({
 
   // General state hooks
   const [, setShow] = useModal();
+  const [showPopup, setShowPopup] = useState(false);
+  const [showProfilePopup, setShowProfilePopup] = useState(false);
 
-  // watch isConnected and isConnecting
-  // only added for testing
+  const setShowTrue = () => {
+    setShow(true);
+  };
+
   useEffect(() => {
     console.log({ isConnected, isConnecting });
   }, [isConnected, isConnecting]);
 
+  const toggleShowProfilePopup = () => {
+    setShowProfilePopup(false);
+  };
   return (
-    <div className="">
-      {btnText == "SIGN UP" ? (
-        <button
-          className="h-10 hidden sm:flex sm:items-center sm:justify-center rounded bg-[#1F3839] px-4 text-white md:text-[12px] text-[11px] lg:text-[14px] xl:text-[16px]  hover:bg-[#4e6466] transition-all duration-300 border border-black"
-          onClick={() => {
-            setShow(true);
-          }}
-        >
-          {bech32Address ? (
-            <div className="flex items-center justify-center">{`${bech32Address.slice(
-              0,
-              3
-            )}...${bech32Address.slice(-3)}`}</div>
-          ) : (
-            btnText
-          )}
-        </button>
-      ) : (
-        <Button
-          className="h-10 hidden sm:flex sm:items-center sm:justify-center rounded  md:text-[12px] text-[11px] lg:text-[14px] xl:text-[16px] transition-all duration-300"
-          onClick={() => {
-            setShow(true);
-          }}
-        >
-          {bech32Address ? (
-            <div className="flex items-center justify-center">{`${bech32Address.slice(
-              0,
-              3
-            )}...${bech32Address.slice(-3)}`}</div>
-          ) : (
-            btnText
-          )}
-        </Button>
+    <>
+      <div className="w-fit">
+        {isConnected ? (
+          <div className="">
+            <button
+              onClick={() => setShowPopup(!showPopup)}
+              className="w-8 h-8 bg-[#eeeeee] shadow-inner rounded border border-[#616161] hidden sm:flex sm:items-center sm:justify-center bg-inherit  text-white md:text-[12px] text-[11px] lg:text-[14px] xl:text-[16px] hover:bg-[#DDD] transition-all duration-300"
+            >
+              {showPopup ? (
+                <svg
+                  className="w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 15 15"
+                >
+                  <path
+                    fill="black"
+                    d="M3.64 2.27L7.5 6.13l3.84-3.84A.92.92 0 0 1 12 2a1 1 0 0 1 1 1a.9.9 0 0 1-.27.66L8.84 7.5l3.89 3.89A.9.9 0 0 1 13 12a1 1 0 0 1-1 1a.92.92 0 0 1-.69-.27L7.5 8.87l-3.85 3.85A.92.92 0 0 1 3 13a1 1 0 0 1-1-1a.9.9 0 0 1 .27-.66L6.16 7.5L2.27 3.61A.9.9 0 0 1 2 3a1 1 0 0 1 1-1c.24.003.47.1.64.27"
+                  />
+                </svg>
+              ) : (
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="50"
+                  height="50"
+                  viewBox="0 0 50 50"
+                >
+                  <path
+                    fill="black"
+                    d="M10 12h30v4H10zm0 10h30v4H10zm0 10h30v4H10z"
+                  />
+                </svg>
+              )}
+            </button>
+            {showPopup && (
+              <PopupMenu
+                onClose={() => setShowPopup(false)}
+                onBecomeSeller={() => console.log("Become a Seller clicked")}
+                onDashboard={() => console.log("Dashboard clicked")}
+                onLogout={setShowTrue}
+              />
+            )}
+          </div>
+        ) : (
+          <button
+            className=" h-10 hidden sm:flex sm:items-center sm:justify-center rounded bg-[#1F3839] px-4 text-white md:text-[12px] text-[11px] lg:text-[14px] xl:text-[16px]  hover:bg-[#4e6466] transition-all duration-300"
+            onClick={setShowTrue}
+          >
+            SIGN UP
+          </button>
+        )}
+      </div>
+      {showProfilePopup && (
+        <div className="absolute bg-black bg-opacity-40 h-screen w-full left-0 top-0">
+          <div className=" h-96 rounded-xl px-4 py-2 border-[#AFAFB4] top-0 w-[500px] absolute bg-white left-1/3 mt-32">
+            <div className="flex items-center justify-between ">
+              <p>Add your profile</p>
+              <button
+                onClick={toggleShowProfilePopup}
+                className="text-xl border w-7 flex justify-center"
+              >
+                X
+              </button>
+            </div>
+          </div>
+        </div>
       )}
-
       <Abstraxion onClose={() => setShow(false)} />
-    </div>
+    </>
   );
 }
 
@@ -76,7 +114,7 @@ interface PopupMenuProps {
   onBecomeSeller: () => void;
   onDashboard: () => void;
   onLogout: () => void;
-  changeCartState: () => void;
+  changeCartState?: () => void;
 }
 
 const PopupMenu: React.FC<PopupMenuProps> = ({
