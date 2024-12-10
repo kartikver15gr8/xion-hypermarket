@@ -9,7 +9,11 @@ import { Button } from "@burnt-labs/ui";
 import Link from "next/link";
 import { useEffect } from "react";
 
-export default function XionConnectBtn() {
+export default function XionConnectBtn({
+  btnText,
+}: {
+  btnText: "Sign in" | "Sign up";
+}) {
   // Abstraxion hooks
   const {
     data: { bech32Address },
@@ -28,21 +32,39 @@ export default function XionConnectBtn() {
 
   return (
     <div className="">
-      <button
-        className="h-10 hidden sm:flex sm:items-center sm:justify-center rounded bg-[#1F3839] px-4 text-white md:text-[12px] text-[11px] lg:text-[14px] xl:text-[16px]  hover:bg-[#4e6466] transition-all duration-300 border border-black "
-        onClick={() => {
-          setShow(true);
-        }}
-      >
-        {bech32Address ? (
-          <div className="flex items-center justify-center">{`${bech32Address.slice(
-            0,
-            3
-          )}...${bech32Address.slice(-3)}`}</div>
-        ) : (
-          "Sign up"
-        )}
-      </button>
+      {btnText == "Sign up" ? (
+        <button
+          className="h-10 hidden sm:flex sm:items-center sm:justify-center rounded bg-[#1F3839] px-4 text-white md:text-[12px] text-[11px] lg:text-[14px] xl:text-[16px]  hover:bg-[#4e6466] transition-all duration-300 border border-black"
+          onClick={() => {
+            setShow(true);
+          }}
+        >
+          {bech32Address ? (
+            <div className="flex items-center justify-center">{`${bech32Address.slice(
+              0,
+              3
+            )}...${bech32Address.slice(-3)}`}</div>
+          ) : (
+            btnText
+          )}
+        </button>
+      ) : (
+        <Button
+          className="h-10 hidden sm:flex sm:items-center sm:justify-center rounded  md:text-[12px] text-[11px] lg:text-[14px] xl:text-[16px] transition-all duration-300"
+          onClick={() => {
+            setShow(true);
+          }}
+        >
+          {bech32Address ? (
+            <div className="flex items-center justify-center">{`${bech32Address.slice(
+              0,
+              3
+            )}...${bech32Address.slice(-3)}`}</div>
+          ) : (
+            btnText
+          )}
+        </Button>
+      )}
 
       <Abstraxion onClose={() => setShow(false)} />
     </div>
