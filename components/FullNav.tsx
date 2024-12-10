@@ -26,6 +26,8 @@ import {
 } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { usePrivy } from "@privy-io/react-auth";
+import XionConnectBtn from "./Xion/XionConnectBtn";
+import { useAbstraxionAccount } from "@burnt-labs/abstraxion";
 
 const isActive =
   "relative text-[14px] md:text-[16px] bg-[#dcdfe0] lg:text-[18px] text-[#182b2d] px-3 py-[5px] rounded-sm hover:bg-[#1d2c3a] hover:text-white transition-all duration-200";
@@ -65,6 +67,10 @@ export default function FullNav() {
 
   const pathname = usePathname();
   const { user, login } = usePrivy();
+  const {
+    isConnected,
+    data: { bech32Address },
+  } = useAbstraxionAccount();
 
   return (
     <div className="absolute w-full flex flex-col p-2 sm:p-0">
@@ -114,7 +120,7 @@ export default function FullNav() {
         {/* <ConnectButton toggleWindow={toggleWalletConnect} /> */}
         <div className="hidden sm:flex items-center gap-x-2">
           {/* <BecomeSeller text="Affiliate" /> */}
-          {!user?.wallet?.address ? (
+          {!isConnected ? (
             <BecomeSeller text="Sign In" />
           ) : (
             <Link href="/affiliate" className=" w-fit hidden sm:flex">
@@ -126,7 +132,8 @@ export default function FullNav() {
           {/* <ConnectWithWallet /> */}
           {/* {pathname != "/" && <SearchForm />} */}
           {/* <PhantomWalletButton /> */}
-          <PrivyConnection />
+          {/* <PrivyConnection /> */}
+          <XionConnectBtn />
         </div>
 
         {/* Below is the Ape icon for phone screen UI */}

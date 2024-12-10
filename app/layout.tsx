@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { teachersFont } from "./fonts/fonts";
 import RecoilRootWrapper from "@/components/RecoilRootWrapper";
@@ -10,8 +9,7 @@ import { siteConfig } from "@/config/site-config";
 import SolanaWalletProvider from "@/components/SolanaWalletProvider";
 import React, { createContext, useContext } from "react";
 import Providers from "@/utils/Providers";
-
-const inter = Inter({ subsets: ["latin"] });
+import { AbstraxionWrapper } from "@/components/Xion/AbstraxionWrapper";
 
 export const metadata: Metadata = siteConfig;
 
@@ -28,8 +26,10 @@ export default function RootLayout({
           {/* <Navigation /> */}
           <Providers>
             <SolanaWalletProvider>
-              <FullNav />
-              {children}
+              <AbstraxionWrapper>
+                <FullNav />
+                {children}
+              </AbstraxionWrapper>
             </SolanaWalletProvider>
           </Providers>
           {/* <BottomNav /> */}
