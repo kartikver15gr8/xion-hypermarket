@@ -1011,7 +1011,7 @@ const HotDigitalProducts = () => {
                   category={elem.category.name}
                   productName={elem.name}
                   description={elem.description}
-                  price={`${elem.price} SOL one time payment`}
+                  price={`${elem.price} XION one time payment`}
                 />
               ))}
           </>
@@ -1206,7 +1206,7 @@ const GamingCollectibles = () => {
           category="Design Templates"
           title="Photoshop Layers and After Effects"
           description="Get the best bundle for video editing and photoshop"
-          price="12 SOL one time payment"
+          price="12 XION one time payment"
         />
 
         <div className="col-span-12 sm:col-span-8  grid grid-cols-2 sm:grid-cols-3 gap-x-3 gap-y-3">
@@ -1408,7 +1408,7 @@ const DesignUIUX = () => {
                   category={elem.category.name}
                   productName={elem.name}
                   description={elem.description}
-                  price={`${elem.price} SOL one time payment`}
+                  price={`${elem.price} XION one time payment`}
                 />
               ))}
           </>
@@ -1474,7 +1474,7 @@ const Trading = () => {
           description={
             "😄\r\nBeginner Friendly Community\r\nLearn Forex Trading Live: We specialize in welcoming new traders. Learn how to trade forex no matter your experience\r\n🎥\r\nPrivate Livestreams\r\nGain access to our exclusive livestreams with real-time scanning memecoins\r\n🤖\r\nPotion Exclusive Bots\r\nFrom bots that check if a coins socials have been reused to bots that check who the top holders are\r\n👀\r\nTweet Trackers\r\nTrack the most notable Influencers on Forex Twitter & see what alpha they are spewing out on the timeline.\r\n💰\r\nWallet Trackers\r\nTracking the best traders on the blockchain with Hyper-Speed Trackers. Spotting INSIDER Plays before it happens.\r\n📈\r\nVolume Monitors\r\nSpot what coins are getting the most volume INSTANTLY\r\n🧑‍🤝‍🧑\r\n24/7 Support\r\nRound-the-clock assistance from our mods. We're here to help you around the clock."
           }
-          price={`${0.7} SOL one time payment`}
+          price={`${0.7} XION one time payment`}
         />
         <HotProductCard
           key={"meme-coin-bot"}
@@ -1485,7 +1485,7 @@ const Trading = () => {
           description={
             "💰\r\nAffordable Signals\r\nWe provide Signals Access at a great price. Anyone can receive the signals and make money from their trades.\r\n📈\r\nHigh Winrate\r\nThe winrate of our signals ranges from 80 to 90%..\r\n🧑‍💻\r\nSupport\r\nYou can get assistance from our support with any queries. We are incredibly kind and cordial.\r\n🔍\r\nProfessional Traders\r\nOur skilled traders are here to assist you. They'll assist you with any issue.\r\n⭐\r\nEasy to understand\r\nOur signals are really simple to interpret. You can learn when to buy and when to sell from the signals."
           }
-          price={`${2} SOL one time payment`}
+          price={`${2} XION one time payment`}
         />
         <HotProductCard
           key={"sendit-meme-alpha-call-group-discord"}
@@ -1496,7 +1496,7 @@ const Trading = () => {
           description={
             "💰\r\nAffordable Signals\r\nWe provide Signals Access at a great price. Anyone can receive the signals and make money from their trades.\r\n📈\r\nHigh Winrate\r\nThe winrate of our signals ranges from 80 to 90%..\r\n🧑‍💻\r\nSupport\r\nYou can get assistance from our support with any queries. We are incredibly kind and cordial.\r\n🔍\r\nProfessional Traders\r\nOur skilled traders are here to assist you. They'll assist you with any issue.\r\n⭐\r\nEasy to understand\r\nOur signals are really simple to interpret. You can learn when to buy and when to sell from the signals."
           }
-          price={`${2.5} SOL one time payment`}
+          price={`${2.5} XION one time payment`}
         />
         <HotProductCard
           key={"pump-fun-meme-sniper-bot"}
@@ -1507,7 +1507,7 @@ const Trading = () => {
           description={
             "💰\r\nAffordable Signals\r\nWe provide Signals Access at a great price. Anyone can receive the signals and make money from their trades.\r\n📈\r\nHigh Winrate\r\nThe winrate of our signals ranges from 80 to 90%..\r\n🧑‍💻\r\nSupport\r\nYou can get assistance from our support with any queries. We are incredibly kind and cordial.\r\n🔍\r\nProfessional Traders\r\nOur skilled traders are here to assist you. They'll assist you with any issue.\r\n⭐\r\nEasy to understand\r\nOur signals are really simple to interpret. You can learn when to buy and when to sell from the signals."
           }
-          price={`${3.2} SOL one time payment`}
+          price={`${3.2} XION one time payment`}
         />
       </div>
     </div>
