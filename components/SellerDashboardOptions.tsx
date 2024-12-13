@@ -13,6 +13,7 @@ import RegisterSeller from "./RegisterSeller";
 import ShareRegisterSeller from "./ShareRegisterSeller";
 import { useRecoilValue } from "recoil";
 import { phantomWallet } from "@/store/atom/phantomWallet";
+import XionRegisterSeller from "./Xion/XionRegisterSeller";
 
 const isActiveTab =
   "flex  text-black hover:text-black transition-all duration-300 backdrop-blur-lg border border-[#dbdad8] py-2 mb-[4px] w-full rounded-md pl-5 bg-[#ececef] ";
@@ -141,7 +142,8 @@ export default function SellerDashboardOptions({
         </div>
         {/* <RegisterSeller /> */}
         <div className="mt-10">
-          <ShareRegisterSeller />
+          {/* <ShareRegisterSeller /> */}
+          <XionRegisterSeller />
         </div>
       </div>
     </div>
