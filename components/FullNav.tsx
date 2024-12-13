@@ -120,16 +120,11 @@ export default function FullNav() {
         {/* <ConnectButton toggleWindow={toggleWalletConnect} /> */}
         <div className="hidden sm:flex items-center gap-x-2">
           {/* <BecomeSeller text="Affiliate" /> */}
-          {!isConnected ? (
-            // <BecomeSeller text="Sign In" />
-            <XionConnectBtn btnText="SIGN IN" />
-          ) : (
-            <Link href="/affiliate" className=" w-fit hidden sm:flex">
-              <Button className="rounded text-black  w-fit md:text-[12px] text-[11px] px-4 lg:text-[14px] xl:text-[16px] border-[#979797] hover:bg-[#EEEEEF] transition-all duration-300">
-                Become an Affiliate
-              </Button>
-            </Link>
-          )}
+          <Link href="/affiliate" className=" w-fit hidden sm:flex ">
+            <Button className="rounded text-black  w-fit md:text-[12px] text-[11px] px-4 lg:text-[14px] xl:text-[16px] border-[#979797] hover:bg-[#EEEEEF] transition-all duration-300">
+              Become an Affiliate
+            </Button>
+          </Link>
           {/* <ConnectWithWallet /> */}
           {/* {pathname != "/" && <SearchForm />} */}
           {/* <PhantomWalletButton /> */}
